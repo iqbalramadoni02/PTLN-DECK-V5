@@ -943,7 +943,7 @@ var KEY='deckptln_token_v1';
    Ganti bila membuat deployment baru.
    ------------------------------------------------------- */
 var LAMBANG='<div class="lambang"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="DECK PTLN"><rect width="100" height="100" rx="24" fill="#EDF0EA"/><rect x="15.5" y="60" width="7.4" height="20" rx="3.2" fill="#10302A" opacity="0.55"/><rect x="27.3" y="52" width="7.4" height="28" rx="3.2" fill="#10302A" opacity="0.64"/><rect x="39.1" y="44" width="7.4" height="36" rx="3.2" fill="#10302A" opacity="0.73"/><rect x="50.900000000000006" y="36" width="7.4" height="44" rx="3.2" fill="#10302A" opacity="0.82"/><rect x="62.7" y="28" width="7.4" height="52" rx="3.2" fill="#10302A" opacity="0.91"/><rect x="74.5" y="18" width="7.4" height="62" rx="3.2" fill="#C77D1A" opacity="1"/></svg></div>';
-var VERSI_UI='2026.10.09-18';
+var VERSI_UI='2026.10.09-19';
 var KUNCI_ALAMAT='deckptln_apiurl_v1';
 
 /* Alamat Web App boleh ditimpa dari dalam aplikasi. Berguna bila di Apps
@@ -1077,6 +1077,56 @@ function ang(v,desimal,kosong){
   return n.toFixed(desimal===undefined?2:desimal);
 }
 function store(k,v){try{v===null?localStorage.removeItem(k):localStorage.setItem(k,v)}catch(e){}}
+
+/* =======================================================
+   DAFTAR KAMPUS: DIRAKIT, DISIMPAN, DIPAKAI ULANG
+
+   Daftar kampus kini 1.326 baris dan jarang berubah, tetapi dulu dikirim
+   ulang utuh setiap kali halaman dibuka — dua megabyte, tiap kali. Tiga
+   hal memperbaikinya, dan ketiganya ada di sini:
+
+   1. Server mengirimnya sebagai satu baris judul ditambah larik nilai,
+      bukan 1.326 objek yang mengulang nama bidang yang sama. Dirakit
+      kembali di bawah ini.
+   2. Hasil rakitannya disimpan di peramban, lengkap dengan sidiknya.
+   3. Saat halaman dibuka lagi, sidik itu dikirim ke server. Bila isinya
+      belum berubah, server cukup menjawab "masih sama" — dan daftar yang
+      sudah ada di peramban dipakai lagi tanpa satu byte pun diunduh.
+
+   Daftar yang tidak muat disimpan tidak merusak apa pun: sidiknya ikut
+   dibuang, sehingga permintaan berikutnya mengunduhnya lagi seperti biasa. */
+var KUNCI_REF='deckptln_ref_v2';
+function rakitUniv(r){
+  if(r&&r.univRingkas&&r.univRingkas.r){
+    var k=r.univRingkas.k||[];
+    return r.univRingkas.r.map(function(baris){
+      var o={};
+      for(var i=0;i<k.length;i++) o[k[i]]=baris[i];
+      return o;
+    });
+  }
+  return (r&&r.univ)||[];       /* server versi lama */
+}
+function simpanRef(){
+  try{
+    if(!S.univ.length||!S.refSidik) return;
+    localStorage.setItem(KUNCI_REF,JSON.stringify(
+      {sidik:S.refSidik,univ:S.univ,bea:S.bea,waktu:Date.now()}));
+  }catch(e){ buangRef() }
+}
+function muatRef(){
+  try{
+    var t=localStorage.getItem(KUNCI_REF); if(!t) return false;
+    var d=JSON.parse(t);
+    if(!d||!d.sidik||!d.univ||!d.univ.length) return false;
+    S.univ=d.univ; S.bea=d.bea||[]; S.refSidik=d.sidik;
+    return true;
+  }catch(e){ return false }
+}
+function buangRef(){
+  try{ localStorage.removeItem(KUNCI_REF) }catch(e){}
+  S.refSidik='';
+}
 function readK(k){try{return localStorage.getItem(k)}catch(e){return null}}
 function toast(msg,bad){
   var t=document.createElement('div');
@@ -1293,6 +1343,12 @@ function mulai(){
   q('app').classList.add('hidden');
   q('boot').classList.remove('hidden');
 
+  /* Daftar kampus dari kunjungan sebelumnya dipulihkan lebih dulu, berikut
+     sidiknya. Sidik itulah yang dikirim ke server di bawah: bila databasenya
+     belum berubah, server menjawab "masih sama" dan dua megabyte itu tidak
+     perlu diunduh lagi. */
+  muatRef();
+
   /* Tampilkan simpanan terakhir lebih dulu supaya halaman langsung
      terlihat, lalu ganti begitu balasan server tiba. */
   var cepat=ambilAwal();
@@ -1395,7 +1451,11 @@ function hapusAwal(){ try{ localStorage.removeItem(KUNCI_SIMPAN) }catch(e){} }
 function terapkanBootstrap(r,awal){
   if(r.domainGuru && r.domainGuru.length) DOMAIN_GURU=r.domainGuru;
   S.user=r.user; S.schema=r.schema;
-  if(!r.refTetap){ S.univ=r.univ||[]; S.bea=r.bea||[] }
+  /* Sidiknya dipasang SEBELUM daftar kampus disimpan: tanpa sidik,
+     simpanannya tidak ada gunanya — tidak ada yang bisa dikirim ke server
+     untuk menanyakan apakah isinya masih sama. */
+  if(r.refSidik) S.refSidik=r.refSidik;
+  if(!r.refTetap){ S.univ=rakitUniv(r); S.bea=r.bea||[]; simpanRef() }
   S.konsultasi=r.konsultasi||[];
   S.skala=r.skala||[]; S.tahunAjaran=r.tahunAjaran||[]; S.statusValidasi=r.statusValidasi||[];
   if(r.tahun) S.tahun=r.tahun;
@@ -2953,7 +3013,7 @@ function simpanTahunIntake(kembali){
        jadi ditarik ulang sebelum layar digambar. */
     return call('segarkanReferensi',S.token).then(function(s){
       selesai();
-      if(s&&s.ok&&!s.refTetap){ S.univ=s.univ||[]; S.bea=s.bea||[] }
+      if(s&&s.ok&&!s.refTetap){ S.univ=rakitUniv(s); S.bea=s.bea||[]; simpanRef() }
       S.programKampus={};
       toast('Admission dates now follow intake '+r.tahun.intake+'.');
       gambarView();
@@ -4442,7 +4502,7 @@ function hapusCache(){
   try{ localStorage.removeItem(KUNCI_SIMPAN) }catch(e){}
   try{ localStorage.removeItem('deckptln_ref_v1') }catch(e){}
   try{ sessionStorage.clear() }catch(e){}
-  S.refSidik='';
+  buangRef();
   var lanjut=Promise.resolve();
   if(window.caches&&caches.keys){
     lanjut=caches.keys().then(function(k){
@@ -6374,7 +6434,7 @@ function segarkanReferensi(tombolId){
   call('segarkanReferensi',S.token).then(function(r){
     if(b){b.disabled=false;b.textContent='Refresh from spreadsheet'}
     if(!r.ok){if(r.error==='SESI_HABIS'){sesiHabis();return} toast(r.error,true);return}
-    if(!r.refTetap){ S.univ=r.univ||[]; S.bea=r.bea||[] }
+    if(!r.refTetap){ S.univ=rakitUniv(r); S.bea=r.bea||[]; simpanRef() }
     toast('Reference data reloaded — '+S.univ.length+' universities, '+S.bea.length+' scholarships.');
     gambarView();
   }).catch(function(e){ if(b){b.disabled=false;b.textContent='Refresh from spreadsheet'} tangani(e) });
