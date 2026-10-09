@@ -56,11 +56,25 @@
   --sea:#2E7F6D;          /* tuntas */
   --gold:#C77D1A;         /* sedang berjalan */
   --alert:#A6402C;
-  --sans:'Inter Tight',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-  --judul:'Instrument Serif',Georgia,'Times New Roman',serif;
-  --mono:'Roboto Mono',ui-monospace,Menlo,Consolas,monospace;
-  --r:10px;               /* kartu */
-  --r2:7px;               /* kendali */
+  /* Satu keluarga huruf untuk seluruh aplikasi, mengikuti huruf sistem —
+     di Mac menjadi SF Pro, di tempat lain jatuh ke huruf sistem setempat.
+     Judul tidak lagi berseri: pada tampilan bergaya macOS, judul adalah
+     huruf yang sama dengan isinya, hanya lebih tebal dan lebih rapat. */
+  --sans:-apple-system,BlinkMacSystemFont,'SF Pro Text','Inter Tight','Segoe UI',
+         Roboto,system-ui,sans-serif;
+  --judul:var(--sans);
+  --mono:ui-monospace,'SF Mono',Menlo,'Roboto Mono',Consolas,monospace;
+  --r:12px;               /* kartu */
+  --r2:6px;               /* kendali */
+  --r3:9px;               /* kelompok dan kotak dalam */
+  /* Garis sehalus rambut dan bayangan yang nyaris tak terlihat: kedalaman
+     di macOS datang dari lapisan, bukan dari bayangan tebal. */
+  --hair:rgba(16,48,42,.13);
+  --lift-1:0 1px 2px rgba(16,48,42,.07), 0 0 0 .5px rgba(16,48,42,.07);
+  --lift-2:0 4px 14px rgba(16,48,42,.10), 0 0 0 .5px rgba(16,48,42,.09);
+  --lift-3:0 18px 48px rgba(16,48,42,.26), 0 0 0 .5px rgba(16,48,42,.14);
+  --fokus:rgba(46,127,109,.45);
+  --cepat:.11s cubic-bezier(.3,0,.2,1);
   --ink:var(--tinta);
   --ink-2:var(--tinta-2);
   --card:var(--kartu);
@@ -69,7 +83,14 @@
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
 body{background:var(--kertas);color:var(--tinta);font-family:var(--sans);
-  font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  font-size:14px;line-height:1.5;letter-spacing:-.003em;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+/* Gerak hanya menjelaskan apa yang berubah, dan selesai sebelum sempat
+   ditunggu. Yang meminta gerak dikurangi tidak mendapat apa pun. */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;scroll-behavior:auto !important}
+}
 .hidden{display:none !important}
 .wrap{max-width:1180px;margin:0 auto;padding:18px 18px 96px}
 .muted{color:var(--mute)}
@@ -84,8 +105,8 @@ body{background:var(--kertas);color:var(--tinta);font-family:var(--sans);
 @media print{ .lambang svg rect{fill:#10302A !important} }
 .pass-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
 .pass .brand{font-size:12.5px;color:#9DB6AD;letter-spacing:0;margin-bottom:6px}
-.pass h1{font-family:var(--judul);font-weight:400;font-size:34px;line-height:1.08;margin:0;letter-spacing:-.01em}
-.pass h1 small{display:block;font-family:var(--sans);font-size:13px;color:#9DB6AD;margin-top:6px;letter-spacing:0}
+.pass h1{font-weight:700;font-size:27px;line-height:1.12;margin:0;letter-spacing:-.025em}
+.pass h1 small{display:block;font-size:12.5px;font-weight:400;color:#9DB6AD;margin-top:5px;letter-spacing:0}
 .pass .pick{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .eyebrow{font-size:12px;color:var(--mute);letter-spacing:0;text-transform:none}
 
@@ -93,48 +114,68 @@ body{background:var(--kertas);color:var(--tinta);font-family:var(--sans);
 .gates{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:18px}
 .gate{background:rgba(255,255,255,.07);border-radius:12px;padding:11px 12px 12px;min-width:0}
 .gate .g-l{font-size:11.5px;color:#9DB6AD;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.gate .g-v{font-family:var(--judul);font-size:25px;line-height:1;margin-top:4px}
+.gate .g-v{font-size:23px;font-weight:600;line-height:1;margin-top:4px;letter-spacing:-.02em;
+  font-variant-numeric:tabular-nums}
 .bar{height:4px;background:rgba(255,255,255,.16);margin-top:9px;border-radius:99px;overflow:hidden}
 .bar i{display:block;height:100%;background:var(--gold);border-radius:99px;transition:width .4s ease}
 .gate.done{background:rgba(46,127,109,.26)}
 .gate.done .bar i{background:#7FD3B8}
 
 /* ---------- tombol ---------- */
-.btn{font-family:var(--sans);font-size:13.5px;font-weight:600;border:1px solid var(--tinta);
-  background:var(--tinta);color:#F1F5F1;padding:9px 15px;border-radius:99px;cursor:pointer;
-  transition:transform .12s ease,background .15s,opacity .15s}
-.btn:hover{transform:translateY(-1px)}
-.btn:active{transform:none}
-.btn.ghost{background:transparent;color:inherit;border-color:var(--line)}
-.btn.ghost:hover{background:rgba(16,48,42,.06)}
-.pass .btn.ghost{color:#EAF0EC;border-color:rgba(234,240,236,.42)}
-.pass .btn.ghost:hover{background:rgba(234,240,236,.14)}
+/* Tombol macOS: sudut kecil, garis sehalus rambut, kilau tipis di tepi
+   atas, dan tekanan yang terasa — mengecil sedikit saat ditekan, bukan
+   melompat ke atas saat disentuh kursor. */
+.btn{font-family:var(--sans);font-size:13.5px;font-weight:590;letter-spacing:-.005em;
+  border:.5px solid var(--tinta);background:var(--tinta);color:#F1F5F1;
+  padding:7px 14px;border-radius:var(--r2);cursor:pointer;
+  box-shadow:inset 0 .5px 0 rgba(255,255,255,.18),0 1px 1.5px rgba(16,48,42,.14);
+  transition:filter var(--cepat),transform var(--cepat),background var(--cepat),opacity var(--cepat)}
+.btn:hover{filter:brightness(1.07)}
+.btn:active{transform:scale(.975);filter:brightness(.95)}
+.btn.ghost{background:#fff;color:var(--tinta);border-color:var(--hair);
+  box-shadow:inset 0 .5px 0 rgba(255,255,255,.9),0 1px 1.5px rgba(16,48,42,.07)}
+.btn.ghost:hover{background:#F7F9F6;filter:none}
+/* Di atas bidang hijau tua, tombol tembus pandang dengan tepi terang —
+   bukan tombol putih yang tulisannya ikut putih. */
+.pass .btn.ghost{background:rgba(255,255,255,.13);color:#EAF0EC;
+  border-color:rgba(234,240,236,.3);box-shadow:inset 0 .5px 0 rgba(255,255,255,.2)}
+.pass .btn.ghost:hover{background:rgba(255,255,255,.22)}
 .btn.sea{background:var(--sea);border-color:var(--sea)}
 .btn.gold{background:var(--gold);border-color:var(--gold)}
 .btn.danger{background:transparent;color:var(--alert);border-color:var(--alert)}
 .btn.danger:hover{background:rgba(166,64,44,.09)}
-.btn.sm{font-size:12.5px;padding:7px 12px}
-.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.btn.sm{font-size:12.5px;padding:5px 11px}
+.btn:disabled{opacity:.42;cursor:not-allowed;transform:none;filter:none}
+/* Cincin fokus macOS: cincin tebal lembut rapat ke tepi kendali, bukan
+   garis terpisah — terlihat jelas bagi yang berpindah dengan papan tik. */
 button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{
-  outline:2.5px solid var(--gold);outline-offset:2px}
+  outline:3.5px solid var(--fokus);outline-offset:1px;border-radius:var(--r2)}
 
-/* ---------- navigasi ---------- */
-.nav{display:flex;gap:6px;flex-wrap:wrap;margin:18px 0 16px;padding-bottom:2px}
-.nav button{font-family:var(--sans);font-size:13.5px;background:transparent;border:1px solid transparent;
-  color:var(--tinta-2);padding:8px 14px;cursor:pointer;border-radius:99px;transition:background .15s,color .15s}
-.nav button:hover{background:rgba(16,48,42,.07);color:var(--tinta)}
-.nav button.on{background:var(--tinta);color:#F1F5F1;font-weight:600}
+/* ---------- navigasi: kendali tersegmen ----------
+   Satu bilah dengan alur abu dan satu segmen putih yang menonjol, seperti
+   pemilih di macOS. Seluruh tab terlihat sekaligus dan berpindahnya satu
+   ketukan — tidak ada menu yang perlu dibuka dulu. */
+.nav{display:flex;gap:2px;flex-wrap:wrap;margin:16px 0 14px;padding:2px;
+  background:rgba(16,48,42,.065);border-radius:var(--r3);
+  box-shadow:inset 0 0 0 .5px rgba(16,48,42,.05)}
+.nav button{font-family:var(--sans);font-size:13px;font-weight:510;letter-spacing:-.005em;
+  background:transparent;border:0;color:var(--tinta-2);padding:6px 13px;cursor:pointer;
+  border-radius:var(--r2);transition:background var(--cepat),color var(--cepat),box-shadow var(--cepat)}
+.nav button:hover{background:rgba(255,255,255,.62);color:var(--tinta)}
+.nav button.on{background:#fff;color:var(--tinta);font-weight:600;
+  box-shadow:0 1px 2.5px rgba(16,48,42,.16),0 0 0 .5px rgba(16,48,42,.07)}
 .nav .badge{display:inline-block;background:var(--alert);color:#fff;font-size:11px;font-weight:600;
   padding:1px 7px;border-radius:99px;margin-left:6px;vertical-align:1px}
 .nav button.on .badge{background:var(--gold)}
 
 /* ---------- kartu ---------- */
-.card{background:var(--kartu);border-radius:var(--r);padding:20px 22px;margin-bottom:14px}
-.card > h2{margin:0 0 3px;font-family:var(--judul);font-weight:400;font-size:23px;letter-spacing:-.01em}
-.card > .sub{color:var(--tinta-2);font-size:13.5px;margin-bottom:16px;max-width:74ch}
-.sec-head{display:flex;align-items:center;gap:14px;margin-bottom:18px}
-.sec-head .kode{font-family:var(--judul);font-size:38px;color:var(--gold);line-height:.9}
-.sec-head h2{margin:0;font-family:var(--judul);font-weight:400;font-size:25px;letter-spacing:-.01em}
+.card{background:var(--kartu);border-radius:var(--r);padding:18px 20px;margin-bottom:12px;
+  box-shadow:var(--lift-1)}
+.card > h2{margin:0 0 2px;font-weight:650;font-size:19px;letter-spacing:-.016em;line-height:1.25}
+.card > .sub{color:var(--tinta-2);font-size:13px;margin-bottom:14px;max-width:74ch}
+.sec-head{display:flex;align-items:center;gap:13px;margin-bottom:16px}
+.sec-head .kode{font-size:26px;font-weight:700;color:var(--gold);line-height:.9;letter-spacing:-.03em}
+.sec-head h2{margin:0;font-weight:650;font-size:20px;letter-spacing:-.016em}
 .sec-head .sub{color:var(--tinta-2);font-size:13.5px;max-width:74ch}
 .tb-head{margin:22px 0 10px}
 .tb-head:first-of-type{margin-top:0}
@@ -142,14 +183,16 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 .tb-head .sub{color:var(--tinta-2);font-size:13px;margin-top:3px;max-width:78ch}
 
 /* ---------- tabel deck ---------- */
-.tb{border-radius:var(--r2);overflow:hidden;background:var(--kertas)}
+/* Daftar berkelompok ala macOS: satu kotak membulat, baris dipisah garis
+   setipis rambut, bukan oleh celah berwarna. */
+.tb{border-radius:var(--r3);overflow:hidden;background:var(--kartu);box-shadow:var(--lift-1)}
 .tb-h,.tb-r{display:grid;gap:0;align-items:stretch}
 .tb-h{background:var(--tinta);color:#B9CEC6}
-.tb-h div{font-size:11.5px;font-weight:500;padding:9px 10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.tb-r{background:var(--kartu);border-top:2px solid var(--kertas)}
-.tb-r:nth-child(even){background:#FAFCF9}
-.tb-r > div{padding:5px 6px;min-width:0;display:flex;align-items:center}
-.tb-r input,.tb-r select,.tb-r textarea{border:1.5px solid #BCCBC4;background:#fff;padding:7px 9px;
+.tb-h div{font-size:11px;font-weight:510;padding:7px 10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tb-r{background:var(--kartu);border-top:.5px solid var(--hair)}
+.tb-r:nth-child(even){background:#FAFBF9}
+.tb-r > div{padding:4px 6px;min-width:0;display:flex;align-items:center}
+.tb-r input,.tb-r select,.tb-r textarea{border:.5px solid rgba(16,48,42,.22);background:#fff;padding:6px 9px;
   font-size:13.5px;border-radius:6px;box-shadow:none}
 .tb-r input:hover,.tb-r select:hover,.tb-r textarea:hover{border-color:var(--sea)}
 .tb-r input:focus,.tb-r select:focus,.tb-r textarea:focus{border-color:var(--tinta);
@@ -174,17 +217,21 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px 18px}
 .f{display:flex;flex-direction:column;gap:5px}
 .f.full{grid-column:1/-1}
-.f label{font-size:13px;font-weight:600;color:var(--tinta)}
+.f label{font-size:12.5px;font-weight:530;color:var(--tinta-2);letter-spacing:0}
 .f .hint{font-size:12.5px;color:var(--tinta-2);max-width:74ch}
 .f .hint.ok{color:var(--sea)}
 .f .hint.warn{color:var(--alert)}
-input,select,textarea{font-family:var(--sans);font-size:14px;color:var(--tinta);background:#fff;
-  border:1.5px solid #BCCBC4;border-radius:var(--r2);padding:9px 11px;width:100%}
-input:hover,select:hover,textarea:hover{border-color:var(--sea)}
-input:focus,select:focus,textarea:focus{border-color:var(--tinta);box-shadow:0 0 0 3px rgba(199,125,26,.22);outline:none}
-input:placeholder-shown,textarea:placeholder-shown{background:#FFFBF2}
-input[disabled],select[disabled],textarea[disabled]{background:#EDF0EA;color:var(--tinta-2);
-  border:1.5px dashed #C3CFC8;cursor:not-allowed}
+/* Kotak isian macOS: garis setipis mungkin, bayangan dalam yang halus di
+   tepi atas, dan cincin fokus yang sama dengan kendali lain. */
+input,select,textarea{font-family:var(--sans);font-size:13.5px;color:var(--tinta);background:#fff;
+  border:.5px solid rgba(16,48,42,.26);border-radius:var(--r2);padding:7px 10px;width:100%;
+  box-shadow:inset 0 1px 1.5px rgba(16,48,42,.055)}
+input:hover,select:hover,textarea:hover{border-color:rgba(16,48,42,.4)}
+input:focus,select:focus,textarea:focus{border-color:var(--sea);
+  box-shadow:0 0 0 3.5px var(--fokus);outline:none}
+input:placeholder-shown,textarea:placeholder-shown{background:#FFFDF8}
+input[disabled],select[disabled],textarea[disabled]{background:#F2F4F0;color:var(--tinta-2);
+  border:.5px solid rgba(16,48,42,.14);box-shadow:none;cursor:not-allowed}
 .f label .wajib-tag{color:var(--alert);margin-left:3px}
 textarea{min-height:80px;resize:vertical}
 select{cursor:pointer}
@@ -194,6 +241,11 @@ select{cursor:pointer}
 .tgt-h{display:flex;justify-content:space-between;align-items:center;gap:12px;
   padding:12px 18px;background:var(--tinta);color:#EAF0EC}
 .tgt-h .t{font-size:13px;font-weight:600}
+/* Tombol di atas bidang gelap mengikuti perlakuan yang sama dengan kepala
+   halaman: tembus pandang bertepi terang, bukan putih pekat. */
+.tgt-h .btn.ghost,.kartu-atas .btn.ghost{background:rgba(255,255,255,.13);color:#EAF0EC;
+  border-color:rgba(234,240,236,.3);box-shadow:inset 0 .5px 0 rgba(255,255,255,.2)}
+.tgt-h .btn.ghost:hover,.kartu-atas .btn.ghost:hover{background:rgba(255,255,255,.22)}
 .tgt-b{padding:18px}
 .info{background:var(--kertas);border-radius:var(--r2);padding:13px 15px;margin-top:12px;font-size:13.5px}
 .info dl{margin:0;display:grid;grid-template-columns:170px 1fr;gap:6px 14px}
@@ -201,13 +253,13 @@ select{cursor:pointer}
 .info dd{margin:0}
 .empty{text-align:center;padding:34px 20px;color:var(--tinta-2);background:var(--kertas);
   border-radius:var(--r);font-size:14px}
-.empty b{display:block;color:var(--tinta);font-family:var(--judul);font-weight:400;font-size:20px;margin-bottom:6px}
+.empty b{display:block;color:var(--tinta);font-weight:650;font-size:17px;letter-spacing:-.015em;margin-bottom:6px}
 
 /* ---------- dasbor siswa ---------- */
 .dash{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:12px}
 .tile{border-radius:var(--r);padding:15px 17px;background:var(--kertas)}
 .tile .l{font-size:12.5px;color:var(--tinta-2)}
-.tile .v{font-family:var(--judul);font-size:34px;margin-top:3px;line-height:1}
+.tile .v{font-size:30px;font-weight:600;letter-spacing:-.025em;margin-top:3px;line-height:1;font-variant-numeric:tabular-nums}
 .tile .v small{font-family:var(--sans);font-size:13px;color:var(--tinta-2)}
 .tile ul{margin:10px 0 0;padding-left:17px;font-size:13px;color:var(--tinta-2)}
 .tile li{margin-bottom:4px}
@@ -256,7 +308,7 @@ select{cursor:pointer}
 /* ---------- hitung mundur ---------- */
 .jam{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:12px}
 .jam .sel{background:var(--tinta);color:#EAF0EC;border-radius:9px;padding:10px 4px;text-align:center}
-.jam .sel b{display:block;font-family:var(--judul);font-size:26px;line-height:1.05;font-variant-numeric:tabular-nums}
+.jam .sel b{display:block;font-size:23px;font-weight:600;letter-spacing:-.02em;line-height:1.05;font-variant-numeric:tabular-nums}
 .jam .sel span{display:block;font-size:11px;color:#9DB6AD;margin-top:3px}
 .jam.mepet .sel{background:var(--alert)}
 .jam.mepet .sel span{color:rgba(255,255,255,.8)}
@@ -328,7 +380,7 @@ select{cursor:pointer}
 .tbl-biaya tfoot .empat td{background:rgba(199,125,26,.12)}
 .tbl-biaya tfoot .empat b{font-size:14.5px}
 .usd{display:flex;flex-direction:column;gap:3px;min-width:0}
-.usd > span{font-size:10.5px;color:var(--mute);text-transform:uppercase;letter-spacing:.05em;
+.usd > span{font-size:10.5px;color:var(--mute);letter-spacing:0;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .usd input{font-family:var(--mono);font-size:13px;border:1.5px solid #BCCBC4;background:#fff;
   padding:6px 8px;border-radius:6px;width:100%}
@@ -336,7 +388,7 @@ select{cursor:pointer}
 .dana-sisa{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;margin-top:9px;
   background:var(--line);border-radius:6px;overflow:hidden}
 .dana-sisa > div{background:var(--kartu);padding:8px 11px}
-.dana-sisa .l{display:block;font-size:10.5px;color:var(--mute);text-transform:uppercase;letter-spacing:.05em}
+.dana-sisa .l{display:block;font-size:10.5px;color:var(--mute);letter-spacing:0}
 .dana-sisa b{font-family:var(--mono);font-size:15px;font-weight:500}
 .dana-sisa.kurang > div:last-child{background:rgba(166,64,44,.16)}
 .dana-sisa.kurang > div:last-child b{color:var(--alert)}
@@ -361,6 +413,65 @@ select{cursor:pointer}
 .sb.bahaya{border-left-color:var(--alert);background:rgba(166,64,44,.08);font-weight:500}
 .sb.awas{border-left-color:var(--gold);background:rgba(199,125,26,.1)}
 .sb.info{border-left-color:var(--mute)}
+
+/* --- tab Database: kotak pencarian dan hasilnya --- */
+.cari-blok{background:var(--kertas);border-radius:var(--r2);padding:13px 15px;margin-bottom:14px}
+.cari-baris{display:flex;gap:9px;align-items:stretch;flex-wrap:wrap}
+.cari-baris input[type=search]{flex:1;min-width:240px;font-family:var(--sans);font-size:14.5px;
+  border:1.5px solid #BCCBC4;background:#fff;padding:10px 13px;border-radius:var(--r2)}
+.cari-baris input[type=search]:focus{border-color:var(--sea);
+  box-shadow:0 0 0 3.5px var(--fokus);outline:none}
+.cari-baris .btn{padding:8px 20px}
+.cari-saring{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin-top:10px}
+.cari-saring .bidang > span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cari-ket{font-size:12px;color:var(--tinta-2);line-height:1.5;margin-top:9px;max-width:88ch}
+.cari-ringkas{font-size:13.5px;color:var(--tinta-2);margin-bottom:10px;line-height:1.5}
+.cari-ringkas b{color:var(--tinta)}
+table.board.cari tbody tr{cursor:default}
+table.board.cari tbody tr:hover td{background:#F4F8F3}
+table.board.cari td.kecil{font-size:12.5px}
+table.board.cari .eyebrow{font-size:11px;line-height:1.35;margin-top:2px}
+table.board.cari td{vertical-align:top}
+.hint.memuat{color:var(--mute);font-style:italic}
+@media(max-width:1020px){.cari-saring{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:620px){.cari-saring{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cari-baris .btn{width:100%}}
+
+/* --- daftar hasil pencarian --- */
+.hasil{display:flex;flex-direction:column;gap:1px;background:var(--line);
+  border-radius:var(--r2);overflow:hidden}
+.hasil-r{display:grid;grid-template-columns:minmax(0,2.1fr) minmax(0,1.3fr) 212px auto;
+  gap:14px;background:var(--kartu);padding:11px 14px;align-items:start}
+.hasil-r.kampus{grid-template-columns:minmax(0,3fr) 212px auto}
+.hasil-r:hover{background:#FAFCF9}
+.hasil-k,.hasil-u{min-width:0}
+.hasil-j{font-weight:600;font-size:14px;line-height:1.3;overflow-wrap:anywhere}
+.hasil-n{font-size:13.5px;line-height:1.3;overflow-wrap:anywhere}
+.hasil-s{font-size:12px;color:var(--tinta-2);line-height:1.4;margin-top:2px;overflow-wrap:anywhere}
+.hasil-m{display:flex;flex-wrap:wrap;gap:3px 9px;align-items:center;margin-top:4px;
+  font-size:11.5px;color:var(--mute)}
+.hasil-b{display:flex;flex-direction:column;gap:2px;font-size:12px}
+.hasil-u1{display:flex;justify-content:space-between;gap:10px;color:var(--tinta-2)}
+.hasil-u1 .mono{font-size:12px;text-align:right;white-space:nowrap}
+.hasil-u1 i{display:block;font-style:normal;font-size:10.5px;color:var(--mute)}
+.hasil-t{display:flex;justify-content:space-between;gap:10px;align-items:baseline;
+  border-top:1px solid var(--line);margin-top:3px;padding-top:3px}
+.hasil-t b{font-family:var(--mono);font-size:13.5px;white-space:nowrap}
+.hasil-a{display:flex;flex-direction:column;gap:4px;align-items:stretch}
+.hasil-a .btn{text-decoration:none;text-align:center;white-space:nowrap}
+@media(max-width:1100px){
+  .hasil-r{grid-template-columns:minmax(0,1.6fr) 200px;row-gap:9px}
+  .hasil-r.kampus{grid-template-columns:minmax(0,1.6fr) 200px}
+  .hasil-u{grid-column:1}
+  .hasil-a{grid-column:1/-1;flex-direction:row;flex-wrap:wrap}
+}
+@media(max-width:640px){
+  .hasil-r,.hasil-r.kampus{grid-template-columns:1fr}
+  .hasil-b{border-top:1px solid var(--line);padding-top:7px}
+}
+.jejak{font-family:var(--mono);font-size:11.5px;line-height:1.5;background:var(--kertas);
+  border-radius:var(--r2);padding:10px 12px;overflow-x:auto;white-space:pre-wrap;
+  margin:10px 0 0;color:var(--tinta-2)}
 @media(max-width:520px){.hb-r{grid-template-columns:minmax(64px,42%) 1fr auto}}
 
 /* =======================================================
@@ -374,7 +485,7 @@ select{cursor:pointer}
 .judul-baris{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
   align-items:flex-start;margin-bottom:14px}
 .judul-baris > div:first-child{min-width:0}
-.judul-baris h2{margin:0 0 2px;font-family:var(--judul);font-weight:400;font-size:23px;letter-spacing:-.01em}
+.judul-baris h2{margin:0 0 2px;font-weight:650;font-size:19px;letter-spacing:-.016em}
 .judul-baris h3{margin:0;font-size:15.5px;font-weight:600}
 .judul-baris .sub{color:var(--tinta-2);font-size:13px;margin:0;max-width:78ch}
 .judul-baris.rapat{margin-bottom:10px;align-items:center}
@@ -401,9 +512,9 @@ select{cursor:pointer}
 .angka{display:grid;grid-template-columns:repeat(auto-fit,minmax(142px,1fr));gap:1px;
   background:var(--line);border-radius:var(--r2);overflow:hidden}
 .kpi{background:var(--kartu);padding:11px 13px 12px;min-width:0}
-.kpi-l{font-size:11px;color:var(--mute);text-transform:uppercase;letter-spacing:.06em;
+.kpi-l{font-size:11px;color:var(--mute);letter-spacing:0;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.kpi-v{font-family:var(--judul);font-size:27px;line-height:1.1;margin:2px 0 1px}
+.kpi-v{font-size:24px;font-weight:600;letter-spacing:-.022em;line-height:1.1;margin:2px 0 1px;font-variant-numeric:tabular-nums}
 .kpi-k{font-size:11.5px;color:var(--tinta-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
 /* --- pita bagi: satu angka per sel, sejajar --- */
@@ -431,7 +542,7 @@ select{cursor:pointer}
   display:flex;flex-direction:column;gap:6px;border-left:3px solid var(--gold)}
 .kartu.redup{opacity:.56;border-left-color:var(--line)}
 .kartu-atas{display:flex;justify-content:space-between;align-items:center;gap:8px}
-.kartu-jenis{font-size:10.5px;color:var(--mute);text-transform:uppercase;letter-spacing:.06em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kartu-jenis{font-size:10.5px;color:var(--mute);letter-spacing:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .kartu-judul{font-weight:600;font-size:14.5px;line-height:1.3}
 .kartu-ket{font-size:13px;color:var(--tinta-2);line-height:1.45}
 .kartu-meta{display:flex;flex-wrap:wrap;gap:4px 10px;font-size:11.5px;color:var(--tinta-2);
@@ -443,7 +554,7 @@ select{cursor:pointer}
 .form-blok{background:var(--kertas);border-radius:var(--r2);padding:13px 15px 15px;margin-bottom:14px}
 .isi-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
 .bidang{display:flex;flex-direction:column;gap:3px;min-width:0}
-.bidang > span{font-size:11px;color:var(--mute);text-transform:uppercase;letter-spacing:.05em}
+.bidang > span{font-size:11px;color:var(--mute);letter-spacing:0}
 .bidang input,.bidang select,.bidang textarea{font-family:var(--sans);font-size:13.5px;
   border:1.5px solid #BCCBC4;background:#fff;padding:7px 9px;border-radius:6px;width:100%}
 .bidang textarea{resize:vertical;line-height:1.45}
@@ -473,7 +584,7 @@ select{cursor:pointer}
 .kan-kosong{text-align:center;color:var(--mute);font-family:var(--mono);padding:12px 0}
 .kan-kartu{background:var(--kartu);border-radius:6px;padding:9px 10px;display:flex;
   flex-direction:column;gap:5px;min-width:0}
-.kan-jenis{font-size:10.5px;color:var(--mute);text-transform:uppercase;letter-spacing:.05em;
+.kan-jenis{font-size:10.5px;color:var(--mute);letter-spacing:0;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .kan-judul{font-weight:600;font-size:13.5px;line-height:1.3;overflow-wrap:anywhere}
 .kan-siswa{background:transparent;border:0;padding:0;text-align:left;font-family:var(--sans);
@@ -510,7 +621,7 @@ select{cursor:pointer}
 .kunci-b .kan-n{margin-left:1px;background:rgba(16,48,42,.09);color:inherit}
 
 /* --- kalender bulanan --- */
-.bulan-j{font-family:var(--judul)!important;font-weight:400!important;font-size:19px!important;
+.bulan-j{font-weight:650!important;font-size:16px!important;letter-spacing:-.015em!important;
   margin:0 4px!important;min-width:142px}
 .kal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:1px;background:var(--line);
   border-radius:var(--r2);overflow:hidden}
@@ -549,17 +660,18 @@ select{cursor:pointer}
 }
 
 /* --- daftar agenda --- */
-.agenda{display:flex;flex-direction:column;gap:1px;background:var(--line);
-  border-radius:var(--r2);overflow:hidden}
-.agenda-bl{background:var(--tinta);color:#B9CEC6;font-size:11px;font-weight:500;
-  padding:5px 11px;letter-spacing:.06em;text-transform:uppercase}
+.agenda{display:flex;flex-direction:column;gap:0;background:var(--kartu);
+  border-radius:var(--r3);overflow:hidden;box-shadow:var(--lift-1)}
+.agenda-r + .agenda-r{border-top:.5px solid var(--hair)}
+.agenda-bl{background:var(--tinta);color:#B9CEC6;font-size:11.5px;font-weight:510;
+  padding:5px 11px;letter-spacing:0}
 .agenda-r{display:grid;grid-template-columns:62px 1fr auto;gap:11px;align-items:center;
   background:var(--kartu);padding:8px 11px}
 .agenda-r[data-lalu]{background:#F7F9F6;opacity:.74}
 .agenda-t{display:flex;flex-direction:column;align-items:center;line-height:1.1;
   border-left:3px solid var(--sea);padding-left:8px}
-.agenda-t b{font-family:var(--judul);font-size:21px;font-weight:400}
-.agenda-t span{font-size:10.5px;color:var(--mute);text-transform:uppercase;letter-spacing:.05em}
+.agenda-t b{font-size:18px;font-weight:650;letter-spacing:-.015em}
+.agenda-t span{font-size:10.5px;color:var(--mute);letter-spacing:0}
 .agenda-i{min-width:0}
 .agenda-j{font-weight:600;font-size:14px;line-height:1.3;overflow-wrap:anywhere}
 .agenda-k{display:flex;flex-wrap:wrap;gap:3px 9px;align-items:center;font-size:12px;
@@ -626,16 +738,23 @@ select{cursor:pointer}
 .save.fail{color:#E9A193;border-color:#E9A193}
 
 /* ---------- dialog ---------- */
-.veil{position:fixed;inset:0;background:rgba(16,48,42,.5);z-index:120;display:flex;
-  align-items:center;justify-content:center;padding:20px}
-.modal{background:var(--kartu);border-radius:16px;max-width:460px;width:100%;overflow:hidden;
-  box-shadow:0 18px 48px rgba(16,48,42,.32)}
-.modal .hd{background:var(--tinta);color:#EAF0EC;padding:15px 20px;font-size:14px;font-weight:600}
-.modal .bd{padding:20px;max-width:74ch}
-.modal .ft{display:flex;gap:9px;justify-content:flex-end;padding:14px 20px;background:#FAFCF9}
-.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--tinta);
-  color:#EAF0EC;padding:13px 20px;border-radius:99px;font-size:13.5px;z-index:90;max-width:90vw;
-  box-shadow:0 10px 28px rgba(16,48,42,.26)}
+/* Dialog dan pemberitahuan mengikuti lembar macOS: latar di belakangnya
+   diburamkan, bukan ditutup gelap; judulnya baris teks biasa di atas
+   permukaan yang sama, bukan bilah berwarna. */
+.veil{position:fixed;inset:0;background:rgba(16,48,42,.26);z-index:120;display:flex;
+  align-items:center;justify-content:center;padding:20px;
+  -webkit-backdrop-filter:blur(14px) saturate(150%);backdrop-filter:blur(14px) saturate(150%)}
+.modal{background:var(--kartu);border-radius:14px;max-width:460px;width:100%;overflow:hidden;
+  box-shadow:var(--lift-3);animation:munculModal .16s cubic-bezier(.2,0,.1,1)}
+@keyframes munculModal{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:none}}
+.modal .hd{padding:16px 20px 2px;font-size:15px;font-weight:650;letter-spacing:-.012em}
+.modal .bd{padding:8px 20px 18px;max-width:74ch;font-size:13.5px;color:var(--tinta-2)}
+.modal .ft{display:flex;gap:8px;justify-content:flex-end;padding:12px 18px;
+  border-top:.5px solid var(--hair);background:#FBFCFA}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);
+  background:rgba(16,48,42,.88);color:#EAF0EC;padding:11px 18px;border-radius:11px;
+  font-size:13.5px;z-index:90;max-width:90vw;box-shadow:var(--lift-3);
+  -webkit-backdrop-filter:blur(18px) saturate(160%);backdrop-filter:blur(18px) saturate(160%)}
 .toast.bad{background:var(--alert)}
 .note{background:rgba(199,125,26,.12);padding:13px 15px;font-size:13.5px;border-radius:var(--r2);
   margin-bottom:14px;max-width:80ch}
@@ -809,7 +928,10 @@ var S = {
   dokumen:[], jenisDokumen:[], statusDokumen:[], dokumenEdit:null,
   dokFilterKelas:'', dokFilterJenis:'', dokCari:'', layananJenis:'',
   agenda:[], ics:'', papan:null, kalBulan:'', kalJenis:'', padat:false,
-  analisa:[], seimbang:[], inggris:null, jurusanBawaan:[], arsip:null, kurs:{}
+  analisa:[], seimbang:[], inggris:null, jurusanBawaan:[], arsip:null, kurs:{},
+  programKampus:{}, memuatProgram:{},
+  dbKueri:'', dbHasil:null, dbSibuk:false, dbNegara:[], dbBidang:[],
+  dbSaring:{negara:'',bidang:'',maksBiaya:'',maksQs:'',maksIelts:'',program:true}
 };
 var KEY='deckptln_token_v1';
 
@@ -821,7 +943,7 @@ var KEY='deckptln_token_v1';
    Ganti bila membuat deployment baru.
    ------------------------------------------------------- */
 var LAMBANG='<div class="lambang"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="DECK PTLN"><rect width="100" height="100" rx="24" fill="#EDF0EA"/><rect x="15.5" y="60" width="7.4" height="20" rx="3.2" fill="#10302A" opacity="0.55"/><rect x="27.3" y="52" width="7.4" height="28" rx="3.2" fill="#10302A" opacity="0.64"/><rect x="39.1" y="44" width="7.4" height="36" rx="3.2" fill="#10302A" opacity="0.73"/><rect x="50.900000000000006" y="36" width="7.4" height="44" rx="3.2" fill="#10302A" opacity="0.82"/><rect x="62.7" y="28" width="7.4" height="52" rx="3.2" fill="#10302A" opacity="0.91"/><rect x="74.5" y="18" width="7.4" height="62" rx="3.2" fill="#C77D1A" opacity="1"/></svg></div>';
-var VERSI_UI='2026.10.08-15';
+var VERSI_UI='2026.10.09-18';
 var KUNCI_ALAMAT='deckptln_apiurl_v1';
 
 /* Alamat Web App boleh ditimpa dari dalam aplikasi. Berguna bila di Apps
@@ -942,6 +1064,18 @@ function labelPeran(r){ return (S.peranLabel&&S.peranLabel[r])||
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){
   return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];})}
 function sv(x){return String(x==null?'':x).trim()}
+/* Pemformat angka yang tidak pernah melempar galat.
+
+   Sebelumnya tiap tempat menulis sendiri `x===null?'—':x.toFixed(2)`.
+   Penjagaan itu meleset untuk `undefined`: bentuknya lolos dari `===null`
+   lalu `.toFixed` dipanggil pada nilai yang tidak ada, dan seluruh panel
+   gagal digambar — persis yang terjadi saat guru membuka deck siswa yang
+   satu ladangnya belum terisi. Semua tempat kini lewat sini. */
+function ang(v,desimal,kosong){
+  var n=Number(v);
+  if(v===null||v===undefined||v===''||isNaN(n)) return kosong===undefined?'—':kosong;
+  return n.toFixed(desimal===undefined?2:desimal);
+}
 function store(k,v){try{v===null?localStorage.removeItem(k):localStorage.setItem(k,v)}catch(e){}}
 function readK(k){try{return localStorage.getItem(k)}catch(e){return null}}
 function toast(msg,bad){
@@ -1264,6 +1398,7 @@ function terapkanBootstrap(r,awal){
   if(!r.refTetap){ S.univ=r.univ||[]; S.bea=r.bea||[] }
   S.konsultasi=r.konsultasi||[];
   S.skala=r.skala||[]; S.tahunAjaran=r.tahunAjaran||[]; S.statusValidasi=r.statusValidasi||[];
+  if(r.tahun) S.tahun=r.tahun;
   S.mapelBawaan=r.mapelBawaan||{X:[],XI:[]};
   S.targetKampus=r.targetKampus||[]; S.targetBeasiswa=r.targetBeasiswa||[];
   S.eksekutif=r.eksekutif||null; S.guruList=r.guru||[];
@@ -1346,9 +1481,10 @@ function lengkapiDeck(d){
   if(!d.sch.length) d.sch=[mkSch()];
   return d;
 }
-function mkUni(){return {negara:'',kampus:'',jurusan:'',beasiswa:'',daftar:'',umum:'',syarat:'',web:'',
-  status:'Not started',hasil:'Pending',deadline:'',
-  mataUang:'',biayaKuliah:'',biayaHidup:'',danaBea:'',danaKel:''}}
+function mkUni(){return {negara:'',kampus:'',fakultas:'',jurusan:'',beasiswa:'',
+  daftar:'',umum:'',syarat:'',web:'',status:'Not started',hasil:'Pending',deadline:'',
+  mataUang:'',biayaKuliah:'',biayaHidup:'',danaBea:'',danaKel:'',
+  asalBiaya:'',bidang:'',durasi:''}}
 function mkSch(){return {wilayah:'',nama:'',tipe:'',periode:'',syarat:'',cakupan:'',link:'',esai:'Not started',aplikasi:'Not started'}}
 
 /* =======================================================
@@ -1656,6 +1792,7 @@ function gambarNav(){
     h+='<button class="'+(S.tab==='dokumen'?'on':'')+'" onclick="pindah(\'dokumen\')">Documents'+
        lencanaDokumen()+'</button>';
     h+='<button class="'+(S.tab==='layanan'?'on':'')+'" onclick="pindah(\'layanan\')">Services</button>';
+    h+='<button class="'+(S.tab==='database'?'on':'')+'" onclick="pindah(\'database\')">Database</button>';
     h+='<button class="'+(S.tab==='akunkelola'?'on':'')+'" onclick="pindah(\'akunkelola\')">Accounts</button>';
     h+='<button class="'+(S.tab==='tkampus'?'on':'')+'" onclick="pindah(\'tkampus\')">University targets</button>';
     h+='<button class="'+(S.tab==='tbeasiswa'?'on':'')+'" onclick="pindah(\'tbeasiswa\')">Scholarship targets</button>';
@@ -1678,6 +1815,7 @@ function gambarNav(){
     h+='<button class="'+(S.tab==='dokumen'?'on':'')+'" onclick="pindah(\'dokumen\')">Documents'+
        lencanaDokumen()+'</button>';
     h+='<button class="'+(S.tab==='layanan'?'on':'')+'" onclick="pindah(\'layanan\')">Services</button>';
+    h+='<button class="'+(S.tab==='database'?'on':'')+'" onclick="pindah(\'database\')">Database</button>';
     h+='<button class="'+(S.tab==='tkampus'?'on':'')+'" onclick="pindah(\'tkampus\')">University targets</button>';
     h+='<button class="'+(S.tab==='tbeasiswa'?'on':'')+'" onclick="pindah(\'tbeasiswa\')">Scholarship targets</button>';
     h+='<button class="'+(S.tab==='konsul'?'on':'')+'" onclick="pindah(\'konsul\')">Consultations'+
@@ -1693,6 +1831,7 @@ function gambarNav(){
        lencanaAgenda()+'</button>';
     h+='<button class="'+(S.tab==='dokumen'?'on':'')+'" onclick="pindah(\'dokumen\')">Documents'+
        lencanaDokumen()+'</button>';
+    h+='<button class="'+(S.tab==='database'?'on':'')+'" onclick="pindah(\'database\')">Database</button>';
     h+='<button class="'+(S.tab==='tkampus'?'on':'')+'" onclick="pindah(\'tkampus\')">Universities &amp; majors</button>';
     h+='<button class="'+(S.tab==='tbeasiswa'?'on':'')+'" onclick="pindah(\'tbeasiswa\')">Scholarships</button>';
     h+='<button class="'+(S.tab==='akun'?'on':'')+'" onclick="pindah(\'akun\')">Account</button>';
@@ -1742,7 +1881,17 @@ function gambarView(){
     var kotak=[].slice.call(v.querySelectorAll('input,textarea,select'));
     jejak={i:kotak.indexOf(f),a:f.selectionStart,b:f.selectionEnd,scroll:v.scrollTop};
   }
-  gambarViewInti();
+  /* Satu ladang yang tidak terisi tidak boleh membuat seluruh panel hilang.
+     Dulu galat di dalam penggambaran menghentikan prosesnya di tengah jalan
+     dan yang tersisa hanyalah layar kosong tanpa keterangan apa pun —
+     guru tidak tahu apa yang terjadi, apalagi harus berbuat apa. Sekarang
+     galatnya ditangkap, ditulis apa adanya, dan tab lain tetap bisa dibuka. */
+  try{
+    gambarViewInti();
+  }catch(e){
+    v.innerHTML=panelGalat(e);
+    try{ console.error('gambarView:',e) }catch(e2){}
+  }
   if(jejak&&jejak.i>=0){
     var baru=v.querySelectorAll('input,textarea,select')[jejak.i];
     if(baru){
@@ -1755,6 +1904,29 @@ function gambarView(){
   if(Math.abs(window.pageYOffset-gulir)>2) window.scrollTo(0,gulir);
   setelahGambar();
 }
+function panelGalat(e){
+  var pesan=(e&&e.message)||String(e||'unknown');
+  var jejak=(e&&e.stack)?String(e.stack).split('\n').slice(0,4).join('\n'):'';
+  return '<div class="card"><h2>This panel could not be drawn</h2>'+
+    '<div class="sub">The rest of the app still works — use the tabs above to carry on. '+
+    'Nothing has been lost; this is a display problem, not a data problem.</div>'+
+    '<div class="note bad"><b>'+esc(pesan)+'</b></div>'+
+    (jejak?'<pre class="jejak">'+esc(jejak)+'</pre>':'')+
+    '<div class="pick" style="margin-top:12px">'+
+    '<button class="btn sea sm" onclick="segarkan()">Reload the data</button>'+
+    '<button class="btn ghost sm" onclick="hapusCache()">Clear cache and reload</button>'+
+    '<button class="btn ghost sm" onclick="salinGalat('+JSON.stringify(pesan+(jejak?'\n'+jejak:''))+')">Copy this message</button>'+
+    '</div>'+
+    '<div class="hint" style="margin-top:10px">App '+esc(VERSI_UI)+' · Apps Script '+
+    esc(S.versiServer||'not reported')+'. If the two versions differ, republish the Apps Script '+
+    'deployment — a mismatch between them is the most common cause.</div></div>';
+}
+function salinGalat(t){
+  function usai(){ toast('Message copied.') }
+  if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(t).then(usai,function(){}) }
+  else usai();
+}
+
 function gambarViewInti(){
   var v=q('view');
   if(S.tab==='konsul'){v.innerHTML=S.user.role==='siswa'?viewKonsulSiswa():viewKonsulGuru();return}
@@ -1763,6 +1935,7 @@ function gambarViewInti(){
   if(S.tab==='kalender'){v.innerHTML=viewKalender();return}
   if(S.tab==='layanan'){v.innerHTML=viewLayanan();return}
   if(S.tab==='dokumen'){v.innerHTML=viewDokumen();return}
+  if(S.tab==='database'&&!ortu()&&S.user.role!=='siswa'){v.innerHTML=viewDatabase();return}
   if(S.tab==='dasbor'&&!ortu()&&S.user.role!=='siswa'){v.innerHTML=viewDasbor();return}
   if(ortu()){
     if(S.tab==='rapor'){v.innerHTML=viewRapor(S.deck,true);return}
@@ -1900,7 +2073,7 @@ function viewDash(){
 
   var rap=S.rapor||hitungRapor(d.rapor), kes=S.kesiapan||hitungKesiapan(d,p,rap);
   h+='<div class="card"><h2>Academic record</h2><div class="sub">From the Transcript tab. Open it to enter or update your report card marks.</div><div class="dash">';
-  h+=tile('Cumulative GPA',rap.gpa===null?'—':rap.gpa.toFixed(2),'4.00 scale',rap.predikat?[esc(rap.predikat)]:['No marks entered yet']);
+  h+=tile('Cumulative GPA',ang(rap.gpa),'4.00 scale',rap.predikat?[esc(rap.predikat)]:['No marks entered yet']);
   h+=tile('Credits recorded',rap.totalSks,'over '+rap.jumlahSemester+' semester(s)',[]);
   h+=tile('File readiness',kes.skor+'%',esc(kes.label),
     ['GPA — '+kes.rincian.gpa+'%','Tests — '+kes.rincian.tes+'%','Documents — '+kes.rincian.dokumen+'%',
@@ -2246,11 +2419,11 @@ function fKampus(deck,ro){
       h+='<option'+(r.kampus===x.nama?' selected':'')+'>'+esc(x.nama)+'</option>'});
     h+='</select></div>';
 
-    /* Jurusan diambil dari daftar jurusan kampus itu sendiri bila tab
-       UNIVERSITAS sudah diisi; bila belum, dari kosakata jurusan bersama
-       yang juga dipakai psikometri — sehingga rekomendasi psikotes dan
-       target kampus menyebut jurusan yang sama persis. */
-    h+='<div class="f"><label>Programme applied for</label>'+pilihJurusan(r,i,ro)+
+    /* Fakultas dulu, baru jurusan — keduanya dari daftar program S1
+       kampus itu sendiri di tab JURUSAN, bukan diketik. Begitu jurusannya
+       dipilih, biayanya terisi dari baris program tersebut. */
+    h+='<div class="f"><label>Faculty / school</label>'+pilihFakultas(r,i,ro)+'</div>';
+    h+='<div class="f"><label>Bachelor programme</label>'+pilihJurusan(r,i,ro)+
        hintJurusan(r)+'</div>';
 
     h+='<div class="f"><label>Scholarship targeted</label><input type="text" value="'+esc(r.beasiswa||'')+'"'+(ro?' disabled':'')+' oninput="setUni('+i+',\'beasiswa\',this.value)" placeholder="e.g. MOE Taiwan Scholarship"></div>';
@@ -2262,7 +2435,8 @@ function fKampus(deck,ro){
     h+='</select></div>';
     h+='<div class="f"><label>Your deadline</label><input type="date" value="'+esc(r.deadline||'')+'"'+(ro?' disabled':'')+
        ' onchange="setUni('+i+',\'deadline\',this.value)">'+
-       '<div class="hint">'+(r.daftar?'Official window: '+esc(r.daftar)+'. ':'')+'Set the date you must submit by — a countdown then appears on this card and on your dashboard.</div></div></div>';
+       '<div class="hint">'+jendelaDaftar(r)+
+       'Set the date you must submit by — a countdown then appears on this card and on your dashboard.</div></div></div>';
 
     if(a) h+=blokFit(a)+blokDana(r,i,a,ro)+blokBerkasTarget(a);
 
@@ -2333,24 +2507,62 @@ function danaKlien(r,a){
   var n=function(v){ var x=Number(v); return (v===''||v===null||v===undefined||isNaN(x))?null:x };
   var uang=sv(r.mataUang).toUpperCase()||d.mataUang||'USD';
   var kuliah=n(r.biayaKuliah), hidup=n(r.biayaHidup);
-  var perkiraan=d.perkiraan;
-  if(kuliah===null){ kuliah=d.kuliah } else perkiraan=false;
-  if(hidup===null){ hidup=d.hidup } else perkiraan=false;
-  var kurs=kursKe(uang);
-  var ada=kuliah!==null||hidup!==null;
-  var total=(kuliah||0)+(hidup||0);
-  var totalRp=(ada&&kurs!==null)?Math.round(total*kurs):null;
+  var asal=sv(r.asalBiaya);
+
+  /* Dari mana angka biaya kuliahnya berasal, berurut dari yang paling
+     tepat ke yang paling kasar. Yang dipilih ditulis di layar, supaya
+     keluarga tahu seberapa jauh angka itu bisa dipegang. */
+  var sumberKuliah;
+  if(kuliah!==null&&asal==='sendiri'){ sumberKuliah='sendiri' }
+  else if(kuliah!==null&&asal==='program'){ sumberKuliah='program' }
+  else if(kuliah!==null){ sumberKuliah='sendiri' }
+  else if(r.bidang&&d.bidangRp){
+    /* Biaya per kelompok bidang: kedokteran dan soshum bisa berbeda
+       berkali lipat, jadi jauh lebih baik daripada satu angka kampus. */
+    var rpB=bidangKeRp(d.bidangRp,r.bidang);
+    if(rpB!==null){
+      return rakitDana(uang,null,hidup,d,r,'bidang',rpB,n);
+    }
+    kuliah=d.kuliah; sumberKuliah='kampus';
+  }
+  else { kuliah=d.kuliah; sumberKuliah='kampus' }
+  return rakitDana(uang,kuliah,hidup,d,r,sumberKuliah,null,n);
+}
+function bidangKeRp(b,nama){
+  if(!b) return null;
+  if(nama==='Kedokteran & Kesehatan') return b.medis;
+  if(nama==='Sains/Teknik/IT') return b.sains;
+  if(nama==='Soshum & Bisnis') return b.soshum;
+  return null;
+}
+function rakitDana(uang,kuliah,hidup,d,r,sumberKuliah,kuliahRpLangsung,n){
+  var kurs=kursKe(uang)||d.kurs;
+  var kuliahRp = kuliahRpLangsung!==null&&kuliahRpLangsung!==undefined ? kuliahRpLangsung
+    : (kurs===null||kuliah===null?null:Math.round(kuliah*kurs));
+  /* Biaya hidup: angka siswa, lalu angka rupiah kampus, lalu hitungan kurs. */
+  var hidupRp;
+  if(hidup!==null) hidupRp = kurs===null?null:Math.round(hidup*kurs);
+  else if(d.hidupRpDb!==null&&d.hidupRpDb!==undefined){ hidupRp=Math.round(d.hidupRpDb); hidup=d.hidup }
+  else { hidup=d.hidup; hidupRp = (kurs===null||hidup===null)?null:Math.round(hidup*kurs) }
+
+  var adaKuliah=kuliahRp!==null, adaHidup=hidupRp!==null;
+  var totalRp = (adaKuliah||adaHidup) ? ((kuliahRp||0)+(hidupRp||0)) : null;
   var tertutup=(n(r.danaBea)||0)+(n(r.danaKel)||0);
-  return {mataUang:uang,kurs:kurs,kursTanggal:d.kursTanggal,
-    kuliah:kuliah,hidup:hidup,total:ada?total:null,
-    kuliahRp:kurs===null?null:(kuliah===null?null:Math.round(kuliah*kurs)),
-    hidupRp:kurs===null?null:(hidup===null?null:Math.round(hidup*kurs)),
-    totalRp:totalRp,totalEmpatTahun:totalRp===null?null:totalRp*4,
+  var tahun=Number(r.durasi)>0?Number(r.durasi):4;
+  return {
+    mataUang:uang, kurs:kurs, kursTanggal:d.kursTanggal,
+    sumberKuliah:sumberKuliah, bidang:sv(r.bidang),
+    kuliah:kuliah, hidup:hidup, kuliahRp:kuliahRp, hidupRp:hidupRp,
+    total:(kuliah===null&&hidup===null)?null:((kuliah||0)+(hidup||0)),
+    totalRp:totalRp, tahunStudi:tahun,
+    totalStudiRp:totalRp===null?null:Math.round(totalRp*tahun),
     tertutup:tertutup,
     selisih:totalRp===null?null:Math.max(0,totalRp-tertutup),
     lebih:totalRp!==null&&tertutup>totalRp,
-    perkiraan:perkiraan&&ada,daftar:d.daftar,
-    daftarRp:(kurs===null||d.daftar===null||d.daftar===undefined)?null:Math.round(d.daftar*kurs)};
+    daftar:d.daftar,
+    daftarRp:(kurs===null||d.daftar===null||d.daftar===undefined)?null:Math.round(d.daftar*kurs),
+    dasarAngka:d.dasarAngka, catatanBiaya:d.catatanBiaya
+  };
 }
 function kursKe(kode){
   var k=(S.kurs||{})[String(kode||'').toUpperCase()];
@@ -2364,47 +2576,85 @@ function nominal(n){
   if(n===null||n===undefined||n==='') return '—';
   return Math.round(Number(n)).toLocaleString('id-ID');
 }
+var LABEL_SUMBER={
+  'program-resmi':{t:'this programme’s published fee',k:'solid'},
+  'program-prediksi':{t:'predicted for this programme',k:'gold'},
+  bidang:{t:'field-group prediction',k:'gold'},
+  kampus:{t:'university starting figure',k:'tipis'},
+  sendiri:{t:'figure you entered',k:'acc'}
+};
+/* Lencana membedakan angka yang benar-benar terbit di situs kampus dari
+   angka yang diperkirakan. Keduanya sama-sama "dari program itu", tapi
+   bobotnya jauh berbeda bagi keluarga yang menyiapkan uangnya. */
+function kunciSumber(d,p){
+  if(d.sumberKuliah!=='program') return d.sumberKuliah;
+  return (p&&p.resmi)?'program-resmi':'program-prediksi';
+}
 
 /* Tabel biaya: mata uang — jumlah — setara rupiah.
    Inilah angka yang benar-benar perlu disiapkan keluarga, jadi ditulis
-   terang-terangan, termasuk totalnya untuk empat tahun S1. */
+   terang-terangan, termasuk totalnya untuk seluruh masa studi. */
 function blokDana(r,i,a,ro){
   var d=danaKlien(r,a);
-  var h='<div class="dana"><div class="dana-h"><b>Cost of a bachelor\'s degree here</b>'+
-    (d.perkiraan?'<span class="tag tipis">country estimate</span>':
-      (d.total!==null?'<span class="tag solid">from the university</span>':''))+
-    (d.kurs!==null?'<span class="eyebrow">1 '+esc(d.mataUang)+' = '+rp(d.kurs).replace('Rp ','Rp ')+
+  var p=programTerpilih(r);
+  var lab=LABEL_SUMBER[kunciSumber(d,p)]||LABEL_SUMBER.kampus;
+  var h='<div class="dana"><div class="dana-h"><b>Cost of this programme, per year</b>'+
+    '<span class="tag '+lab.k+'">'+esc(lab.t)+'</span>'+
+    (d.kurs!==null?'<span class="eyebrow">1 '+esc(d.mataUang)+' = '+rp(d.kurs)+
       (d.kursTanggal?' · '+esc(d.kursTanggal):'')+'</span>':'')+
     '</div>';
 
-  if(d.total!==null){
+  if(d.totalRp!==null){
     h+='<div class="tbl-biaya"><table><thead><tr>'+
        '<th>What</th><th>Currency</th><th class="num">Amount / year</th><th class="num">In rupiah / year</th>'+
        '</tr></thead><tbody>'+
-       barisBiaya('Tuition',d.mataUang,d.kuliah,d.kuliahRp)+
+       barisBiaya('Tuition'+(d.sumberKuliah==='bidang'?' ('+esc(d.bidang)+')':''),
+         d.sumberKuliah==='bidang'?'—':d.mataUang,
+         d.sumberKuliah==='bidang'?null:d.kuliah,d.kuliahRp)+
        barisBiaya('Living cost',d.mataUang,d.hidup,d.hidupRp)+
        '</tbody><tfoot>'+
        '<tr class="jml"><td>Per year</td><td class="mono">'+esc(d.mataUang)+'</td>'+
-       '<td class="num mono">'+nominal(d.total)+'</td>'+
+       '<td class="num mono">'+(d.sumberKuliah==='bidang'?'—':nominal(d.total))+'</td>'+
        '<td class="num mono"><b>'+rp(d.totalRp)+'</b></td></tr>'+
-       '<tr class="empat"><td>Four years (S1)</td><td></td><td class="num mono">'+
-       nominal(d.total===null?null:d.total*4)+'</td>'+
-       '<td class="num mono"><b>'+rp(d.totalEmpatTahun)+'</b></td></tr>'+
+       '<tr class="empat"><td>Whole degree ('+d.tahunStudi+' year'+(d.tahunStudi===1?'':'s')+')</td>'+
+       '<td></td><td class="num mono">'+(d.sumberKuliah==='bidang'?'—':nominal(d.total===null?null:d.total*d.tahunStudi))+'</td>'+
+       '<td class="num mono"><b>'+rp(d.totalStudiRp)+'</b></td></tr>'+
        '</tfoot></table></div>';
-    if(d.kurs===null)
-      h+='<div class="fit-n">Currency <b>'+esc(d.mataUang)+'</b> is not in the KURS tab, so the rupiah '+
-         'figure cannot be worked out. Add it there with its rate.</div>';
+    if(p&&p.totalProgramRp)
+      h+='<div class="fit-n">The database also records the whole-programme tuition for this '+
+         'course as <b>'+rp(p.totalProgramRp)+'</b>'+(p.tahun?', for academic year '+esc(p.tahun):'')+'.</div>';
   }else{
-    h+='<div class="fit-n">No cost on file for this university yet — fill the cost columns on the '+
-       'UNIVERSITAS tab, or type the figures below.</div>';
+    h+='<div class="fit-n">No cost on file for this university yet — choose a programme above, '+
+       'or type the figures below.</div>';
   }
+
+  /* Dari mana angkanya, ditulis apa adanya. */
+  var asal=[];
+  if(d.sumberKuliah==='program'&&p)
+    asal.push((p.resmi
+      ? 'Tuition is the fee this programme publishes'
+      : 'Tuition is a <b>prediction</b> for this programme — not a fee the university has quoted')+
+      (p.status?' ('+esc(p.status)+')':'')+
+      (p.tahun?', academic year '+esc(p.tahun):'')+
+      (p.sumber?' — <a href="'+esc(p.sumber)+'" target="_blank" rel="noopener">source</a>':'')+'.');
+  else if(d.sumberKuliah==='bidang')
+    asal.push('Tuition is the university’s predicted figure for <b>'+esc(d.bidang)+'</b>. '+
+      'Pick a specific programme above for a closer figure.');
+  else if(d.sumberKuliah==='kampus')
+    asal.push('Tuition is the university’s <b>starting</b> figure — the cheapest programme. '+
+      'Pick a faculty and programme above for the real one.');
+  /* Dasar angka milik tingkat kampus; menyebutnya di samping angka
+     program akan menyesatkan, karena menjelaskan hitungan yang lain. */
+  if(d.sumberKuliah!=='program'&&d.dasarAngka) asal.push('Basis: '+esc(d.dasarAngka)+'.');
+  if(d.catatanBiaya) asal.push(esc(d.catatanBiaya));
+  if(asal.length) h+='<div class="fit-n">'+asal.join(' ')+'</div>';
 
   /* --- angka yang boleh diubah siswa --- */
   h+='<div class="dana-h" style="margin-top:12px"><b>Your own figures</b>'+
     '<span class="eyebrow">Leave a box empty to keep the figure from the database</span></div>'+
     '<div class="dana-grid">'+
     isianUang('Currency',r.mataUang,d.mataUang,i,'mataUang',ro)+
-    isianUsd('Tuition / year',r.biayaKuliah,d.kuliah,i,'biayaKuliah',ro,d.mataUang)+
+    isianUsd('Tuition / year',r.biayaKuliah,d.sumberKuliah==='bidang'?null:d.kuliah,i,'biayaKuliah',ro,d.mataUang)+
     isianUsd('Living / year',r.biayaHidup,d.hidup,i,'biayaHidup',ro,d.mataUang)+
     '</div>'+
     '<div class="dana-grid" style="margin-top:8px">'+
@@ -2420,8 +2670,8 @@ function blokDana(r,i,a,ro){
       '<div><span class="l">'+(d.selisih>0?'Still unfunded / year':'Fully funded')+'</span>'+
       '<b>'+(d.selisih>0?rp(d.selisih):(d.lebih?'+'+rp(d.tertutup-d.totalRp):rp(0)))+'</b></div></div>';
     if(d.selisih>0)
-      h+='<div class="fit-n">Over four years that is <b>'+rp(d.selisih*4)+'</b> still to find. '+
-         'An offer you cannot fund is not an offer — settle this before you accept.</div>';
+      h+='<div class="fit-n">Over '+d.tahunStudi+' years that is <b>'+rp(d.selisih*d.tahunStudi)+
+         '</b> still to find. An offer you cannot fund is not an offer — settle this before you accept.</div>';
   }
   if(d.daftar) h+='<div class="fit-n">Application fee, paid once: '+esc(d.mataUang)+' '+
     nominal(d.daftar)+(d.daftarRp!==null?' (about '+rp(d.daftarRp)+')':'')+'.</div>';
@@ -2482,52 +2732,241 @@ function blokSeimbang(){
   return h+'</div>';
 }
 
-/* Pilihan jurusan: dari kampusnya bila ada, selain itu dari kosakata bersama. */
-function daftarJurusan(r){
-  var u=(S.univ||[]).filter(function(x){return x.nama===r.kampus})[0];
-  if(u&&u.jurusan&&u.jurusan.length) return {list:u.jurusan,dari:'kampus'};
-  var bawaan=(S.jurusanBawaan||[]).map(function(x){return x.j});
-  return {list:bawaan,dari:'bawaan'};
+/* =======================================================
+   FAKULTAS DAN JURUSAN DARI DATABASE
+
+   Siswa tidak lagi mengetik jurusan. Setelah memilih kampus,
+   daftar program S1 kampus itu diambil sekali dari tab JURUSAN,
+   lalu fakultas dan jurusannya dipilih dari daftar itu. Begitu
+   satu jurusan dipilih, biayanya langsung terisi dari baris
+   program tersebut — bukan dari rata-rata kampus.
+   ======================================================= */
+
+/* Daftar program satu kampus diambil sekali lalu disimpan, karena
+   siswa biasanya bolak-balik antar target saat mengisi. */
+function muatProgram(kampus,lanjut){
+  var k=sv(kampus); if(!k) return;
+  if(S.programKampus[k]){ if(lanjut) lanjut(S.programKampus[k]); return }
+  if(S.memuatProgram[k]) return;
+  S.memuatProgram[k]=true;
+  call('jurusanKampus',S.token,k).then(function(r){
+    delete S.memuatProgram[k];
+    if(!r.ok){ if(r.error==='SESI_HABIS'){sesiHabis();return} S.programKampus[k]={ada:false,fakultas:[]}; }
+    else S.programKampus[k]=r;
+    gambarView();
+    if(lanjut) lanjut(S.programKampus[k]);
+  }).catch(function(){ delete S.memuatProgram[k]; });
 }
+function programKampus(kampus){ return S.programKampus[sv(kampus)]||null }
+/* Biaya yang terisi otomatis dari program dibuang saat programnya berubah;
+   yang diketik siswa sendiri tidak pernah disentuh. */
+function kosongkanBiayaOtomatis(r){
+  if(r.asalBiaya==='program'){ r.biayaKuliah=''; r.mataUang=''; r.asalBiaya='' }
+}
+
+/* Pilihan fakultas untuk satu target. */
+function pilihFakultas(r,i,ro){
+  var db=programKampus(r.kampus);
+  if(!r.kampus) return '<div class="hint">Choose a university first.</div>';
+  if(!db){
+    /* Target yang sudah tersimpan juga perlu daftarnya saat halaman dibuka,
+       bukan hanya saat kampusnya baru dipilih. Diambil sekali, lalu
+       tersimpan untuk seluruh sesi. */
+    muatProgram(r.kampus);
+    return '<div class="hint memuat">Loading the programme list…</div>';
+  }
+  if(!db.ada) return '<input type="text" value="'+esc(r.fakultas||'')+'"'+(ro?' disabled':'')+
+    ' placeholder="Type the faculty" oninput="setUni('+i+',\'fakultas\',this.value)">'+
+    '<div class="hint">'+esc(db.pesan||'No programme list for this university yet.')+'</div>';
+  var h='<select'+(ro?' disabled':'')+' onchange="setUni('+i+',\'fakultas\',this.value)">'+
+    '<option value="">— choose a faculty —</option>';
+  db.fakultas.forEach(function(f){
+    h+='<option value="'+esc(f.nama)+'"'+(r.fakultas===f.nama?' selected':'')+'>'+
+       esc(f.nama)+' ('+f.jumlah+')</option>';
+  });
+  if(r.fakultas&&!db.fakultas.some(function(f){return f.nama===r.fakultas}))
+    h+='<option selected>'+esc(r.fakultas)+'</option>';
+  return h+'</select><div class="hint">'+db.jumlah+' bachelor programmes across '+
+    db.fakultas.length+' faculties, from the school database.</div>';
+}
+
+/* Pilihan jurusan, terbatas pada fakultas yang sudah dipilih. */
 function pilihJurusan(r,i,ro){
-  var d=daftarJurusan(r);
-  if(!d.list.length)
+  var db=programKampus(r.kampus);
+  /* Tanpa daftar program kampus itu sendiri, jurusannya diketik — bukan
+     dipilih. Menyodorkan daftar apa pun di sini (kosakata bawaan sekolah
+     sekalipun) berarti memberi tahu siswa bahwa program itu ada di kampus
+     tersebut, padahal belum tentu. Ketikan bebas jujur: siswa menulis apa
+     yang ia temukan sendiri di situs kampusnya. */
+  if(!db||!db.ada)
     return '<input type="text" value="'+esc(r.jurusan||'')+'"'+(ro?' disabled':'')+
       ' placeholder="e.g. Chemical Engineering" oninput="setUni('+i+',\'jurusan\',this.value)">';
-  var ada=d.list.indexOf(r.jurusan)>=0;
-  var h='<select'+(ro?' disabled':'')+' onchange="setUni('+i+',\'jurusan\',this.value)">'+
-    '<option value="">— select —</option>';
-  d.list.forEach(function(j){
-    h+='<option'+(r.jurusan===j?' selected':'')+'>'+esc(j)+'</option>';
+  if(!r.fakultas) return '<div class="hint">Choose a faculty first — the programmes follow from it.</div>';
+  var fak=db.fakultas.filter(function(f){return f.nama===r.fakultas})[0];
+  if(!fak) return '<input type="text" value="'+esc(r.jurusan||'')+'"'+(ro?' disabled':'')+
+    ' oninput="setUni('+i+',\'jurusan\',this.value)">';
+  var h='<select'+(ro?' disabled':'')+' onchange="pilihProgram('+i+',this.value)">'+
+    '<option value="">— choose a programme —</option>';
+  fak.program.forEach(function(p){
+    h+='<option value="'+esc(p.program)+'"'+(r.jurusan===p.program?' selected':'')+'>'+
+       esc(p.program)+'</option>';
   });
-  /* Jurusan yang sudah terlanjur diketik dan tidak ada di daftar tetap
-     dipertahankan, supaya data lama tidak hilang diam-diam. */
-  if(r.jurusan&&!ada) h+='<option selected>'+esc(r.jurusan)+'</option>';
+  if(r.jurusan&&!fak.program.some(function(p){return p.program===r.jurusan}))
+    h+='<option selected>'+esc(r.jurusan)+'</option>';
   return h+'</select>';
 }
+
+/* Program yang dipilih siswa, beserta seluruh keterangannya. */
+function programTerpilih(r){
+  var db=programKampus(r.kampus);
+  if(!db||!db.ada||!r.fakultas||!r.jurusan) return null;
+  var fak=db.fakultas.filter(function(f){return f.nama===r.fakultas})[0];
+  if(!fak) return null;
+  return fak.program.filter(function(p){return p.program===r.jurusan})[0]||null;
+}
+
+/* Memilih program langsung mengisi biayanya dari baris program itu. */
+/* Biaya setahun lahir dari pembagian (total program ÷ lama studi), sehingga
+   menghasilkan angka seperti 19885.7142857143. Angka itu masuk ke kotak
+   "Your own figures" yang dibaca dan disunting orang — jadi dibulatkan dulu
+   ke satuan yang wajar, bukan ditampilkan apa adanya. */
+function bulatUang(v){
+  if(v===null||v===undefined||v==='') return '';
+  var n=Number(v);
+  if(isNaN(n)) return '';
+  return String(n>=100?Math.round(n):Math.round(n*100)/100);
+}
+function pilihProgram(i,nama){
+  var r=targetDeck().uni[i];
+  r.jurusan=nama;
+  var p=programTerpilih(r);
+  if(p){
+    /* Angka yang sudah diketik siswa sendiri tidak ditimpa. */
+    if(!sv(r.asalBiaya)||r.asalBiaya==='program'){
+      r.mataUang=p.mataUang||r.mataUang;
+      r.biayaKuliah=bulatUang(p.perTahun);
+      r.asalBiaya='program';
+    }
+    r.bidang=p.bidang||'';
+    r.durasi=p.durasi!==null&&p.durasi!==undefined?String(p.durasi):'';
+  }
+  ubahRapor2(); gambarView();
+}
+
+/* Keterangan di bawah pilihan jurusan: kecocokan dengan psikometri,
+   dan dari mana angka biayanya berasal. */
 function hintJurusan(r){
-  var d=daftarJurusan(r);
-  var pesan=d.dari==='kampus'
-    ? d.list.length+' programmes listed for this university.'
-    : 'From the school\'s standard list. Paste this university\'s own programmes into the JURUSAN TERSEDIA column to narrow it.';
-  /* Bila psikometri sudah menyarankan rumpun, kecocokan jurusan disebut di sini. */
+  var pesan=[];
+  var p=programTerpilih(r);
+  if(p){
+    pesan.push(p.resmi
+      ? 'Tuition below is this programme\'s own published figure.'
+      : 'Tuition below is a prediction for this programme\'s field group, not a quoted fee.');
+    if(p.durasi) pesan.push('Programme length '+p.durasi+' years.');
+  }else{
+    var db=programKampus(r.kampus);
+    if(db&&!db.ada) pesan.push('This university\'s programme list is not in the database yet — '+
+      'type the programme from its own website, and the cost below falls back to the figure '+
+      'for its field group.');
+  }
   var psi=(S.tab==='detail'&&S.detail)?S.detail.psi:S.psi;
   if(r.jurusan&&psi&&psi.teratas&&psi.teratas.length){
-    var rum=rumpunDari(r.jurusan);
+    var rum=rumpunDari(r.jurusan)||rumpunDariBidang(r.bidang);
     if(rum){
       var atas=psi.teratas[0];
-      pesan+=rum===atas.k
-        ? ' This matches the strongest psychometric family ('+esc(atas.label||atas.l||atas.k)+').'
-        : ' The psychometric profile leans towards '+esc(atas.label||atas.l||atas.k)+'.';
+      pesan.push(rum===atas.k
+        ? 'This matches the strongest psychometric family ('+esc(atas.label||atas.l||atas.k)+').'
+        : 'The psychometric profile leans towards '+esc(atas.label||atas.l||atas.k)+'.');
     }
   }
-  return '<div class="hint">'+pesan+'</div>';
+  return pesan.length?'<div class="hint">'+pesan.join(' ')+'</div>':'';
 }
+function rumpunDariBidang(b){
+  if(b==='Kedokteran & Kesehatan') return 'health';
+  if(b==='Sains/Teknik/IT') return 'stem';
+  if(b==='Soshum & Bisnis') return 'business';
+  return '';
+}
+/* =======================================================
+   TAHUN INTAKE YANG SEDANG DISIAPKAN
+
+   Jadwal pendaftaran di database ditulis lengkap dengan tahunnya, dan
+   seluruh 1.338 baris itu dipatok ke satu angkatan. Administrator cukup
+   mengubah satu angka di sini; tahun pada setiap jadwal bergeser
+   sebanyak selisihnya, dan tanggal yang lengkap ikut masuk kalender.
+
+   Yang digeser hanya tahun. Pola jadwal kampus jarang berubah dari tahun
+   ke tahun, jadi hasilnya mendekati benar — tapi tetap pergeseran, bukan
+   pengumuman resmi, dan setiap layar yang menampilkannya mengatakan itu.
+   ======================================================= */
+/* Jendela pendaftaran yang ditampilkan di kartu target.
+
+   Dibaca dari daftar kampus yang sedang dipegang aplikasi, bukan dari
+   salinan yang tersimpan di deck siswa. Salinan itu dibuat saat kampusnya
+   dipilih — bisa tahun lalu — sedangkan yang harus dilihat siswa adalah
+   jadwal untuk angkatan yang sedang disiapkan. */
+function jendelaDaftar(r){
+  var u=(S.univ||[]).filter(function(x){return x.nama===r.kampus})[0];
+  var teks=(u&&u.daftar)||r.daftar||'';
+  if(!teks) return '';
+  var h='Official window: '+esc(teks)+'. ';
+  if(u&&u.jadwalDigeser) h+='<b>Years shifted to intake '+esc(String((S.tahun||{}).intake||''))+
+    '</b> — months and days are the previous cycle’s, so confirm on the university’s own site. ';
+  else if(u&&u.umum) h+='Results: '+esc(u.umum)+'. ';
+  return h;
+}
+
+function blokTahunIntake(){
+  var t=S.tahun||{};
+  if(!t.dasar) return '';
+  var h='<div class="card"><h2>Admission year</h2>'+
+    '<div class="sub">The schedules in the database were written for intake '+
+    esc(String(t.dasar))+'. Set the intake this cohort is preparing for, and every admission '+
+    'date shifts with it — on each target card, and in the calendar.</div>'+
+    '<div class="grid"><div class="f"><label for="thIntake">Intake year</label>'+
+    '<input id="thIntake" type="number" min="2000" max="2100" step="1" value="'+
+    esc(String(t.intake||t.dasar))+'">'+
+    '<div class="hint">Academic year '+esc(t.label||'')+'. Leave it at '+esc(String(t.dasar))+
+    ' to use the dates exactly as written in the spreadsheet.</div></div></div>'+
+    '<div style="margin-top:12px"><button class="btn sea" id="btnTahun" onclick="simpanTahunIntake()">Save</button>'+
+    (t.digeser?'<button class="btn ghost sm" style="margin-left:8px" onclick="simpanTahunIntake(true)">'+
+      'Back to '+esc(String(t.dasar))+'</button>':'')+'</div>';
+  if(t.digeser)
+    h+='<div class="sb awas" style="margin-top:12px">Dates are shifted '+
+      esc(String(t.delta>0?'+':''))+esc(String(t.delta))+' year'+(Math.abs(t.delta)===1?'':'s')+
+      ' from what the spreadsheet says. The months and days are last cycle’s — the pattern '+
+      'rarely moves, but these are not the universities’ own announcements. Check the real '+
+      'window on each university’s site before a student relies on it.</div>';
+  return h+'</div>';
+}
+function simpanTahunIntake(kembali){
+  var t=S.tahun||{};
+  var v=kembali?t.dasar:Number((q('thIntake')||{}).value||0);
+  if(!(v>=2000&&v<=2100)){ toast('Intake year must be between 2000 and 2100.',true); return }
+  var b=q('btnTahun');
+  if(b){b.disabled=true;b.textContent='Saving…'}
+  function selesai(){ if(b){b.disabled=false;b.textContent='Save'} }
+  call('setTahunIntake',S.token,v).then(function(r){
+    if(!r.ok){ selesai(); if(r.error==='SESI_HABIS'){sesiHabis();return} toast(r.error,true); return }
+    S.tahun=r.tahun;
+    /* Daftar kampus yang dipegang peramban masih memuat tanggal lama,
+       jadi ditarik ulang sebelum layar digambar. */
+    return call('segarkanReferensi',S.token).then(function(s){
+      selesai();
+      if(s&&s.ok&&!s.refTetap){ S.univ=s.univ||[]; S.bea=s.bea||[] }
+      S.programKampus={};
+      toast('Admission dates now follow intake '+r.tahun.intake+'.');
+      gambarView();
+    });
+  }).catch(function(e){ selesai(); tangani(e) });
+}
+
 function rumpunDari(nama){
   var n=String(nama||'').toLowerCase(), k='';
   (S.jurusanBawaan||[]).forEach(function(x){ if(x.j.toLowerCase()===n) k=x.rumpun });
   return k;
 }
+
 
 function tambahUni(){targetDeck().uni.push(mkUni());ubahRapor2();gambarView()}
 function hapusUni(i){
@@ -2537,18 +2976,25 @@ function hapusUni(i){
 }
 function setUni(i,f,v){
   var r=targetDeck().uni[i]; r[f]=v;
-  if(f==='negara'){r.kampus='';r.daftar='';r.umum='';r.syarat='';r.web='';r.jurusan=''}
+  if(f==='negara'){r.kampus='';r.daftar='';r.umum='';r.syarat='';r.web='';
+    r.fakultas='';r.jurusan='';kosongkanBiayaOtomatis(r)}
   if(f==='kampus'){
     var u=S.univ.filter(function(x){return x.nama===v&&(!r.negara||x.negara===r.negara)})[0];
     if(u){
       r.negara=u.negara;r.daftar=u.daftar;r.umum=u.umum;r.syarat=u.syarat;r.web=u.web;
-      /* Jurusan yang tidak ditawarkan kampus baru dikosongkan, supaya tidak
-         tertinggal pilihan dari kampus sebelumnya. */
-      if(r.jurusan&&u.jurusan&&u.jurusan.length&&u.jurusan.indexOf(r.jurusan)<0) r.jurusan='';
+      /* Fakultas dan jurusan milik kampus lain tidak boleh tertinggal. */
+      r.fakultas='';r.jurusan='';r.bidang='';r.durasi='';
+      kosongkanBiayaOtomatis(r);
     }
+    if(v) muatProgram(v);
   }
+  /* Ganti fakultas berarti jurusannya ikut gugur. */
+  if(f==='fakultas'){ r.jurusan=''; r.bidang=''; r.durasi=''; kosongkanBiayaOtomatis(r) }
+  /* Angka yang diketik sendiri menandai dirinya, supaya tidak ditimpa
+     saat siswa memilih program lain. */
+  if(f==='biayaKuliah'||f==='mataUang') r.asalBiaya=sv(v)?'sendiri':'';
   ubahRapor2();
-  if(f==='negara'||f==='kampus'||f==='deadline'||f==='jurusan'||f==='mataUang'||
+  if(f==='negara'||f==='kampus'||f==='deadline'||f==='jurusan'||f==='fakultas'||f==='mataUang'||
      f==='biayaKuliah'||f==='biayaHidup'||f==='danaBea'||f==='danaKel') gambarView();
 }
 
@@ -2669,11 +3115,11 @@ function viewRapor(deck,ro){
 
   h+='<div class="tb-head" style="margin-top:20px"><h3>Cumulative summary</h3><div class="sub">Recalculated as you type.</div></div><div class="dash">';
   h+='<div id="ringkasGpa" style="display:contents">';
-  h+=tile('Cumulative GPA',rap.gpa===null?'—':rap.gpa.toFixed(2),'on a 4.00 scale',rap.predikat?[esc(rap.predikat)]:['—']);
+  h+=tile('Cumulative GPA',ang(rap.gpa),'on a 4.00 scale',rap.predikat?[esc(rap.predikat)]:['—']);
   h+=tile('Total credits',rap.totalSks,'across '+rap.jumlahSemester+' semester(s)',[]);
   h+=tile('Quality points',rap.totalSkor,'grade point × credits',[]);
   h+='</div>';
-  h+=tile('Trend',rap.tren===null?'—':(rap.tren>0?'+':'')+rap.tren.toFixed(2),'first to latest semester',
+  h+=tile('Trend',rap.tren===null||rap.tren===undefined?'—':(rap.tren>0?'+':'')+ang(rap.tren),'first to latest semester',
     rap.tren===null?[]:[rap.tren>0?'Improving':rap.tren<0?'Declining':'Steady']);
   h+='</div></div>';
 
@@ -2692,7 +3138,7 @@ function viewRapor(deck,ro){
   SEM.forEach(function(k){
     var g=rap.sem[k];
     h+='<button class="btn '+(S.semAktif===k?'':'ghost ')+'sm" onclick="S.semAktif=\''+k+'\';gambarView()">'+
-       esc(SEM_LABEL[k])+(g.gpa===null?'':' · '+g.gpa.toFixed(2))+'</button>';
+       esc(SEM_LABEL[k])+(g&&g.gpa!==null&&g.gpa!==undefined?' · '+ang(g.gpa):'')+'</button>';
   });
   h+='</div>';
   var k=S.semAktif, rows=deck.rapor.sem[k]||[], sum=rap.sem[k];
@@ -2721,16 +3167,16 @@ function viewRapor(deck,ro){
        '<div data-l="Subject name"><input type="text" value="'+esc(r.mapel||'')+'"'+(ro?' disabled':'')+' placeholder="Subject" oninput="setRapor(\''+k+'\','+i+',\'mapel\',this.value)"></div>'+
        '<div data-l="Report" class="mono"><input type="number" min="0" max="100" value="'+esc(r.nilai===''||r.nilai==null?'':r.nilai)+'"'+(ro?' disabled':'')+' placeholder="0–100" oninput="setRapor(\''+k+'\','+i+',\'nilai\',this.value)"></div>'+
        '<div data-l="Grade" class="mono" id="rg_'+k+'_'+i+'"><b>'+(sk?esc(sk.g):'—')+'</b></div>'+
-       '<div data-l="Grade point" class="mono" id="rp_'+k+'_'+i+'">'+(sk?sk.p.toFixed(2):'—')+'</div>'+
+       '<div data-l="Grade point" class="mono" id="rp_'+k+'_'+i+'">'+(sk?ang(sk.p):'—')+'</div>'+
        '<div data-l="Credits" class="mono"><input type="number" min="0" max="20" value="'+esc(r.sks===''||r.sks==null?'':r.sks)+'"'+(ro?' disabled':'')+' placeholder="SKS" oninput="setRapor(\''+k+'\','+i+',\'sks\',this.value)"></div>'+
-       '<div data-l="Score" class="mono" id="rs_'+k+'_'+i+'">'+(sk?(sk.p*c).toFixed(2):'—')+'</div>'+
+       '<div data-l="Score" class="mono" id="rs_'+k+'_'+i+'">'+(sk?ang(sk.p*c):'—')+'</div>'+
        '<div class="x">'+(ro?'':'<button title="Delete row" onclick="hapusRapor(\''+k+'\','+i+')">&times;</button>')+'</div></div>';
   });
   h+='<div class="tb-r" id="rtot" style="grid-template-columns:2.6fr 1fr .8fr 1fr .9fr .9fr 34px;background:#F2F4F1;font-weight:600">'+
      '<div data-l="Total"><b>Total</b></div><div></div><div></div>'+
-     '<div data-l="Semester GPA" class="mono"><b id="rtg">'+(sum.gpa===null?'—':sum.gpa.toFixed(2))+'</b></div>'+
+     '<div data-l="Semester GPA" class="mono"><b id="rtg">'+ang(sum&&sum.gpa)+'</b></div>'+
      '<div data-l="Credits" class="mono"><b id="rtc">'+sum.sks+'</b></div>'+
-     '<div data-l="Score" class="mono"><b id="rts">'+sum.skor.toFixed(2)+'</b></div><div></div></div></div>';
+     '<div data-l="Score" class="mono"><b id="rts">'+ang(sum.skor,2,'0')+'</b></div><div></div></div></div>';
   if(!ro) h+='<div class="tb-add"><button class="btn sea sm" onclick="tambahRapor(\''+k+'\')">+ Add subject</button>'+
     ' <button class="btn ghost sm" onclick="salinMapel(\''+k+'\')">Copy subjects from previous semester</button></div>';
 
@@ -2740,7 +3186,7 @@ function viewRapor(deck,ro){
   h+='</tr></thead><tbody><tr><td class="nm">Minimum</td>';
   S.skala.forEach(function(x){h+='<td class="mono" style="text-align:center">'+(x.min<0?'0':x.min)+'</td>'});
   h+='</tr><tr><td class="nm">Grade point</td>';
-  S.skala.forEach(function(x){h+='<td class="mono" style="text-align:center">'+x.p.toFixed(2)+'</td>'});
+  S.skala.forEach(function(x){h+='<td class="mono" style="text-align:center">'+ang(x.p)+'</td>'});
   h+='</tr></tbody></table></div>';
   h+='<div class="tb-head" style="margin-top:16px"><h3>Academic standing</h3></div>';
   h+='<div class="scroll"><table class="tbl"><thead><tr><th>Cumulative GPA</th><th>Standing</th></tr></thead><tbody>'+
@@ -2869,17 +3315,17 @@ function perbaruiRapor(sem,i){
   var sk=skalaDari(r.nilai), c=parseFloat(r.sks)||0;
   var g=q('rg_'+sem+'_'+i), p=q('rp_'+sem+'_'+i), s2=q('rs_'+sem+'_'+i), row=q('rr_'+sem+'_'+i);
   if(g) g.innerHTML='<b>'+(sk?esc(sk.g):'—')+'</b>';
-  if(p) p.textContent=sk?sk.p.toFixed(2):'—';
-  if(s2) s2.textContent=sk?(sk.p*c).toFixed(2):'—';
+  if(p) p.textContent=sk?ang(sk.p):'—';
+  if(s2) s2.textContent=sk?ang(sk.p*c):'—';
   if(row) row.className='tb-r '+(sk?(sk.p>=3.5?'s2':sk.p>=2.5?'s1':'s0'):'');
   var rap=hitungRapor(d.rapor), sum=rap.sem[sem];
-  if(q('rtg')) q('rtg').textContent=sum.gpa===null?'—':sum.gpa.toFixed(2);
+  if(q('rtg')) q('rtg').textContent=ang(sum&&sum.gpa);
   if(q('rtc')) q('rtc').textContent=sum.sks;
-  if(q('rts')) q('rts').textContent=sum.skor.toFixed(2);
+  if(q('rts')) q('rts').textContent=ang(sum&&sum.skor);
   var wr=q('ringkasGpa');
   if(wr){
     var v=wr.querySelectorAll('.tile .v');
-    if(v[0]) v[0].innerHTML=(rap.gpa===null?'—':rap.gpa.toFixed(2))+' <small>on a 4.00 scale</small>';
+    if(v[0]) v[0].innerHTML=(ang(rap.gpa))+' <small>on a 4.00 scale</small>';
     if(v[1]) v[1].innerHTML=rap.totalSks+' <small>across '+rap.jumlahSemester+' semester(s)</small>';
     if(v[2]) v[2].innerHTML=rap.totalSkor+' <small>grade point × credits</small>';
     var li=wr.querySelector('.tile ul li');
@@ -2891,7 +3337,7 @@ function perbaruiRapor(sem,i){
     SEM.forEach(function(kk,idx){
       if(tombol[idx]){
         var gg=rap.sem[kk];
-        tombol[idx].textContent=SEM_LABEL[kk]+(gg.gpa===null?'':' · '+gg.gpa.toFixed(2));
+        tombol[idx].textContent=SEM_LABEL[kk]+(gg&&gg.gpa!==null&&gg.gpa!==undefined?' · '+ang(gg.gpa):'');
       }
     });
   }
@@ -3025,7 +3471,7 @@ var PERAN_URUT=['siswa','ortu','guru','kepsek','wakepsek','admin'];
 
 function viewKelolaAkun(){
   var ak=S.akun||[];
-  var h='<div class="card"><h2>Create an account</h2>'+
+  var h=blokTahunIntake()+'<div class="card"><h2>Create an account</h2>'+
     '<div class="sub">Principal and vice principal accounts can only be made here. Leave the password blank and one is generated, then emailed to the person.</div>'+
     '<div class="grid">'+
     '<div class="f"><label for="aRole">Role</label><select id="aRole" onchange="aturFormAkun()">';
@@ -3289,7 +3735,7 @@ function cetakLaporan(){
 
   var isi='<section>'+
     kartuCetak2('Overall progress',p.total+'%','six gates')+
-    kartuCetak2('Cumulative GPA',rap.gpa===null?'—':rap.gpa.toFixed(2),rap.predikat||'')+
+    kartuCetak2('Cumulative GPA',ang(rap.gpa),rap.predikat||'')+
     kartuCetak2('File readiness',kes.skor+'%',kes.label)+
     (psi.iq!==null?kartuCetak2('IQ',psi.iq,psi.labelIq):'')+
     (psi.selaras!==null?kartuCetak2('Alignment',psi.selaras+'%',psi.labelSelaras):'')+
@@ -3332,11 +3778,11 @@ function cetakLaporan(){
   SEM.forEach(function(k){
     var rows=(d.rapor.sem||{})[k]||[], sum=rap.sem[k];
     if(!sum||sum.gpa===null) return;
-    isi+=tabelCetak(SEM_LABEL[k]+' — GPA '+sum.gpa.toFixed(2),
+    isi+=tabelCetak(SEM_LABEL[k]+' — GPA '+ang(sum.gpa),
       ['Subject','Report','Grade','Grade point','Credits','Score'],
       rows.filter(function(r){return skalaDari(r.nilai)}).map(function(r){
         var sk=skalaDari(r.nilai), c=parseFloat(r.sks)||0;
-        return [r.mapel,r.nilai,sk.g,sk.p,r.sks,+(sk.p*c).toFixed(2)]}),[1,3,4,5]);
+        return [r.mapel,r.nilai,sk.g,sk.p,r.sks,+ang(sk.p*c)]}),[1,3,4,5]);
   });
   isi+='</section>';
 
@@ -3350,7 +3796,7 @@ function cetakTranskrip(){
   var jr=(d.rapor.jurusan)||{}, KL=(S.kurikulum||{}).label||{};
   var alr=sv(jr.aliran)?jr.aliran:(sv(jr.xii)?jr.xii:(jr.xi||''));
   var isi='<section>'+
-    kartuCetak2('Cumulative GPA',rap.gpa===null?'—':rap.gpa.toFixed(2),'4.00 scale')+
+    kartuCetak2('Cumulative GPA',ang(rap.gpa),'4.00 scale')+
     kartuCetak2('Total credits',rap.totalSks,'')+
     kartuCetak2('Standing',rap.predikat||'—','')+
     (alr?kartuCetak2('Stream',KL[alr]||alr,'Grade XI – XII'):'')+'</section>';
@@ -3363,11 +3809,11 @@ function cetakTranskrip(){
     var js=(k==='s1'||k==='s2')?'X':alr;
     isi+='<section'+(i===3?' class="pecah"':'')+'>'+tabelCetak(
       SEM_LABEL[k]+(t[SEM_GRADE[k]]?' — '+t[SEM_GRADE[k]]:'')+(js?' — '+(KL[js]||js):'')+
-        (sum.gpa===null?'':' · GPA '+sum.gpa.toFixed(2)),
+        (sum&&sum.gpa!==null&&sum.gpa!==undefined?' · GPA '+ang(sum.gpa):''),
       ['Group','Subject name','Report','Grade','Grade point','Credits','Score'],
       rows.map(function(r){
         var sk=skalaDari(r.nilai), c=parseFloat(r.sks)||0;
-        return [r.grup||'',r.mapel,r.nilai,sk?sk.g:'',sk?sk.p:'',r.sks,sk?+(sk.p*c).toFixed(2):'']}),[2,4,5,6])+'</section>';
+        return [r.grup||'',r.mapel,r.nilai,sk?sk.g:'',sk?sk.p:'',r.sks,sk?+ang(sk.p*c):'']}),[2,4,5,6])+'</section>';
   });
   cetakPdf('transkrip-'+slug(namaSubjek()),'Academic transcript',[namaSubjek(),'Class '+(kelasSubjek()||'—')],isi);
 }
@@ -3623,7 +4069,7 @@ function blokGrafikSiswa(d,p,rap){
   });
   if(titikGpa.length>=2){
     h+='<div class="graf-kotak"><h3>Report card GPA by semester</h3>'+
-      '<div class="sub">Cumulative '+(rap.gpa===null?'—':rap.gpa.toFixed(2))+' on a 4.00 scale.</div>'+
+      '<div class="sub">Cumulative '+(ang(rap.gpa))+' on a 4.00 scale.</div>'+
       grafikGaris([{nama:'Semester GPA',titik:titikGpa,warna:'#C77D1A'}],{label:labelGpa,min:0,maks:4})+'</div>';
   }
   return h+'</div>';
@@ -3726,7 +4172,7 @@ function cetakKinerja(){
   var p=(bimbing()&&S.detail)?(S.detail.progres||hitungDetail()):(S.progres||hitung());
   var rap=hitungRapor(d.rapor);
   var isi='<section>'+kartuCetak2('Overall progress',p.total+'%','six gates')+
-    kartuCetak2('Cumulative GPA',rap.gpa===null?'—':rap.gpa.toFixed(2),rap.predikat||'')+
+    kartuCetak2('Cumulative GPA',ang(rap.gpa),rap.predikat||'')+
     kartuCetak2('Credits',rap.totalSks,'recorded')+'</section>';
   isi+='<section><h2>Progress by gate</h2>'+
     grafikBatang(S.schema.sections.map(function(sec){var v=p[sec.id]||0;return {l:sec.kode+' · '+sec.label,v:v,t:v+'%'}}),{lebarLabel:180})+
@@ -4475,6 +4921,240 @@ function grafikRadar(data){
 
 
 /* =======================================================
+   TAB DATABASE — MESIN PENCARI KAMPUS DAN PROGRAM
+
+   Guru, administrator, dan pimpinan mencari di sini. Dua
+   tingkat hasil dari data yang sama: tingkat kampus untuk
+   "kampus mana di Jepang yang di bawah 100 juta", dan tingkat
+   program untuk "di mana saja ada Computer Science, berapa
+   biayanya".
+
+   Pencarian tidak pernah menyapu 21.342 baris: indeks 280
+   kampus disaring dulu, lalu hanya kampus yang lolos yang
+   potongan barisnya dibaca, dan berhenti begitu hasilnya cukup.
+   ======================================================= */
+function viewDatabase(){
+  var r=S.dbHasil;
+  var f=S.dbSaring;
+  var h='<div class="card"><div class="judul-baris">'+
+    '<div><h2>University database</h2><div class="sub">'+
+    'Every university, faculty and bachelor programme on file, with the cost of each — '+
+    'searchable. Use it to answer a student before they commit to a target.</div></div>'+
+    (r&&r.hasil&&r.hasil.length?'<div class="pick">'+
+      '<button class="btn ghost sm" onclick="unduhCariCsv()">Download CSV</button></div>':'')+
+    '</div>';
+
+  /* --- kotak pencarian --- */
+  h+='<div class="cari-blok">'+
+    '<div class="cari-baris">'+
+    '<input id="dbKueri" type="search" value="'+esc(S.dbKueri||'')+'" '+
+    'placeholder="Try: computer science · kedokteran · Tokyo · business Malaysia" '+
+    'onkeydown="if(event.key===\'Enter\')jalankanCari()">'+
+    '<button class="btn sea" onclick="jalankanCari()"'+(S.dbSibuk?' disabled':'')+'>'+
+    (S.dbSibuk?'Searching…':'Search')+'</button></div>'+
+    '<div class="cari-saring">'+
+    '<label class="bidang"><span>Level</span><select onchange="S.dbSaring.program=(this.value===\'program\');jalankanCari()">'+
+      '<option value="program"'+(f.program?' selected':'')+'>Programmes</option>'+
+      '<option value="kampus"'+(!f.program?' selected':'')+'>Universities</option>'+
+      '</select></label>'+
+    '<label class="bidang"><span>Country</span><select onchange="S.dbSaring.negara=this.value;jalankanCari()">'+
+      '<option value="">All countries</option>'+
+      (S.dbNegara||[]).map(function(n){
+        return '<option'+(f.negara===n?' selected':'')+'>'+esc(n)+'</option>' }).join('')+
+      '</select></label>'+
+    '<label class="bidang"><span>Field group</span><select onchange="S.dbSaring.bidang=this.value;jalankanCari()">'+
+      '<option value="">All fields</option>'+
+      (S.dbBidang||[]).map(function(n){
+        return '<option'+(f.bidang===n?' selected':'')+'>'+esc(n)+'</option>' }).join('')+
+      '</select></label>'+
+    '<label class="bidang"><span>Max tuition / year (Rp)</span>'+
+      '<input type="number" step="10000000" min="0" value="'+esc(f.maksBiaya||'')+'" '+
+      'placeholder="e.g. 150000000" onchange="S.dbSaring.maksBiaya=this.value;jalankanCari()"></label>'+
+    '<label class="bidang"><span>QS rank up to</span>'+
+      '<input type="number" min="1" value="'+esc(f.maksQs||'')+'" placeholder="e.g. 200" '+
+      'onchange="S.dbSaring.maksQs=this.value;jalankanCari()"></label>'+
+    '<label class="bidang"><span>IELTS they have</span>'+
+      '<input type="number" step="0.5" min="0" max="9" value="'+esc(f.maksIelts||'')+'" '+
+      'placeholder="e.g. 6.5" onchange="S.dbSaring.maksIelts=this.value;jalankanCari()"></label>'+
+    '</div>'+
+    '<div class="cari-ket">'+
+    (f.maksIelts?'Showing only universities whose stated minimum IELTS is <b>'+esc(f.maksIelts)+' or lower</b>. ':'')+
+    'All rupiah figures use the KURS tab. Tuition marked <b>predicted</b> is not a quoted fee.'+
+    '</div></div>';
+
+  if(S.dbSibuk) h+='<div class="empty"><b>Searching…</b>Reading the programme list for the matching universities.</div>';
+  else if(!r) h+='<div class="empty"><b>Nothing searched yet</b>'+
+    'Type a programme, a faculty, a university or a country — or just set the filters and press Search.</div>';
+  else h+=hasilCari(r);
+  return h+'</div>';
+}
+
+function hasilCari(r){
+  if(!r.hasil||!r.hasil.length)
+    return '<div class="empty"><b>No match</b>Nothing fits that search. Widen a filter, or search the '+
+      'university level instead of programmes.</div>';
+
+  var h='<div class="cari-ringkas">';
+  if(r.tingkat==='program'){
+    h+='<b>'+r.ditampilkan+' programme'+(r.ditampilkan===1?'':'s')+'</b> shown, from '+
+       r.kampusDibaca+' of the '+r.kampusPunyaProgram+' matching universities that have a programme list'+
+       (r.kampusCocok!==r.kampusPunyaProgram?' ('+r.kampusCocok+' universities match the filters in all)':'')+'.'+
+       (r.masihAda?' <span class="eyebrow">More exist — narrow the search to see them.</span>':'');
+  }else{
+    h+='<b>'+r.total+' universit'+(r.total===1?'y':'ies')+'</b> match'+
+       (r.ditampilkan<r.total?', showing the first '+r.ditampilkan:'')+'.';
+  }
+  h+='</div>';
+
+  if(r.tingkat==='program') return h+tabelProgram(r.hasil);
+  return h+tabelKampus(r.hasil);
+}
+
+/* Hasil program ditulis sebagai daftar, bukan tabel sembilan kolom.
+   Dengan tabel, nama kampus dan angka biayanya terdorong keluar layar —
+   padahal justru angka itu yang dicari orang. */
+function tabelProgram(baris){
+  var h='<div class="hasil">';
+  baris.forEach(function(x){
+    var total=(x.perTahunRp||0)+(x.hidupRp||0);
+    h+='<div class="hasil-r">'+
+      '<div class="hasil-k">'+
+        '<div class="hasil-j">'+esc(x.program)+'</div>'+
+        '<div class="hasil-s">'+esc(x.fakultas||'Faculty not broken out')+'</div>'+
+        '<div class="hasil-m">'+
+          (x.bidang?'<span>'+esc(x.bidang)+'</span>':'')+
+          (x.durasi?'<span>'+esc(String(x.durasi))+' years</span>':'')+
+          (x.resmi?'<span class="tag solid">official fee</span>':'<span class="tag gold">predicted</span>')+
+        '</div>'+
+      '</div>'+
+      '<div class="hasil-u">'+
+        '<div class="hasil-n">'+esc(x.kampus)+'</div>'+
+        '<div class="hasil-m">'+
+          '<span>'+esc(x.negara)+'</span>'+
+          (x.qsAngka?'<span class="mono">QS #'+x.qsAngka+'</span>':'')+
+          (x.minIelts?'<span class="mono">IELTS '+x.minIelts+'</span>':'')+
+        '</div>'+
+      '</div>'+
+      '<div class="hasil-b">'+
+        barisUang('Tuition',x.perTahunRp,x.mataUang,x.perTahun)+
+        barisUang('Living',x.hidupRp,'',null)+
+        '<div class="hasil-t"><span>Per year</span><b>'+rp(total||null)+'</b></div>'+
+      '</div>'+
+      '<div class="hasil-a">'+
+        '<button class="btn sea xs" onclick="salinTarget('+
+          JSON.stringify(JSON.stringify({negara:x.negara,kampus:x.kampus,fakultas:x.fakultas,program:x.program}))+
+          ')">Copy</button>'+
+        (x.sumber?'<a class="btn ghost xs" target="_blank" rel="noopener" href="'+esc(x.sumber)+'">Source</a>':'')+
+        (x.web?'<a class="btn ghost xs" target="_blank" rel="noopener" href="'+
+          (x.web.indexOf('http')===0?esc(x.web):'https://'+esc(x.web))+'">Site</a>':'')+
+      '</div></div>';
+  });
+  return h+'</div>';
+}
+function barisUang(label,nilaiRp,uang,asli){
+  return '<div class="hasil-u1"><span>'+esc(label)+'</span>'+
+    '<span class="mono">'+rp(nilaiRp)+
+    (uang&&asli?'<i>'+esc(uang)+' '+nominal(asli)+'</i>':'')+'</span></div>';
+}
+
+function tabelKampus(baris){
+  var h='<div class="hasil">';
+  baris.forEach(function(x){
+    h+='<div class="hasil-r kampus">'+
+      '<div class="hasil-k">'+
+        '<div class="hasil-j">'+esc(x.nama)+'</div>'+
+        '<div class="hasil-m">'+
+          '<span>'+esc(x.negara)+'</span>'+
+          (x.qsAngka?'<span class="mono">QS #'+x.qsAngka+'</span>':'')+
+          (x.minIelts?'<span class="mono">IELTS '+x.minIelts+'</span>':'')+
+          (x.intake?'<span>'+esc(x.intake)+'</span>':'')+
+        '</div>'+
+        (x.adaProgram
+          ? '<div class="hasil-s">'+x.nProgram+' bachelor programmes across '+x.nFakultas+' faculties</div>'
+          : '<div class="hasil-s muted">No programme list on file yet</div>')+
+      '</div>'+
+      '<div class="hasil-b">'+
+        barisUang('Tuition'+(x.dariBidang?' ('+esc(x.dariBidang)+')':''),x.kuliahRp,'',null)+
+        barisUang('Living',x.hidupRp,'',null)+
+        '<div class="hasil-t"><span>Year 1 total</span><b>'+rp(x.totalTahun1Rp)+'</b></div>'+
+      '</div>'+
+      '<div class="hasil-a">'+
+        (x.web?'<a class="btn ghost xs" target="_blank" rel="noopener" href="'+
+          (x.web.indexOf('http')===0?esc(x.web):'https://'+esc(x.web))+'">Site</a>':'')+
+        (x.adaProgram?'<button class="btn sea xs" onclick="cariKampusIni('+
+          JSON.stringify(JSON.stringify(x.nama))+')">Programmes</button>':'')+
+      '</div></div>';
+  });
+  return h+'</div>';
+}
+
+/* Dari satu kampus langsung melihat seluruh programnya. */
+function cariKampusIni(json){
+  var nama; try{ nama=JSON.parse(json) }catch(e){ return }
+  S.dbKueri=nama; S.dbSaring.program=true;
+  var k=q('dbKueri'); if(k) k.value=nama;
+  jalankanCari();
+}
+
+function jalankanCari(){
+  var kotak=q('dbKueri');
+  if(kotak) S.dbKueri=kotak.value;
+  S.dbSibuk=true; gambarView();
+  call('cariKampus',S.token,S.dbKueri,S.dbSaring).then(function(r){
+    S.dbSibuk=false;
+    if(!r.ok){ if(r.error==='SESI_HABIS'){sesiHabis();return} toast(r.error,true); gambarView(); return }
+    S.dbHasil=r;
+    if(r.negaraOpsi) S.dbNegara=r.negaraOpsi;
+    if(r.bidangOpsi) S.dbBidang=r.bidangOpsi;
+    gambarView();
+    var k=q('dbKueri'); if(k){ k.focus(); try{k.setSelectionRange(k.value.length,k.value.length)}catch(e){} }
+  }).catch(function(e){ S.dbSibuk=false; gambarView(); tangani(e) });
+}
+
+/* Satu baris hasil bisa langsung dipakai: disalin supaya guru tinggal
+   menempelkannya saat mengisi target bersama siswa. */
+function salinTarget(json){
+  var x; try{ x=JSON.parse(json) }catch(e){ return }
+  var teks=[x.program,x.fakultas,x.kampus,x.negara].filter(Boolean).join(' · ');
+  function usai(){ toast('Copied: '+teks) }
+  if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(teks).then(usai,usai);
+  else usai();
+}
+
+function unduhCariCsv(){
+  var r=S.dbHasil; if(!r||!r.hasil||!r.hasil.length) return;
+  var kepala,baris;
+  if(r.tingkat==='program'){
+    kepala=['Programme','Faculty','University','Country','Field group','Duration (years)',
+      'Currency','Tuition/year (local)','Tuition/year (Rp)','Living/year (Rp)','Per year (Rp)',
+      'Whole programme (Rp)','Basis','Academic year','Source','QS','Min IELTS'];
+    baris=r.hasil.map(function(x){
+      return [x.program,x.fakultas,x.kampus,x.negara,x.bidang,x.durasi,x.mataUang,x.perTahun,
+        x.perTahunRp,x.hidupRp,(x.perTahunRp||0)+(x.hidupRp||0),x.totalProgramRp,
+        x.resmi?'Official':'Predicted',x.tahun,x.sumber,x.qsAngka,x.minIelts];
+    });
+  }else{
+    kepala=['University','Country','QS','Min IELTS','Min GPA','Tuition/year (Rp)',
+      'Tuition max/year (Rp)','Living/year (Rp)','Application fee (Rp)','Year 1 total (Rp)',
+      'Programmes','Faculties','Intake','Basis','Website'];
+    baris=r.hasil.map(function(x){
+      return [x.nama,x.negara,x.qsAngka,x.minIelts,x.minGpa,x.kuliahRp,x.kuliahMaksRp,x.hidupRp,
+        x.daftarRp,x.totalTahun1Rp,x.nProgram,x.nFakultas,x.intake,x.dasarAngka,x.web];
+    });
+  }
+  var csv=[kepala].concat(baris).map(function(b){
+    return b.map(function(v){
+      var t=String(v==null?'':v);
+      return /[",\n]/.test(t)?'"'+t.replace(/"/g,'""')+'"':t;
+    }).join(',');
+  }).join('\n');
+  var a=document.createElement('a');
+  a.href='data:text/csv;charset=utf-8,'+encodeURIComponent('﻿'+csv);
+  a.download='database-kampus-deck-ptln.csv';
+  document.body.appendChild(a); a.click(); a.remove();
+}
+
+/* =======================================================
    DASBOR GURU PENDAMPING
    Grafik perkembangan seluruh siswa, dipisahkan dari papan
    siswa supaya keduanya enak dibaca masing-masing.
@@ -4497,7 +5177,7 @@ function viewDasbor(){
      '<div class="angka">'+
      kpi('Students',p.total,'registered decks')+
      kpi('Average progress',p.rataProgres+'%','across all six gates')+
-     kpi('Average GPA',p.adaGpa?p.rataGpa.toFixed(2):'—',p.adaGpa+' with marks')+
+     kpi('Average GPA',p.adaGpa?ang(p.rataGpa):'—',p.adaGpa+' with marks')+
      kpi('Offers received',p.target.loa,p.target.adaLoa+' students')+
      kpi('University targets',p.target.kampus,p.target.adaKampus+' students')+
      kpi('Scholarship targets',p.target.beasiswa,p.target.adaBeasiswa+' students')+
@@ -4669,7 +5349,7 @@ function blokArsip(){
          '<div data-l="Country">'+esc(k.negara||'—')+'</div>'+
          '<div data-l="Applied" class="num mono">'+k.dicoba+'</div>'+
          '<div data-l="Offers" class="num mono">'+k.diterima+'</div>'+
-         '<div data-l="GPA" class="num mono">'+(k.gpaDiterima===null?'—':k.gpaDiterima.toFixed(2))+'</div></div>';
+         '<div data-l="GPA" class="num mono">'+ang(k.gpaDiterima)+'</div></div>';
     });
     h+='</div></div>';
   }
@@ -5238,7 +5918,8 @@ var JENIS_AGENDA={
   beasiswa:{l:'Scholarship deadline',w:'#C77D1A'},
   dokumen:{l:'Document deadline',w:'#A6402C'},
   konsultasi:{l:'Consultation',w:'#2E7F6D'},
-  layanan:{l:'Mentor schedule',w:'#A67C1A'}
+  layanan:{l:'Mentor schedule',w:'#A67C1A'},
+  admisi:{l:'Admission window closes',w:'#7C4A8D'}
 };
 var BULAN=['January','February','March','April','May','June','July','August','September','October','November','December'];
 
@@ -5617,9 +6298,9 @@ function bagianTranskrip(deck,nama,kelas){
     var rows=(deck.rapor.sem||{})[k]||[], sum=rap.sem[k];
     var b=rows.map(function(r){
       var sk=skalaDari(r.nilai), c=parseFloat(r.sks)||0;
-      return [r.mapel||'', r.nilai===''||r.nilai==null?'':r.nilai, sk?sk.g:'', sk?sk.p:'', r.sks===''||r.sks==null?'':r.sks, sk?+(sk.p*c).toFixed(2):''];
+      return [r.mapel||'', r.nilai===''||r.nilai==null?'':r.nilai, sk?sk.g:'', sk?sk.p:'', r.sks===''||r.sks==null?'':r.sks, sk?+ang(sk.p*c):''];
     });
-    b.push(['TOTAL','','','',sum.sks,+sum.skor.toFixed(2)]);
+    b.push(['TOTAL','','','',sum.sks,+ang(sum.skor,2,'0')]);
     b.push(['SEMESTER GPA','','','','',sum.gpa===null?'':sum.gpa]);
     var js=(k==='s1'||k==='s2')?'X':alr;
     bag.push({judul:SEM_LABEL[k]+(t[SEM_GRADE[k]]?' — '+t[SEM_GRADE[k]]:'')+(js?' — '+(KL[js]||js):''),
@@ -5787,7 +6468,7 @@ function viewPantau(){
     'you can follow the progress but nothing you do here changes it.</div><div class="dash">';
   h+=tile('Overall progress',p.total+'%','across the six gates',
     [S.diperbarui?'Last updated '+esc(S.diperbarui):'Not updated yet']);
-  h+=tile('Report card GPA',rap.gpa===null?'—':rap.gpa.toFixed(2),'4.00 scale',
+  h+=tile('Report card GPA',ang(rap.gpa),'4.00 scale',
     rap.predikat?[esc(rap.predikat)]:['No marks entered yet']);
   h+=tile('University targets',uni.length,loa.length+' offer(s) so far',
     uni.slice(0,4).map(function(x){return esc(x.kampus)+' — '+esc(x.status||'Not started')}));
@@ -6048,7 +6729,7 @@ function viewPapan(){
       h+='<td class="num"><span class="mini"><i style="width:'+(x[k]||0)+'%"></i></span> <span class="mono" style="font-size:11px">'+(x[k]||0)+'</span></td>';
     });
     h+='<td class="num tot">'+x.total+'%</td>'+
-       '<td class="num mono">'+(x.gpa===null||x.gpa===undefined?'—':x.gpa.toFixed(2))+'</td>'+
+       '<td class="num mono">'+ang(x.gpa)+'</td>'+
        '<td class="num mono">'+x.nKampus+'</td><td class="num mono">'+x.nBeasiswa+'</td>'+
        '<td class="num">'+(x.loa?'<span class="tag solid">'+x.loa+'</span>':'<span class="mono muted">0</span>')+'</td>'+
        '<td class="mono" style="font-size:11px">'+esc(x.validasi||'0/7')+'</td>'+
@@ -6185,20 +6866,59 @@ function kirimPengingat(){
 function blokOrtu(d){
   var email=d.emailOrtu||'';
   var akun=(d.ortu||[]);
-  var h='<div class="card"><h2>Parent contact and report</h2>'+
-    '<div class="sub">Fill in the parent or guardian email for this student. Separate two addresses with a comma. '+
-    'The report is sent as a PDF attachment containing progress, transcript, psychometric result, and targets.</div>'+
+  var h='<div class="card"><h2>Parent contact and account</h2>'+
+    '<div class="sub">Two separate things, and both are worth having: an <b>email address</b> for sending '+
+    'reports, and a <b>parent account</b> so the parent can log in any time and watch progress themselves.</div>';
+
+  /* --- 1. alamat untuk laporan --- */
+  h+='<div class="tb-head rapat"><h3>Email for reports</h3></div>'+
     '<div class="grid"><div class="f full"><label for="emOrtu">Parent / guardian email</label>'+
     '<input id="emOrtu" type="text" value="'+esc(email)+'" placeholder="ayah@contoh.com, ibu@contoh.com">'+
-    '<div class="hint">'+(akun.length
-      ? 'Also linked to '+akun.length+' parent account: '+akun.map(function(x){return esc(x.nama)+' ('+esc(x.email)+')'}).join(', ')+'. Both receive the report.'
-      : 'No parent account linked yet — the student can share their parent code from their own Account page.')+'</div></div></div>'+
-    '<div class="pick" style="margin-top:12px">'+
+    '<div class="hint">Separate two addresses with a comma. Saved permanently in the USERS tab — '+
+    'it survives every sync and every update.</div></div></div>'+
+    '<div class="pick" style="margin-top:10px">'+
     '<button class="btn sea sm" id="btnEmOrtu" onclick="simpanEmailOrtu()">Save email</button>'+
-    '<button class="btn gold sm" id="btnPdfOrtu" onclick="kirimLaporanPdf()">Send PDF report to parent</button>'+
+    '<button class="btn gold sm" id="btnPdfOrtu" onclick="kirimLaporanPdf()">Send PDF report</button>'+
     '<button class="btn ghost sm" onclick="laporanOrtu()">Send short summary</button></div>';
+
+  /* --- 2. akun yang bisa dipakai masuk --- */
+  h+='<div class="tb-head rapat" style="margin-top:20px"><h3>Parent account</h3>'+
+    '<span class="eyebrow">'+(akun.length?akun.length+' account'+(akun.length>1?'s':''):'none yet')+'</span></div>';
+
+  if(akun.length){
+    h+='<div class="tb ketat"><div class="tb-h" style="grid-template-columns:1.6fr 2fr 1fr 1.2fr 1.6fr">'+
+      '<div>Name</div><div>Email</div><div>Status</div><div>Last signed in</div><div></div></div>';
+    akun.forEach(function(x){
+      h+='<div class="tb-r" style="grid-template-columns:1.6fr 2fr 1fr 1.2fr 1.6fr">'+
+         '<div data-l="Name"><b>'+esc(x.nama)+'</b></div>'+
+         '<div data-l="Email" class="mono kecil">'+esc(x.email)+'</div>'+
+         '<div data-l="Status"><span class="tag '+(x.status==='aktif'?'acc':'no')+'">'+
+           esc(x.status==='aktif'?'Active':'Deactivated')+'</span></div>'+
+         '<div data-l="Last signed in" class="mono kecil">'+esc(x.login||'never')+'</div>'+
+         '<div class="pick ketat">'+
+         '<button class="btn ghost xs" onclick="ortuKirimUlang(\''+esc(x.id)+'\')">Resend password</button>'+
+         '<button class="btn ghost xs bahaya" onclick="ortuHapus(\''+esc(x.id)+'\',\''+esc(x.nama)+'\')">Remove</button>'+
+         '</div></div>';
+    });
+    h+='</div>';
+  }else{
+    h+='<div class="empty"><b>No parent account yet</b>Until now a parent could only get in if the student '+
+      'shared their parent code — which often never happens. Create one here instead and it is permanent.</div>';
+  }
+
+  h+='<div class="form-blok" style="margin-top:12px"><div class="isi-grid">'+
+    '<label class="bidang s2"><span>Parent or guardian name</span>'+
+    '<input id="ortuNama" placeholder="e.g. Bapak Ahmad Fauzi"></label>'+
+    '<label class="bidang s2"><span>Email they will sign in with</span>'+
+    '<input id="ortuEmail" type="email" placeholder="ayah@contoh.com"></label>'+
+    '</div><div class="pick ketat">'+
+    '<button class="btn gold sm" id="btnOrtuBuat" onclick="ortuBuat()">Create parent account</button>'+
+    '<span class="eyebrow">A password is generated and emailed to them straight away. '+
+    'The address is added to the report list too.</span></div></div>';
+
   return h+'</div>';
 }
+
 function simpanEmailOrtu(){
   var b=q('btnEmOrtu'); b.disabled=true; b.textContent='Saving…';
   call('simpanEmailOrtu',S.token,S.detail.siswa.id,q('emOrtu').value).then(function(r){
@@ -6208,6 +6928,44 @@ function simpanEmailOrtu(){
     toast(r.emailOrtu?'Parent email saved.':'Parent email cleared.');
   }).catch(function(e){b.disabled=false;b.textContent='Save email';tangani(e)});
 }
+
+function ortuBuat(){
+  var nama=sv(q('ortuNama').value), email=sv(q('ortuEmail').value);
+  if(nama.length<3){toast('Write the parent\'s name first.',true);q('ortuNama').focus();return}
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){toast('That email address does not look right.',true);q('ortuEmail').focus();return}
+  var b=q('btnOrtuBuat'); b.disabled=true; b.textContent='Creating…';
+  call('ortuBuat',S.token,S.detail.siswa.id,nama,email).then(function(r){
+    b.disabled=false; b.textContent='Create parent account';
+    if(!r.ok){if(r.error==='SESI_HABIS'){sesiHabis();return} toast(r.error,true);return}
+    S.detail.ortu=r.ortu; if(r.emailOrtu!==undefined) S.detail.emailOrtu=r.emailOrtu;
+    gambarView();
+    beritahu('Parent account created',
+      '<p>An email with the sign-in details has been sent to <b>'+esc(r.email)+'</b>.</p>'+
+      '<p>In case it does not arrive, the temporary password is below. '+
+      'Ask them to change it from the Account menu after signing in.</p>',r.sandi);
+  }).catch(function(e){b.disabled=false;b.textContent='Create parent account';tangani(e)});
+}
+
+function ortuKirimUlang(id){
+  tanya('Reset this parent\'s password and email them a new one? Their current password stops working.',function(){
+    call('ortuKirimUlang',S.token,id).then(function(r){
+      if(!r.ok){if(r.error==='SESI_HABIS'){sesiHabis();return} toast(r.error,true);return}
+      beritahu('New password sent',
+        '<p>A new password has been emailed to <b>'+esc(r.email)+'</b>.</p>',r.sandi);
+    }).catch(tangani);
+  },'Reset password');
+}
+
+function ortuHapus(id,nama){
+  tanya('Remove the parent account for '+nama+'? They will no longer be able to sign in. '+
+        'The email address stays on file, so reports still reach them.',function(){
+    call('ortuHapus',S.token,id).then(function(r){
+      if(!r.ok){if(r.error==='SESI_HABIS'){sesiHabis();return} toast(r.error,true);return}
+      S.detail.ortu=r.ortu; gambarView(); toast('Parent account removed.');
+    }).catch(tangani);
+  },'Remove',true);
+}
+
 function kirimLaporanPdf(){
   var alamat=String(q('emOrtu').value||'').trim();
   if(!alamat&&!(S.detail.ortu||[]).length){toast('Fill in the parent email first, then save it.',true);return}
