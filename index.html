@@ -30,9 +30,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>DECK PTLN — SMAIT Al-Ittihad</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!-- Tidak ada huruf yang diunduh. Sejak tampilan memakai huruf sistem,
+     ketiga keluarga huruf Google di sini tidak lagi dipakai satu pun —
+     tetapi tautannya masih menahan render pada setiap kali halaman dibuka,
+     dan gagal sama sekali bila jaringan sekolah memblokir fonts.googleapis.com.
+     Halaman kini tampil utuh tanpa satu pun permintaan ke luar. -->
 <style>
 /* =========================================================
    Tampilan DECK PTLN — "menuju keberangkatan"
@@ -151,19 +153,67 @@ body{background:var(--kertas);color:var(--tinta);font-family:var(--sans);
 button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{
   outline:3.5px solid var(--fokus);outline-offset:1px;border-radius:var(--r2)}
 
-/* ---------- navigasi: kendali tersegmen ----------
-   Satu bilah dengan alur abu dan satu segmen putih yang menonjol, seperti
-   pemilih di macOS. Seluruh tab terlihat sekaligus dan berpindahnya satu
-   ketukan — tidak ada menu yang perlu dibuka dulu. */
-.nav{display:flex;gap:2px;flex-wrap:wrap;margin:16px 0 14px;padding:2px;
-  background:rgba(16,48,42,.065);border-radius:var(--r3);
-  box-shadow:inset 0 0 0 .5px rgba(16,48,42,.05)}
-.nav button{font-family:var(--sans);font-size:13px;font-weight:510;letter-spacing:-.005em;
-  background:transparent;border:0;color:var(--tinta-2);padding:6px 13px;cursor:pointer;
-  border-radius:var(--r2);transition:background var(--cepat),color var(--cepat),box-shadow var(--cepat)}
-.nav button:hover{background:rgba(255,255,255,.62);color:var(--tinta)}
-.nav button.on{background:#fff;color:var(--tinta);font-weight:600;
-  box-shadow:0 1px 2.5px rgba(16,48,42,.16),0 0 0 .5px rgba(16,48,42,.07)}
+/* ---------- menu samping ----------
+   Seperti bilah sisi di Finder atau Mail: daftar bagian yang berdiri
+   sendiri di kiri, dikelompokkan, dengan satu baris terpilih yang
+   menonjol. Bisa disembunyikan supaya bagian yang sedang dibuka memakai
+   seluruh lebar layar; di layar sempit ia menutup dirinya sendiri begitu
+   satu bagian dipilih. */
+.shell{display:flex;align-items:flex-start;min-height:100vh;max-width:none;margin:0;padding:0}
+.sisi{flex:0 0 232px;width:232px;position:sticky;top:0;height:100vh;z-index:60;
+  display:flex;flex-direction:column;background:rgba(237,240,234,.78);
+  border-right:.5px solid var(--hair);
+  -webkit-backdrop-filter:blur(22px) saturate(170%);backdrop-filter:blur(22px) saturate(170%);
+  transition:margin-left var(--cepat),opacity var(--cepat)}
+.sisi.tutup{margin-left:-232px;opacity:0;pointer-events:none}
+.sisi-atas{display:flex;align-items:center;gap:9px;padding:13px 14px 9px;flex:0 0 auto}
+.sisi-judul{font-size:12px;font-weight:600;letter-spacing:.01em;color:var(--tinta-2)}
+.sisi-tutup,.sisi-buka{display:inline-flex;align-items:center;justify-content:center;
+  width:26px;height:26px;border-radius:var(--r2);border:.5px solid transparent;
+  background:transparent;color:var(--tinta-2);cursor:pointer;flex:0 0 auto;
+  transition:background var(--cepat),color var(--cepat)}
+.sisi-tutup:hover,.sisi-buka:hover{background:rgba(16,48,42,.09);color:var(--tinta)}
+.utama{flex:1;min-width:0;padding:18px 20px 96px;max-width:1180px;margin:0 auto;position:relative}
+.sisi-buka{position:absolute;top:20px;left:-4px;display:none}
+.shell.lipat .sisi-buka{display:inline-flex}
+.shell.lipat .utama{padding-left:40px}
+.sisi-tirai{display:none;position:fixed;inset:0;background:rgba(16,48,42,.3);z-index:55;
+  -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+
+.nav{flex:1;min-height:0;overflow-y:auto;padding:2px 10px 18px;
+  display:flex;flex-direction:column;gap:1px}
+.nav .nav-kel{font-size:10.5px;font-weight:600;color:var(--mute);letter-spacing:.02em;
+  padding:13px 8px 4px}
+.nav .nav-kel:first-child{padding-top:3px}
+.nav button{font-family:var(--sans);font-size:13px;font-weight:500;letter-spacing:-.005em;
+  background:transparent;border:0;color:var(--tinta);padding:6px 9px;cursor:pointer;
+  border-radius:var(--r2);text-align:left;display:flex;align-items:center;gap:7px;width:100%;
+  transition:background var(--cepat),color var(--cepat)}
+.nav button:hover{background:rgba(16,48,42,.075)}
+.nav button.on{background:var(--tinta);color:#F1F5F1;font-weight:600}
+.nav button .n-t{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nav button .n-p{font-size:11px;color:var(--mute);font-variant-numeric:tabular-nums;flex:0 0 auto}
+.nav button.on .n-p{color:#A8C3B8}
+
+@media (max-width:1000px){
+  .sisi{position:fixed;left:0;top:0;box-shadow:var(--lift-3)}
+  .sisi.tutup{margin-left:-232px}
+  .sisi-buka{display:inline-flex}
+  body.sisi-terbuka .sisi-tirai{display:block}
+}
+/* Di layar sempit tombol menu duduk DI ATAS isi, bukan di sampingnya.
+   Menyisakan kolom untuk tombol itu memakan 20 px dari lebar yang sudah
+   tinggal 390 px, dan grafik yang lebar minimumnya 340 px langsung
+   mendorong halaman melebar. */
+@media (max-width:760px){
+  .utama,.shell.lipat .utama{padding:52px 14px 96px}
+  /* Tombol menu tetap di tempatnya saat halaman digulir. Tombol yang
+     harus dicari dengan menggulir ke atas dulu bukan tombol menu. */
+  .sisi-buka{position:fixed;top:10px;left:10px;z-index:58;background:rgba(255,255,255,.86);
+    border-color:var(--hair);box-shadow:var(--lift-1);
+    -webkit-backdrop-filter:blur(14px) saturate(160%);backdrop-filter:blur(14px) saturate(160%)}
+}
+@media print{ .sisi,.sisi-buka,.sisi-tirai{display:none !important} .utama{padding:0;max-width:none} }
 .nav .badge{display:inline-block;background:var(--alert);color:#fff;font-size:11px;font-weight:600;
   padding:1px 7px;border-radius:99px;margin-left:6px;vertical-align:1px}
 .nav button.on .badge{background:var(--gold)}
@@ -436,6 +486,36 @@ table.board.cari td{vertical-align:top}
 @media(max-width:1020px){.cari-saring{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:620px){.cari-saring{grid-template-columns:repeat(2,minmax(0,1fr))}
   .cari-baris .btn{width:100%}}
+
+/* --- syarat minimum yang belum tercatat --- */
+.syarat{display:flex;flex-direction:column;gap:1px;background:var(--line);
+  border-radius:var(--r3);overflow:hidden}
+.syarat-r{display:grid;grid-template-columns:minmax(0,2fr) 320px auto;gap:14px;
+  background:var(--kartu);padding:11px 14px;align-items:start}
+.syarat-k{min-width:0}
+.syarat-b{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.syarat-a{display:flex;flex-direction:column;gap:4px}
+.syarat-a .btn{text-decoration:none;text-align:center;white-space:nowrap}
+@media(max-width:900px){.syarat-r{grid-template-columns:1fr}
+  .syarat-a{flex-direction:row;flex-wrap:wrap}}
+
+/* --- minggu ini: satu tindakan per baris, yang teratas menonjol --- */
+.pekan{display:flex;flex-direction:column;gap:1px;background:var(--line);
+  border-radius:var(--r3);overflow:hidden}
+.pekan-r{display:grid;grid-template-columns:30px minmax(0,1fr) auto;gap:13px;
+  align-items:center;background:var(--kartu);padding:12px 14px}
+.pekan-r.utama{background:#FFFBF2}
+.pekan-n{width:24px;height:24px;border-radius:50%;background:rgba(16,48,42,.08);
+  display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:650;
+  color:var(--tinta-2)}
+.pekan-r.utama .pekan-n{background:var(--gold);color:#fff}
+.pekan-j{font-size:14.5px;font-weight:600;letter-spacing:-.01em;line-height:1.3}
+.pekan-r.utama .pekan-j{font-size:15.5px}
+.pekan-a{font-size:13px;color:var(--tinta-2);line-height:1.5;margin-top:3px;max-width:76ch}
+@media(max-width:620px){
+  .pekan-r{grid-template-columns:24px minmax(0,1fr);gap:9px}
+  .pekan-r .btn{grid-column:2;justify-self:start;margin-top:6px}
+}
 
 /* --- daftar hasil pencarian --- */
 .hasil{display:flex;flex-direction:column;gap:1px;background:var(--line);
@@ -903,10 +983,24 @@ table.board.cari td{vertical-align:top}
 </div>
 
 <!-- ============ APPLICATION ============ -->
-<div id="app" class="wrap hidden">
-  <div id="hdr"></div>
-  <div id="nav" class="nav"></div>
-  <div id="view"></div>
+<div id="app" class="shell hidden">
+  <aside id="sisi" class="sisi" aria-label="Sections">
+    <div class="sisi-atas">
+      <button class="sisi-tutup" onclick="sisiTutup()" title="Hide the menu" aria-label="Hide the menu">
+        <svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true"><path d="M3 3.5h10M3 8h10M3 12.5h10"
+          stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/></svg></button>
+      <span class="sisi-judul">DECK PTLN</span>
+    </div>
+    <div id="nav" class="nav"></div>
+  </aside>
+  <div id="tirai" class="sisi-tirai" onclick="sisiTutup()"></div>
+  <div class="utama">
+    <button id="sisiBuka" class="sisi-buka" onclick="sisiToggle()" title="Show the menu" aria-label="Show the menu">
+      <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3 3.5h10M3 8h10M3 12.5h10"
+        stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/></svg></button>
+    <div id="hdr"></div>
+    <div id="view"></div>
+  </div>
 </div>
 
 <script>
@@ -930,7 +1024,9 @@ var S = {
   agenda:[], ics:'', papan:null, kalBulan:'', kalJenis:'', padat:false,
   analisa:[], seimbang:[], inggris:null, jurusanBawaan:[], arsip:null, kurs:{},
   programKampus:{}, memuatProgram:{},
-  dbKueri:'', dbHasil:null, dbSibuk:false, dbNegara:[], dbBidang:[],
+  dbKueri:'', dbHasil:null, dbSibuk:false, dbNegara:[], dbBidang:[], ambilRef:false,
+  catatan:[], catatanEdit:null, jenisCatatan:[], sisiBuka:true, semuaGerbang:false,
+  mulai:{}, mulaiTutup:false, syaratKurang:undefined, syaratSibuk:false,
   dbSaring:{negara:'',bidang:'',maksBiaya:'',maksQs:'',maksIelts:'',program:true}
 };
 var KEY='deckptln_token_v1';
@@ -943,7 +1039,7 @@ var KEY='deckptln_token_v1';
    Ganti bila membuat deployment baru.
    ------------------------------------------------------- */
 var LAMBANG='<div class="lambang"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="DECK PTLN"><rect width="100" height="100" rx="24" fill="#EDF0EA"/><rect x="15.5" y="60" width="7.4" height="20" rx="3.2" fill="#10302A" opacity="0.55"/><rect x="27.3" y="52" width="7.4" height="28" rx="3.2" fill="#10302A" opacity="0.64"/><rect x="39.1" y="44" width="7.4" height="36" rx="3.2" fill="#10302A" opacity="0.73"/><rect x="50.900000000000006" y="36" width="7.4" height="44" rx="3.2" fill="#10302A" opacity="0.82"/><rect x="62.7" y="28" width="7.4" height="52" rx="3.2" fill="#10302A" opacity="0.91"/><rect x="74.5" y="18" width="7.4" height="62" rx="3.2" fill="#C77D1A" opacity="1"/></svg></div>';
-var VERSI_UI='2026.10.09-19';
+var VERSI_UI='2026.10.10-21';
 var KUNCI_ALAMAT='deckptln_apiurl_v1';
 
 /* Alamat Web App boleh ditimpa dari dalam aplikasi. Berguna bila di Apps
@@ -1126,6 +1222,29 @@ function muatRef(){
 function buangRef(){
   try{ localStorage.removeItem(KUNCI_REF) }catch(e){}
   S.refSidik='';
+}
+
+/* Mengambil daftar kampus di latar belakang, setelah deck tampil.
+
+   Deck tidak menunggu ini. Yang menunggu hanya pilihan kampus — dan
+   selama belum tiba, kolomnya berkata sedang memuat, bukan tampak kosong
+   seolah databasenya hilang. Dijalankan paling banyak sekali per sesi. */
+function ambilRefLatar(sidikServer){
+  if(S.ambilRef) return;
+  if(S.univ.length && S.refSidik===sidikServer) return;   /* sudah terkini */
+  S.ambilRef=true;
+  /* Sidik berarti "daftar ini sudah saya pegang". Mengirimnya saat daftarnya
+     belum ada membuat server menjawab "masih sama" dan tidak mengirim
+     apa-apa — dan pilihan kampus tidak pernah terisi. */
+  var punya=S.univ.length?(S.refSidik||''):'';
+  call('ambilReferensi',S.token,punya).then(function(r){
+    S.ambilRef=false;
+    if(!r||!r.ok) return;
+    if(r.refTetap){ S.refSidik=r.refSidik||S.refSidik; simpanRef(); return }
+    S.univ=rakitUniv(r); S.bea=r.bea||[]; S.refSidik=r.refSidik||S.refSidik;
+    simpanRef();
+    gambarView();          /* pilihan kampus yang tadi memuat kini terisi */
+  }).catch(function(){ S.ambilRef=false });
 }
 function readK(k){try{return localStorage.getItem(k)}catch(e){return null}}
 function toast(msg,bad){
@@ -1358,7 +1477,7 @@ function mulai(){
       terapkanBootstrap(cepat,true);
       S.versiServer='';                 // versi sungguhan menunggu balasan server
       q('boot').classList.add('hidden');
-      q('app').classList.remove('hidden');
+      q('app').classList.remove('hidden'); sisiAwal();
       render();
       pakaiCepat=true;
       spandukMuat(true);
@@ -1376,7 +1495,7 @@ function mulai(){
     }
     terapkanBootstrap(r,true);
     q('boot').classList.add('hidden');
-    q('app').classList.remove('hidden');
+    q('app').classList.remove('hidden'); sisiAwal();
     mulaiSync();     // dijalankan sebelum render, agar tidak ikut gagal bila render bermasalah
     render();
     if(!S.versiServer||S.versiServer!==VERSI_UI) periksaServer(); else gambarPita();
@@ -1451,11 +1570,16 @@ function hapusAwal(){ try{ localStorage.removeItem(KUNCI_SIMPAN) }catch(e){} }
 function terapkanBootstrap(r,awal){
   if(r.domainGuru && r.domainGuru.length) DOMAIN_GURU=r.domainGuru;
   S.user=r.user; S.schema=r.schema;
-  /* Sidiknya dipasang SEBELUM daftar kampus disimpan: tanpa sidik,
-     simpanannya tidak ada gunanya — tidak ada yang bisa dikirim ke server
-     untuk menanyakan apakah isinya masih sama. */
-  if(r.refSidik) S.refSidik=r.refSidik;
-  if(!r.refTetap){ S.univ=rakitUniv(r); S.bea=r.bea||[]; simpanRef() }
+  /* Daftar kampus tidak lagi ikut dalam balasan bootstrap; yang datang
+     hanya sidiknya. Bila yang dipegang peramban sudah sama, tidak ada yang
+     perlu diambil. Bila berbeda, pengambilannya dijadwalkan di latar
+     belakang — deck tidak menunggu. */
+  var sidikServer=r.refSidik||'';
+  if(!r.refTetap&&r.univRingkas){        /* server versi lama: masih menyertakannya */
+    S.refSidik=sidikServer; S.univ=rakitUniv(r); S.bea=r.bea||[]; simpanRef();
+  }else if(sidikServer&&sidikServer!==S.refSidik){
+    setTimeout(function(){ ambilRefLatar(sidikServer) },0);
+  }
   S.konsultasi=r.konsultasi||[];
   S.skala=r.skala||[]; S.tahunAjaran=r.tahunAjaran||[]; S.statusValidasi=r.statusValidasi||[];
   if(r.tahun) S.tahun=r.tahun;
@@ -1468,6 +1592,8 @@ function terapkanBootstrap(r,awal){
   S.reset=r.reset||[];
   S.psi=r.psi||null; S.rumpun=r.rumpun||S.rumpun; S.kodeOrtu=r.kodeOrtu||S.kodeOrtu;
   S.layanan=r.layanan||[]; S.dokumen=r.dokumen||[];
+  if(r.catatan) S.catatan=r.catatan;
+  if(r.jenisCatatan) S.jenisCatatan=r.jenisCatatan;
   S.analisa=r.analisa||[]; S.seimbang=r.seimbang||[]; S.inggris=r.inggris||null;
   if(r.arsip!==undefined) S.arsip=r.arsip;
   if(r.jurusanBawaan) S.jurusanBawaan=r.jurusanBawaan;
@@ -1810,96 +1936,165 @@ function gambarHeader(){
   q('hdr').innerHTML=h;
 }
 
+/* =======================================================
+   MENU SAMPING
+
+   Daftar bagian dibangun dari satu keterangan, bukan dari potongan HTML
+   yang ditulis ulang per peran. Dengan begitu pengelompokan, lencana, dan
+   angka progres berlaku sama untuk siswa, guru, admin, pimpinan, dan
+   orang tua — dan menambah satu bagian cukup menambah satu baris.
+   ======================================================= */
+function butirNav(){
+  var r=S.user.role, d=[];
+  function kel(t){ d.push({kel:t}) }
+  function b(id,label,opsi){ d.push(Object.assign({id:id,label:label},opsi||{})) }
+
+  if(r==='siswa'){
+    var p=S.progres||hitung();
+    kel('Your deck');
+    b('dash','Dashboard');
+    b('pekan','This week');
+    kel('Six gates');
+    S.schema.sections.forEach(function(s){
+      if(!gerbangUntukKelas(s.id)) return;
+      b(s.id,s.kode+' · '+s.label,{progres:p[s.id]||0});
+    });
+    kel('Your record');
+    b('rapor','Transcript');
+    b('psi','Psychometrics');
+    b('banding','Compare targets');
+    kel('With your mentor');
+    b('konsul','Consultations',{badge:(S.konsultasi||[]).filter(function(k){return k.status==='Accepted'}).length});
+    b('dokumen','My documents',{badge:(S.dokumen||[]).filter(function(x){return x.status==='Revisi'}).length});
+    b('layanan','Services');
+    b('kabar','Announcements',{badge:(S.pengumuman||[]).length});
+    b('kalender','Calendar',{badgeHtml:lencanaAgenda()});
+    kel('');
+    b('akun','Account');
+  }else if(ortu()){
+    kel('Your child');
+    b('pantau','Overview'); b('rapor','Transcript'); b('psi','Psychometrics'); b('rinci','Full deck');
+    kel('');
+    b('kabar','Announcements',{badge:(S.pengumuman||[]).length});
+    b('kalender','Calendar',{badgeHtml:lencanaAgenda()});
+    b('akun','Account');
+  }else if(r==='admin'||r==='guru'){
+    var adm=(r==='admin');
+    kel('Counselling');
+    b('dasbor','Dashboard');
+    b('papan',adm?'Student decks':'Student board');
+    if(S.detail) b('detail','Check · '+S.detail.siswa.nama.split(' ')[0]);
+    b('catatan','Counselling notes');
+    b('konsul','Consultations',{badge:(S.konsultasi||[]).filter(function(k){return k.status==='Pending'}).length});
+    kel('Day to day');
+    b('kalender','Calendar',{badgeHtml:lencanaAgenda()});
+    b('dokumen','Documents',{badgeHtml:lencanaDokumen()});
+    b('layanan','Services');
+    b('kabar','Announcements');
+    kel('Reference');
+    b('database','Database');
+    b('tkampus','University targets');
+    b('tbeasiswa','Scholarship targets');
+    if(adm){
+      kel('Administration');
+      b('exec','Overview');
+      b('akunkelola','Accounts');
+      b('reset','Password requests',{badge:(S.reset||[]).filter(function(x){return x.status==='Menunggu'}).length});
+      b('log','Activity log');
+    }
+    kel('');
+    b('akun','Account');
+  }else{
+    kel('Leadership');
+    b('dasbor','Dashboard'); b('exec','Overview'); b('papan','All students');
+    kel('Reference');
+    b('kalender','Calendar',{badgeHtml:lencanaAgenda()});
+    b('dokumen','Documents',{badgeHtml:lencanaDokumen()});
+    b('database','Database');
+    b('tkampus','Universities &amp; majors');
+    b('tbeasiswa','Scholarships');
+    kel('');
+    b('akun','Account');
+  }
+  return d;
+}
+
 function gambarNav(){
   var h='';
-  if(S.user.role==='siswa'){
-    h+='<button class="'+(S.tab==='dash'?'on':'')+'" onclick="pindah(\'dash\')">Dashboard</button>';
-    S.schema.sections.forEach(function(s){
-      h+='<button class="'+(S.tab===s.id?'on':'')+'" onclick="pindah(\''+s.id+'\')">'+s.kode+' · '+esc(s.label)+'</button>';
-    });
-    h+='<button class="'+(S.tab==='rapor'?'on':'')+'" onclick="pindah(\'rapor\')">Transcript</button>';
-    h+='<button class="'+(S.tab==='psi'?'on':'')+'" onclick="pindah(\'psi\')">Psychometrics</button>';
-    var baru=(S.pengumuman||[]).length;
-    h+='<button class="'+(S.tab==='kabar'?'on':'')+'" onclick="pindah(\'kabar\')">Announcements'+
-       (baru?'<span class="badge">'+baru+'</span>':'')+'</button>';
-    var blm=(S.konsultasi||[]).filter(function(k){return k.status==='Accepted'}).length;
-    h+='<button class="'+(S.tab==='konsul'?'on':'')+'" onclick="pindah(\'konsul\')">Consultations'+
-       (blm?'<span class="badge">'+blm+'</span>':'')+'</button>';
-    var rev=(S.dokumen||[]).filter(function(d){return d.status==='Revisi'}).length;
-    h+='<button class="'+(S.tab==='dokumen'?'on':'')+'" onclick="pindah(\'dokumen\')">My documents'+
-       (rev?'<span class="badge">'+rev+'</span>':'')+'</button>';
-    h+='<button class="'+(S.tab==='layanan'?'on':'')+'" onclick="pindah(\'layanan\')">Services</button>';
-    h+='<button class="'+(S.tab==='kalender'?'on':'')+'" onclick="pindah(\'kalender\')">Calendar'+
-       lencanaAgenda()+'</button>';
-    h+='<button class="'+(S.tab==='akun'?'on':'')+'" onclick="pindah(\'akun\')">Account</button>';
-  }else if(ortu()){
-    h+='<button class="'+(S.tab==='pantau'?'on':'')+'" onclick="pindah(\'pantau\')">Overview</button>';
-    h+='<button class="'+(S.tab==='rapor'?'on':'')+'" onclick="pindah(\'rapor\')">Transcript</button>';
-    h+='<button class="'+(S.tab==='psi'?'on':'')+'" onclick="pindah(\'psi\')">Psychometrics</button>';
-    h+='<button class="'+(S.tab==='rinci'?'on':'')+'" onclick="pindah(\'rinci\')">Full deck</button>';
-    var bk=(S.pengumuman||[]).length;
-    h+='<button class="'+(S.tab==='kabar'?'on':'')+'" onclick="pindah(\'kabar\')">Announcements'+
-       (bk?'<span class="badge">'+bk+'</span>':'')+'</button>';
-    h+='<button class="'+(S.tab==='kalender'?'on':'')+'" onclick="pindah(\'kalender\')">Calendar'+
-       lencanaAgenda()+'</button>';
-    h+='<button class="'+(S.tab==='akun'?'on':'')+'" onclick="pindah(\'akun\')">Account</button>';
-  }else if(S.user.role==='admin'){
-    var mn2=(S.konsultasi||[]).filter(function(k){return k.status==='Pending'}).length;
-    h+='<button class="'+(S.tab==='dasbor'?'on':'')+'" onclick="pindah(\'dasbor\')">Dashboard</button>';
-    h+='<button class="'+(S.tab==='papan'?'on':'')+'" onclick="pindah(\'papan\')">Student decks</button>';
-    h+='<button class="'+(S.tab==='kalender'?'on':'')+'" onclick="pindah(\'kalender\')">Calendar'+
-       lencanaAgenda()+'</button>';
-    h+='<button class="'+(S.tab==='dokumen'?'on':'')+'" onclick="pindah(\'dokumen\')">Documents'+
-       lencanaDokumen()+'</button>';
-    h+='<button class="'+(S.tab==='layanan'?'on':'')+'" onclick="pindah(\'layanan\')">Services</button>';
-    h+='<button class="'+(S.tab==='database'?'on':'')+'" onclick="pindah(\'database\')">Database</button>';
-    h+='<button class="'+(S.tab==='akunkelola'?'on':'')+'" onclick="pindah(\'akunkelola\')">Accounts</button>';
-    h+='<button class="'+(S.tab==='tkampus'?'on':'')+'" onclick="pindah(\'tkampus\')">University targets</button>';
-    h+='<button class="'+(S.tab==='tbeasiswa'?'on':'')+'" onclick="pindah(\'tbeasiswa\')">Scholarship targets</button>';
-    h+='<button class="'+(S.tab==='konsul'?'on':'')+'" onclick="pindah(\'konsul\')">Consultations'+
-       (mn2?'<span class="badge">'+mn2+'</span>':'')+'</button>';
-    h+='<button class="'+(S.tab==='kabar'?'on':'')+'" onclick="pindah(\'kabar\')">Announcements</button>';
-    h+='<button class="'+(S.tab==='exec'?'on':'')+'" onclick="pindah(\'exec\')">Overview</button>';
-    var mr=(S.reset||[]).filter(function(x){return x.status==='Menunggu'}).length;
-    h+='<button class="'+(S.tab==='reset'?'on':'')+'" onclick="pindah(\'reset\')">Password requests'+
-       (mr?'<span class="badge">'+mr+'</span>':'')+'</button>';
-    h+='<button class="'+(S.tab==='log'?'on':'')+'" onclick="pindah(\'log\')">Activity log</button>';
-    if(S.detail) h+='<button class="'+(S.tab==='detail'?'on':'')+'" onclick="pindah(\'detail\')">Check · '+esc(S.detail.siswa.nama.split(' ')[0])+'</button>';
-    h+='<button class="'+(S.tab==='akun'?'on':'')+'" onclick="pindah(\'akun\')">Account</button>';
-  }else if(S.user.role==='guru'){
-    var mn=(S.konsultasi||[]).filter(function(k){return k.status==='Pending'}).length;
-    h+='<button class="'+(S.tab==='dasbor'?'on':'')+'" onclick="pindah(\'dasbor\')">Dashboard</button>';
-    h+='<button class="'+(S.tab==='papan'?'on':'')+'" onclick="pindah(\'papan\')">Student board</button>';
-    h+='<button class="'+(S.tab==='kalender'?'on':'')+'" onclick="pindah(\'kalender\')">Calendar'+
-       lencanaAgenda()+'</button>';
-    h+='<button class="'+(S.tab==='dokumen'?'on':'')+'" onclick="pindah(\'dokumen\')">Documents'+
-       lencanaDokumen()+'</button>';
-    h+='<button class="'+(S.tab==='layanan'?'on':'')+'" onclick="pindah(\'layanan\')">Services</button>';
-    h+='<button class="'+(S.tab==='database'?'on':'')+'" onclick="pindah(\'database\')">Database</button>';
-    h+='<button class="'+(S.tab==='tkampus'?'on':'')+'" onclick="pindah(\'tkampus\')">University targets</button>';
-    h+='<button class="'+(S.tab==='tbeasiswa'?'on':'')+'" onclick="pindah(\'tbeasiswa\')">Scholarship targets</button>';
-    h+='<button class="'+(S.tab==='konsul'?'on':'')+'" onclick="pindah(\'konsul\')">Consultations'+
-       (mn?'<span class="badge">'+mn+'</span>':'')+'</button>';
-    h+='<button class="'+(S.tab==='kabar'?'on':'')+'" onclick="pindah(\'kabar\')">Announcements</button>';
-    if(S.detail) h+='<button class="'+(S.tab==='detail'?'on':'')+'" onclick="pindah(\'detail\')">Check · '+esc(S.detail.siswa.nama.split(' ')[0])+'</button>';
-    h+='<button class="'+(S.tab==='akun'?'on':'')+'" onclick="pindah(\'akun\')">Account</button>';
-  }else{
-    h+='<button class="'+(S.tab==='dasbor'?'on':'')+'" onclick="pindah(\'dasbor\')">Dashboard</button>';
-    h+='<button class="'+(S.tab==='exec'?'on':'')+'" onclick="pindah(\'exec\')">Overview</button>';
-    h+='<button class="'+(S.tab==='papan'?'on':'')+'" onclick="pindah(\'papan\')">All students</button>';
-    h+='<button class="'+(S.tab==='kalender'?'on':'')+'" onclick="pindah(\'kalender\')">Calendar'+
-       lencanaAgenda()+'</button>';
-    h+='<button class="'+(S.tab==='dokumen'?'on':'')+'" onclick="pindah(\'dokumen\')">Documents'+
-       lencanaDokumen()+'</button>';
-    h+='<button class="'+(S.tab==='database'?'on':'')+'" onclick="pindah(\'database\')">Database</button>';
-    h+='<button class="'+(S.tab==='tkampus'?'on':'')+'" onclick="pindah(\'tkampus\')">Universities &amp; majors</button>';
-    h+='<button class="'+(S.tab==='tbeasiswa'?'on':'')+'" onclick="pindah(\'tbeasiswa\')">Scholarships</button>';
-    h+='<button class="'+(S.tab==='akun'?'on':'')+'" onclick="pindah(\'akun\')">Account</button>';
-  }
+  butirNav().forEach(function(x){
+    if(x.kel!==undefined){ h+='<div class="nav-kel">'+esc(x.kel)+'</div>'; return }
+    var lenc=x.badgeHtml||(x.badge?'<span class="badge">'+x.badge+'</span>':'');
+    var pr=(x.progres!==undefined)?'<span class="n-p">'+x.progres+'%</span>':'';
+    h+='<button class="'+(S.tab===x.id?'on':'')+'" onclick="pindah(\''+x.id+'\')">'+
+       '<span class="n-t">'+x.label+'</span>'+pr+lenc+'</button>';
+  });
   q('nav').innerHTML=h;
 }
 
-function pindah(t){S.tab=t;gambarHeader();gambarNav();gambarView();window.scrollTo({top:0,behavior:'smooth'})}
+/* Gerbang mana yang relevan untuk kelas siswa.
+
+   Kelas X baru menjajaki: memaksanya melihat berkas pendaftaran dan
+   keberangkatan hanya membuat enam kotak kosong, dan itulah sebabnya
+   sebagian besar deck berhenti terisi. Yang disembunyikan tidak dihapus —
+   begitu naik kelas, gerbangnya muncul sendiri beserta isinya. */
+var GERBANG_KELAS={
+  X:['A','C','D'],
+  XI:['A','B','C','D','E'],
+  XII:null            /* null berarti semuanya */
+};
+function tingkatKelas(){
+  var k=String((S.user&&S.user.kelas)||'').toUpperCase();
+  if(/^XII/.test(k)) return 'XII';
+  if(/^XI/.test(k)) return 'XI';
+  if(/^X/.test(k)) return 'X';
+  return 'XII';       /* tidak diketahui: tampilkan semuanya */
+}
+function gerbangUntukKelas(id){
+  if(S.semuaGerbang) return true;
+  var boleh=GERBANG_KELAS[tingkatKelas()];
+  if(!boleh) return true;
+  var s=(S.schema.sections||[]).filter(function(x){return x.id===id})[0];
+  return !s||boleh.indexOf(s.kode)>=0;
+}
+
+/* ---- buka-tutup menu samping ----
+
+   Di layar lebar menu tetap terbuka sampai dilipat sendiri oleh pemakai,
+   dan pilihannya diingat. Di layar sempit ia menutup diri begitu satu
+   bagian dipilih, supaya bagian itu memakai seluruh lebar layar. */
+var KUNCI_SISI='deckptln_sisi_v1';
+function sempit(){ return window.innerWidth<=1000 }
+function sisiPasang(buka){
+  S.sisiBuka=!!buka;
+  var a=q('app'), s=q('sisi');
+  if(!a||!s) return;
+  s.classList.toggle('tutup',!buka);
+  a.classList.toggle('lipat',!buka);
+  document.body.classList.toggle('sisi-terbuka',!!buka&&sempit());
+  if(!sempit()) store(KUNCI_SISI,buka?'1':'0');
+}
+function sisiToggle(){ sisiPasang(!S.sisiBuka) }
+function sisiTutup(){ sisiPasang(false) }
+function sisiAwal(){
+  /* Layar sempit mulai tertutup; layar lebar mengikuti pilihan terakhir. */
+  if(sempit()) return sisiPasang(false);
+  var t=null; try{ t=localStorage.getItem(KUNCI_SISI) }catch(e){}
+  sisiPasang(t!=='0');
+}
+var sisiLebarTerakhir=0;
+window.addEventListener('resize',function(){
+  var k=sempit();
+  if(k===sisiLebarTerakhir) return;       /* hanya saat melewati ambang */
+  sisiLebarTerakhir=k;
+  sisiAwal();
+});
+
+function pindah(t){
+  S.tab=t;
+  if(sempit()) sisiPasang(false);          /* fokus ke bagian yang dipilih */
+  gambarHeader();gambarNav();gambarView();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
 function setelahGambar(){
   gambarPita();
   if(document.querySelector('.jam[data-tgl]')) mulaiJam();
@@ -2015,6 +2210,7 @@ function gambarViewInti(){
     if(S.tab==='exec'){v.innerHTML=viewEksekutif();return}
     v.innerHTML=viewDasbor(); return;
   }
+  if(bimbing()&&S.tab==='catatan'){v.innerHTML=viewCatatan();return}
   if(S.user.role==='admin'){
     if(S.tab==='akunkelola'){v.innerHTML=viewKelolaAkun();return}
     if(S.tab==='log'){v.innerHTML=viewLog();return}
@@ -2028,6 +2224,8 @@ function gambarViewInti(){
     if(S.tab==='papan'){v.innerHTML=viewPapan();return}
     v.innerHTML=viewDasbor(); return;
   }
+  if(S.tab==='pekan'){v.innerHTML=viewPekan();return}
+  if(S.tab==='banding'){v.innerHTML=viewBanding();return}
   if(S.tab==='dash'){v.innerHTML=viewDash();return}
   if(S.tab==='rapor'){v.innerHTML=viewRapor(S.deck,false);return}
   if(S.tab==='psi'){v.innerHTML=viewPsi(S.deck,false);return}
@@ -2042,7 +2240,468 @@ function cariSeksi(id){
 /* =======================================================
    DASBOR SISWA
    ======================================================= */
+/* =======================================================
+   MINGGU INI — SATU TINDAKAN, BUKAN ENAM GERBANG
+
+   Dasbor menunjukkan keadaan; halaman ini menunjukkan perbuatan. Dari
+   seluruh isi deck, dipilih satu hal yang paling mendesak dan paling
+   menghambat, ditulis sebagai kalimat yang bisa langsung dikerjakan.
+
+   Urutannya bukan selera: yang mematikan peluang lebih dulu. Tenggat yang
+   lewat mengalahkan apa pun; sesudahnya syarat yang belum terpenuhi,
+   karena tanpa itu berkas sebagus apa pun ditolak; baru kemudian berkas,
+   dana, dan penjajakan.
+   ======================================================= */
+function hariKe(tgl){
+  if(!tgl) return null;
+  var t=new Date(tgl+'T00:00:00'); if(isNaN(t.getTime())) return null;
+  var k=new Date(); k.setHours(0,0,0,0);
+  return Math.round((t-k)/86400000);
+}
+function langkahBerikut(){
+  /* analisaKini() memetakan indeks target ke analisanya, bukan larik —
+     dijadikan larik dulu supaya urutannya sejalan dengan daftar target. */
+  var d=S.deck||{}, peta=analisaKini(), out=[];
+  var an=Object.keys(peta).map(function(k){return peta[k]});
+  var uni=(d.uni||[]).filter(function(x){return sv(x.kampus)});
+  var skor=skorBahasaKini();
+
+  /* 1 — tenggat yang sudah lewat atau tinggal hitungan hari */
+  uni.forEach(function(u){
+    var n=hariKe(u.deadline);
+    if(n===null) return;
+    if(n<0) out.push({p:1,judul:'Your deadline for '+u.kampus+' has passed',
+      apa:'It was '+Math.abs(n)+' day'+(Math.abs(n)===1?'':'s')+' ago. Either submit now, or move the date so the countdown means something again.',
+      tab:'D',tombol:'Open the target'});
+    else if(n<=21&&u.status!=='Submitted'&&u.status!=='Accepted')
+      out.push({p:2,judul:u.kampus+' closes in '+n+' day'+(n===1?'':'s'),
+        apa:'Status is still "'+(u.status||'Not started')+'". Work backwards from the deadline — documents first, then the form.',
+        tab:'D',tombol:'Open the target'});
+  });
+
+  /* 2 — syarat bahasa: gerbang paling keras, dan paling sering kosong */
+  if(!skor.ada&&uni.length){
+    var perlu=uni.map(function(u){var a=(an||[]).filter(function(x){return x.kampus===u.kampus})[0];
+      return a&&a.minIelts}).filter(function(x){return x});
+    var tinggi=perlu.length?Math.max.apply(null,perlu):null;
+    out.push({p:3,judul:'You have no English test score yet',
+      apa:(tinggi?'Your targets ask for IELTS up to '+ang(tinggi,1)+'. ':'')+
+        'Every target needs one, and a test seat is booked weeks ahead. Put your score in — or the date you will sit the test.',
+      tab:'C',tombol:'Open gate C'});
+  }else if(skor.ada){
+    (an||[]).forEach(function(a){
+      if(a.cocok&&a.cocok.label==='Below minimum')
+        out.push({p:4,judul:'Your score is below the minimum at '+a.kampus,
+          apa:a.cocok.kurang.join(' ')+' Either raise the score or add a university you already clear.',
+          tab:'D',tombol:'Open the target'});
+    });
+  }
+
+  /* 3 — target tanpa tenggat sendiri: tidak ada hitung mundur, sehingga
+     tidak ada yang mengingatkan apa pun. Hanya 10% siswa mengisinya, dan
+     itulah sebabnya pengingat selama ini tidak pernah terasa mendesak. */
+  uni.forEach(function(u){
+    if(sv(u.deadline)) return;
+    var ref=(S.univ||[]).filter(function(x){return x.nama===u.kampus})[0]||{};
+    out.push({p:4,judul:'No deadline set for '+u.kampus,
+      apa:(ref.daftar?'The official window is '+ref.daftar+'. ':'')+
+        'Pick the date you must submit by — until there is one, nothing counts down and no reminder reaches you.',
+      tab:'D',tombol:'Set the date'});
+  });
+
+  /* 4 — belum punya target sama sekali */
+  if(!uni.length) out.push({p:2,judul:'You have no university target yet',
+    apa:'Everything else follows from this one choice. Pick a country and a university — the cost, the requirements and your fit are worked out straight away.',
+    tab:'D',tombol:'Add a target'});
+
+  /* 4 — dana: tidak ada satu pun target yang dananya direncanakan */
+  var adaDana=uni.some(function(u){return Number(u.danaBea)||Number(u.danaKel)});
+  if(uni.length&&!adaDana) out.push({p:5,judul:'No funding planned for any target',
+    apa:'The cost per year is already worked out for you. Fill in what a scholarship might cover and what your family can cover, and the gap becomes a number you can act on.',
+    tab:'D',tombol:'Open the targets'});
+
+  /* 5 — berkas yang tertunda pada target terdekat */
+  (an||[]).forEach(function(a){
+    if(a.berkas&&a.berkas.tertunda&&a.berkas.tertunda.length&&hariKe(a.deadline)!==null)
+      out.push({p:6,judul:'Documents still open for '+a.kampus,
+        apa:'Still outstanding: '+a.berkas.tertunda.join(', ')+'.',
+        tab:'B',tombol:'Open gate B'});
+  });
+
+  /* 6 — psikometri belum dikerjakan */
+  var psi=S.psi||{};
+  if(!psi.teratas||!psi.teratas.length) out.push({p:7,judul:'Your psychometric profile is empty',
+    apa:'It takes one sitting, and it is what tells you whether the major you are aiming at fits how you actually work.',
+    tab:'A',tombol:'Open gate A'});
+
+  out.sort(function(a,b){return a.p-b.p});
+  return out;
+}
+function skorBahasaKini(){
+  var t=(S.deck&&S.deck.tes)||[],ada=false,rinci=[];
+  t.forEach(function(x){ if(sv(x.skor)){ada=true;rinci.push(sv(x.jenis)+' '+sv(x.skor))} });
+  return {ada:ada,rinci:rinci};
+}
+function idSeksiDariKode(k){
+  var s=(S.schema.sections||[]).filter(function(x){return x.kode===k})[0];
+  return s?s.id:'dash';
+}
+/* =======================================================
+   CATATAN KONSELING
+
+   Yang dicatat bukan janji temunya — itu sudah ada di tab Consultations —
+   melainkan isinya: apa yang dibahas, apa yang disepakati, dan apa yang
+   ditagih pertemuan depan. Konselor yang memegang puluhan anak tidak
+   mungkin mengingat semuanya, dan tanpa catatan setiap pertemuan dimulai
+   dari nol.
+
+   Catatan ini tidak terlihat oleh siswa. Yang sampai ke siswa hanya
+   tindak lanjut yang ditagih darinya.
+   ======================================================= */
+function viewCatatan(){
+  var c=S.catatan||[], e=S.catatanEdit;
+  var hari=hariIniStr();
+  var tunggak=c.filter(function(x){return x.status!=='Selesai'&&x.tagih&&x.tenggat&&x.tenggat<hari});
+  var terbuka=c.filter(function(x){return x.status!=='Selesai'&&!(x.tagih&&x.tenggat&&x.tenggat<hari)});
+
+  var h='<div class="card"><h2>Counselling notes</h2>'+
+    '<div class="sub">What was discussed, what was agreed, and what you will ask for next time. '+
+    'Students never see these — only the follow-up you set for them.</div>';
+  if(!e) h+='<button class="btn sea" onclick="catatanBaru()">+ Write a note</button>';
+  h+='</div>';
+
+  if(e) h+=formCatatan(e);
+
+  if(tunggak.length){
+    h+='<div class="card"><h2>Overdue follow-ups</h2>'+
+      '<div class="sub">You asked for these and the date has passed.</div><div class="hasil">';
+    tunggak.forEach(function(x){ h+=barisCatatan(x,true) });
+    h+='</div></div>';
+  }
+  h+='<div class="card"><h2>'+(terbuka.length?'Open notes':'Notes')+'</h2>';
+  if(!c.length) h+='<div class="empty"><b>No notes yet</b>After your next conversation with a student, '+
+    'write down what you agreed. By the following month it is the only record that it happened.</div>';
+  else{
+    h+='<div class="hasil">';
+    terbuka.forEach(function(x){ h+=barisCatatan(x,false) });
+    var selesai=c.filter(function(x){return x.status==='Selesai'});
+    h+='</div>';
+    if(selesai.length) h+='<div class="tb-head"><h3>Closed</h3></div><div class="hasil">'+
+      selesai.map(function(x){return barisCatatan(x,false)}).join('')+'</div>';
+  }
+  return h+'</div>';
+}
+function barisCatatan(x,mendesak){
+  var n=hariKe(x.tenggat);
+  return '<div class="hasil-r kampus">'+
+    '<div class="hasil-k"><div class="hasil-j">'+esc(x.nama)+'<span class="eyebrow"> · '+esc(x.kelas||'')+'</span></div>'+
+    '<div class="hasil-s">'+esc(x.ringkasan)+'</div>'+
+    (x.kesepakatan?'<div class="hasil-s"><b>Agreed:</b> '+esc(x.kesepakatan)+'</div>':'')+
+    (x.tagih?'<div class="hasil-s"><b>Next time:</b> '+esc(x.tagih)+
+      (x.tenggat?' <span class="'+(mendesak?'bahaya-t':'eyebrow')+'">by '+esc(x.tenggat)+
+        (n!==null?' ('+n+'d)':'')+'</span>':'')+'</div>':'')+
+    '<div class="hasil-m"><span>'+esc(x.tanggal)+'</span><span>'+esc(x.jenis)+'</span>'+
+    '<span>'+esc(x.guru)+'</span>'+
+    (x.status==='Selesai'?'<span class="tag solid">Closed</span>':'')+'</div></div>'+
+    '<div class="hasil-a">'+
+    (x.status!=='Selesai'?'<button class="btn ghost xs" onclick="catatanTutup(\''+esc(x.id)+'\')">Mark done</button>':'')+
+    '<button class="btn ghost xs" onclick="catatanUbah(\''+esc(x.id)+'\')">Edit</button>'+
+    '<button class="btn ghost xs bahaya" onclick="catatanBuang(\''+esc(x.id)+'\')">Remove</button>'+
+    '</div></div>';
+}
+function formCatatan(e){
+  var siswa=(S.ringkasan||[]).slice().sort(function(a,b){return (a.nama||'').localeCompare(b.nama||'')});
+  var h='<div class="card"><h2>'+(e.id?'Edit note':'New note')+'</h2><div class="grid">'+
+    '<div class="f"><label for="ckSiswa">Student</label><select id="ckSiswa"><option value="">— choose —</option>';
+  siswa.forEach(function(s){ h+='<option value="'+esc(s.id)+'"'+(e.siswaId===s.id?' selected':'')+'>'+
+    esc(s.nama)+' — '+esc(s.kelas||'')+'</option>' });
+  h+='</select></div>'+
+    '<div class="f"><label for="ckTanggal">Meeting date</label><input id="ckTanggal" type="date" value="'+esc(e.tanggal||hariIniStr())+'"></div>'+
+    '<div class="f"><label for="ckJenis">Kind</label><select id="ckJenis">';
+  (S.jenisCatatan||['Konseling rutin']).forEach(function(j){ h+='<option'+(e.jenis===j?' selected':'')+'>'+esc(j)+'</option>' });
+  h+='</select></div></div>'+
+    '<div class="f" style="margin-top:10px"><label for="ckRingkas">What was discussed</label>'+
+    '<textarea id="ckRingkas" placeholder="He is set on Malaysia but has not sat IELTS. Family has not been told the real cost yet.">'+esc(e.ringkasan||'')+'</textarea></div>'+
+    '<div class="f"><label for="ckSepakat">What was agreed</label>'+
+    '<textarea id="ckSepakat" placeholder="He will register for the 14 Dec IELTS sitting and bring his father to the next meeting.">'+esc(e.kesepakatan||'')+'</textarea></div>'+
+    '<div class="grid"><div class="f"><label for="ckTagih">What you will ask for next time</label>'+
+    '<input id="ckTagih" type="text" value="'+esc(e.tagih||'')+'" placeholder="Proof of IELTS registration"></div>'+
+    '<div class="f"><label for="ckTenggat">By when</label><input id="ckTenggat" type="date" value="'+esc(e.tenggat||'')+'">'+
+    '<div class="hint">An overdue follow-up moves to the top of this page.</div></div></div>'+
+    '<div style="margin-top:12px"><button class="btn sea" id="btnCatatan" onclick="catatanKirim()">Save note</button>'+
+    '<button class="btn ghost sm" style="margin-left:8px" onclick="S.catatanEdit=null;gambarView()">Cancel</button></div>';
+  return h+'</div>';
+}
+function catatanBaru(){ S.catatanEdit={id:'',siswaId:'',tanggal:hariIniStr(),jenis:(S.jenisCatatan||[''])[0],
+  ringkasan:'',kesepakatan:'',tagih:'',tenggat:'',status:'Terbuka'}; gambarView() }
+function catatanUbah(id){
+  var x=(S.catatan||[]).filter(function(c){return c.id===id})[0];
+  if(x){ S.catatanEdit=JSON.parse(JSON.stringify(x)); gambarView() }
+}
+function catatanKirim(){
+  var e=S.catatanEdit||{};
+  var d={id:e.id,siswaId:(q('ckSiswa')||{}).value,tanggal:(q('ckTanggal')||{}).value,
+    jenis:(q('ckJenis')||{}).value,ringkasan:(q('ckRingkas')||{}).value,
+    kesepakatan:(q('ckSepakat')||{}).value,tagih:(q('ckTagih')||{}).value,
+    tenggat:(q('ckTenggat')||{}).value,status:e.status||'Terbuka'};
+  var b=q('btnCatatan'); if(b){b.disabled=true;b.textContent='Saving…'}
+  call('catatanSimpan',S.token,d).then(function(r){
+    if(b){b.disabled=false;b.textContent='Save note'}
+    if(!r.ok){ if(r.error==='SESI_HABIS'){sesiHabis();return} toast(r.error,true); return }
+    S.catatan=r.catatan||[]; S.catatanEdit=null; toast('Note saved.'); gambarView();
+  }).catch(function(x){ if(b){b.disabled=false;b.textContent='Save note'} tangani(x) });
+}
+function catatanTutup(id){
+  var x=(S.catatan||[]).filter(function(c){return c.id===id})[0]; if(!x) return;
+  var d=JSON.parse(JSON.stringify(x)); d.status='Selesai';
+  call('catatanSimpan',S.token,d).then(function(r){
+    if(!r.ok){ toast(r.error,true); return }
+    S.catatan=r.catatan||[]; toast('Marked done.'); gambarView();
+  }).catch(tangani);
+}
+function catatanBuang(id){
+  tanya('Remove this note? The record of what was agreed goes with it.',function(){
+    call('catatanHapus',S.token,id).then(function(r){
+      if(!r.ok){ toast(r.error,true); return }
+      S.catatan=r.catatan||[]; toast('Note removed.'); gambarView();
+    }).catch(tangani);
+  },'Remove',true);
+}
+
+function viewPekan(){
+  var l=langkahBerikut();
+  var h='<div class="card"><h2>This week</h2>'+
+    '<div class="sub">Out of everything in your deck, this is what matters most right now. '+
+    'Work down the list — the one at the top is the one that blocks the others.</div>';
+  if(!l.length){
+    /* Tidak ada yang menghambat bukan berarti tidak ada yang berguna
+       ditampilkan: rencana tes tetap ikut, karena tanggalnya justru
+       dipakai jauh sebelum ada yang terlambat. */
+    h+='<div class="empty"><b>Nothing is blocking you</b>Every target has a date, a score and a funding plan. '+
+       'Keep the documents moving and check back next week.</div></div>';
+    return h+blokRencanaTes();
+  }
+  h+='<div class="pekan">';
+  l.slice(0,6).forEach(function(x,i){
+    h+='<div class="pekan-r'+(i===0?' utama':'')+'">'+
+       '<div class="pekan-n">'+(i+1)+'</div>'+
+       '<div class="pekan-i"><div class="pekan-j">'+esc(x.judul)+'</div>'+
+       '<div class="pekan-a">'+esc(x.apa)+'</div></div>'+
+       '<button class="btn '+(i===0?'sea':'ghost')+' sm" onclick="pindah(\''+
+         idSeksiDariKode(x.tab)+'\')">'+esc(x.tombol)+'</button></div>';
+  });
+  h+='</div>';
+  if(l.length>6) h+='<div class="fit-n">'+(l.length-6)+' more once these are done.</div>';
+  return h+'</div>'+blokRencanaTes();
+}
+
+/* Rencana tes bahasa: mundur dari tenggat paling awal ke tanggal tes dan
+   tanggal mulai belajar. Tanpa ini, "IELTS 6.5" hanya angka; dengan ini ia
+   jadi tanggal yang bisa ditulis di kalender. */
+function blokRencanaTes(){
+  var uni=((S.deck||{}).uni||[]).filter(function(x){return sv(x.kampus)&&x.deadline});
+  if(!uni.length) return '';
+  var paling=uni.map(function(u){return u.deadline}).sort()[0];
+  var n=hariKe(paling); if(n===null) return '';
+  var skor=skorBahasaKini();
+  var tgl=function(mundur){
+    var t=new Date(paling+'T00:00:00'); t.setDate(t.getDate()-mundur);
+    return t.toISOString().slice(0,10);
+  };
+  var h='<div class="card"><h2>Your English test, counted backwards</h2>'+
+    '<div class="sub">From your earliest deadline, '+esc(paling)+'. IELTS results take about 13 days, '+
+    'and seats fill weeks ahead — so the date you must act on is not the deadline.</div>'+
+    '<div class="tbl-biaya"><table><thead><tr><th>Step</th><th>By when</th><th class="num">Days from today</th></tr></thead><tbody>'+
+    barisTes('Start preparing',tgl(120),hariKe(tgl(120)))+
+    barisTes('Book your test seat',tgl(75),hariKe(tgl(75)))+
+    barisTes('Sit the test',tgl(45),hariKe(tgl(45)))+
+    barisTes('Results arrive',tgl(32),hariKe(tgl(32)))+
+    '</tbody><tfoot><tr class="empat"><td>Earliest deadline</td><td class="mono">'+esc(paling)+
+    '</td><td class="num mono"><b>'+n+'</b></td></tr></tfoot></table></div>';
+  if(skor.ada) h+='<div class="fit-n">You already have '+esc(skor.rinci.join(', '))+
+    '. Use this only if you intend to retake for a higher band.</div>';
+  else h+='<div class="fit-n">These are working dates, not official ones — check your test centre’s own calendar before you rely on them.</div>';
+  return h+'</div>';
+}
+function barisTes(label,tanggal,sisa){
+  var lewat=(sisa!==null&&sisa<0);
+  return '<tr><td>'+esc(label)+(lewat?' <span class="tag">overdue</span>':'')+'</td>'+
+    '<td class="mono">'+esc(tanggal)+'</td>'+
+    '<td class="num mono">'+(sisa===null?'—':sisa)+'</td></tr>';
+}
+
+/* =======================================================
+   BANDINGKAN TARGET BERDAMPINGAN
+
+   Siswa punya beberapa target tetapi melihatnya satu per satu, sehingga
+   tidak pernah benar-benar membandingkan. Satu tabel — kecocokan, biaya,
+   selisih dana, tenggat — adalah percakapan konseling yang sebenarnya.
+   ======================================================= */
+function viewBanding(){
+  var peta=analisaKini(), uni=((S.deck||{}).uni||[]).filter(function(x){return sv(x.kampus)});
+  if(uni.length<2) return '<div class="card"><h2>Compare targets</h2>'+
+    '<div class="empty"><b>Add a second target first</b>'+
+    'This page puts your targets side by side — fit, cost, funding gap and deadline in one table. '+
+    'It needs at least two to be worth reading.</div>'+
+    '<button class="btn sea" onclick="pindah(\''+idSeksiDariKode('D')+'\')">Open your targets</button></div>';
+  var baris=uni.map(function(u,i){
+    var a=peta[i]||{};
+    var dn=a.dana?danaKlien(u,a):null;
+    return {u:u,a:a,d:dn};
+  });
+  var h='<div class="card"><h2>Compare your targets</h2>'+
+    '<div class="sub">The same questions asked of every target at once. Where a figure is a prediction '+
+    'rather than a published fee, it says so on the target card itself.</div>'+
+    '<div class="tbl-biaya"><table><thead><tr><th>What</th>';
+  baris.forEach(function(b){ h+='<th>'+esc(b.u.kampus)+'</th>' });
+  h+='</tr></thead><tbody>';
+  function brs(label,fn){
+    var r='<tr><td>'+esc(label)+'</td>';
+    baris.forEach(function(b){ r+='<td>'+fn(b)+'</td>' });
+    return r+'</tr>';
+  }
+  h+=brs('Country',function(b){return esc(b.u.negara||'—')});
+  h+=brs('Programme',function(b){return esc(b.u.jurusan||'—')});
+  h+=brs('Fit',function(b){return b.a.cocok?lencanaFit(b.a.cocok):'—'});
+  h+=brs('Minimum IELTS',function(b){return b.a.minIelts?ang(b.a.minIelts,1):'not recorded'});
+  h+=brs('Cost / year',function(b){return b.d&&b.d.totalRp!==null?'<b class="mono">'+rp(b.d.totalRp)+'</b>':'—'});
+  h+=brs('Whole degree',function(b){return b.d&&b.d.totalStudiRp!==null?'<span class="mono">'+rp(b.d.totalStudiRp)+'</span>':'—'});
+  h+=brs('Still unfunded / year',function(b){
+    if(!b.d||b.d.selisih===null) return '—';
+    return b.d.selisih>0?'<span class="bahaya-t mono">'+rp(b.d.selisih)+'</span>':'<span class="mono">Fully funded</span>'});
+  h+=brs('Your deadline',function(b){
+    var n=hariKe(b.u.deadline);
+    return b.u.deadline?esc(b.u.deadline)+(n!==null?' <span class="eyebrow">('+n+'d)</span>':''):'not set'});
+  h+=brs('Status',function(b){return esc(b.u.status||'—')});
+  h+=brs('Outcome',function(b){return esc(b.u.hasil||'—')});
+  h+='</tbody></table></div>';
+  var termurah=baris.filter(function(b){return b.d&&b.d.totalRp!==null}).sort(function(a,b){return a.d.totalRp-b.d.totalRp})[0];
+  var aman=baris.filter(function(b){return b.a.cocok&&b.a.cocok.label==='Safe'})[0];
+  var pesan=[];
+  if(termurah) pesan.push('Cheapest per year: <b>'+esc(termurah.u.kampus)+'</b> at '+rp(termurah.d.totalRp)+'.');
+  pesan.push(aman?('You already clear the minimums at <b>'+esc(aman.u.kampus)+'</b>.')
+    :'None of these is a safe choice yet — add one you already clear before the deadlines arrive.');
+  h+='<div class="fit-n">'+pesan.join(' ')+'</div>';
+  return h+'</div>';
+}
+
+/* =======================================================
+   PENGISIAN AWAL TIGA MENIT
+
+   Siswa baru melihat enam gerbang kosong dan berhenti di situ — itulah
+   sebabnya rencana dana terisi 0% dan skor bahasa 5%: bukan karena tidak
+   peduli, melainkan karena tidak tahu harus mulai di mana.
+
+   Lima pertanyaan, satu layar. Jawabannya langsung menjadi satu target
+   lengkap beserta prediksi biaya dan selisih dananya. Dari situ deck
+   sudah punya isi, dan sisanya tinggal disempurnakan.
+   ======================================================= */
+function perluMulai(){
+  var d=S.deck||{};
+  if(S.mulaiTutup) return false;
+  var uni=(d.uni||[]).filter(function(x){return sv(x.kampus)});
+  return uni.length===0;
+}
+function viewMulai(){
+  var m=S.mulai||{};
+  var h='<div class="card"><h2>Let’s set up your deck</h2>'+
+    '<div class="sub">Five questions, about three minutes. By the end you will have a real target '+
+    'with its cost worked out — not an empty form. Nothing here is final; you can change all of it later.</div>'+
+    '<div class="grid">'+
+    '<div class="f"><label for="mNegara">1 · Which country are you aiming at?</label>'+
+    '<select id="mNegara" onchange="mulaiSet(\'negara\',this.value)"><option value="">— choose —</option>';
+  negaraList().forEach(function(n){ h+='<option'+(m.negara===n?' selected':'')+'>'+esc(n)+'</option>' });
+  h+='</select>'+tungguDaftar()+'</div>'+
+    '<div class="f"><label for="mKampus">2 · A university you have in mind</label>'+
+    '<select id="mKampus" onchange="mulaiSet(\'kampus\',this.value)"><option value="">— choose —</option>';
+  (S.univ||[]).filter(function(x){return !m.negara||x.negara===m.negara}).forEach(function(x){
+    h+='<option'+(m.kampus===x.nama?' selected':'')+'>'+esc(x.nama)+'</option>' });
+  h+='</select><div class="hint">Not sure yet? Pick any one — this is a starting point, not a commitment.</div></div>'+
+    '<div class="f"><label for="mTahun">3 · When do you want to leave?</label>'+
+    '<select id="mTahun" onchange="mulaiSet(\'tahun\',this.value)">';
+  var thIntake=((S.tahun||{}).intake)||new Date().getFullYear()+1;
+  for(var y=thIntake;y<=thIntake+3;y++) h+='<option'+(String(m.tahun)===String(y)?' selected':'')+'>'+y+'</option>';
+  h+='</select></div>'+
+    '<div class="f"><label for="mIelts">4 · Your English score, if you have one</label>'+
+    '<input id="mIelts" type="text" value="'+esc(m.ielts||'')+'" placeholder="e.g. IELTS 6.5 — leave blank if none yet" '+
+    'oninput="mulaiSet(\'ielts\',this.value)">'+
+    '<div class="hint">Blank is a fine answer. It just means booking a test becomes your first task.</div></div>'+
+    '<div class="f"><label for="mDana">5 · What can your family put in each year?</label>'+
+    '<input id="mDana" type="number" min="0" step="1000000" value="'+esc(m.dana||'')+'" placeholder="in rupiah, per year" '+
+    'oninput="mulaiSet(\'dana\',this.value)">'+
+    '<div class="hint">A rough figure is enough. It is what turns the cost into a gap you can plan around.</div></div>'+
+    '</div>';
+
+  /* Hasilnya diperlihatkan sebelum disimpan, supaya jelas apa yang didapat. */
+  var pra=mulaiPratinjau(m);
+  if(pra) h+=pra;
+  h+='<div style="margin-top:14px"><button class="btn sea" id="btnMulai"'+(m.kampus?'':' disabled')+
+     ' onclick="mulaiSimpan()">Create my first target</button>'+
+     '<button class="btn ghost sm" style="margin-left:8px" onclick="S.mulaiTutup=true;gambarView()">I’ll do it myself</button>'+
+     '</div></div>';
+  return h;
+}
+function mulaiSet(k,v){
+  S.mulai=S.mulai||{};
+  S.mulai[k]=v;
+  if(k==='negara') S.mulai.kampus='';
+  gambarView();
+}
+function mulaiPratinjau(m){
+  if(!m.kampus) return '';
+  var u=(S.univ||[]).filter(function(x){return x.nama===m.kampus})[0];
+  if(!u) return '';
+  var contoh=mkUni();
+  contoh.negara=u.negara; contoh.kampus=u.nama; contoh.mataUang=u.mataUang;
+  contoh.danaKel=Number(m.dana)||0;
+  var a={dana:(S.analisa&&S.analisa[0]&&S.analisa[0].dana)||null};
+  /* Biaya diambil dari angka kampus itu sendiri lewat hitungan yang sama
+     dengan kartu target, supaya angka yang dilihat di sini persis sama. */
+  var d=danaKlien(contoh,{dana:{mataUang:u.mataUang,kurs:kursKe(u.mataUang),kursTanggal:'',
+    kuliah:u.kuliah,hidup:u.hidup,daftar:u.daftarBiaya,perkiraan:true,
+    sumberKuliah:'kampus',bidang:'',tahunStudi:4}});
+  if(!d||d.totalRp===null) return '';
+  var h='<div class="dana" style="margin-top:14px"><div class="dana-h">'+
+    '<b>What this would cost, per year</b><span class="tag tipis">university starting figure</span></div>'+
+    '<div class="dana-sisa '+(d.selisih>0?'kurang':'cukup')+'">'+
+    '<div><span class="l">Needed / year</span><b>'+rp(d.totalRp)+'</b></div>'+
+    '<div><span class="l">Your family covers</span><b>'+rp(d.tertutup)+'</b></div>'+
+    '<div><span class="l">'+(d.selisih>0?'Gap to find / year':'Fully funded')+'</span><b>'+
+      (d.selisih>0?rp(d.selisih):rp(0))+'</b></div></div>';
+  if(d.selisih>0) h+='<div class="fit-n">That gap is what a scholarship has to close. '+
+    'It is not a reason to give up on this university — it is the number to go looking with.</div>';
+  return h+'</div>';
+}
+function mulaiSimpan(){
+  var m=S.mulai||{};
+  if(!m.kampus){ toast('Choose a university first.',true); return }
+  var u=(S.univ||[]).filter(function(x){return x.nama===m.kampus})[0]||{};
+  var d=targetDeck();
+  var t=mkUni();
+  t.negara=u.negara||m.negara; t.kampus=m.kampus;
+  t.daftar=u.daftar||''; t.umum=u.umum||''; t.syarat=u.syarat||''; t.web=u.web||'';
+  t.status='Researching';
+  t.danaKel=Number(m.dana)||'';
+  d.uni=d.uni||[]; d.uni.push(t);
+  if(m.tahun){ d.meta=d.meta||{}; d.meta.tahun=String(m.tahun) }
+  /* Skor bahasa yang sudah dipunyai langsung dicatat di gerbang C, supaya
+     kecocokan terhitung sejak target pertama dibuat. */
+  var sk=String(m.ielts||'').match(/(\d+(?:[.,]\d+)?)/);
+  if(sk){
+    d.tes=d.tes||[];
+    var baris=d.tes.filter(function(x){return /ielts/i.test(x.jenis)})[0];
+    if(!baris){ baris={jenis:'IELTS',skor:'',st:'Done'}; d.tes.push(baris) }
+    baris.skor=sk[1].replace(',','.'); baris.st='Done';
+  }
+  S.mulaiTutup=true; S.mulai={};
+  if(m.kampus) muatProgram(m.kampus);
+  ubahRapor2();
+  toast('Target created. Everything below now has real numbers in it.');
+  pindah(idSeksiDariKode('D'));
+}
+
 function viewDash(){
+  if(perluMulai()) return viewMulai();
   var p=S.progres||hitung(), d=S.deck;
   var dokBelum=(d.dok||[]).filter(function(r){return r.st!=='Done'&&r.st!=='Not required'});
   var tesBelum=(d.tes||[]).filter(function(r){return r.st!=='Done'&&sv(r.jenis)});
@@ -2473,7 +3132,7 @@ function fKampus(deck,ro){
        (ro?'':'<button class="btn ghost sm" onclick="hapusUni('+i+')">Remove</button>')+'</div><div class="tgt-b"><div class="grid">';
     h+='<div class="f"><label>Country</label><select'+(ro?' disabled':'')+' onchange="setUni('+i+',\'negara\',this.value)"><option value="">— select —</option>';
     negaraList().forEach(function(n){h+='<option'+(r.negara===n?' selected':'')+'>'+esc(n)+'</option>'});
-    h+='</select></div>';
+    h+='</select>'+tungguDaftar()+'</div>';
     h+='<div class="f"><label>University</label><select'+(ro?' disabled':'')+' onchange="setUni('+i+',\'kampus\',this.value)"><option value="">— select —</option>';
     S.univ.filter(function(x){return !r.negara||x.negara===r.negara}).forEach(function(x){
       h+='<option'+(r.kampus===x.nama?' selected':'')+'>'+esc(x.nama)+'</option>'});
@@ -3019,6 +3678,16 @@ function simpanTahunIntake(kembali){
       gambarView();
     });
   }).catch(function(e){ selesai(); tangani(e) });
+}
+
+/* Keterangan saat daftar kampus belum tiba. Tanpa ini, kolom negara dan
+   kampus tampak kosong dan terbaca seolah databasenya hilang. Yang sudah
+   dipilih siswa tetap tampil — itu tersimpan di decknya, bukan di daftar. */
+function tungguDaftar(){
+  if(S.univ.length) return '';
+  return '<div class="hint memuat">'+(S.ambilRef
+    ? 'Loading the university list…'
+    : 'The university list has not loaded yet — press Refresh.')+'</div>';
 }
 
 function rumpunDari(nama){
@@ -4993,6 +5662,67 @@ function grafikRadar(data){
    kampus disaring dulu, lalu hanya kampus yang lolos yang
    potongan barisnya dibaca, dan berhenti begitu hasilnya cukup.
    ======================================================= */
+/* Syarat minimum yang belum tercatat, hanya untuk kampus yang memang
+   ditarget siswa. Mengisinya di spreadsheet berarti mencari satu baris di
+   antara 1.326 dan karena itu tidak pernah dikerjakan; di sini jumlahnya
+   belasan, dan tiap satu yang diisi langsung menajamkan label kecocokan
+   anak-anak yang menargetnya. */
+function blokSyaratKurang(){
+  var k=S.syaratKurang;
+  if(k===undefined){
+    if(!S.syaratSibuk){
+      S.syaratSibuk=true;
+      call('syaratKurang',S.token).then(function(r){
+        S.syaratSibuk=false;
+        S.syaratKurang=(r&&r.ok)?(r.kurang||[]):[];
+        if(S.tab==='database') gambarView();
+      }).catch(function(){ S.syaratSibuk=false; S.syaratKurang=[] });
+    }
+    return '';
+  }
+  if(!k.length) return '';
+  var h='<div class="card"><h2>Minimums still missing</h2>'+
+    '<div class="sub">These are universities your students actually target, and the deck cannot judge '+
+    'fit without their minimums. Each one you fill in sharpens the Safe/Reach label for every student '+
+    'aiming there. The figure goes straight into the UNIVERSITAS tab.</div><div class="syarat">';
+  k.slice(0,12).forEach(function(x,i){
+    h+='<div class="syarat-r"><div class="syarat-k">'+
+      '<div class="hasil-j">'+esc(x.kampus)+'</div>'+
+      '<div class="hasil-m"><span>'+esc(x.negara||'')+'</span>'+
+      '<span>'+x.siswa+' student'+(x.siswa===1?'':'s')+' targeting</span></div>'+
+      (x.syarat?'<div class="hasil-s">School’s own note: '+esc(String(x.syarat).slice(0,150))+'</div>':'')+
+      '</div>'+
+      '<div class="syarat-b"><label class="usd"><span>Min GPA (0–4)</span>'+
+      '<input id="sqG'+i+'" type="number" step="0.01" min="0" max="4" value="'+
+        (x.minGpa===null?'':esc(String(x.minGpa)))+'" placeholder="—"></label>'+
+      '<label class="usd"><span>Min IELTS (0–9)</span>'+
+      '<input id="sqI'+i+'" type="number" step="0.5" min="0" max="9" value="'+
+        (x.minIelts===null?'':esc(String(x.minIelts)))+'" placeholder="—"></label></div>'+
+      '<div class="syarat-a"><button class="btn sea xs" onclick="syaratKirim('+i+')">Save</button>'+
+      (x.web?'<a class="btn ghost xs" target="_blank" rel="noopener" href="'+esc(x.web)+'">Site</a>':'')+
+      '</div></div>';
+  });
+  h+='</div>';
+  if(k.length>12) h+='<div class="fit-n">'+(k.length-12)+' more after these.</div>';
+  return h+'</div>';
+}
+function syaratKirim(i){
+  var x=(S.syaratKurang||[])[i]; if(!x) return;
+  var g=(q('sqG'+i)||{}).value, s=(q('sqI'+i)||{}).value;
+  if(!sv(g)&&!sv(s)){ toast('Fill in at least one of the two.',true); return }
+  call('syaratSimpan',S.token,x.kampus,g,s).then(function(r){
+    if(!r.ok){ if(r.error==='SESI_HABIS'){sesiHabis();return} toast(r.error,true); return }
+    /* Daftar kampus di peramban memegang angka lama; ditarik ulang supaya
+       label kecocokan di papan siswa langsung ikut berubah. */
+    S.syaratKurang=undefined; buangRef();
+    return call('segarkanReferensi',S.token).then(function(z){
+      if(z&&z.ok&&!z.refTetap){ S.univ=rakitUniv(z); S.bea=z.bea||[];
+        if(z.refSidik) S.refSidik=z.refSidik; simpanRef() }
+      toast('Saved for '+r.kampus+'.'); gambarView();
+    });
+  }).catch(tangani);
+}
+
 function viewDatabase(){
   var r=S.dbHasil;
   var f=S.dbSaring;
@@ -5046,7 +5776,7 @@ function viewDatabase(){
   else if(!r) h+='<div class="empty"><b>Nothing searched yet</b>'+
     'Type a programme, a faculty, a university or a country — or just set the filters and press Search.</div>';
   else h+=hasilCari(r);
-  return h+'</div>';
+  return h+'</div>'+blokSyaratKurang();
 }
 
 function hasilCari(r){
@@ -6236,7 +6966,7 @@ function cetakKalender(){
 function gayaCetak(){
   return '<style>'+
     '@page{size:A4;margin:14mm}'+
-    'body{font-family:"Inter Tight",Arial,sans-serif;color:#10302A;font-size:11pt;margin:0}'+
+    'body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;color:#10302A;font-size:11pt;margin:0}'+
     'h1{font-size:19pt;margin:0 0 2mm}h2{font-size:13pt;margin:7mm 0 2mm;padding-bottom:1.5mm;border-bottom:1.5px solid #10302A}'+
     'h3{font-size:11pt;margin:5mm 0 1.5mm}'+
     '.kop{border-bottom:2.5px solid #10302A;padding-bottom:3mm;margin-bottom:5mm}'+
@@ -6281,7 +7011,6 @@ function cetakPdf(namaBerkas,judul,metaBaris,isi){
   var w=window.open('','_blank','width=1100,height=800');
   if(!w){toast('Your browser blocked the print window. Allow pop-ups for this site and try again.',true);return}
   w.document.write('<!DOCTYPE html><html><head><meta charset="utf-8"><title>'+esc(namaBerkas)+'</title>'+
-    '<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Inter+Tight:wght@400;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">'+
     gayaCetak()+'</head><body>'+kopCetak(judul,metaBaris)+isi+
     '<div class="kaki">Printed from DECK PTLN on '+esc(new Date().toLocaleString())+
     '. Use your browser\'s "Save as PDF" option in the print dialog.</div></body></html>');
@@ -6434,7 +7163,8 @@ function segarkanReferensi(tombolId){
   call('segarkanReferensi',S.token).then(function(r){
     if(b){b.disabled=false;b.textContent='Refresh from spreadsheet'}
     if(!r.ok){if(r.error==='SESI_HABIS'){sesiHabis();return} toast(r.error,true);return}
-    if(!r.refTetap){ S.univ=rakitUniv(r); S.bea=r.bea||[]; simpanRef() }
+    if(!r.refTetap){ S.univ=rakitUniv(r); S.bea=r.bea||[];
+      if(r.refSidik) S.refSidik=r.refSidik; S.programKampus={}; simpanRef() }
     toast('Reference data reloaded — '+S.univ.length+' universities, '+S.bea.length+' scholarships.');
     gambarView();
   }).catch(function(e){ if(b){b.disabled=false;b.textContent='Refresh from spreadsheet'} tangani(e) });
