@@ -129,9 +129,10 @@ body{background:var(--kertas);color:var(--tinta);font-family:var(--sans);
    melompat ke atas saat disentuh kursor. */
 .btn{font-family:var(--sans);font-size:13.5px;font-weight:590;letter-spacing:-.005em;
   border:.5px solid var(--tinta);background:var(--tinta);color:#F1F5F1;
-  padding:7px 14px;border-radius:var(--r2);cursor:pointer;
+  padding:7px 14px;border-radius:var(--r2);cursor:pointer;min-height:32px;
   box-shadow:inset 0 .5px 0 rgba(255,255,255,.18),0 1px 1.5px rgba(16,48,42,.14);
-  transition:filter var(--cepat),transform var(--cepat),background var(--cepat),opacity var(--cepat)}
+  transition:filter var(--cepat),transform var(--cepat),background var(--cepat),opacity var(--cepat);
+  display:inline-flex;align-items:center;justify-content:center}
 .btn:hover{filter:brightness(1.07)}
 .btn:active{transform:scale(.975);filter:brightness(.95)}
 .btn.ghost{background:#fff;color:var(--tinta);border-color:var(--hair);
@@ -146,7 +147,7 @@ body{background:var(--kertas);color:var(--tinta);font-family:var(--sans);
 .btn.gold{background:var(--gold);border-color:var(--gold)}
 .btn.danger{background:transparent;color:var(--alert);border-color:var(--alert)}
 .btn.danger:hover{background:rgba(166,64,44,.09)}
-.btn.sm{font-size:12.5px;padding:5px 11px}
+.btn.sm{font-size:12.5px;padding:6px 12px;min-height:28px}
 .btn:disabled{opacity:.42;cursor:not-allowed;transform:none;filter:none}
 /* Cincin fokus macOS: cincin tebal lembut rapat ke tepi kendali, bukan
    garis terpisah — terlihat jelas bagi yang berpindah dengan papan tik. */
@@ -380,8 +381,17 @@ select{cursor:pointer}
 .graf-kotak{border-radius:var(--r);padding:16px 18px;background:var(--kertas);margin-bottom:12px;overflow-x:auto}
 .graf-kotak h3{margin:0 0 3px;font-size:15px;font-weight:600}
 .graf-kotak .sub{color:var(--tinta-2);font-size:13px;margin-bottom:8px}
-.graf-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:12px;align-items:start}
-.graf-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:12px;align-items:start}
+.graf-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;align-items:start}
+.graf-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;align-items:start}
+@media(max-width:700px){
+  .graf-2{grid-template-columns:1fr}
+  .graf-3{grid-template-columns:1fr}
+}
+@media(max-width:500px){
+  .graf-kotak{padding:12px 14px}
+  .graf-kotak h3{font-size:14px}
+  .graf-kotak .sub{font-size:12px}
+}
 
 /* --- batang mendatar sebagai HTML --- */
 .hb{display:flex;flex-direction:column;gap:5px;margin-top:4px}
@@ -1039,7 +1049,7 @@ var KEY='deckptln_token_v1';
    Ganti bila membuat deployment baru.
    ------------------------------------------------------- */
 var LAMBANG='<div class="lambang"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="DECK PTLN"><rect width="100" height="100" rx="24" fill="#EDF0EA"/><rect x="15.5" y="60" width="7.4" height="20" rx="3.2" fill="#10302A" opacity="0.55"/><rect x="27.3" y="52" width="7.4" height="28" rx="3.2" fill="#10302A" opacity="0.64"/><rect x="39.1" y="44" width="7.4" height="36" rx="3.2" fill="#10302A" opacity="0.73"/><rect x="50.900000000000006" y="36" width="7.4" height="44" rx="3.2" fill="#10302A" opacity="0.82"/><rect x="62.7" y="28" width="7.4" height="52" rx="3.2" fill="#10302A" opacity="0.91"/><rect x="74.5" y="18" width="7.4" height="62" rx="3.2" fill="#C77D1A" opacity="1"/></svg></div>';
-var VERSI_UI='2026.10.10-21';
+var VERSI_UI='2026.10.12-23';
 var KUNCI_ALAMAT='deckptln_apiurl_v1';
 
 /* Alamat Web App boleh ditimpa dari dalam aplikasi. Berguna bila di Apps
@@ -2715,6 +2725,7 @@ function viewDash(){
     '<div><h2>Deck dashboard</h2><div class="sub">A summary of your progress and everything still open.</div></div>'+
     '<div class="pick"><button class="btn sea sm" onclick="kirimRingkasan()" id="btnRingkas">Email my progress to a mentor</button>'+
     '<button class="btn sea sm" onclick="cetakLaporan()">Download report (PDF)</button>'+
+    '<button class="btn sea sm" onclick="unduhLaporanProgres(this)">Progress report</button>'+
     '<button class="btn ghost sm" onclick="unduhLaporan(\'xls\')">Excel</button>'+
     '<button class="btn ghost sm" onclick="cetak()">Print deck</button>'+
     '<button class="btn ghost sm" onclick="unduhJson()">Download backup</button></div></div>'+
@@ -5523,7 +5534,7 @@ function tekSvg(x,y,t,o){
 function grafikBatang(data,opsi){
   opsi=opsi||{};
   if(!data.length) return '<div class="empty">Nothing to chart yet.</div>';
-  var maks=Math.max.apply(null,data.map(function(d){return d.v}))||1;
+  var maks=opsi.maks||Math.max.apply(null,data.map(function(d){return d.v}))||1;
   var lebarLabel=opsi.lebarLabel||190, tinggiBaris=30, pad=14;
   var w=760, h=pad*2+data.length*tinggiBaris;
   var t=svgBuka(w,h);
@@ -7007,11 +7018,11 @@ function tabelCetak(judul,kepala,baris,rataKanan){
   });
   return h+'</table>';
 }
-function cetakPdf(namaBerkas,judul,metaBaris,isi){
+function cetakPdf(namaBerkas,judul,metaBaris,isi,kepala){
   var w=window.open('','_blank','width=1100,height=800');
   if(!w){toast('Your browser blocked the print window. Allow pop-ups for this site and try again.',true);return}
   w.document.write('<!DOCTYPE html><html><head><meta charset="utf-8"><title>'+esc(namaBerkas)+'</title>'+
-    gayaCetak()+'</head><body>'+kopCetak(judul,metaBaris)+isi+
+    gayaCetak()+'</head><body>'+(kepala||'')+kopCetak(judul,metaBaris)+isi+
     '<div class="kaki">Printed from DECK PTLN on '+esc(new Date().toLocaleString())+
     '. Use your browser\'s "Save as PDF" option in the print dialog.</div></body></html>');
   w.document.close();
@@ -7152,6 +7163,378 @@ function unduhLaporan(fmt){
   var bag=bagianLaporan(d,siswa,p);
   var f='laporan-'+slug(siswa.nama);
   if(fmt==='csv') unduhCsvBagian(f+'.csv',bag); else unduhExcel(f+'.xls',bag);
+}
+
+/* =======================================================
+   STUDENTS PROGRESS PREPARATION REPORT — format portofolio ala SAPP
+   Siswa: unduhLaporanProgres(this)
+   Mentor dari halaman detail: unduhLaporanProgres(this,true)
+   ======================================================= */
+var LABEL_TOMBOL_LAPORAN='Progress report';
+var BULAN_ID=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+var STATUS_ID={'Ready':'Siap','On track':'Sesuai jadwal','Needs attention':'Perlu perhatian','Urgent':'Mendesak',
+  'Overdue':'Terlambat','In progress':'Berjalan','Needs work':'Perlu dikerjakan'};
+var GERBANG_ID={a:'A · Data Diri',b:'B · Dokumen',c:'C · Tes',d:'D · Kampus',e:'E · Beasiswa',f:'F · Keberangkatan'};
+function warnaStatusLaporan(st){
+  return {'Ready':'#2E7F6D','On track':'#2E7F6D','In progress':'#C77D1A','Needs attention':'#C77D1A',
+    'Needs work':'#B4442F','Urgent':'#B4442F','Overdue':'#B4442F'}[st]||'#6D7C90';
+}
+function tglIndo(d){ d=d||new Date(); return d.getDate()+' '+BULAN_ID[d.getMonth()]+' '+d.getFullYear() }
+function kosongStrip(v){ return v===null||v===undefined||v===''?'—':v }
+
+function unduhLaporanProgres(btn,dariDetail){
+  var id=(dariDetail&&S.detail&&S.detail.siswa)?S.detail.siswa.id:'';
+  if(btn){btn.disabled=true;btn.textContent='Preparing…'}
+  function pulih(){ if(btn){btn.disabled=false;btn.textContent=LABEL_TOMBOL_LAPORAN} }
+  var args=['laporanSiswa',S.token]; if(id) args.push(id);
+  call.apply(null,args).then(function(r){
+    pulih();
+    if(!r.ok){ if(r.error==='SESI_HABIS'){sesiHabis();return} toast(r.error,true); return }
+    var l=susunLaporanProgres(r);
+    cetakSapp(l.namaBerkas,l.html);
+  }).catch(function(e){ pulih(); toast('Could not prepare the report: '+e.message,true) });
+}
+
+function gayaSapp(){
+  return '<style>'+
+    '@page{size:A4;margin:12mm 13mm 16mm}'+
+    '*{box-sizing:border-box}'+
+    'body{font-family:Arial,Helvetica,sans-serif;color:#141414;font-size:9.5pt;margin:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}'+
+    '.kop{display:flex;align-items:center;gap:4mm;padding-bottom:2.5mm;border-bottom:3px double #141414}'+
+    '.kop img{height:17mm;width:auto}'+
+    '.kop .yys{font-size:9.5pt}.kop .sek{font-size:14pt;font-weight:700;margin:.5mm 0}.kop .alm{font-size:8pt;color:#333}'+
+    '.judul{text-align:center;font-weight:700;font-size:12pt;margin:5mm 0 1mm;letter-spacing:.02em}'+
+    '.sub{text-align:center;font-size:8.5pt;color:#555;margin-bottom:4mm}'+
+    '.hjudul{text-align:center;font-weight:700;font-size:11pt;margin:0 0 4mm;text-transform:uppercase}'+
+    '.bab{font-weight:700;font-size:10pt;margin:5mm 0 2mm;page-break-after:avoid}'+
+    '.idn{display:grid;grid-template-columns:1fr 1fr;gap:0 10mm;margin-bottom:3mm}'+
+    '.idn table{border:none;margin:0}.idn td{border:none;padding:1.2mm 1mm;vertical-align:top;font-size:9.5pt}'+
+    '.idn td:first-child{width:27mm}.idn td:nth-child(2){width:4mm}'+
+    'table{width:100%;border-collapse:collapse;margin:0 0 3mm}'+
+    'th,td{border:1px solid #333;padding:1.6mm 1.8mm;font-size:8.8pt;vertical-align:middle}'+
+    'th{font-weight:700;text-align:center;background:#EDEDED}'+
+    'th.kls,td.kls{background:#FBE3D3}th.akt,td.akt{background:#DCE8F4}'+
+    'td.c{text-align:center}td.r{text-align:right}'+
+    'tr.tot td{font-weight:700;background:#F4F4F4}'+
+    '.kotak{border:1px solid #333;padding:3mm 3mm 2mm;margin-bottom:3mm;page-break-inside:avoid}'+
+    '.kotak h4{text-align:center;font-size:9.5pt;margin:0 0 2mm}'+
+    '.duo{display:grid;grid-template-columns:1fr 1fr;gap:0}.duo .kotak+.kotak{border-left:none}'+
+    '.graf{width:100%;height:auto;max-height:62mm;display:block;margin:0 auto}.besar .graf{max-height:105mm}'+
+    '.kosong{text-align:center;color:#777;font-style:italic;padding:6mm 0}'+
+    '.catat{font-size:8.5pt;line-height:1.45;margin:2mm 0 0}.catat ol{margin:1mm 0 0;padding-left:5mm}'+
+    '.kartu{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin:2mm 0 3mm}'+
+    '.kartu>div{border:1px solid #333;padding:2.5mm 3mm}.kartu>div+div{border-left:none}'+
+    '.kartu .l{font-size:7.5pt;text-transform:uppercase;color:#555;letter-spacing:.04em}'+
+    '.kartu .v{font-size:15pt;font-weight:700;margin-top:1mm}.kartu .k{font-size:7.8pt;color:#555}'+
+    '.pill{display:inline-block;padding:.4mm 2mm;border-radius:2mm;color:#fff;font-size:8pt;font-weight:700}'+
+    '.hal{page-break-before:always}'+
+    '.garis{border-bottom:1px solid #999;height:7.5mm}'+
+    '.ttd{display:grid;grid-template-columns:1fr 1fr;gap:10mm;margin-top:6mm;text-align:center;page-break-inside:avoid}'+
+    '.ttd .ruang{height:22mm}.ttd .nm{font-weight:700;text-decoration:underline}'+
+    '.kaki{text-align:center;font-family:"Courier New",monospace;font-size:6.5pt;color:#B5B5B5;letter-spacing:.05em;margin-top:5mm}'+
+    '@media screen{body{max-width:190mm;margin:8mm auto;padding:0 6mm}.hal{margin-top:12mm;border-top:1px dashed #bbb;padding-top:8mm}}'+
+    '</style>';
+}
+function cetakSapp(namaBerkas,isi){
+  var w=window.open('','_blank','width=1000,height=900');
+  if(!w){toast('Your browser blocked the print window. Allow pop-ups for this site and try again.',true);return}
+  w.document.write('<!DOCTYPE html><html><head><meta charset="utf-8"><title>'+esc(namaBerkas)+'</title>'+
+    gayaSapp()+'</head><body>'+isi+'</body></html>');
+  w.document.close();
+  w.focus();
+  setTimeout(function(){ try{ w.print() }catch(e){} },700);
+}
+
+/** Radar dengan skala bebas (IELTS 0–9, nilai 0–100) dan angka di tiap titik. */
+function radarLaporan(data,maks,warna,isi){
+  var n=data.length; if(n<3) return '<div class="kosong">Belum cukup data untuk grafik.</div>';
+  var w=460,h=330,cx=230,cy=165,r=112;
+  var t=svgBuka(w,h);
+  for(var g=1;g<=4;g++){
+    var p='';
+    for(var i=0;i<n;i++){ var a=-Math.PI/2+i*2*Math.PI/n; p+=(i?' L ':'M ')+(cx+r*g/4*Math.cos(a)).toFixed(1)+' '+(cy+r*g/4*Math.sin(a)).toFixed(1) }
+    t+='<path d="'+p+' Z" fill="none" stroke="#DDDDDD" stroke-width="1"/>';
+    t+=tekSvg(cx+3,cy-r*g/4+3,String(Math.round(maks*g/4*10)/10),{size:8,fill:'#999'});
+  }
+  var jalur='';
+  data.forEach(function(d,i){
+    var a=-Math.PI/2+i*2*Math.PI/n;
+    t+='<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+r*Math.cos(a)).toFixed(1)+'" y2="'+(cy+r*Math.sin(a)).toFixed(1)+'" stroke="#E6E6E6"/>';
+    var f=Math.max(0,Math.min(1,(Number(d.v)||0)/maks));
+    jalur+=(i?' L ':'M ')+(cx+r*f*Math.cos(a)).toFixed(1)+' '+(cy+r*f*Math.sin(a)).toFixed(1);
+    var lx=cx+(r+20)*Math.cos(a), ly=cy+(r+20)*Math.sin(a);
+    var anc=Math.abs(Math.cos(a))<0.3?'middle':(Math.cos(a)>0?'start':'end');
+    t+=tekSvg(lx.toFixed(1),(ly+3).toFixed(1),d.l.length>24?d.l.slice(0,23)+'…':d.l,{anchor:anc,size:9.5,fill:'#141414',bold:true});
+  });
+  t+='<path d="'+jalur+' Z" fill="'+(isi||'rgba(91,84,214,.18)')+'" stroke="'+(warna||'#5B54D6')+'" stroke-width="2.2"/>';
+  data.forEach(function(d,i){
+    var a=-Math.PI/2+i*2*Math.PI/n, f=Math.max(0,Math.min(1,(Number(d.v)||0)/maks));
+    var px=cx+r*f*Math.cos(a), py=cy+r*f*Math.sin(a);
+    t+='<circle cx="'+px.toFixed(1)+'" cy="'+py.toFixed(1)+'" r="3.5" fill="'+(warna||'#5B54D6')+'"/>';
+    t+=tekSvg((px+6).toFixed(1),(py-5).toFixed(1),String(d.v),{size:9,fill:'#141414',bold:true});
+  });
+  return t+'</svg>';
+}
+
+/** Menyusun seluruh laporan. Mengembalikan {namaBerkas, html}. */
+function susunLaporanProgres(d){
+  var s=d.siswa||{}, p=d.progres||{}, pr=d.proyeksi||{gerbang:{},fokus:[]}, idn=d.identitas||{};
+  var ids=['a','b','c','d','e','f'];
+  var lg=d.logo||{}, lg2=d.logo2||{};
+  function img(l){ return l&&l.data?'<img src="data:'+esc(l.mime||'image/png')+';base64,'+esc(l.data)+'" alt="">':'' }
+  function tabel(kepala,baris,kelasKolom){
+    var h='<table><tr>'+kepala.map(function(k){return '<th>'+esc(k)+'</th>'}).join('')+'</tr>';
+    baris.forEach(function(b){ h+='<tr>'+b.map(function(c,i){
+      var kl=(kelasKolom||[])[i]; return '<td'+(kl?' class="'+kl+'"':'')+'>'+esc(kosongStrip(c))+'</td>' }).join('')+'</tr>' });
+    return h+'</table>';
+  }
+  function kotak(judul,isi,kelas){ return '<div class="kotak'+(kelas?' '+kelas:'')+'"><h4>'+esc(judul)+'</h4>'+isi+'</div>' }
+  function rank(x){ return x?x.rank+' dari '+x.dari:'—' }
+
+  /* ---------- HALAMAN 1: identitas & akademik ---------- */
+  var h='<div class="kop">'+img(lg)+img(lg2)+
+    '<div><div class="yys">'+esc(idn.yayasan||'')+'</div><div class="sek">'+esc(idn.sekolah||'')+'</div>'+
+    '<div class="alm">'+esc(idn.alamat||'')+'</div></div></div>'+
+    '<div class="judul">STUDENTS PROGRESS PREPARATION REPORT</div>'+
+    '<div class="sub">Study Abroad Program · DECK PTLN — portofolio persiapan studi lanjut luar negeri</div>'+
+    '<div class="idn"><table>'+
+      '<tr><td>Nama</td><td>:</td><td><b>'+esc(s.nama||'')+'</b></td></tr>'+
+      '<tr><td>ID Siswa</td><td>:</td><td>'+esc(s.id||'')+'</td></tr>'+
+      '<tr><td>Email</td><td>:</td><td>'+esc(s.email||'')+'</td></tr>'+
+    '</table><table>'+
+      '<tr><td>Kelas</td><td>:</td><td>'+esc(s.kelas||'—')+'</td></tr>'+
+      '<tr><td>Semester</td><td>:</td><td>'+esc(d.semesterBerjalan||'')+'</td></tr>'+
+      '<tr><td>Tahun Ajaran</td><td>:</td><td>'+esc(d.tahunAjaran||'')+'</td></tr>'+
+      '<tr><td>Target Berangkat</td><td>:</td><td>'+esc(s.tahunBerangkat?'Intake '+s.tahunBerangkat:'Belum diisi')+'</td></tr>'+
+    '</table></div>';
+
+  var sk=d.kesiapan||{}, rp=d.rapor||{};
+  h+='<div class="kartu">'+
+    '<div><div class="l">Progres DECK</div><div class="v">'+(p.total||0)+'%</div><div class="k">rata-rata enam gerbang</div></div>'+
+    '<div><div class="l">Kesiapan berkas</div><div class="v">'+(sk.skor===undefined?'—':sk.skor+'%')+'</div><div class="k">'+esc(sk.label||'')+'</div></div>'+
+    '<div><div class="l">GPA kumulatif</div><div class="v">'+(rp.gpa===null||rp.gpa===undefined?'—':ang(rp.gpa))+'</div><div class="k">'+esc(rp.predikat||'skala 4.00')+'</div></div>'+
+    '<div><div class="l">Sisa waktu</div><div class="v">'+(pr.sisaBulan===null||pr.sisaBulan===undefined?'—':pr.sisaBulan+' bln')+'</div><div class="k">'+(pr.lajuTotal?'perlu ±'+pr.lajuTotal+'% per bulan':(pr.sisaBulan===0?'tahun target sudah lewat':'isi tahun target di deck'))+'</div></div>'+
+    '</div>';
+
+  h+='<div class="bab">A. PRESTASI AKADEMIK</div>';
+  var sem=d.semester||[];
+  h+='<table><tr><th rowspan="2">No</th><th rowspan="2">Semester</th><th rowspan="2">Tahun Ajaran</th>'+
+    '<th colspan="5" class="kls">KELAS</th><th colspan="2" class="akt">ANGKATAN</th></tr>'+
+    '<tr><th class="kls">Jumlah Nilai</th><th class="kls">Rata2 Nilai</th><th class="kls">SKS</th><th class="kls">GPA</th><th class="kls">Rank</th>'+
+    '<th class="akt">Rata2 GPA</th><th class="akt">Rank</th></tr>';
+  sem.forEach(function(x){
+    h+='<tr><td class="c">'+x.no+'</td><td>SEMESTER '+x.no+'</td><td class="c">'+esc(x.tahun||'—')+'</td>'+
+      '<td class="c kls">'+esc(kosongStrip(x.jumlah))+'</td><td class="c kls">'+esc(x.rata===null?'—':ang(x.rata))+'</td>'+
+      '<td class="c kls">'+esc(x.sks||'—')+'</td><td class="c kls"><b>'+esc(x.gpa===null?'—':ang(x.gpa))+'</b></td>'+
+      '<td class="c kls">'+esc(x.gpa===null?'—':rank(x.rankKelas))+'</td>'+
+      '<td class="c akt">'+esc(x.rataAngkatan===null||x.rataAngkatan===undefined?'—':ang(x.rataAngkatan))+'</td>'+
+      '<td class="c akt">'+esc(x.gpa===null?'—':rank(x.rankAngkatan))+'</td></tr>';
+  });
+  var pk=(d.peringkat||{}).kumulatif||{};
+  h+='<tr class="tot"><td colspan="5" class="r">KUMULATIF</td><td class="c">'+esc(rp.totalSks||0)+'</td>'+
+    '<td class="c">'+esc(rp.gpa===null||rp.gpa===undefined?'—':ang(rp.gpa))+'</td><td class="c">'+esc(rank(pk.kelas))+'</td>'+
+    '<td class="c">—</td><td class="c">'+esc(rank(pk.angkatan))+'</td></tr></table>';
+  h+='<div class="catat">Catatan:<ol>'+
+    '<li>Nilai diambil dari rapor yang diisi siswa di DECK PTLN (gerbang Rapor); semester kosong berarti belum diisi.</li>'+
+    '<li>GPA dihitung dengan skala konversi sekolah (4.00) dan dibobot SKS tiap mata pelajaran.</li>'+
+    '<li>Rank kelas dan angkatan dihitung dari GPA di antara siswa terdaftar DECK PTLN pada kelas / tingkat '+esc((d.peringkat||{}).tingkat||'')+' yang sama — bukan peringkat resmi ledger sekolah.</li>'+
+    '<li>Progres DECK dan kesiapan berkas mengukur kelengkapan persiapan, bukan peluang diterima.</li>'+
+    '</ol></div>';
+
+  /* ---------- HALAMAN 2: grafik perkembangan ---------- */
+  h+='<div class="hal"><div class="hjudul">Grafik Perkembangan</div>';
+  var adaGpa=sem.filter(function(x){return x.gpa!==null});
+  var titikS=[],titikA=[],lab=[];
+  sem.forEach(function(x,i){ if(x.gpa!==null||x.rataAngkatan!==null&&x.rataAngkatan!==undefined){ lab.push('S'+x.no) } });
+  var idxIsi=sem.filter(function(x){return x.gpa!==null||(x.rataAngkatan!==null&&x.rataAngkatan!==undefined)});
+  idxIsi.forEach(function(x,i){ if(x.gpa!==null) titikS.push({x:i,y:x.gpa}); if(x.rataAngkatan!==null&&x.rataAngkatan!==undefined) titikA.push({x:i,y:x.rataAngkatan}) });
+  h+=kotak('TREN GPA PER SEMESTER',
+    adaGpa.length?grafikGaris([{nama:'GPA siswa',titik:titikS,warna:'#3D7BE0'},{nama:'Rata-rata angkatan',titik:titikA,warna:'#1BA37A'}],{label:lab,min:Math.max(0,Math.floor((Math.min.apply(null,titikS.concat(titikA).map(function(q){return q.y}))-0.2)*10)/10),maks:4}):
+    '<div class="kosong">Rapor belum diisi.</div>');
+  var mi=(d.mapelInti||[]).slice(0,8);
+  h+=kotak('NILAI RATA-RATA MATA PELAJARAN INTI',
+    mi.length>=3?radarLaporan(mi,100,'#5B54D6','rgba(91,84,214,.18)'):'<div class="kosong">Belum cukup nilai mata pelajaran inti.</div>','besar')+
+    '<div class="catat">Rata-rata nilai rapor (0–100) setiap mata pelajaran inti di semua semester yang sudah diisi.</div></div>';
+
+  /* ---------- HALAMAN 3: hasil tes ---------- */
+  h+='<div class="hal"><div class="hjudul">Hasil Tes</div>';
+  var ie=d.ielts||[];
+  h+='<div class="bab">IELTS SIMULATION TEST</div>';
+  if(ie.length){
+    var nIe=Math.max(5,ie.length), kep=['Simulasi Ke'];
+    for(var i=1;i<=nIe;i++) kep.push(String(i));
+    var baris=[['Listening','listening'],['Reading','reading'],['Writing','writing'],['Speaking','speaking'],['Overall','overall']].map(function(k){
+      var b=[k[0]]; for(var j=0;j<nIe;j++) b.push(ie[j]?ie[j][k[1]]:''); return b });
+    h+=tabel(kep,baris,[null].concat(Array(nIe).fill('c')));
+    var trOv=ie.map(function(x,i){return {x:i,y:parseFloat(x.overall)}}).filter(function(q){return !isNaN(q.y)});
+    var akhir=ie[ie.length-1]||{};
+    var rad=[['Listening','listening'],['Reading','reading'],['Writing','writing'],['Speaking','speaking']].map(function(k){return {l:k[0],v:parseFloat(akhir[k[1]])||0}});
+    h+='<div class="duo">'+kotak('Progres Overall Band',trOv.length?grafikGaris([{nama:'Overall',titik:trOv,warna:'#8B5CF6'}],{label:ie.map(function(x,i){return x.label||('Sim '+(i+1))}),min:0,maks:9}):'<div class="kosong">Belum ada skor overall.</div>')+
+      kotak('Penguasaan Skill — Simulasi Terakhir',radarLaporan(rad,9,'#E0457B','rgba(224,69,123,.16)'))+'</div>';
+  } else h+='<div class="kosong">Belum ada data IELTS mock test di gerbang C.</div>';
+
+  var sat=d.sat||[];
+  h+='<div class="bab">SAT MOCK TEST</div>';
+  if(sat.length){
+    var bs=sat.map(function(x,i){return [x.label||('TO '+(i+1)),x.tgl,x.ebrw,x.math,x.total]});
+    var trS=sat.map(function(x,i){return {x:i,y:parseFloat(x.total)}}).filter(function(q){return !isNaN(q.y)});
+    h+='<div class="duo">'+kotak('Skor per Try Out',tabel(['Try Out','Tanggal','R&W','Math','Total'],bs,[null,'c','c','c','c']))+
+      kotak('Grafik Progres Skor Total',trS.length?grafikGaris([{nama:'Total',titik:trS,warna:'#E39B1F'}],{label:sat.map(function(x,i){return x.label||('TO '+(i+1))}),min:400,maks:1600}):'<div class="kosong">Belum ada skor total.</div>')+'</div>';
+  } else h+='<div class="kosong">Belum ada data SAT mock test.</div>';
+
+  var ts=d.tes||[], bh=d.bahasa||[];
+  h+='<div class="bab">TES STANDAR &amp; KEMAMPUAN BAHASA</div>';
+  h+=ts.length?tabel(['Jenis Tes','Target','Tanggal','Skor','Berlaku s.d.','Status'],ts.map(function(x){return [x.jenis,x.target,x.tgl,x.skor,x.valid,x.st]}),[null,'c','c','c','c','c']):
+    '<div class="kosong">Belum ada tes standar yang dijadwalkan atau diikuti.</div>';
+  if(bh.length) h+=tabel(['Skill','Target','Skor Saat Ini'],bh.map(function(x){return [x.skill,x.target,x.score]}),[null,'c','c']);
+  h+='</div>';
+
+  /* ---------- HALAMAN 4: progres DECK ---------- */
+  h+='<div class="hal"><div class="hjudul">Progres Persiapan DECK PTLN</div>';
+  h+=kotak('PROGRES PER GERBANG',grafikBatang(ids.map(function(g){
+    var x=(pr.gerbang||{})[g]||{kini:p[g]||0};
+    return {l:GERBANG_ID[g],v:x.kini,t:x.kini+'%',warna:warnaStatusLaporan(x.status)};
+  }),{lebarLabel:180,maks:100}));
+  var vl=d.validasi||{};
+  h+='<table><tr><th>Gerbang</th><th>Selesai</th><th>Sisa</th><th>Perlu / bulan</th><th>Status</th><th>Validasi Mentor</th><th>Catatan Mentor</th></tr>';
+  ids.forEach(function(g){
+    var x=(pr.gerbang||{})[g]||{}, v=vl[g]||{};
+    h+='<tr><td>'+esc(GERBANG_ID[g])+'</td><td class="c">'+(x.kini||0)+'%</td><td class="c">'+(x.sisa||0)+'%</td>'+
+      '<td class="c">'+(x.lajuPerBulan===null||x.lajuPerBulan===undefined?'—':x.lajuPerBulan+'%')+'</td>'+
+      '<td class="c"><span class="pill" style="background:'+warnaStatusLaporan(x.status)+'">'+esc(STATUS_ID[x.status]||x.status||'—')+'</span></td>'+
+      '<td class="c">'+esc(!v.st||v.st==='Not checked'?'Belum diperiksa':v.st)+(v.tgl?'<br><span style="font-size:7.5pt;color:#555">'+esc(v.tgl)+(v.guru?' · '+esc(v.guru):'')+'</span>':'')+'</td>'+
+      '<td>'+esc(v.cat||'—')+'</td></tr>';
+  });
+  h+='</table><div class="catat">'+(pr.sisaBulan===null||pr.sisaBulan===undefined
+    ?'Tahun target keberangkatan belum diisi, sehingga kebutuhan progres per bulan belum dapat dihitung.'
+    :'“Perlu / bulan” = sisa progres dibagi sisa bulan sampai intake Agustus '+esc(pr.tahun)+'. Sesuai jadwal ≤ 8%, perlu perhatian ≤ 15%, mendesak di atasnya.')+'</div>';
+  if((pr.fokus||[]).length){
+    h+='<div class="bab">FOKUS BULAN DEPAN</div><ol style="margin:0;padding-left:5mm;line-height:1.6">'+
+      pr.fokus.map(function(f){ return '<li><b>'+esc(GERBANG_ID[f.id])+'</b> ('+f.kini+'%) — '+esc(f.saran)+'</li>' }).join('')+'</ol>';
+  }
+  var kr=sk.rincian||{};
+  if(sk.skor!==undefined){
+    h+='<div class="bab">KESIAPAN BERKAS</div>'+tabel(['Komponen','Bobot','Skor'],[
+      ['GPA rapor','55%',(kr.gpa||0)+'%'],['Tes bahasa & standar','25%',(kr.tes||0)+'%'],['Dokumen','20%',(kr.dokumen||0)+'%'],['Total',' ',sk.skor+'% · '+(sk.label||'')]
+    ],[null,'c','c']);
+  }
+  h+='</div>';
+
+  /* ---------- HALAMAN 5: target kampus & beasiswa ---------- */
+  var t=d.analisa||[], bea=d.beasiswa||[];
+  h+='<div class="hal"><div class="hjudul">Target Kampus &amp; Beasiswa</div>';
+  h+='<div class="bab">TARGET UNIVERSITAS'+(t.length?' ('+t.length+')':'')+'</div>';
+  h+=t.length?tabel(['No','Universitas','Negara','Program Studi','Kecocokan','Min GPA','Min IELTS','Status'],
+    t.map(function(x,i){return [i+1,x.kampus,x.negara,x.jurusan,x.cocok,x.minGpa,x.minIelts,x.hasil||x.status]}),['c',null,null,null,'c','c','c','c']):
+    '<div class="kosong">Belum ada universitas target.</div>';
+  var catat=(d.seimbang||[]).filter(function(x){return x&&x.teks});
+  if(catat.length) h+='<div class="catat">Catatan daftar target:<ol>'+catat.map(function(x){return '<li>'+esc(x.teks)+'</li>'}).join('')+'</ol></div>';
+  h+='<div class="bab">TARGET BEASISWA'+(bea.length?' ('+bea.length+')':'')+'</div>';
+  h+=bea.length?tabel(['No','Beasiswa','Wilayah','Jenis Pendanaan','Periode','Esai','Aplikasi'],
+    bea.map(function(x,i){return [i+1,x.nama,x.wilayah,x.tipe,x.periode,x.esai,x.aplikasi]}),['c',null,null,null,'c','c','c']):
+    '<div class="kosong">Belum ada beasiswa target.</div>';
+  h+='</div>';
+
+  /* ---------- HALAMAN 6: psikometri ---------- */
+  var ps=d.psi||{}, ru=(ps.rumpun||[]).filter(function(x){return x.skor!==null&&x.skor!==undefined});
+  h+='<div class="hal"><div class="hjudul">Psikometri</div>';
+  h+='<div class="idn"><table>'+
+    '<tr><td>Kategori skor IQ</td><td>:</td><td><b>'+esc(ps.labelIq||(ps.iq?ps.iq:'Belum ada data'))+'</b>'+(ps.iq?' ('+esc(ps.iq)+')':'')+'</td></tr>'+
+    '<tr><td>Tanggal tes</td><td>:</td><td>'+esc(ps.tanggal||'—')+'</td></tr>'+
+    '</table><table><tr><td>Lembaga</td><td>:</td><td>'+esc(ps.lembaga||'—')+'</td></tr>'+
+    '<tr><td>Catatan</td><td>:</td><td>'+esc(ps.catatan||'—')+'</td></tr></table></div>';
+  h+=kotak('KECOCOKAN RUMPUN JURUSAN',ru.length>=3?radarLaporan(ru.map(function(x){return {l:x.label.split(/[,&]/)[0].trim(),v:x.skor}}),100,'#1BA37A','rgba(27,163,122,.18)'):
+    '<div class="kosong">Belum cukup data psikometri.</div>','besar');
+  var top=ps.teratas||[];
+  var pilihan=[]; t.forEach(function(x){ if(x.jurusan&&pilihan.indexOf(x.jurusan)<0) pilihan.push(x.jurusan) });
+  h+='<div class="duo">'+kotak('Rekomendasi Psikometri',top.length?'<ol style="margin:0;padding-left:5mm;line-height:1.5">'+top.map(function(x){
+      return '<li><b>'+esc(x.label)+'</b> ('+x.skor+')<br><span style="font-size:8.3pt;color:#444">'+esc((x.jurusan||[]).join(', '))+'</span></li>'}).join('')+'</ol>':'<div class="kosong">—</div>')+
+    kotak('Program Studi Pilihan Murid',pilihan.length?'<ol style="margin:0;padding-left:5mm;line-height:1.5">'+pilihan.slice(0,8).map(function(x){return '<li>'+esc(x)+'</li>'}).join('')+'</ol>':'<div class="kosong">Belum ada.</div>')+'</div>';
+  h+='<div class="catat">Skor rumpun memadukan nilai rapor mata pelajaran terkait, hasil IQ, dan minat (bila tersedia). Ini bahan diskusi, bukan keputusan jurusan.</div></div>';
+
+  /* ---------- HALAMAN 7: rekomendasi & pengesahan ---------- */
+  var poin=[];
+  (pr.fokus||[]).forEach(function(f){ poin.push(GERBANG_ID[f.id]+': '+f.saran) });
+  (sk.saran||[]).forEach(function(x){ poin.push(x) });
+  catat.slice(0,2).forEach(function(x){ poin.push(x.teks) });
+  h+='<div class="hal"><div class="hjudul">Rekomendasi</div>';
+  h+='<div class="bab">Rekomendasi otomatis dari data DECK</div>'+
+    (poin.length?'<ol style="margin:0;padding-left:5mm;line-height:1.6">'+poin.map(function(x){return '<li>'+esc(x)+'</li>'}).join('')+'</ol>':'<div class="kosong">Tidak ada catatan.</div>');
+  h+='<div class="bab">Catatan & kesepakatan konsultasi</div>';
+  for(var gi=0;gi<7;gi++) h+='<div class="garis"></div>';
+  var pembuat=(d.pencetak&&d.pencetak.peran==='guru'&&d.pencetak.nama)?d.pencetak.nama:(idn.konselor||'');
+  h+='<div style="text-align:right;margin-top:7mm">'+esc(idn.kota||'Pekanbaru')+', '+tglIndo(new Date())+'</div>'+
+    '<div class="ttd">'+
+      '<div>Mengetahui<br>Kepala '+esc(idn.sekolah||'')+'<div class="ruang"></div><div class="nm">'+esc(idn.kepala||'____________________')+'</div></div>'+
+      '<div>Dibuat Oleh<br>Konselor Study Abroad Program<div class="ruang"></div><div class="nm">'+esc(pembuat||'____________________')+'</div></div>'+
+    '</div>'+
+    '<div class="ttd" style="grid-template-columns:1fr;margin-top:8mm"><div>Siswa<div class="ruang"></div><div class="nm">'+esc(s.nama||'')+'</div></div></div>';
+  h+='<div class="catat" style="margin-top:6mm;color:#666">Laporan dibuat '+esc(d.tanggalLaporan||'')+' · data deck terakhir diperbarui '+esc(d.diperbarui||'—')+'.</div></div>';
+
+  var kaki='<div class="kaki">DECK PTLN // SAPP-DECK '+esc(VERSI_UI)+' // ID: ['+esc(s.id||'')+'] // CETAK: ['+esc(d.tanggalLaporan||'')+']</div>';
+  h=h.split('<div class="hal">').join(kaki+'<div class="hal">')+kaki;
+  return {namaBerkas:'SAPP-DECK_'+(s.kelas||'').replace(/\s+/g,'')+'_'+String(s.nama||'siswa').toUpperCase().replace(/[^A-Z0-9]+/g,'_'),html:h};
+}
+
+/* ---------- logo kop & penandatangan (administrator, menu Account) ---------- */
+function kotakLogo(judul,slot,l){
+  return '<div style="display:flex;gap:14px;align-items:center;min-width:280px">'+
+    '<div style="width:84px;height:84px;border:1px solid var(--line);border-radius:var(--r);display:flex;align-items:center;justify-content:center;background:#fff">'+
+    (l?'<img src="data:'+esc(l.mime)+';base64,'+esc(l.data)+'" alt="'+esc(judul)+'" style="max-width:74px;max-height:74px">':'<span class="hint">…</span>')+
+    '</div><div><div style="font-weight:600;margin-bottom:4px">'+esc(judul)+'</div>'+
+    '<div class="hint" style="margin-bottom:8px">'+(l?(l.kustom?'Uploaded image.':'Default logo.'):'Loading…')+'</div>'+
+    '<div class="pick"><label class="btn sea sm" style="cursor:pointer">Upload'+
+    '<input type="file" accept="image/png,image/jpeg,image/svg+xml,image/gif,image/webp" style="display:none" onchange="unggahLogo(this,\''+slot+'\')"></label>'+
+    (l&&l.kustom?'<button class="btn ghost sm" onclick="resetLogo(\''+slot+'\')">Use default</button>':'')+
+    '</div></div></div>';
+}
+function kartuLogo(){
+  if(S.user.role!=='admin') return '';
+  var L=S.logo||{};
+  return '<div class="card"><h2>Progress report letterhead</h2>'+
+    '<div class="sub">Logos and signatories printed on every Students Progress Preparation Report. PNG, JPG or SVG under 300 KB.</div>'+
+    '<div style="display:flex;gap:28px;flex-wrap:wrap;margin-top:10px">'+
+    kotakLogo('School / foundation logo','utama',L.logo)+kotakLogo('Second logo (JSIT)','kedua',L.logo2)+'</div>'+
+    '<div class="grid" style="margin-top:14px">'+
+    '<div class="f"><label for="inKepala">Principal (Mengetahui)</label><input id="inKepala" type="text" value="'+esc(L.kepala||'')+'"></div>'+
+    '<div class="f"><label for="inKonselor">Counsellor (Dibuat oleh)</label><input id="inKonselor" type="text" value="'+esc(L.konselor||'')+'">'+
+    '<div class="hint">Used when a student prints. A mentor who prints signs under their own name.</div></div>'+
+    '</div><div style="margin-top:10px"><button class="btn sm" onclick="simpanPenandatangan()">Save names</button></div></div>';
+}
+function muatLogo(){
+  if(!S.user||S.user.role!=='admin'||S.logo||S.logoMinta) return;
+  S.logoMinta=true;
+  call('logoInfo',S.token).then(function(r){
+    S.logoMinta=false;
+    if(r.ok){ S.logo={logo:r.logo,logo2:r.logo2,kepala:r.kepala,konselor:r.konselor}; if(S.tab==='akun') gambarView() }
+  }).catch(function(){ S.logoMinta=false });
+}
+function pasangLogo(slot,l){ S.logo=S.logo||{}; S.logo[slot==='kedua'?'logo2':'logo']=l }
+function unggahLogo(inp,slot){
+  var f=inp.files&&inp.files[0]; if(!f) return;
+  if(f.size>330000){toast('That image is '+Math.round(f.size/1024)+' KB. Use one under 300 KB.',true);inp.value='';return}
+  var rd=new FileReader();
+  rd.onload=function(){
+    toast('Uploading logo…');
+    call('setLogoSekolah',S.token,String(rd.result),slot||'utama').then(function(r){
+      if(!r.ok){ if(r.error==='SESI_HABIS'){sesiHabis();return} toast(r.error,true); return }
+      pasangLogo(r.slot,r.logo); toast('Logo saved. New reports will use it.'); gambarView();
+    }).catch(function(e){toast('Upload failed: '+e.message,true)});
+  };
+  rd.readAsDataURL(f);
+}
+function resetLogo(slot){
+  call('setLogoSekolah',S.token,'',slot||'utama').then(function(r){
+    if(!r.ok){ toast(r.error,true); return }
+    pasangLogo(r.slot,r.logo); toast('Back to the default logo.'); gambarView();
+  }).catch(function(e){toast(e.message,true)});
+}
+function simpanPenandatangan(){
+  var data={kepala:(q('inKepala')||{}).value||'',konselor:(q('inKonselor')||{}).value||''};
+  call('setIdentitasLaporan',S.token,data).then(function(r){
+    if(!r.ok){ if(r.error==='SESI_HABIS'){sesiHabis();return} toast(r.error,true); return }
+    S.logo=S.logo||{}; S.logo.kepala=r.kepala; S.logo.konselor=r.konselor; toast('Signatory names saved.');
+  }).catch(function(e){toast(e.message,true)});
 }
 
 /* =======================================================
@@ -7566,6 +7949,7 @@ function viewDetail(){
     '<div class="sub">'+esc(d.siswa.kelas||'—')+' · '+esc(d.siswa.id)+' · '+esc(d.siswa.email)+
     ((deck.meta||{}).tahun?' · departing '+esc(deck.meta.tahun):'')+' · updated '+esc(d.diperbarui||'—')+'</div></div>'+
     '<div class="pick"><button class="btn sea sm" onclick="cetakLaporan()">Report (PDF)</button>'+
+    '<button class="btn sea sm" onclick="unduhLaporanProgres(this,true)">Progress report</button>'+
     '<button class="btn ghost sm" onclick="unduhLaporan(\'xls\')">Excel</button>'+
     (S.user.role==='guru'||S.user.role==='admin'?'<button class="btn gold sm" onclick="laporanOrtu()">Email progress to parent</button>'+
       '<button class="btn ghost sm" onclick="kirimPengingat()">Send preparation reminder</button>':'')+
@@ -7842,6 +8226,7 @@ function segarkan(){
    AKUN
    ======================================================= */
 function viewAkun(){
+  muatLogo();
   return '<div class="card"><h2>Account</h2><div class="sub">Your account details.</div>'+
     '<div class="grid">'+
     '<div class="f"><label>Name</label><input type="text" value="'+esc(S.user.nama)+'" disabled></div>'+
@@ -7860,6 +8245,7 @@ function viewAkun(){
       '<button class="btn danger sm" onclick="gantiKode()">Issue a new code</button></div>'+
       '<div class="hint">Issuing a new code stops anyone who has the old one from registering. Parents already connected stay connected.</div></div>'+
       '</div></div>' : '')+
+    kartuLogo()+
     '<div class="card"><h2>Spreadsheet sync</h2>'+
     '<div class="sub">This page checks the database every 45 seconds. When someone edits the spreadsheet by hand, the change is pulled in automatically — unless you have unsaved work, in which case you are asked first.</div>'+
     '<div class="grid"><div class="f"><label>When the spreadsheet changes</label>'+
