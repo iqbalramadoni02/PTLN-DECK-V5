@@ -2778,6 +2778,152 @@ html.latar-app .sisi{background:rgba(244,247,241,.84)!important;-webkit-backdrop
 .ct-ajak>div span{color:var(--tinta-2)}
 .tl-bag-r .mono{width:18px;text-align:right;color:var(--mute);font-size:11px}
 @media (max-width:820px){ .ct-bag.dengan{grid-template-columns:1fr} .ct-kertas{padding:20px 18px} }
+
+/* ---------- halaman masuk: berita PTLN di samping kotak masuk ---------- */
+.portal{width:100%;max-width:460px;margin:18px auto 0;display:flex;flex-direction:column;border-radius:var(--r4);overflow:hidden;
+  background:rgba(8,26,22,.38);border:1px solid rgba(255,255,255,.16);-webkit-backdrop-filter:blur(14px) saturate(140%);backdrop-filter:blur(14px) saturate(140%);
+  box-shadow:0 30px 60px -24px rgba(0,0,0,.55);color:#EDF0EA}
+.pt-kepala{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 16px 12px;border-bottom:1px solid rgba(255,255,255,.12)}
+.pt-kepala b{display:block;font-size:15px;letter-spacing:.01em}
+.pt-kepala span{font-size:11.5px;opacity:.75}
+.pt-kepala .pt-n{font-family:var(--mono);font-size:11px;background:rgba(199,125,26,.9);color:#fff;border-radius:999px;padding:2px 9px;opacity:1}
+.pt-gulir{padding:12px;display:flex;flex-direction:column;gap:12px;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.3) transparent}
+.pt-post{background:rgba(255,255,255,.97);color:#1F2A24;border-radius:14px;padding:13px 14px 12px;box-shadow:0 8px 22px -14px rgba(0,0,0,.6);animation:ptMasuk .35s ease both}
+.pt-post.pin{box-shadow:0 0 0 2px rgba(199,125,26,.75),0 8px 22px -14px rgba(0,0,0,.6)}
+@keyframes ptMasuk{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.pt-ph{display:flex;align-items:center;gap:10px;margin-bottom:9px}
+.pt-ph b{display:block;font-size:13px;line-height:1.25}
+.pt-ph span{display:block;font-size:11.5px;color:#55706A}
+.pt-ph em{font-style:normal;color:#A9650F;font-weight:600}
+.pt-av{flex:0 0 38px;width:38px;height:38px;border-radius:50%;overflow:hidden;background:#10302A;display:block}
+.pt-av svg{width:100%;height:100%;display:block}
+.pt-post h3{font-size:15px;line-height:1.35;margin:0 0 5px;color:#10302A}
+.pt-isi{font-size:13.5px;line-height:1.55;white-space:pre-line;overflow-wrap:anywhere}
+.pt-isi.potong{max-height:6.3em;overflow:hidden;-webkit-mask-image:linear-gradient(#000 60%,transparent);mask-image:linear-gradient(#000 60%,transparent)}
+.pt-isi a{color:#1F6F5C}
+.pt-tag{color:#1F6F5C;font-weight:600}
+.pt-lagi{background:none;border:0;padding:2px 0;margin-top:2px;color:#55706A;font-weight:600;font-size:12.5px;cursor:pointer}
+.pt-lagi:hover{color:#10302A;text-decoration:underline}
+.pt-gb{margin:10px -14px 0;background:#E8EFEA;min-height:0}
+.pt-gb img{display:block;width:100%;max-height:340px;object-fit:cover}
+.pt-gb.memuat{height:170px;background:linear-gradient(90deg,#E8EFEA 25%,#F4F7F3 50%,#E8EFEA 75%);background-size:200% 100%;animation:ptKilau 1.2s linear infinite}
+@keyframes ptKilau{from{background-position:200% 0}to{background-position:-200% 0}}
+.pt-link{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:10px;padding:9px 11px;border-radius:10px;background:#F1F5F1;border:1px solid #DDE5DD;color:#10302A;text-decoration:none;font-size:12.5px}
+.pt-link span{color:#55706A;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pt-link:hover{background:#E8EFEA}
+.pt-kosong{font-size:13px;opacity:.85;padding:18px 6px;text-align:center}
+.pt-kerangka i{display:block;height:10px;border-radius:6px;margin:8px 0;background:linear-gradient(90deg,#E8EFEA 25%,#F4F7F3 50%,#E8EFEA 75%);background-size:200% 100%;animation:ptKilau 1.2s linear infinite}
+.pt-kerangka .pt-ph div{flex:1}
+.pt-kerangka .pt-ph i{margin:5px 0;width:60%}
+.pt-kerangka .pt-av{background:#E8EFEA}
+.pt-kerangka i.pendek{width:45%}
+@media (min-width:980px){
+  #auth.ada-portal{display:grid;grid-template-columns:minmax(0,460px) minmax(0,440px);grid-template-rows:auto auto;column-gap:28px;
+    justify-content:center;align-content:center}
+  #auth.ada-portal > .pass{grid-column:1;grid-row:1;align-self:end;margin:0}
+  #auth.ada-portal > .auth-body{grid-column:1;grid-row:2;align-self:start;margin:0}
+  #auth.ada-portal > .portal{grid-column:2;grid-row:1 / span 2;margin:0;max-width:none;align-self:center;max-height:calc(100vh - 64px)}
+  #auth.ada-portal > .portal .pt-gulir{max-height:calc(100vh - 130px)}
+}
+@media (max-width:979px){ .portal .pt-gulir{max-height:none} }
+:root[data-tema="malam"] .pt-post{background:rgba(22,34,31,.97);color:#E4ECE7}
+:root[data-tema="malam"] .pt-post h3{color:#F2F5F1}
+:root[data-tema="malam"] .pt-ph span,:root[data-tema="malam"] .pt-lagi{color:#9DB3AC}
+:root[data-tema="malam"] .pt-link{background:#1E2D29;border-color:#2C3F3A;color:#E4ECE7}
+
+/* tombol masuk yang sedang bekerja */
+.putar{display:inline-block;width:15px;height:15px;border-radius:50%;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;animation:putarIkon .8s linear infinite;margin-right:9px;vertical-align:-3px}
+@keyframes putarIkon{to{transform:rotate(360deg)}}
+#formIn.memuat input{opacity:.7}
+#btnIn[disabled]{opacity:1;cursor:progress}
+
+/* layar memuat bertahap */
+.boot-maju{position:relative;width:min(240px,70vw);height:3px;border-radius:3px;background:rgba(16,48,42,.12);overflow:hidden;margin:16px auto 0}
+.boot-maju i{position:absolute;left:0;top:0;bottom:0;width:0;background:linear-gradient(90deg,var(--sea,#2E7F6D),var(--gold,#C77D1A));border-radius:3px;transition:width .35s ease}
+.boot-tahap{position:relative;margin-top:10px;font-size:12.5px;color:var(--tinta-2,#55706A);text-align:center;min-height:18px;padding:0 16px}
+.boot-aksi{position:relative;display:flex;gap:8px;justify-content:center;margin-top:12px}
+.boot-aksi.hidden{display:none}
+
+/* pengaturan berita halaman masuk */
+.pt-impor{display:grid;gap:8px;margin:8px 0 10px}
+.pt-impor-k{display:flex;gap:10px;align-items:flex-start;padding:10px;border:1px solid var(--line);border-radius:12px;cursor:pointer;background:var(--kartu)}
+.pt-impor-k.on{border-color:var(--sea);box-shadow:0 0 0 1px var(--sea) inset}
+.pt-impor-k img{width:64px;height:48px;object-fit:cover;border-radius:8px;flex:0 0 64px}
+.pt-impor-k span{display:flex;flex-direction:column;gap:2px;min-width:0}
+.pt-impor-k i{font-style:normal;font-size:12.5px;color:var(--tinta-2)}
+.pt-impor-k em{font-style:normal;font-size:11px;font-family:var(--mono);color:var(--tinta-2)}
+.pt-daftar{list-style:none;padding:0;margin:6px 0 0;display:grid;gap:6px}
+.pt-daftar li{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--line);border-radius:10px}
+.pt-daftar li div{display:flex;flex-direction:column;min-width:0}
+.pt-daftar li b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* CV beasiswa: pemeriksaan ATS */
+.ats-atas{display:flex;gap:18px;align-items:center;margin:14px 0 12px;flex-wrap:wrap}
+.ats-cincin{--w:#B4432F;width:108px;height:108px;border-radius:50%;display:grid;place-content:center;text-align:center;flex:0 0 108px;
+  background:radial-gradient(closest-side,var(--kartu,#fff) 78%,transparent 80% 100%),conic-gradient(var(--w) var(--p),rgba(16,48,42,.1) 0)}
+.ats-cincin b{font-size:30px;line-height:1;font-family:var(--mono)}
+.ats-cincin span{font-size:11px;color:var(--tinta-2)}
+.ats-cincin.ok{--w:#2E7F6D}.ats-cincin.baik{--w:#5E9C4A}.ats-cincin.sedang{--w:#C77D1A}
+.ats-t{font-weight:700;font-size:16px}
+.ats-t.ok{color:#2E7F6D}.ats-t.baik{color:#4C8A3A}.ats-t.sedang{color:#A9650F}.ats-t.lemah{color:#B4432F}
+.ats-aman{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.ats-aman span{font-size:11.5px;padding:3px 8px;border-radius:999px;background:rgba(46,127,109,.1);color:#1F6F5C}
+.ats-kriteria{display:grid;gap:7px;margin:6px 0 4px}
+.ats-k{display:grid;grid-template-columns:minmax(0,1fr) 120px 46px;gap:10px;align-items:center;font-size:13px}
+.ats-k i{display:block;height:7px;border-radius:7px;background:rgba(16,48,42,.1);overflow:hidden}
+.ats-k i b{display:block;height:100%;border-radius:7px;background:#B4432F}
+.ats-k i b.ok{background:#2E7F6D}.ats-k i b.sedang{background:#C77D1A}
+.ats-k em{font-style:normal;font-family:var(--mono);font-size:11.5px;text-align:right;color:var(--tinta-2)}
+.ats-fix{margin:6px 0 0;padding-left:20px;display:grid;gap:8px}
+.ats-fix li{font-size:13.5px}
+.ats-fix li span{display:block;margin-bottom:4px}
+.ats-chip{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.ats-chip span{font-size:12px;padding:3px 9px;border-radius:999px;border:1px solid var(--line)}
+.ats-chip span.ok{background:rgba(46,127,109,.12);border-color:rgba(46,127,109,.35);color:#1F6F5C}
+.ats-chip span.no{background:rgba(199,125,26,.08);border-color:rgba(199,125,26,.35);color:#8A5310}
+@media (max-width:560px){ .ats-k{grid-template-columns:minmax(0,1fr) 70px 40px} }
+
+/* beranda siswa: target kampus yang dipantau intensif */
+.tk-wadah .sub b.tk-awas{color:#B4432F}
+.tk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(290px,100%),1fr));gap:14px;margin-top:12px}
+.tk-kartu{--w:#2E7F6D;--w2:#C77D1A;position:relative;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--kartu);display:flex;flex-direction:column;gap:10px;padding:0 14px 14px}
+.tk-atas{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 -14px;padding:12px 14px;background:linear-gradient(120deg,var(--w),color-mix(in srgb,var(--w) 70%,var(--w2)));color:#fff}
+.tk-nama{display:flex;gap:10px;align-items:center;min-width:0}
+.tk-nama>div{min-width:0}
+.tk-nama b{display:block;font-size:14px;line-height:1.25}
+.tk-nama span{display:block;font-size:11.5px;opacity:.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tk-kode{flex:0 0 auto;font-family:var(--mono);font-weight:700;font-size:12px;padding:5px 8px;border-radius:8px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35)}
+.tk-cincin{flex:0 0 54px;width:54px;height:54px;border-radius:50%;display:grid;place-content:center;background:radial-gradient(closest-side,var(--w) 76%,transparent 78% 100%),conic-gradient(#fff var(--p),rgba(255,255,255,.25) 0)}
+.tk-cincin b{font-size:13px;font-family:var(--mono)}
+.tk-dl{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.tk-hari{display:flex;align-items:baseline;gap:7px}
+.tk-hari b{font-size:30px;line-height:1;font-family:var(--mono);color:var(--w)}
+.tk-hari span{font-size:12px;color:var(--tinta-2);max-width:120px;line-height:1.25}
+.tk-hari.mepet b,.tk-hari.lewat b{color:#B4432F}
+.tk-hari.dekat b{color:#C77D1A}
+.tk-tgl{text-align:right;font-size:11.5px;color:var(--tinta-2);line-height:1.35}
+.tk-tgl b{color:var(--tinta);font-size:12.5px}
+.tk-fase{display:flex;gap:5px}
+.tk-f{position:relative;flex:1;height:22px;border-radius:7px;background:rgba(16,48,42,.07);overflow:hidden;display:grid;place-content:center}
+.tk-f i{position:absolute;left:0;top:0;bottom:0;background:color-mix(in srgb,var(--w) 35%,transparent)}
+.tk-f.ok i{background:var(--w)}
+.tk-f.kini{box-shadow:0 0 0 2px var(--w2) inset}
+.tk-f span{position:relative;font-size:11px;font-weight:700;font-family:var(--mono)}
+.tk-f.ok span{color:#fff}
+.tk-meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:11.5px;color:var(--tinta-2)}
+.tk-langkah{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.tk-langkah li{display:flex;gap:8px;font-size:12.5px;line-height:1.4;align-items:flex-start}
+.tk-langkah li span{flex:0 0 14px;height:14px;margin-top:2px;border-radius:4px;border:1.5px solid var(--line)}
+.tk-langkah li.kini{font-weight:600}
+.tk-langkah li.kini span{border-color:var(--w2);background:color-mix(in srgb,var(--w2) 20%,transparent)}
+.tk-catatan{font-size:12.5px;padding:8px 10px;border-radius:10px;background:rgba(199,125,26,.08);border-left:3px solid var(--w2)}
+.tk-catatan b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--tinta-2);margin-bottom:2px}
+.tk-link{font-size:12.5px;font-weight:600;color:var(--w);text-decoration:none}
+.tk-lain{margin-top:14px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:12px}
+.tk-lain b{width:100%;font-size:12px;color:var(--tinta-2)}
+.tk-lain span{padding:4px 9px;border-radius:999px;border:1px solid var(--line)}
+.tk-lain i{font-style:normal}
+.tk-oto{display:inline-block;margin-top:3px;font-size:10.5px;padding:1px 7px;border-radius:999px;background:rgba(46,127,109,.1);color:#1F6F5C;border:1px solid rgba(46,127,109,.3)}
 </style>
 </head>
 <body>
@@ -2787,6 +2933,9 @@ html.latar-app .sisi{background:rgba(244,247,241,.84)!important;-webkit-backdrop
     <span class="inti"><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
   <div class="eyebrow">Preparing your DECK PTLN</div>
   <div class="perf" style="position:relative;margin-top:-6px">SMAIT Al-Ittihad · Study Abroad Preparation Deck</div>
+  <div class="boot-maju" aria-hidden="true"><i id="bootBar"></i></div>
+  <div class="boot-tahap" id="bootTahap" role="status" aria-live="polite">Loading your deck…</div>
+  <div class="boot-aksi hidden" id="bootAksi"><button type="button" class="btn sea sm" onclick="mulai()">Try again</button><button type="button" class="btn ghost sm" onclick="store(KEY,null);location.reload()">Sign out</button></div>
 </div>
 
 <!-- ============ SIGN IN / REGISTER ============ -->
@@ -2920,7 +3069,7 @@ var KEY='deckptln_token_v1';
    Ganti bila membuat deployment baru.
    ------------------------------------------------------- */
 var LAMBANG='<div class="lambang"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="DECK PTLN"><rect width="100" height="100" rx="24" fill="#EDF0EA"/><rect x="15.5" y="60" width="7.4" height="20" rx="3.2" fill="#10302A" opacity="0.55"/><rect x="27.3" y="52" width="7.4" height="28" rx="3.2" fill="#10302A" opacity="0.64"/><rect x="39.1" y="44" width="7.4" height="36" rx="3.2" fill="#10302A" opacity="0.73"/><rect x="50.900000000000006" y="36" width="7.4" height="44" rx="3.2" fill="#10302A" opacity="0.82"/><rect x="62.7" y="28" width="7.4" height="52" rx="3.2" fill="#10302A" opacity="0.91"/><rect x="74.5" y="18" width="7.4" height="62" rx="3.2" fill="#C77D1A" opacity="1"/></svg></div>';
-var VERSI_UI='2026.11.19-33';
+var VERSI_UI='2026.11.20-35';
 var KUNCI_ALAMAT='deckptln_apiurl_v1';
 
 /* Alamat Web App boleh ditimpa dari dalam aplikasi. Berguna bila di Apps
@@ -2947,7 +3096,15 @@ function call(name){
   var args=[].slice.call(arguments,1);
   if(PAKAI_GSR){
     return new Promise(function(res,rej){
-      var runner=google.script.run.withSuccessHandler(res).withFailureHandler(function(e){
+      /* google.script.run tidak punya batas waktu sendiri. Untuk panggilan
+         masuk dan data awal diberi batas, supaya layar tidak menunggu
+         selamanya bila server tidak menjawab; pemakai lalu ditawari
+         mencoba lagi. */
+      var batas=BATAS_KHUSUS[name], selesai=false;
+      var jam=batas?setTimeout(function(){ if(selesai) return; selesai=true;
+        rej(new Error('The school server did not answer in time. It may be busy — please try again in a moment.')) },batas+5000):null;
+      var runner=google.script.run.withSuccessHandler(function(r){ if(selesai) return; selesai=true; if(jam) clearTimeout(jam); res(r) })
+        .withFailureHandler(function(e){ if(selesai) return; selesai=true; if(jam) clearTimeout(jam);
         rej(new Error(e && e.message ? e.message : 'Lost connection to the server.'));
       });
       runner[name].apply(runner,args);
@@ -2964,6 +3121,12 @@ function call(name){
    halaman tidak menggantung menunggu jaringan yang tidak menjawab. */
 var BATAS_TUNGGU=25000;
 var ULANG_MAKS=3;
+/* Panggilan berat (masuk, data awal) diberi waktu lebih panjang dan hanya
+   diulang sekali: Apps Script yang baru bangun bisa butuh 20-40 detik,
+   dan memutusnya di detik ke-25 lalu mengulang dari nol justru membuat
+   masuk gagal. Panggilan ringan halaman masuk cukup sebentar. */
+var BATAS_KHUSUS={masukLengkap:60000,bootstrap:60000,login:45000,register:45000,ping:15000,beritaPortal:20000,beritaPortalGambar:25000,latarInfo:20000};
+var ULANG_KHUSUS={masukLengkap:1,bootstrap:1,login:1,register:0,ping:0,beritaPortal:1,beritaPortalGambar:1};
 
 /**
  * Panggilan jaringan untuk hosting luar (GitHub Pages, Netlify).
@@ -2980,7 +3143,7 @@ var ULANG_MAKS=3;
 function panggilJaringan(name,args,percobaan){
   var API_URL=alamatApi();
   var pemutus=(typeof AbortController!=='undefined')?new AbortController():null;
-  var jam=setTimeout(function(){ if(pemutus) pemutus.abort() },BATAS_TUNGGU);
+  var jam=setTimeout(function(){ if(pemutus) pemutus.abort() },BATAS_KHUSUS[name]||BATAS_TUNGGU);
   var alamat=API_URL+(API_URL.indexOf('?')<0?'?':'&')+'t='+Date.now()+'_'+Math.random().toString(36).slice(2,8);
   return fetch(alamat,{
     method:'POST', redirect:'follow', cache:'no-store',
@@ -3007,14 +3170,14 @@ function panggilJaringan(name,args,percobaan){
     clearTimeout(jam);
     var pesan=(e&&e.message)||'';
     var sementara=/Failed to fetch|NetworkError|Load failed|aborted|The user aborted|replied with code 5\d\d/i.test(pesan);
-    if(sementara && percobaan<ULANG_MAKS){
+    if(sementara && percobaan<(name in ULANG_KHUSUS?ULANG_KHUSUS[name]:ULANG_MAKS)){
       // Jeda menaik: 0,6 dtk, 1,2 dtk, 2,4 dtk.
       var jeda=600*Math.pow(2,percobaan);
       return new Promise(function(r){ setTimeout(r,jeda) })
         .then(function(){ return panggilJaringan(name,args,percobaan+1) });
     }
     if(/aborted|The user aborted/i.test(pesan))
-      throw new Error('The server did not answer in time. Check your connection, then try again.');
+      throw new Error('The school server did not answer in time. It may be busy or waking up — please try again in a moment.');
     if(/Failed to fetch|NetworkError|Load failed/i.test(pesan))
       throw new Error('Could not reach the Web App. This page must be served over https rather than opened as a local file — or open the Web App address directly.');
     throw e;
@@ -3288,17 +3451,7 @@ function cekPeran(){
 }
 function authErr(m){q('authMsg').innerHTML='<div class="note bad">'+esc(m)+'</div>'}
 
-function doLogin(ev){
-  ev.preventDefault();
-  var b=q('btnIn'); b.disabled=true; b.textContent='Checking…';
-  call('login',{email:q('inEmail').value,pass:q('inPass').value})
-    .then(function(r){
-      if(!r.ok){authErr(r.error);b.disabled=false;b.textContent='Sign in';return}
-      store(KEY,r.token); S.token=r.token; mulai();
-    })
-    .catch(function(e){authErr(e.message);b.disabled=false;b.textContent='Sign in'});
-  return false;
-}
+/* doLogin ada di modul BERITA PORTAL — MASUK LEBIH CEPAT. */
 var __KODE_SAH__=false;
 function cekKode(){
   var el=q('hintKode'), v=String(q('upKode').value||'').trim().toUpperCase();
@@ -3373,7 +3526,9 @@ function mulai(){
     }catch(e){ hapusAwal(); pakaiCepat=false }
   }
 
+  if(!pakaiCepat) bootTunggu(true);
   call('bootstrap',S.token,S.refSidik||'').then(function(r){
+    bootTunggu(false);
     spandukMuat(false);
     if(!r.ok){
       hapusAwal();
@@ -3382,17 +3537,9 @@ function mulai(){
            q('auth').classList.remove('hidden');authErr(r.error)}
       return;
     }
-    terapkanBootstrap(r,true);
-    q('boot').classList.add('hidden');
-    q('app').classList.remove('hidden'); sisiAwal();
-    mulaiSync();     // dijalankan sebelum render, agar tidak ikut gagal bila render bermasalah
-    render();
-    setTimeout(function(){ try{ muatFotoMini() }catch(eF){} },1200);
-    if(!S.versiServer||S.versiServer!==VERSI_UI) periksaServer(); else gambarPita();
-    setSinkron('ok');
-    tampilkanPeringatan(r);
-    setTimeout(tawarkanDraf,300);
+    bootSelesai(r);
   }).catch(function(e){
+    bootTunggu(false);
     spandukMuat(false);
     if(pakaiCepat){
       // Halaman sudah tampil dari simpanan; jangan lempar pengguna keluar.
@@ -3407,6 +3554,37 @@ function mulai(){
     q('authMsg').innerHTML='<div class="note bad">'+esc(e.message)+
       '<div style="margin-top:9px"><button type="button" class="btn sea sm" style="width:auto" onclick="mulai()">Try again</button></div></div>';
   });
+}
+
+/* Langkah sesudah data awal tiba — dipakai mulai() dan juga masuk cepat
+   (masukLengkap), yang membawa data awal sekaligus dengan tokennya. */
+function bootSelesai(r){
+  terapkanBootstrap(r,true);
+  q('auth').classList.add('hidden');
+  q('boot').classList.add('hidden');
+  q('app').classList.remove('hidden'); sisiAwal();
+  mulaiSync();     // dijalankan sebelum render, agar tidak ikut gagal bila render bermasalah
+  render();
+  setTimeout(function(){ try{ muatFotoMini() }catch(eF){} },1200);
+  if(!S.versiServer||S.versiServer!==VERSI_UI) periksaServer(); else gambarPita();
+  setSinkron('ok');
+  tampilkanPeringatan(r);
+  setTimeout(tawarkanDraf,300);
+}
+/* Layar memuat: pesan bertahap dan garis kemajuan, supaya menunggu server
+   yang baru bangun tidak terasa macet. Sesudah 20 detik muncul pilihan
+   mencoba lagi atau keluar. */
+function bootTunggu(nyala){
+  var el=q('bootTahap'), bar=q('bootBar'), aksi=q('bootAksi');
+  if(bootTunggu._henti){ bootTunggu._henti(); bootTunggu._henti=null }
+  if(!el) return;
+  if(!nyala){ if(aksi) aksi.classList.add('hidden'); return }
+  if(aksi) aksi.classList.add('hidden');
+  var t0=Date.now();
+  var henti=tahapTunggu(el,function(t,i){ el.textContent=t; if(i>=3&&aksi) aksi.classList.remove('hidden') });
+  var jam=setInterval(function(){ if(bar){ var d=(Date.now()-t0)/1000; bar.style.width=Math.min(96,100*(1-Math.exp(-d/7)))+'%' } },200);
+  if(bar) bar.style.width='4%';
+  bootTunggu._henti=function(){ henti(); clearInterval(jam); if(bar) bar.style.width='100%' };
 }
 
 /* Bagian yang gagal dibaca server (lihat aman_ di Code.gs) tidak lagi
@@ -3758,6 +3936,7 @@ function simpan(){
     if(r.rapor) S.rapor=r.rapor;
     if(r.kesiapan) S.kesiapan=r.kesiapan;
     if(r.psi) S.psi=r.psi;
+    try{ terimaPelacakDariSimpan(r) }catch(eP){}
     /* Kecocokan dan hitungan dana ikut diperbarui tiap simpan, supaya
        lencana di kartu target tidak pernah tertinggal dari isinya. */
     var berubah=JSON.stringify(S.analisa)!==JSON.stringify(r.analisa||[]);
@@ -6103,7 +6282,7 @@ function simpanSekarang(){
   if(!S.dirty||!S.token||S.user.role!=='siswa') return Promise.resolve();
   S.progres=hitung(); S.rapor=hitungRapor(S.deck.rapor);
   return call('simpanDeck',S.token,S.deck).then(function(r){
-    if(r&&r.ok){ S.dirty=false; tandaSimpan('ok','Saved '+(r.waktu||'')) }
+    if(r&&r.ok){ S.dirty=false; tandaSimpan('ok','Saved '+(r.waktu||'')); try{ terimaPelacakDariSimpan(r) }catch(eP){} }
     return r;
   });
 }
@@ -11241,7 +11420,7 @@ function viewAkun(){
       '<button class="btn danger sm" onclick="gantiKode()">Issue a new code</button></div>'+
       '<div class="hint">Issuing a new code stops anyone who has the old one from registering. Parents already connected stay connected.</div></div>'+
       '</div></div>' : '')+
-    kartuLogo()+kartuLatar()+
+    kartuLogo()+kartuLatar()+kartuPortal()+
     '<div class="card"><h2>Spreadsheet sync</h2>'+
     '<div class="sub">This page checks the database every 45 seconds. When someone edits the spreadsheet by hand, the change is pulled in automatically — unless you have unsaved work, in which case you are asked first.</div>'+
     '<div class="grid"><div class="f"><label>When the spreadsheet changes</label>'+
@@ -12195,7 +12374,11 @@ function eksporWord(){
       '<style>'+css+'@page{size:'+(asli.querySelector('table.board')?'29.7cm 21cm;mso-page-orientation:landscape':'21cm 29.7cm')+';margin:1.6cm}</style></head><body>'+
       '<h1>DECK PTLN · '+esc(judulEkspor())+'</h1><p class="meta">'+esc((S.user?S.user.nama+' · ':'')+new Date().toLocaleString())+'</p>'+
       b.innerHTML+'</body></html>';
-    unduhBlob(new Blob(['﻿',html],{type:'application/msword'}),namaEkspor('doc'));
+    var lanskap=!!asli.querySelector('table.board')||Array.prototype.some.call(b.querySelectorAll('table'),function(t){ var r=t.querySelector('tr'); return r&&r.children.length>7 });
+    return htmlKeDocx('<h1>DECK PTLN · '+esc(judulEkspor())+'</h1><p class="meta">'+esc((S.user?S.user.nama+' · ':'')+new Date().toLocaleString())+'</p>'+b.innerHTML,
+      {lanskap:lanskap,judul:judulEkspor(),kaki:'DECK PTLN · '+judulEkspor()})
+      .then(function(bl){ unduhBlob(bl,namaEkspor('docx')) })
+      .catch(function(e){ try{ console.warn('[docx]',e) }catch(x){} unduhBlob(new Blob(['﻿',html],{type:'application/msword'}),namaEkspor('doc')) });
   });
 }
 function eksporExcel(){
@@ -12638,7 +12821,7 @@ function modelCv(d){
   out.push({t:'nama',s:tlTeks(ko.nama).toUpperCase()||'YOUR NAME'});
   var tempat=gabung([gabung([ko.kota,ko.provinsi],', '),ko.negara||'Indonesia'],', ');
   out.push({t:'kontak',s:gabung([tempat,ko.telp,ko.email,ko.linkedin],'  |  ')});
-  var urut=CV_URUTAN[d.urutan==='pasca'?'pasca':'sma'];
+  var urut=CV_URUTAN[CV_URUTAN[d.urutan]?d.urutan:'sma'];
   function isi(arr,syarat){ return (arr||[]).filter(syarat) }
   urut.forEach(function(sek){
     if(sek==='profil'){ if(tlTeks(d.profil)){ out.push({t:'judul',s:J.profil}); out.push({t:'para',r:[{s:tlTeks(d.profil)}]}) } return }
@@ -14792,8 +14975,8 @@ function brUbah(id){
   gambarView(); window.scrollTo({top:0,behavior:'smooth'});
 }
 function brOpsiSasaran(nilai){
-  var o=['Semua','Siswa','Orang tua','Guru','X','XI','XII'].concat(S.daftarKelas||S.kelasOpsi||[]);
-  var lab={Semua:'Everyone',Siswa:'All students','Orang tua':'All parents',Guru:'Teachers & leadership only',X:'Grade X',XI:'Grade XI',XII:'Grade XII'};
+  var o=['Semua','Publik','Siswa','Orang tua','Guru','X','XI','XII'].concat(S.daftarKelas||S.kelasOpsi||[]);
+  var lab={Publik:'Everyone + sign-in page (public news)',Semua:'Everyone',Siswa:'All students','Orang tua':'All parents',Guru:'Teachers & leadership only',X:'Grade X',XI:'Grade XI',XII:'Grade XII'};
   var seen={}, h='';
   o.forEach(function(x){ x=String(x); if(!x||seen[x]) return; seen[x]=1; h+='<option value="'+esc(x)+'"'+(nilai===x?' selected':'')+'>'+esc(lab[x]||('Class '+x))+'</option>' });
   return h;
@@ -15490,8 +15673,9 @@ function viewPelacak(){
     (asBolehUbah()&&prog?'<button class="btn gold sm" onclick="asTambahBuka()">'+ikon('plus')+'Add students</button>':'')+
     (bimbing()&&!A.demo?'<button class="btn sea sm" onclick="asEditorBaru()">'+ikon('plus')+'New tracker</button>':'')+
     (bimbing()&&!A.demo&&prog?'<button class="btn ghost sm" onclick="asEditorUbah(\''+esc(prog.id)+'\')">Edit tracker</button>':'')+
+    (bimbing()&&!A.demo?'<button class="btn ghost sm" id="asSinkB" onclick="asSinkronDeck()" title="Students who chose a tracker university in their deck are added automatically">Sync with student decks</button>':'')+
     (staf&&!A.demo?'<button class="btn ghost sm" onclick="asDemoMulai()">Try with sample data</button>':'')+
-    (prog?'<button class="btn ghost sm" onclick="asUnduh(\'pdf\')">'+ikon('unduh')+'PDF report</button><button class="btn ghost sm" onclick="asUnduh(\'xlsx\')">Excel</button>':'')+
+    (prog?'<button class="btn ghost sm" onclick="asUnduh(\'pdf\')">'+ikon('unduh')+'PDF report</button><button class="btn ghost sm" onclick="asUnduh(\'xlsx\')">Excel</button><button class="btn ghost sm" onclick="asUnduh(\'docx\')">Word</button>':'')+
     '<span class="as-simpan" id="asSimpanSt">'+esc(A.simpanSt||'')+'</span></div></div>';
   /* Pemilih pelacak */
   if(!A.demo&&semuaP.length){
@@ -15672,7 +15856,7 @@ function asBaris(t,tampilNama,ubah,tanpaKampus){
   var A=asSt(), u=asUrgensi(t), buka=A.buka[t.id], dis=ubah?'':' disabled', k=asKampus(t), nf=k?k.fase.length:0;
   var h='<tr class="as-r'+(u.k==='lewat'?' lewat':'')+'" data-as="'+esc(t.id)+'">'+
     '<td><div class="as-sel-siswa">'+asFoto(t)+'<div>'+(tampilNama?'<button class="as-nama" onclick="asLaciBuka(\''+esc(t.siswaId)+'\')">'+esc(t.nama)+'</button>':'<button class="as-nama redup" onclick="asLaciBuka(\''+esc(t.siswaId)+'\')">'+esc(t.nama)+'</button>')+
-      '<div>'+asAsal(t)+'</div>'+(t.kelas&&asAsal(t).indexOf(t.kelas)<0?'<div class="muted kecil">'+esc(t.kelas)+'</div>':'')+'</div></div></td>'+
+      '<div>'+asAsal(t)+'</div>'+(t.kelas&&asAsal(t).indexOf(t.kelas)<0?'<div class="muted kecil">'+esc(t.kelas)+'</div>':'')+(t.guru==='Auto (student deck)'?'<span class="tk-oto" title="Added automatically because the student chose this university in their deck">Auto · from deck</span>':'')+'</div></div></td>'+
     '<td>'+(tanpaKampus?'<span class="as-prog-t">'+esc(t.program||'Programme not set')+'</span>':asPill(t,null,t.program||'Programme not set'))+'</td>'+
     '<td><div class="as-fase"><span class="as-fk">Phase '+t.faseKe+'/'+nf+'</span> <b>'+esc(t.fase)+'</b></div>'+
       '<div class="as-bar kecil" '+asGaya(null,t.universitas)+'><i style="width:'+t.progres+'%"></i></div>'+
@@ -16089,6 +16273,17 @@ function asLaporanData(){
 }
 function asUnduh(jenis){
   var D=asLaporanData(), prog=D.prog, nama=String(prog.nama).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,50)+'-'+hariIniStr();
+  if(jenis==='docx'){
+    var ringkas='<table><thead><tr><th>University</th><th>Code</th><th>Admission deadline</th><th>Opens</th><th>Students</th><th>Average progress</th><th>Completed</th></tr></thead><tbody>'+
+      prog.def.kampus.map(function(k){ var ts=asData().filter(function(t){return t.universitas===k.kode});
+        return '<tr><td>'+esc(k.nama)+'</td><td>'+esc(k.kode)+'</td><td>'+esc(k.tenggatAdmisi?tglPanjang(k.tenggatAdmisi):'—')+'</td><td>'+esc(k.bukaAdmisi?tglPanjang(k.bukaAdmisi):'—')+'</td><td class="n">'+ts.length+'</td><td class="n">'+
+          (ts.length?Math.round(ts.reduce(function(s2,t){return s2+t.progres},0)/ts.length):0)+'%</td><td class="n">'+ts.filter(function(t){return t.status==='Completed'}).length+'</td></tr>' }).join('')+'</tbody></table>';
+    var isi='<p class="s"><b>SMAIT Al-Ittihad Pekanbaru</b></p><h1 class="s">'+esc(prog.nama)+'</h1><p class="s m">Admission follow-up by university · Generated '+esc(tglPanjang(hariIniStr()))+'</p><h2>Summary</h2>'+ringkas+
+      D.grup.map(function(g){ return '<h2>'+esc(g.judul)+'</h2>'+(g.baris.length?'<table><thead><tr>'+D.kepala.map(function(x){return '<th>'+esc(x)+'</th>'}).join('')+'</tr></thead><tbody>'+
+        g.baris.map(function(r){ return '<tr>'+r.map(function(v){return '<td>'+esc(v)+'</td>'}).join('')+'</tr>' }).join('')+'</tbody></table>':'<p class="m">No students in this university yet.</p>') }).join('');
+    htmlKeDocx(isi,{lanskap:true,judul:prog.nama,kaki:'DECK PTLN · '+prog.nama,margin:800}).then(function(bl){ unduhBlob(bl,nama+'.docx') }).catch(function(e){ toast(e.message||'Word file could not be created.',true) });
+    return;
+  }
   if(jenis==='xlsx'){
     muatLib('xlsx',function(){return !!window.XLSX}).then(function(){
       var wb=XLSX.utils.book_new();
@@ -16151,29 +16346,12 @@ function asUnduh(jenis){
     });
     var hal=doc.getNumberOfPages();
     for(var p=1;p<=hal;p++){ doc.setPage(p); doc.setFontSize(7.5); doc.setTextColor(124,145,139); T('DECK PTLN · '+prog.nama,M,H-14); T('Page '+p+' of '+hal,W-M,H-14,{align:'right'}) }
+    pdfHiasi(doc);
     doc.save(nama+'.pdf');
   }).catch(function(e){ toast(e.message||'PDF could not be created.',true) });
 }
 
 /* Kartu kecil di beranda siswa / orang tua. */
-function asKartuSaya(){
-  var ts=asSemuaTarget(); if(!ts.length) return '';
-  var progs=(S.pelacakProgram||[]);
-  var h='';
-  progs.forEach(function(p){
-    var milik=ts.filter(function(t){return (t.pelacak||'ASEAN')===p.id}); if(!milik.length) return;
-    h+='<div class="card as-saya"><div class="judul-baris"><div><div class="eyebrow">'+esc(p.nama)+'</div><h2>'+(ortu()?'Progress':'Your progress')+'</h2></div>'+
-      '<button class="btn ghost xs" onclick="S.as=S.as||null;asSt().pilih=\''+esc(p.id)+'\';pindah(\'pelacak\')">Details</button></div>';
-    milik.forEach(function(t){
-      var u=asUrgensi(t), k=asKampus(t,p), m=k&&k.tenggatAdmisi?mundur(k.tenggatAdmisi):null;
-      h+='<div class="as-mini" '+asGaya(p,t.universitas)+'><div class="as-mini-l"><span>'+asPill(t,p,t.program)+'</span><b>'+t.progres+'%</b></div><div class="as-bar"><i style="width:'+t.progres+'%"></i></div>'+
-        '<div class="as-mini-m">'+asStatusLencana(t.status)+'<span>Phase '+t.faseKe+': '+esc(t.fase)+'</span>'+(m?'<span class="dl '+m.kelas+'">Admission: '+esc(m.label)+'</span>':'')+(t.tenggat?'<span class="as-u u-'+u.k+'">'+esc(u.l)+'</span>':'')+'</div>'+
-        (t.langkahBerikut?'<div class="as-next">Next: '+esc(t.langkahBerikut)+'</div>':'')+(t.catatan?'<div class="as-next"><b>From your mentor:</b> '+esc(t.catatan)+'</div>':'')+'</div>';
-    });
-    h+='</div>';
-  });
-  return h;
-}
 
 /* =======================================================
    REKAP KUSTOM — bentuk rekap mengikuti JSON yang diunggah
@@ -16635,7 +16813,11 @@ function rkUnduh(jenis){
       (T.ttd&&T.ttd.aktif?'<table class="ttd"><tr><td>'+esc(rkTtdTeks(T.ttd.kiri)).replace(/\n/g,'<br>')+'<br><br><br><br><b><u>'+esc(T.ttd.namaKiri||'(............................)')+'</u></b></td>'+
         '<td>'+esc(rkTtdTeks(T.ttd.kanan)).replace(/\n/g,'<br>')+'<br><br><br><br><b><u>'+esc(T.ttd.namaKanan||'(............................)')+'</u></b></td></tr></table>':'')+
       '</div></body></html>';
-    unduhBlob(new Blob(['﻿'+html],{type:'application/msword'}),rkNamaBerkas()+'.doc'); return;
+    /* Berkas Word asli (.docx): tabel selebar halaman, judul kolom berulang di tiap halaman. */
+    htmlKeDocx(html.replace('<h1>','<h1 class="s">'),{lanskap:T.orientasi!=='p',judul:T.judul,kaki:'DECK PTLN · '+(T.judul||'Recap')+' · '+sek,margin:T.orientasi==='p'?900:800})
+      .then(function(bl){ unduhBlob(bl,rkNamaBerkas()+'.docx') })
+      .catch(function(e){ try{ console.warn('[docx]',e) }catch(x){} unduhBlob(new Blob(['﻿'+html],{type:'application/msword'}),rkNamaBerkas()+'.doc') });
+    return;
   }
   /* PDF teks — tajam di semua ukuran, tabel terpecah rapi antarhalaman. */
   muatLib('jspdf',function(){return !!(window.jspdf&&window.jspdf.jsPDF)}).then(function(){
@@ -16701,6 +16883,7 @@ function rkUnduh(jenis){
     }
     var hal=doc.getNumberOfPages();
     for(var p=1;p<=hal;p++){ doc.setPage(p); doc.setFontSize(7.5); doc.setTextColor(124,145,139); teks('DECK PTLN · '+(T.judul||''),M,H-14); teks('Page '+p+' of '+hal,W-M,H-14,{align:'right'}) }
+    pdfHiasi(doc);
     doc.save(rkNamaBerkas()+'.pdf');
   }).catch(function(e){ toast(e.message||'PDF could not be created.',true) });
 }
@@ -17443,6 +17626,923 @@ function ctImpor(f){
   }).catch(function(e){ toast(e.message,true) });
 }
 
+
+/* =======================================================
+   LAPORAN RAPI: EXCEL · WORD · PDF
+   Semua unduhan Excel lewat satu pintu (XLSX.writeFile dibungkus):
+   buku kerja SheetJS diubah menjadi buku kerja ExcelJS yang bergaya —
+   kop tebal, kepala tabel berwarna, garis, baris belang, panel beku,
+   filter, ukuran A4 pas lebar halaman, judul kolom berulang di tiap
+   halaman cetak, dan nomor halaman. Isinya tetap sama persis, jadi
+   berkas yang diimpor ulang tetap terbaca. Bila ExcelJS gagal dimuat,
+   berkas polos lama dipakai.
+   Word: berkas .docx asli (bukan HTML berganti nama) dengan gaya,
+   tabel selebar halaman, baris judul berulang, dan nomor halaman.
+   ======================================================= */
+LIB_EKSPOR.exceljs='https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js';
+var XL_WARNA={tua:'FF10302A',teks:'FF1F2A24',abu:'FF55706A',garis:'FFD6DFD6',belang:'FFF6F8F5',grup:'FFE8EFEA',emas:'FFC77D1A',putih:'FFFFFFFF'};
+var XL_BATAS_SEL=160000;
+function pasangXlsxRapi(){
+  if(!window.XLSX||XLSX.__rapi) return;
+  var asli=XLSX.writeFile;
+  XLSX.__rapi=true; XLSX.__writeFileAsli=asli;
+  XLSX.writeFile=function(wb,nama,opsi){
+    var sel=0;
+    try{ (wb.SheetNames||[]).forEach(function(n){ var ws=wb.Sheets[n]; if(ws&&ws['!ref']){ var r=XLSX.utils.decode_range(ws['!ref']); sel+=(r.e.r-r.s.r+1)*(r.e.c-r.s.c+1) } }) }catch(e){ sel=XL_BATAS_SEL+1 }
+    if(sel>XL_BATAS_SEL||/\.(csv|xls|ods)$/i.test(String(nama||''))) return asli.call(XLSX,wb,nama,opsi);
+    return xlsxRapi(wb,nama).catch(function(e){
+      try{ console.warn('[excel rapi]',e) }catch(x){}
+      return asli.call(XLSX,wb,nama,opsi);
+    });
+  };
+}
+/* muatLib asli dibungkus: begitu SheetJS termuat, pintunya langsung dipasang. */
+(function(){
+  var lama=muatLib;
+  muatLib=function(k,cek){
+    var j=lama(k,cek);
+    if(k==='xlsx') return j.then(function(){ pasangXlsxRapi() });
+    return j;
+  };
+})();
+function xlsxRapi(wbS,nama){
+  return muatLib('exceljs',function(){return !!window.ExcelJS}).then(function(){
+    var wb=new ExcelJS.Workbook();
+    wb.creator='DECK PTLN'; wb.lastModifiedBy=(S.user&&S.user.nama)||'DECK PTLN'; wb.created=new Date(); wb.modified=new Date();
+    var judulBerkas=String(nama||'').replace(/\.xlsx$/i,'').replace(/[-_]+/g,' ');
+    wbS.SheetNames.forEach(function(nm){ xlsxRapiLembar(wb,wbS.Sheets[nm],nm,judulBerkas) });
+    return wb.xlsx.writeBuffer();
+  }).then(function(buf){
+    unduhBlob(new Blob([buf],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}),nama);
+  });
+}
+function xlsxRapiLembar(wb,ws,nm,judulBerkas){
+  var sh=wb.addWorksheet(String(nm).slice(0,31),{views:[{showGridLines:false}]});
+  if(!ws||!ws['!ref']) return;
+  var R=XLSX.utils.decode_range(ws['!ref']), nR=R.e.r+1, nC=R.e.c+1;
+  function sel(r,c){ return ws[XLSX.utils.encode_cell({r:r,c:c})] }
+  function kosong(x){ return !x||x.v===undefined||x.v===null||x.v==='' }
+  var isiBaris=[];
+  for(var r=0;r<nR;r++){ var n=0; for(var c=0;c<nC;c++) if(!kosong(sel(r,c))) n++; isiBaris.push(n) }
+  /* Baris kepala tabel: baris pertama (dalam 15 baris awal) yang paling tidak separuh kolomnya terisi teks pendek. */
+  var kepala=-1;
+  for(var r2=0;r2<Math.min(nR,15);r2++){
+    if(isiBaris[r2]<Math.max(2,Math.ceil(nC*0.5))) continue;
+    var semuaTeks=true;
+    for(var c2=0;c2<nC;c2++){ var x=sel(r2,c2); if(!kosong(x)&&(x.t!=='s'||String(x.v).length>70)) semuaTeks=false }
+    if(semuaTeks){ kepala=r2; break }
+  }
+  var akhirData=nR-1;
+  if(kepala>=0){ for(var r3=kepala+1;r3<nR;r3++){ if(!isiBaris[r3]){ akhirData=r3-1; break } } }
+  var gabungan=(ws['!merges']||[]).slice();
+  var lebar=(ws['!cols']||[]).map(function(c){ return c&&(c.wch||c.width)?Math.min(60,Math.max(5,c.wch||c.width)):0 });
+  for(var c3=0;c3<nC;c3++){
+    if(lebar[c3]) continue;
+    var mx=6;
+    for(var r4=Math.max(kepala,0);r4<=Math.min(akhirData,Math.max(kepala,0)+400);r4++){ var x2=sel(r4,c3); if(!kosong(x2)) mx=Math.max(mx,Math.min(48,String(x2.w||x2.v).length+2)) }
+    lebar[c3]=mx;
+  }
+  /* Kolom yang lebar hanya karena judulnya dipersempit: judul kolom boleh turun baris, isinya tidak. */
+  if(kepala>=0){
+    for(var c7=0;c7<nC;c7++){
+      var hk=sel(kepala,c7), kataPj=kosong(hk)?4:String(hk.v).split(/\s+/).reduce(function(a,w){return Math.max(a,w.length)},0), isiPj=0;
+      for(var r7=kepala+1;r7<=Math.min(akhirData,kepala+400);r7++){ var x7=sel(r7,c7); if(!kosong(x7)&&!(isiBaris[r7]===1&&c7===0&&nC>2)) isiPj=Math.max(isiPj,String(x7.w||x7.v).length) }
+      var ideal=Math.max(kataPj+2,Math.min(isiPj+2,45),5);
+      lebar[c7]=lebar[c7]?Math.min(lebar[c7],ideal):ideal;
+    }
+  }
+  for(var c4=0;c4<nC;c4++) sh.getColumn(c4+1).width=lebar[c4]||10;
+  var garis={style:'thin',color:{argb:XL_WARNA.garis}};
+  var garisTua={style:'thin',color:{argb:XL_WARNA.tua}};
+  var urutJudul=0, belang=false;
+  for(var r5=0;r5<nR;r5++){
+    var row=sh.getRow(r5+1);
+    var peran=kepala<0?(r5===0&&isiBaris[0]===1?'judul':'biasa'):r5<kepala?'judul':r5===kepala?'kepala':r5<=akhirData?'data':'bebas';
+    if(peran==='data'&&isiBaris[r5]===1&&nC>2&&!kosong(sel(r5,0))&&sel(r5,0).t==='s') peran='grup';
+    for(var c5=0;c5<nC;c5++){
+      var s=sel(r5,c5), cell=row.getCell(c5+1);
+      if(!kosong(s)){
+        if(s.f) cell.value={formula:String(s.f).replace(/^=/,''),result:s.v};
+        else if(s.t==='n'){ cell.value=s.v; if(s.z&&s.z!=='General') cell.numFmt=String(s.z) }
+        else if(s.t==='b') cell.value=!!s.v;
+        else if(s.t==='d') cell.value=s.v instanceof Date?s.v:new Date(s.v);
+        else cell.value=String(s.v);
+        if(s.l&&s.l.Target&&/^https?:/i.test(s.l.Target)) cell.value={text:String(s.v),hyperlink:s.l.Target};
+        else if(typeof cell.value==='string'&&/^https?:\/\/\S+$/i.test(cell.value)&&cell.value.length<250) cell.value={text:cell.value,hyperlink:cell.value};
+      }
+      if(peran==='kepala'){
+        cell.font={name:'Calibri',size:10,bold:true,color:{argb:XL_WARNA.putih}};
+        cell.fill={type:'pattern',pattern:'solid',fgColor:{argb:XL_WARNA.tua}};
+        cell.alignment={vertical:'middle',horizontal:'left',wrapText:true};
+        cell.border={top:garisTua,bottom:garisTua,left:{style:'thin',color:{argb:'FF2E5A50'}},right:{style:'thin',color:{argb:'FF2E5A50'}}};
+      }else if(peran==='data'){
+        cell.font={name:'Calibri',size:10,color:{argb:XL_WARNA.teks}};
+        if(cell.value&&cell.value.hyperlink) cell.font={name:'Calibri',size:10,color:{argb:'FF1F6F5C'},underline:true};
+        cell.alignment={vertical:'top',wrapText:true,horizontal:s&&(s.t==='n'||(s.t==='s'&&/^-?\d+([.,]\d+)?\s?%$/.test(String(s.v).trim())))?'right':'left'};
+        cell.border={top:garis,bottom:garis,left:garis,right:garis};
+        if(belang) cell.fill={type:'pattern',pattern:'solid',fgColor:{argb:XL_WARNA.belang}};
+      }else if(peran==='grup'){
+        cell.font={name:'Calibri',size:10.5,bold:true,color:{argb:XL_WARNA.tua}};
+        cell.fill={type:'pattern',pattern:'solid',fgColor:{argb:XL_WARNA.grup}};
+        cell.border={top:garis,bottom:garis,left:garis,right:garis};
+        cell.alignment={vertical:'middle'};
+      }else if(peran==='judul'&&!kosong(s)){
+        cell.font=urutJudul===0?{name:'Calibri',size:15,bold:true,color:{argb:XL_WARNA.tua}}:{name:'Calibri',size:10,color:{argb:XL_WARNA.abu},italic:urutJudul>1};
+        cell.alignment={vertical:'middle'};
+      }else{
+        cell.font={name:'Calibri',size:10,color:{argb:XL_WARNA.teks}};
+        if(!kosong(s)) cell.alignment={vertical:'top',wrapText:peran==='biasa'&&String(s.v).length>(lebar[c5]||10)*1.2};
+      }
+    }
+    if(peran==='judul'&&isiBaris[r5]){ if(urutJudul===0) row.height=24; urutJudul++ }
+    if(peran==='kepala') row.height=Math.max(20,Math.min(48,14*Math.ceil(Math.max.apply(null,[1].concat(Array.apply(null,Array(nC)).map(function(_,i){ var x=sel(r5,i); return kosong(x)?1:Math.ceil(String(x.v).length/Math.max(4,(lebar[i]||10)-1)) })))+0.4)));
+    if(peran==='data') belang=!belang;
+    if(peran==='grup'){
+      belang=false;
+      if(!gabungan.some(function(m){return m.s.r===r5})) gabungan.push({s:{r:r5,c:0},e:{r:r5,c:nC-1}});
+    }
+    if(peran==='judul'&&isiBaris[r5]===1&&nC>1&&!kosong(sel(r5,0))&&!gabungan.some(function(m){return m.s.r===r5})) gabungan.push({s:{r:r5,c:0},e:{r:r5,c:nC-1}});
+  }
+  /* Kotak tebal di sekeliling tabel. */
+  if(kepala>=0&&akhirData>kepala){
+    for(var c6=1;c6<=nC;c6++){
+      var b=sh.getRow(akhirData+1).getCell(c6); b.border=Object.assign({},b.border||{},{bottom:garisTua});
+    }
+  }
+  gabungan.forEach(function(m){ try{ sh.mergeCells(m.s.r+1,m.s.c+1,m.e.r+1,m.e.c+1) }catch(e){} });
+  if(kepala>=0){
+    sh.views=[{state:'frozen',ySplit:kepala+1,xSplit:0,showGridLines:false,activeCell:'A'+(kepala+2)}];
+    if(akhirData>kepala) sh.autoFilter={from:{row:kepala+1,column:1},to:{row:akhirData+1,column:nC}};
+  }
+  var total=lebar.reduce(function(a,b){return a+(b||10)},0);
+  sh.pageSetup={paperSize:9,orientation:total>95?'landscape':'portrait',fitToPage:true,fitToWidth:1,fitToHeight:0,horizontalCentered:true,
+    margins:{left:0.4,right:0.4,top:0.55,bottom:0.6,header:0.25,footer:0.3}};
+  if(kepala>=0) sh.pageSetup.printTitlesRow=(kepala+1)+':'+(kepala+1);
+  var kaki=('DECK PTLN · '+(judulBerkas||nm)).replace(/&/g,'&&').slice(0,90);
+  sh.headerFooter={oddFooter:'&L&8&K55706A'+kaki+'&R&8&K55706APage &P of &N',evenFooter:'&L&8&K55706A'+kaki+'&R&8&K55706APage &P of &N'};
+}
+
+/* ---------- Word (.docx) asli ---------- */
+function docxPaket(badan,opsi){
+  opsi=opsi||{};
+  var lanskap=!!opsi.lanskap, m=opsi.margin||1000, W=lanskap?16838:11906, H=lanskap?11906:16838;
+  var x=xmlEsc, kini=new Date().toISOString().replace(/\.\d+Z$/,'Z');
+  var gaya='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">'+
+    '<w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:eastAsia="Calibri" w:cs="Calibri"/><w:color w:val="1F2A24"/><w:sz w:val="21"/><w:szCs w:val="21"/><w:lang w:val="en-GB"/></w:rPr></w:rPrDefault>'+
+    '<w:pPrDefault><w:pPr><w:spacing w:after="80" w:line="264" w:lineRule="auto"/></w:pPr></w:pPrDefault></w:docDefaults>'+
+    '<w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/><w:qFormat/></w:style>'+
+    '<w:style w:type="paragraph" w:styleId="Title"><w:name w:val="Title"/><w:basedOn w:val="Normal"/><w:next w:val="Normal"/><w:qFormat/><w:pPr><w:spacing w:before="0" w:after="60"/></w:pPr><w:rPr><w:b/><w:color w:val="10302A"/><w:sz w:val="34"/><w:szCs w:val="34"/></w:rPr></w:style>'+
+    '<w:style w:type="paragraph" w:styleId="Subtitle"><w:name w:val="Subtitle"/><w:basedOn w:val="Normal"/><w:qFormat/><w:pPr><w:spacing w:after="160"/></w:pPr><w:rPr><w:color w:val="55706A"/><w:sz w:val="19"/><w:szCs w:val="19"/></w:rPr></w:style>'+
+    '<w:style w:type="paragraph" w:styleId="Heading1"><w:name w:val="heading 1"/><w:basedOn w:val="Normal"/><w:next w:val="Normal"/><w:qFormat/><w:pPr><w:keepNext/><w:pBdr><w:bottom w:val="single" w:sz="6" w:space="2" w:color="C77D1A"/></w:pBdr><w:spacing w:before="260" w:after="90"/><w:outlineLvl w:val="0"/></w:pPr><w:rPr><w:b/><w:color w:val="10302A"/><w:sz w:val="26"/><w:szCs w:val="26"/></w:rPr></w:style>'+
+    '<w:style w:type="paragraph" w:styleId="Heading2"><w:name w:val="heading 2"/><w:basedOn w:val="Normal"/><w:next w:val="Normal"/><w:qFormat/><w:pPr><w:keepNext/><w:spacing w:before="200" w:after="70"/><w:outlineLvl w:val="1"/></w:pPr><w:rPr><w:b/><w:color w:val="173F35"/><w:sz w:val="23"/><w:szCs w:val="23"/></w:rPr></w:style>'+
+    '<w:style w:type="paragraph" w:styleId="Heading3"><w:name w:val="heading 3"/><w:basedOn w:val="Normal"/><w:next w:val="Normal"/><w:qFormat/><w:pPr><w:keepNext/><w:spacing w:before="160" w:after="60"/><w:outlineLvl w:val="2"/></w:pPr><w:rPr><w:b/><w:color w:val="2E5A50"/><w:sz w:val="21"/><w:szCs w:val="21"/></w:rPr></w:style>'+
+    '<w:style w:type="paragraph" w:styleId="ListParagraph"><w:name w:val="List Paragraph"/><w:basedOn w:val="Normal"/><w:qFormat/><w:pPr><w:spacing w:after="40"/><w:ind w:left="360" w:hanging="240"/></w:pPr></w:style>'+
+    '<w:style w:type="paragraph" w:styleId="Footer"><w:name w:val="footer"/><w:basedOn w:val="Normal"/><w:rPr><w:color w:val="7C918B"/><w:sz w:val="16"/><w:szCs w:val="16"/></w:rPr></w:style>'+
+    '<w:style w:type="paragraph" w:styleId="Header"><w:name w:val="header"/><w:basedOn w:val="Normal"/><w:rPr><w:color w:val="7C918B"/><w:sz w:val="16"/><w:szCs w:val="16"/></w:rPr></w:style>'+
+    '<w:style w:type="table" w:default="1" w:styleId="TableNormal"><w:name w:val="Normal Table"/><w:tblPr><w:tblInd w:w="0" w:type="dxa"/><w:tblCellMar><w:top w:w="0" w:type="dxa"/><w:left w:w="108" w:type="dxa"/><w:bottom w:w="0" w:type="dxa"/><w:right w:w="108" w:type="dxa"/></w:tblCellMar></w:tblPr></w:style>'+
+    '<w:style w:type="table" w:styleId="TabelLaporan"><w:name w:val="Report Table"/><w:basedOn w:val="TableNormal"/><w:pPr><w:spacing w:after="0" w:line="240" w:lineRule="auto"/></w:pPr><w:tblPr><w:tblBorders>'+
+      '<w:top w:val="single" w:sz="6" w:space="0" w:color="10302A"/><w:left w:val="single" w:sz="4" w:space="0" w:color="D6DFD6"/><w:bottom w:val="single" w:sz="6" w:space="0" w:color="10302A"/><w:right w:val="single" w:sz="4" w:space="0" w:color="D6DFD6"/>'+
+      '<w:insideH w:val="single" w:sz="4" w:space="0" w:color="D6DFD6"/><w:insideV w:val="single" w:sz="4" w:space="0" w:color="D6DFD6"/></w:tblBorders>'+
+      '<w:tblCellMar><w:top w:w="45" w:type="dxa"/><w:left w:w="80" w:type="dxa"/><w:bottom w:w="45" w:type="dxa"/><w:right w:w="80" w:type="dxa"/></w:tblCellMar></w:tblPr></w:style>'+
+    '</w:styles>';
+  var nomor='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:numbering xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">'+
+    '<w:abstractNum w:abstractNumId="0"><w:multiLevelType w:val="hybridMultilevel"/>'+[0,1,2].map(function(l){return '<w:lvl w:ilvl="'+l+'"><w:start w:val="1"/><w:numFmt w:val="bullet"/><w:lvlText w:val="'+['•','◦','▪'][l]+'"/><w:lvlJc w:val="left"/><w:pPr><w:ind w:left="'+(360+l*360)+'" w:hanging="240"/></w:pPr><w:rPr><w:rFonts w:ascii="Calibri" w:hAnsi="Calibri"/><w:color w:val="C77D1A"/></w:rPr></w:lvl>'}).join('')+'</w:abstractNum>'+
+    '<w:abstractNum w:abstractNumId="1"><w:multiLevelType w:val="hybridMultilevel"/>'+[0,1,2].map(function(l){return '<w:lvl w:ilvl="'+l+'"><w:start w:val="1"/><w:numFmt w:val="'+['decimal','lowerLetter','lowerRoman'][l]+'"/><w:lvlText w:val="%'+(l+1)+'."/><w:lvlJc w:val="left"/><w:pPr><w:ind w:left="'+(400+l*360)+'" w:hanging="300"/></w:pPr></w:lvl>'}).join('')+'</w:abstractNum>'+
+    '<w:num w:numId="1"><w:abstractNumId w:val="0"/></w:num><w:num w:numId="2"><w:abstractNumId w:val="1"/></w:num></w:numbering>';
+  var kaki='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:ftr xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:p><w:pPr><w:pStyle w:val="Footer"/><w:pBdr><w:top w:val="single" w:sz="4" w:space="4" w:color="D6DFD6"/></w:pBdr><w:tabs><w:tab w:val="right" w:pos="'+(W-2*m)+'"/></w:tabs></w:pPr>'+
+    '<w:r><w:t xml:space="preserve">'+x(opsi.kaki||'DECK PTLN')+'</w:t></w:r><w:r><w:tab/><w:t xml:space="preserve">Page </w:t></w:r><w:r><w:fldChar w:fldCharType="begin"/></w:r><w:r><w:instrText xml:space="preserve"> PAGE </w:instrText></w:r><w:r><w:fldChar w:fldCharType="separate"/></w:r><w:r><w:t>1</w:t></w:r><w:r><w:fldChar w:fldCharType="end"/></w:r>'+
+    '<w:r><w:t xml:space="preserve"> of </w:t></w:r><w:r><w:fldChar w:fldCharType="begin"/></w:r><w:r><w:instrText xml:space="preserve"> NUMPAGES </w:instrText></w:r><w:r><w:fldChar w:fldCharType="separate"/></w:r><w:r><w:t>1</w:t></w:r><w:r><w:fldChar w:fldCharType="end"/></w:r></w:p></w:ftr>';
+  var kop=opsi.kop?'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:hdr xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:p><w:pPr><w:pStyle w:val="Header"/><w:jc w:val="right"/></w:pPr><w:r><w:t xml:space="preserve">'+x(opsi.kop)+'</w:t></w:r></w:p></w:hdr>':'';
+  var gambar=opsi.gambar||[];
+  var rels='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'+
+    '<Relationship Id="rIdGaya" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/>'+
+    '<Relationship Id="rIdNomor" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/numbering" Target="numbering.xml"/>'+
+    '<Relationship Id="rIdAtur" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/settings" Target="settings.xml"/>'+
+    '<Relationship Id="rIdKaki" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/footer" Target="footer1.xml"/>'+
+    (kop?'<Relationship Id="rIdKop" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/header" Target="header1.xml"/>':'')+
+    gambar.map(function(g){return '<Relationship Id="'+g.id+'" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="media/'+g.nama+'"/>'}).join('')+'</Relationships>';
+  var doc='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" '+
+    'xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"><w:body>'+badan+
+    '<w:sectPr>'+(kop?'<w:headerReference w:type="default" r:id="rIdKop"/>':'')+'<w:footerReference w:type="default" r:id="rIdKaki"/><w:pgSz w:w="'+W+'" w:h="'+H+'"'+(lanskap?' w:orient="landscape"':'')+'/>'+
+    '<w:pgMar w:top="'+m+'" w:right="'+m+'" w:bottom="'+m+'" w:left="'+m+'" w:header="440" w:footer="440" w:gutter="0"/></w:sectPr></w:body></w:document>';
+  var jenis='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/>'+
+    '<Default Extension="png" ContentType="image/png"/><Default Extension="jpeg" ContentType="image/jpeg"/>'+
+    '<Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/><Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/>'+
+    '<Override PartName="/word/numbering.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.numbering+xml"/><Override PartName="/word/settings.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.settings+xml"/>'+
+    '<Override PartName="/word/footer1.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.footer+xml"/>'+(kop?'<Override PartName="/word/header1.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.header+xml"/>':'')+
+    '<Override PartName="/docProps/core.xml" ContentType="application/vnd.openxmlformats-package.core-properties+xml"/><Override PartName="/docProps/app.xml" ContentType="application/vnd.openxmlformats-officedocument.extended-properties+xml"/></Types>';
+  return muatJsZip().then(function(){
+    var z=new JSZip();
+    z.file('[Content_Types].xml',jenis);
+    z.file('_rels/.rels','<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties" Target="docProps/core.xml"/><Relationship Id="rId3" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties" Target="docProps/app.xml"/></Relationships>');
+    z.file('docProps/core.xml','<?xml version="1.0" encoding="UTF-8" standalone="yes"?><cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><dc:title>'+x(opsi.judul||'DECK PTLN')+'</dc:title><dc:creator>'+x(opsi.penulis||(S.user&&S.user.nama)||'DECK PTLN')+'</dc:creator><dcterms:created xsi:type="dcterms:W3CDTF">'+kini+'</dcterms:created><dcterms:modified xsi:type="dcterms:W3CDTF">'+kini+'</dcterms:modified></cp:coreProperties>');
+    z.file('docProps/app.xml','<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Properties xmlns="http://schemas.openxmlformats.org/officeDocument/2006/extended-properties"><Application>DECK PTLN</Application></Properties>');
+    z.file('word/document.xml',doc); z.file('word/styles.xml',gaya); z.file('word/numbering.xml',nomor);
+    z.file('word/settings.xml','<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:settings xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:updateFields w:val="true"/><w:defaultTabStop w:val="720"/><w:compat><w:compatSetting w:name="compatibilityMode" w:uri="http://schemas.microsoft.com/office/word" w:val="15"/></w:compat></w:settings>');
+    z.file('word/footer1.xml',kaki); if(kop) z.file('word/header1.xml',kop);
+    z.file('word/_rels/document.xml.rels',rels);
+    gambar.forEach(function(g){ z.file('word/media/'+g.nama,g.data,{base64:true}) });
+    return z.generateAsync({type:'blob',mimeType:'application/vnd.openxmlformats-officedocument.wordprocessingml.document',compression:'DEFLATE'});
+  });
+}
+function docxPolos(badan,opsi){ return docxPaket(badan,opsi) }
+
+/* HTML sederhana → .docx: judul, paragraf, daftar, tabel (lebar pas halaman,
+   judul kolom berulang), gambar PNG/JPEG, pemisah halaman. */
+function htmlKeDocx(html,opsi){
+  opsi=opsi||{};
+  var dom=new DOMParser().parseFromString('<!doctype html><html><body>'+(typeof html==='string'?html.replace(/^[\s\S]*<body[^>]*>/i,'').replace(/<\/body>[\s\S]*$/i,''):html.outerHTML)+'</body></html>','text/html');
+  var lanskap=!!opsi.lanskap, m=opsi.margin||1000, lebarTeks=(lanskap?16838:11906)-2*m;
+  var gambar=[], x=xmlEsc;
+  var BLOK=/^(P|H1|H2|H3|H4|H5|H6|UL|OL|TABLE|DIV|SECTION|ARTICLE|HEADER|FOOTER|BLOCKQUOTE|PRE|HR|FIGURE|MAIN|ASIDE|NAV|DL|DT|DD|LI|THEAD|TBODY|TR|FORM|FIELDSET)$/;
+  function rPr(f){
+    return '<w:rPr>'+(f.mono?'<w:rFonts w:ascii="Consolas" w:hAnsi="Consolas"/>':'')+(f.b?'<w:b/>':'')+(f.i?'<w:i/>':'')+(f.warna?'<w:color w:val="'+f.warna+'"/>':'')+(f.sz?'<w:sz w:val="'+f.sz+'"/><w:szCs w:val="'+f.sz+'"/>':'')+(f.u?'<w:u w:val="single"/>':'')+'</w:rPr>';
+  }
+  function gambarXml(im,f){
+    var src=im.getAttribute('src')||'', mm=/^data:image\/(png|jpe?g);base64,(.+)$/i.exec(src);
+    if(!mm) return '';
+    var ext=/png/i.test(mm[1])?'png':'jpeg', id='rIdGb'+(gambar.length+1), nama='gambar'+(gambar.length+1)+'.'+ext;
+    gambar.push({id:id,nama:nama,data:mm[2]});
+    var w=Number(im.getAttribute('width'))||im.naturalWidth||480, h=Number(im.getAttribute('height'))||Math.round(w*0.6);
+    var maks=Math.floor((f.selLebar||lebarTeks)/1440*96)-8; if(w>maks){ h=Math.round(h*maks/w); w=maks }
+    var cx=w*9525, cy=h*9525, n=gambar.length;
+    return '<w:r><w:drawing><wp:inline distT="0" distB="0" distL="0" distR="0"><wp:extent cx="'+cx+'" cy="'+cy+'"/><wp:docPr id="'+n+'" name="Picture '+n+'"/>'+
+      '<a:graphic><a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture"><pic:pic><pic:nvPicPr><pic:cNvPr id="'+n+'" name="'+nama+'"/><pic:cNvPicPr/></pic:nvPicPr>'+
+      '<pic:blipFill><a:blip r:embed="'+id+'"/><a:stretch><a:fillRect/></a:stretch></pic:blipFill><pic:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="'+cx+'" cy="'+cy+'"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></pic:spPr></pic:pic></a:graphicData></a:graphic></wp:inline></w:drawing></w:r>';
+  }
+  function runs(node,f){
+    var out='', anak=node.childNodes;
+    Array.prototype.forEach.call(anak,function(n,i){
+      if(n.nodeType===3){ var t=n.nodeValue.replace(/\s+/g,' '); if(t) out+='<w:r>'+rPr(f)+'<w:t xml:space="preserve">'+x(t)+'</w:t></w:r>'; return }
+      if(n.nodeType!==1) return;
+      var tg=n.tagName, g=Object.assign({},f);
+      /* Dua unsur yang di layar bertumpuk (mis. <b>Judul</b><span>Isi</span>) diberi spasi agar katanya tidak menempel. */
+      var sblm=anak[i-1];
+      if(sblm&&sblm.nodeType===1&&sblm.tagName!=='BR'&&/\S$/.test(sblm.textContent||'')&&/^\S/.test(n.textContent||'')) out+='<w:r><w:t xml:space="preserve"> </w:t></w:r>';
+      if(tg==='BR'){ out+=/page-break/i.test(n.getAttribute('style')||'')?'<w:r><w:br w:type="page"/></w:r>':'<w:r><w:br/></w:r>'; return }
+      if(tg==='IMG'){ out+=gambarXml(n,f); return }
+      if(/^(SCRIPT|STYLE|BUTTON|INPUT|SELECT|TEXTAREA|SVG|CANVAS)$/.test(tg)) return;
+      if(tg==='B'||tg==='STRONG') g.b=true;
+      if(tg==='I'||tg==='EM') g.i=true;
+      if(tg==='U') g.u=true;
+      if(tg==='A'){ g.u=true; g.warna='1F6F5C' }
+      if(tg==='SMALL') g.sz=Math.max(14,(f.sz||21)-3);
+      if(tg==='CODE'||tg==='KBD') g.mono=true;
+      if(/(^|\s)(muted|meta|m|hint)(\s|$)/.test(n.className||'')) g.warna='55706A';
+      out+=runs(n,g);
+    });
+    return out;
+  }
+  function rata(el){
+    var st=(el.getAttribute&&el.getAttribute('style'))||'', a=(el.getAttribute&&el.getAttribute('align'))||'', k=' '+(el.className||'')+' ';
+    if(/text-align\s*:\s*center/i.test(st)||/center/i.test(a)||/ (s|m|tengah|center) /.test(k)) return 'center';
+    if(/text-align\s*:\s*right/i.test(st)||/right/i.test(a)||/ n /.test(k)) return 'right';
+    return '';
+  }
+  /* Urutan unsur pPr harus sesuai skema Word: gaya, nomor, garis, spasi, inden, rata. */
+  function pp(o){ o=o||{}; var t=(o.gaya?'<w:pStyle w:val="'+o.gaya+'"/>':'')+(o.num||'')+(o.bdr||'')+(o.rapat?'<w:spacing w:after="0"/>':o.spasi||'')+(o.ind||'')+(o.jc?'<w:jc w:val="'+o.jc+'"/>':''); return t }
+  function para(isi,pPr){ return '<w:p>'+(pPr?'<w:pPr>'+pPr+'</w:pPr>':'')+isi+'</w:p>' }
+  function adaBlok(el){ return Array.prototype.some.call(el.children||[],function(c){ return BLOK.test(c.tagName)||(c.tagName==='BR'&&/page-break/i.test(c.getAttribute('style')||'')) }) }
+  function blok(el,f,daftar){
+    var out='', antre=document.createElement('span');
+    function siram(){
+      if(!antre.childNodes.length) return;
+      var r=runs(antre,f);
+      if(r.replace(/<[^>]+>/g,'').trim()||/<w:drawing>/.test(r)) out+=para(r,pp({rapat:f.pRapat,jc:f.jc}));
+      antre=document.createElement('span');
+    }
+    Array.prototype.forEach.call(el.childNodes,function(n){
+      if(n.nodeType===3){ antre.appendChild(n.cloneNode()); return }
+      if(n.nodeType!==1) return;
+      var tg=n.tagName;
+      if(/^(SCRIPT|STYLE|BUTTON|INPUT|SELECT|TEXTAREA|NOSCRIPT)$/.test(tg)) return;
+      if(tg==='BR'&&/page-break/i.test(n.getAttribute('style')||'')){ siram(); out+='<w:p><w:r><w:br w:type="page"/></w:r></w:p>'; return }
+      if(!BLOK.test(tg)){ antre.appendChild(n.cloneNode(true)); return }
+      siram();
+      var jc=rata(n)||f.jc||'';
+      var g=Object.assign({},f,{jc:jc});
+      if(/^H[1-6]$/.test(tg)){
+        var lv=+tg.charAt(1), gaya=opsi.tanpaGayaJudul?'':(lv===1?'Title':lv===2?'Heading1':lv===3?'Heading2':'Heading3');
+        out+=para(runs(n,{sz:f.sz&&!gaya?f.sz:undefined,b:!gaya}),pp({gaya:gaya,jc:jc}));
+        return;
+      }
+      if(tg==='HR'){ out+=para('',pp({bdr:'<w:pBdr><w:bottom w:val="single" w:sz="6" w:space="1" w:color="C9D2CC"/></w:pBdr>'})); return }
+      if(tg==='UL'||tg==='OL'){
+        var lvl=(daftar?daftar.lvl+1:0);
+        Array.prototype.forEach.call(n.children,function(li){
+          if(li.tagName!=='LI') return;
+          var sub=Array.prototype.filter.call(li.children,function(c){return c.tagName==='UL'||c.tagName==='OL'});
+          var salin=li.cloneNode(true); Array.prototype.forEach.call(salin.querySelectorAll(':scope > ul, :scope > ol'),function(s){ s.remove() });
+          out+=para(runs(salin,f),pp({gaya:'ListParagraph',num:'<w:numPr><w:ilvl w:val="'+Math.min(lvl,2)+'"/><w:numId w:val="'+(tg==='OL'?2:1)+'"/></w:numPr>',rapat:f.pRapat}));
+          sub.forEach(function(s){ var w=document.createElement('div'); w.appendChild(s.cloneNode(true)); out+=blok(w,f,{lvl:lvl}) });
+        });
+        return;
+      }
+      if(tg==='TABLE'){ out+=tabel(n,f); return }
+      if(tg==='P'||tg==='LI'||tg==='DT'||tg==='DD'||tg==='PRE'||tg==='BLOCKQUOTE'||!adaBlok(n)){
+        var kecil=/(^|\s)(muted|meta|m|hint|kecil)(\s|$)/.test(n.className||'');
+        var gf=Object.assign({},f); if(tg==='DT') gf.b=true; if(kecil&&!f.sz){ gf.sz=18; gf.warna='55706A' }
+        var r=runs(n,gf);
+        if(!r.replace(/<[^>]+>/g,'').trim()&&!/<w:drawing>/.test(r)) return;
+        out+=para(r,pp({rapat:f.pRapat,ind:tg==='BLOCKQUOTE'?'<w:ind w:left="360"/>':'',jc:jc}));
+        return;
+      }
+      out+=blok(n,g,daftar);
+    });
+    siram();
+    return out;
+  }
+  function tabel(t,f){
+    var baris=Array.prototype.slice.call(t.querySelectorAll('tr')).filter(function(tr){return tr.closest('table')===t});
+    if(!baris.length) return '';
+    var nK=0; baris.forEach(function(tr){ var n=0; Array.prototype.forEach.call(tr.children,function(c){ n+=Math.max(1,c.colSpan||1) }); nK=Math.max(nK,n) });
+    if(!nK) return '';
+    var tanpaGaris=/(^|\s)(ttd|polos)(\s|$)/.test(t.className||'');
+    /* Lebar kolom dalam twip: setiap kolom paling tidak selebar kata terpanjangnya (judul kolom
+       tidak terpotong per huruf), sisanya dibagi menurut panjang isi, total pas selebar halaman.
+       Bila kolomnya terlalu banyak, huruf tabel diperkecil dulu. */
+    var minK=[], ingin=[]; for(var i=0;i<nK;i++){ minK.push(2); ingin.push(3) }
+    baris.slice(0,300).forEach(function(tr){
+      var k=0; Array.prototype.forEach.call(tr.children,function(c){ var sp=Math.max(1,c.colSpan||1);
+        if(sp===1&&k<nK){ var t=(c.textContent||'').replace(/\s+/g,' ').trim(), kata=t.split(' ').reduce(function(a,w){return Math.max(a,w.length)},0);
+          minK[k]=Math.max(minK[k],Math.min(kata,c.tagName==='TH'?14:18)); ingin[k]=Math.max(ingin[k],Math.min(t.length,c.tagName==='TH'?18:40)) }
+        k+=sp });
+    });
+    var sz=opsi.tabelSz||(nK>14?14:nK>10?15:nK>7?16:nK>4?18:19);
+    function twip(n,ukuran){ return Math.ceil(n*ukuran*5.4)+180 }
+    while(sz>12&&minK.reduce(function(a,n){return a+twip(n,sz)},0)>lebarTeks) sz--;
+    var lkMin=minK.map(function(n){return twip(n,sz)}), lkIngin=ingin.map(function(n,i){return Math.max(lkMin[i],twip(n,sz))});
+    var totMin=lkMin.reduce(function(a,b){return a+b},0), totIngin=lkIngin.reduce(function(a,b){return a+b},0), lk;
+    if(totMin>=lebarTeks) lk=lkMin.map(function(w){return Math.floor(w/totMin*lebarTeks)});
+    else if(totIngin<=lebarTeks) lk=lkIngin.map(function(w){return Math.floor(w/totIngin*lebarTeks)});
+    else { var sisa=lebarTeks-totMin, tambah=totIngin-totMin; lk=lkMin.map(function(w,i){return Math.floor(w+(lkIngin[i]-w)/tambah*sisa)}) }
+    var grid='<w:tblGrid>'+lk.map(function(w){return '<w:gridCol w:w="'+w+'"/>'}).join('')+'</w:tblGrid>';
+    var tblPr='<w:tblPr>'+(tanpaGaris?'':'<w:tblStyle w:val="TabelLaporan"/>')+'<w:tblW w:w="'+lebarTeks+'" w:type="dxa"/>'+
+      (tanpaGaris?'<w:tblBorders><w:top w:val="nil"/><w:left w:val="nil"/><w:bottom w:val="nil"/><w:right w:val="nil"/><w:insideH w:val="nil"/><w:insideV w:val="nil"/></w:tblBorders>':'')+'<w:tblLayout w:type="fixed"/></w:tblPr>';
+    var belang=false, out='<w:tbl>'+tblPr+grid;
+    baris.forEach(function(tr,ri){
+      var sel=Array.prototype.slice.call(tr.children).filter(function(c){return /^(TD|TH)$/.test(c.tagName)});
+      if(!sel.length) return;
+      var kepala=!tanpaGaris&&(tr.parentNode.tagName==='THEAD'||sel.every(function(c){return c.tagName==='TH'}));
+      var grup=!kepala&&sel.length===1&&(sel[0].colSpan||1)>=nK&&nK>1;
+      out+='<w:tr><w:trPr><w:cantSplit/>'+(kepala?'<w:tblHeader/>':'')+'</w:trPr>';
+      var k=0;
+      sel.forEach(function(c){
+        var sp=Math.min(nK-k,Math.max(1,c.colSpan||1)), w=0; for(var j=k;j<k+sp;j++) w+=lk[j]||0; k+=sp;
+        var isi=c.cloneNode(true);
+        var g={sz:sz,b:kepala||grup||/(^|\s)g(\s|$)/.test(c.className||''),warna:kepala?'FFFFFF':grup?'10302A':undefined,jc:rata(c)||(tanpaGaris?'center':''),pRapat:true,selLebar:w};
+        var isiAngka=!kepala&&/^\s*-?[\d.,]+\s*%?\s*$/.test(c.textContent||'');
+        if(isiAngka&&!g.jc) g.jc='right';
+        var badan=blok(isi,g)||'<w:p><w:pPr><w:spacing w:after="0"/></w:pPr></w:p>';
+        var isi2=kepala?'10302A':grup||/(^|\s)g(\s|$)/.test(c.className||'')?'E8EFEA':(belang&&!tanpaGaris?'F6F8F5':'');
+        out+='<w:tc><w:tcPr><w:tcW w:w="'+w+'" w:type="dxa"/>'+(sp>1?'<w:gridSpan w:val="'+sp+'"/>':'')+(isi2?'<w:shd w:val="clear" w:color="auto" w:fill="'+isi2+'"/>':'')+'<w:vAlign w:val="'+(kepala?'center':'top')+'"/></w:tcPr>'+badan+'</w:tc>';
+      });
+      while(k<nK){ out+='<w:tc><w:tcPr><w:tcW w:w="'+(lk[k]||0)+'" w:type="dxa"/></w:tcPr><w:p/></w:tc>'; k++ }
+      out+='</w:tr>';
+      if(!kepala&&!grup) belang=!belang; else if(grup) belang=false;
+    });
+    return out+'</w:tbl><w:p><w:pPr><w:spacing w:after="60"/></w:pPr></w:p>';
+  }
+  var badan=blok(dom.body,{});
+  if(!badan) badan='<w:p/>';
+  return docxPaket(badan,Object.assign({},opsi,{gambar:gambar}));
+}
+
+/* ---------- PDF: pita warna sekolah di atas, garis di bawah ---------- */
+function pdfHiasi(doc){
+  try{
+    var n=doc.getNumberOfPages(), W=doc.internal.pageSize.getWidth(), H=doc.internal.pageSize.getHeight();
+    for(var p=1;p<=n;p++){
+      doc.setPage(p);
+      doc.setFillColor(16,48,42); doc.rect(0,0,W,6,'F');
+      doc.setFillColor(199,125,26); doc.rect(0,6,W*0.28,2,'F');
+      doc.setDrawColor(214,223,214); doc.setLineWidth(0.5); doc.line(30,H-24,W-30,H-24);
+    }
+  }catch(e){}
+}
+
+/* =======================================================
+   BERITA PORTAL — kolom berita PTLN di halaman masuk
+   Tampil seperti linimasa media sosial di samping kotak masuk; latar
+   halaman tetap. Isinya berita bersasaran "Publik" dari INFO & BERITA,
+   diimpor dari JSON atau DOCX (pengaturan admin) atau ditulis biasa.
+   Disimpan di peramban bersama nomor versinya: halaman masuk langsung
+   menampilkan berita terakhir, lalu memperbaruinya diam-diam.
+   ======================================================= */
+var KUNCI_PORTAL='deckptln_portal_v1';
+var PORTAL={rev:'',berita:[],gambar:{}};
+function portalMulai(){
+  try{ var t=JSON.parse(localStorage.getItem(KUNCI_PORTAL)||'null'); if(t&&Array.isArray(t.berita)) PORTAL=Object.assign({gambar:{}},t) }catch(e){}
+  var auth=q('auth'); if(!auth) return;
+  var el=q('portalFeed');
+  if(!el){ el=document.createElement('aside'); el.id='portalFeed'; el.className='portal'; el.setAttribute('aria-label','PTLN news'); auth.appendChild(el) }
+  auth.classList.add('ada-portal');
+  portalGambar();
+  var jalan=function(){ if(!auth.classList.contains('hidden')){ portalGambar(); portalAmbil() } };
+  try{ new MutationObserver(jalan).observe(auth,{attributes:true,attributeFilter:['class']}) }catch(e){}
+  jalan();
+}
+function portalAmbil(){
+  if(PORTAL._muat) return;
+  PORTAL._muat=true;
+  call('beritaPortal',PORTAL.rev||'').then(function(r){
+    PORTAL._muat=false;
+    if(!r||!r.ok) return;
+    if(!r.sama){ PORTAL.rev=r.rev; PORTAL.berita=r.berita||[]; PORTAL.sekolah=r.sekolah; portalSimpan() }
+    PORTAL.dimuat=true; portalGambar(); portalMuatGambar();
+  }).catch(function(){ PORTAL._muat=false; PORTAL.dimuat=true; portalGambar() });
+}
+function portalSimpan(){
+  try{ localStorage.setItem(KUNCI_PORTAL,JSON.stringify({rev:PORTAL.rev,berita:PORTAL.berita,sekolah:PORTAL.sekolah,gambar:PORTAL.gambar})) }
+  catch(e){ try{ localStorage.setItem(KUNCI_PORTAL,JSON.stringify({rev:PORTAL.rev,berita:PORTAL.berita,sekolah:PORTAL.sekolah,gambar:{}})) }catch(e2){} }
+}
+function portalWaktu(t){
+  var d=new Date(String(t||'').replace(' ','T')); if(isNaN(d)) return '';
+  var s=(Date.now()-d.getTime())/1000;
+  if(s<60) return 'just now'; if(s<3600) return Math.floor(s/60)+'m'; if(s<86400) return Math.floor(s/3600)+'h';
+  if(s<86400*7) return Math.floor(s/86400)+'d';
+  return tglPanjang(String(t).slice(0,10));
+}
+function portalTeks(t){
+  /* Tautan dan tagar dibuat bisa diklik; selebihnya teks biasa. */
+  return esc(t).replace(/(https?:\/\/[^\s<]+)/g,'<a href="$1" target="_blank" rel="noopener">$1</a>').replace(/(^|\s)#([A-Za-z0-9_]{2,40})/g,'$1<span class="pt-tag">#$2</span>');
+}
+function portalGambar(){
+  var el=q('portalFeed'); if(!el) return;
+  var d=PORTAL.berita||[];
+  var logo='<span class="pt-av" aria-hidden="true"><svg viewBox="0 0 100 100"><rect width="100" height="100" rx="50" fill="#10302A"/><rect x="24" y="58" width="7" height="18" rx="3" fill="#EDF0EA" opacity=".6"/><rect x="36" y="50" width="7" height="26" rx="3" fill="#EDF0EA" opacity=".7"/><rect x="48" y="42" width="7" height="34" rx="3" fill="#EDF0EA" opacity=".85"/><rect x="60" y="30" width="7" height="46" rx="3" fill="#C77D1A"/></svg></span>';
+  var h='<div class="pt-kepala"><div><b>PTLN News</b><span>Study abroad &amp; scholarship updates</span></div>'+(d.length?'<span class="pt-n">'+d.length+'</span>':'')+'</div><div class="pt-gulir">';
+  if(!d.length){
+    h+=PORTAL.dimuat?'<div class="pt-kosong">No news yet. Updates from the study abroad office will appear here.</div>':
+      [0,1].map(function(){return '<div class="pt-post pt-kerangka"><div class="pt-ph"><span class="pt-av"></span><div><i></i><i></i></div></div><i></i><i></i><i class="pendek"></i></div>'}).join('');
+  }
+  d.forEach(function(b){
+    var buka=PORTAL.buka&&PORTAL.buka[b.id], panjang=(b.isi||'').length>260;
+    var gb=b.gambar?(PORTAL.gambar[b.id]||''):'';
+    h+='<article class="pt-post'+(b.sematkan?' pin':'')+'"><div class="pt-ph">'+logo+'<div><b>'+esc(PORTAL.sekolah||'SMAIT Al-Ittihad')+' · PTLN</b>'+
+      '<span>'+esc(portalWaktu(b.tanggal))+(b.kategori?' · '+esc(b.kategori):'')+(b.sematkan?' · <em>Pinned</em>':'')+'</span></div></div>'+
+      '<h3>'+esc(b.judul)+'</h3>'+(b.isi?'<div class="pt-isi'+(panjang&&!buka?' potong':'')+'">'+portalTeks(b.isi)+'</div>':'')+
+      (panjang?'<button type="button" class="pt-lagi" onclick="PORTAL.buka=PORTAL.buka||{};PORTAL.buka[\''+esc(b.id)+'\']='+(buka?'false':'true')+';portalGambar()">'+(buka?'See less':'See more')+'</button>':'')+
+      (b.gambar?'<div class="pt-gb'+(gb?'':' memuat')+'">'+(gb?'<img alt="" loading="lazy" src="'+esc(gb)+'" onerror="this.parentNode.style.display=\'none\'">':'')+'</div>':'')+
+      (b.tautan?'<a class="pt-link" href="'+esc(b.tautan)+'" target="_blank" rel="noopener"><span>'+esc(b.tautan.replace(/^https?:\/\//,'').split('/')[0])+'</span><b>Open link →</b></a>':'')+
+      '</article>';
+  });
+  el.innerHTML=h+'</div>';
+}
+function portalMuatGambar(){
+  var perlu=(PORTAL.berita||[]).filter(function(b){return b.gambar&&!PORTAL.gambar[b.id]}).map(function(b){return b.id});
+  if(!perlu.length) return;
+  call('beritaPortalGambar',perlu).then(function(r){
+    if(!r||!r.ok) return;
+    Object.keys(r.gambar||{}).forEach(function(id){ if(r.gambar[id]) PORTAL.gambar[id]=r.gambar[id] });
+    portalSimpan(); portalGambar();
+  }).catch(function(){});
+}
+
+/* ---------- pengaturan: impor JSON / DOCX ---------- */
+function kartuPortal(){
+  if(!bimbing()) return '';
+  var P=S.portalImp||{}, d=(brData().berita||[]).filter(function(b){return b.sasaran==='Publik'});
+  var h='<div class="card portal-atur"><h2>Sign-in page news</h2><div class="sub">Posts shown beside the sign-in box, like a social-media feed, for anyone who opens the app. '+
+    'Import them from a <b>JSON</b> file or a <b>Word (.docx)</b> document — in Word, every <b>Heading</b> starts a new post, the paragraphs below it become the text, and pictures in it become the post picture.</div>'+
+    '<div class="pick" style="margin-top:12px"><label class="btn sea sm">'+ikon('unggah')+'Import JSON or DOCX<input type="file" hidden accept=".json,.docx,application/json,application/vnd.openxmlformats-officedocument.wordprocessingml.document" onchange="portalImpor(this.files[0]);this.value=\'\'"></label>'+
+    '<button class="btn ghost sm" onclick="portalContoh(\'json\')">Sample JSON</button><button class="btn ghost sm" onclick="portalContoh(\'docx\')">Sample DOCX</button>'+
+    '<button class="btn ghost sm" onclick="portalTulis()">Write one post</button></div>';
+  if(P.memuat) h+='<div class="note" style="margin-top:10px">Reading '+esc(P.nama||'the file')+'…</div>';
+  if(P.galat) h+='<div class="note bad" style="margin-top:10px">'+esc(P.galat)+'</div>';
+  if(P.daftar&&P.daftar.length){
+    var pilih=P.daftar.filter(function(x){return x.pakai}).length;
+    h+='<h3 class="rk-h3">'+P.daftar.length+' post(s) found in '+esc(P.nama)+'</h3><div class="pt-impor">'+P.daftar.map(function(b,i){
+      return '<label class="pt-impor-k'+(b.pakai?' on':'')+'"><input type="checkbox"'+(b.pakai?' checked':'')+' onchange="S.portalImp.daftar['+i+'].pakai=this.checked;gambarView()">'+
+        (b.gambar?'<img alt="" src="'+esc(b.gambar)+'">':'')+'<span><b>'+esc(b.judul)+'</b><i>'+esc(String(b.isi||'').slice(0,160))+(String(b.isi||'').length>160?'…':'')+'</i>'+
+        '<em>'+esc([b.tanggal,b.kategori,b.tautan?'link':''].filter(Boolean).join(' · '))+'</em></span></label>';
+    }).join('')+'</div><div class="pick ketat"><span class="hint">Public posts also appear on everyone’s Home page.</span>'+
+      '<button class="btn gold sm" id="ptTerapB" onclick="portalTerapkan()"'+(pilih?'':' disabled')+'>Publish '+pilih+' post(s)</button><button class="btn ghost sm" onclick="S.portalImp=null;gambarView()">Cancel</button></div>';
+  }
+  h+='<h3 class="rk-h3">On the sign-in page now · '+d.length+'</h3>';
+  if(!d.length) h+='<div class="empty kecil"><b>No public posts yet</b>Import a file or write one post.</div>';
+  else h+='<ul class="pt-daftar">'+d.map(function(b){
+    return '<li><div><b>'+esc(b.judul)+'</b><span class="muted kecil">'+esc((b.tanggal||'').slice(0,10))+(b.sematkan?' · pinned':'')+(b.status!=='Aktif'?' · archived':'')+'</span></div>'+
+      '<span class="pick"><button class="btn ghost xs" onclick="pindah(\'beranda\');brUbah(\''+esc(b.id)+'\')">Edit</button><button class="btn ghost xs" onclick="brSemat(\''+esc(b.id)+'\')">'+(b.sematkan?'Unpin':'Pin')+'</button>'+
+      '<button class="btn ghost xs bahaya" onclick="brHapus(\''+esc(b.id)+'\')">Delete</button></span></li>';
+  }).join('')+'</ul>';
+  return h+'</div>';
+}
+function portalTulis(){ brTulisBaru(); if(S.brEdit){ S.brEdit.sasaran='Publik'; gambarView() } }
+function portalNormal(o){
+  o=o||{};
+  function a(){ for(var i=0;i<arguments.length;i++){ var v=o[arguments[i]]; if(v!=null&&v!=='') return v } return '' }
+  var tags=a('tags','tag','tagar','hashtags'); if(Array.isArray(tags)) tags=tags.map(function(t){return '#'+String(t).replace(/^#/,'').replace(/\s+/g,'')}).join(' ');
+  var isi=String(a('isi','body','content','text','teks','konten','deskripsi','description','caption')||'');
+  if(tags) isi=(isi?isi+'\n\n':'')+tags;
+  var kat=String(a('kategori','category','jenis','type')||'News'); kat=kat.charAt(0).toUpperCase()+kat.slice(1).toLowerCase();
+  if(['Info','News','Admission','Scholarship','Event'].indexOf(kat)<0) kat={Berita:'News',Beasiswa:'Scholarship',Acara:'Event',Admisi:'Admission',Pendaftaran:'Admission'}[kat]||'News';
+  var tgl=admTgl(a('tanggal','date','published','publishedAt','waktu','created'));
+  return {judul:String(a('judul','title','headline','nama')||'').trim(),isi:isi.trim(),tanggal:tgl||'',kategori:kat,
+    tautan:String(a('tautan','link','url','href')||'').trim(),gambar:String(a('gambar','image','imageUrl','foto','picture','thumbnail')||'').trim(),
+    sematkan:!!a('sematkan','pinned','pin'),sampai:admTgl(a('sampai','until','expires'))||'',pakai:true};
+}
+function portalImpor(file){
+  if(!file) return;
+  S.portalImp={memuat:true,nama:file.name}; gambarView();
+  var kerja=/\.docx$/i.test(file.name)?portalDariDocx(file):file.text().then(function(t){
+    var j; try{ j=JSON.parse(String(t).replace(/^﻿/,'')) }catch(e){ throw new Error('This is not valid JSON: '+e.message) }
+    var arr=Array.isArray(j)?j:(j.berita||j.posts||j.news||j.items||j.data||j.feed||(j.judul||j.title?[j]:null));
+    if(!Array.isArray(arr)||!arr.length) throw new Error('No list of posts was found. Use [{"title": …, "body": …}] or {"posts": [...]}.');
+    return arr.map(portalNormal);
+  });
+  kerja.then(function(daftar){
+    daftar=daftar.filter(function(b){return b.judul&&b.judul.length>=3}).slice(0,60);
+    if(!daftar.length) throw new Error('No posts with a title were found in '+file.name+'.');
+    /* Gambar yang terlalu besar diperkecil; tautan https dibiarkan. */
+    return Promise.all(daftar.map(function(b){
+      if(!b.gambar||/^https:\/\//i.test(b.gambar)) { if(b.gambar&&!/^https:/i.test(b.gambar)) b.gambar=''; return b }
+      if(/^data:image\//.test(b.gambar)&&b.gambar.length<=47000) return b;
+      if(/^data:image\//.test(b.gambar)) return fetch(b.gambar).then(function(x){return x.blob()}).then(function(bl){ return kecilkanGambar(new File([bl],'g.jpg',{type:bl.type||'image/jpeg'}),900,47000) }).then(function(d){ b.gambar=d; return b }).catch(function(){ b.gambar=''; return b });
+      b.gambar=''; return b;
+    }));
+  }).then(function(daftar){ S.portalImp={nama:file.name,daftar:daftar}; gambarView() })
+    .catch(function(e){ S.portalImp={nama:file.name,galat:e.message}; gambarView() });
+}
+/* DOCX: setiap paragraf bergaya Heading/Title (atau baris tebal pendek) memulai berita baru. */
+function portalDariDocx(file){
+  return muatJsZip().then(function(){ return file.arrayBuffer() }).then(function(buf){ return JSZip.loadAsync(buf) }).then(function(zip){
+    var f=zip.file('word/document.xml'); if(!f) throw new Error('This Word file could not be read.');
+    var rel=zip.file('word/_rels/document.xml.rels');
+    return Promise.all([f.async('string'),rel?rel.async('string'):Promise.resolve('')]).then(function(x){
+      var dom=new DOMParser(), doc=dom.parseFromString(x[0],'application/xml'), rels={};
+      if(x[1]){ var rd=dom.parseFromString(x[1],'application/xml'); Array.prototype.forEach.call(rd.getElementsByTagName('Relationship'),function(r){ rels[r.getAttribute('Id')]=r.getAttribute('Target') }) }
+      var W='http://schemas.openxmlformats.org/wordprocessingml/2006/main';
+      var ps=doc.getElementsByTagNameNS(W,'p'), posts=[], kini=null, tugas=[];
+      function gayaP(p){ var g=p.getElementsByTagNameNS(W,'pStyle')[0]; return g?String(g.getAttributeNS(W,'val')||g.getAttribute('w:val')||''):'' }
+      function judulGaya(s){ return /^(heading|judul)\s*\d/i.test(s)||/^heading/i.test(s) }
+      function dokJudul(s){ return /^(title|subtitle|judul|subjudul)$/i.test(s) }
+      /* Bila dokumen memakai gaya Heading, hanya Heading yang memulai berita; teks pengantar sebelum
+         Heading pertama dan judul dokumen (gaya Title) diabaikan. Tanpa Heading, baris tebal pendek
+         dipakai sebagai judul. */
+      var adaHeading=Array.prototype.some.call(ps,function(p){ return judulGaya(gayaP(p)) });
+      Array.prototype.forEach.call(ps,function(p){
+        var s=gayaP(p);
+        var teks=Array.prototype.map.call(p.getElementsByTagNameNS(W,'t'),function(t){return t.textContent}).join('').trim();
+        if(dokJudul(s)) return;
+        if(adaHeading&&!kini&&!judulGaya(s)) return;
+        var tebal=p.getElementsByTagNameNS(W,'b').length>0&&teks.length>0&&teks.length<120&&!/[.!?]$/.test(teks);
+        var judul=adaHeading?judulGaya(s):((!kini&&tebal)||(tebal&&p.getElementsByTagNameNS(W,'r').length<=3&&kini&&kini.isi.length>0));
+        var gb=p.getElementsByTagName('a:blip')[0]||p.getElementsByTagNameNS('http://schemas.openxmlformats.org/drawingml/2006/main','blip')[0];
+        if(judul&&teks){ kini={judul:teks,isi:'',pakai:true,kategori:'News',tanggal:'',tautan:'',gambar:''}; posts.push(kini); return }
+        if(!kini&&teks){ kini={judul:teks.slice(0,120),isi:teks.length>120?teks:'',pakai:true,kategori:'News',tanggal:'',tautan:'',gambar:''}; posts.push(kini); return }
+        if(!kini) return;
+        if(gb&&!kini.gambar){
+          var id=gb.getAttribute('r:embed')||gb.getAttributeNS('http://schemas.openxmlformats.org/officeDocument/2006/relationships','embed');
+          var target=rels[id]; var file2=target&&zip.file('word/'+target.replace(/^\.?\//,''));
+          if(file2){ var post=kini; kini.gambar='…'; tugas.push(file2.async('blob').then(function(bl){ return kecilkanGambar(new File([bl],'g',{type:/png$/i.test(target)?'image/png':'image/jpeg'}),900,47000) }).then(function(d){ post.gambar=d }).catch(function(){ post.gambar='' })) }
+        }
+        if(!teks) return;
+        var m;
+        if((m=teks.match(/^(tanggal|date)\s*[:：]\s*(.+)$/i))){ kini.tanggal=admTgl(m[2])||''; return }
+        if((m=teks.match(/^(kategori|category)\s*[:：]\s*(.+)$/i))){ kini.kategori=portalNormal({kategori:m[2].trim()}).kategori; return }
+        if((m=teks.match(/^(tautan|link|url)\s*[:：]\s*(\S+)/i))){ kini.tautan=m[2]; return }
+        kini.isi+=(kini.isi?'\n\n':'')+teks;
+      });
+      return Promise.all(tugas).then(function(){ posts.forEach(function(b){ if(b.gambar==='…') b.gambar='' }); return posts });
+    });
+  });
+}
+function portalTerapkan(){
+  var P=S.portalImp; if(!P||!P.daftar) return;
+  var kirim=P.daftar.filter(function(b){return b.pakai}).map(function(b){ return {judul:b.judul,isi:b.isi,tanggal:b.tanggal,kategori:b.kategori,tautan:b.tautan,gambar:b.gambar,sematkan:b.sematkan,sampai:b.sampai,sasaran:'Publik'} });
+  var bt=q('ptTerapB'); if(bt){bt.disabled=true;bt.textContent='Publishing…'}
+  call('beritaImpor',S.token,kirim,{sasaran:'Publik'}).then(function(r){
+    if(!r.ok){ if(r.error==='SESI_HABIS'){sesiHabis();return} toast(r.error,true); if(bt){bt.disabled=false;bt.textContent='Publish'} return }
+    S.beranda=S.beranda||{}; S.beranda.berita=r.berita; S.portalImp=null; PORTAL.rev='';
+    toast(r.jumlah+' post(s) published on the sign-in page'+(r.galat&&r.galat.length?' · '+r.galat[0]:'.'),!!(r.galat&&r.galat.length)); gambarView();
+  }).catch(function(e){ if(bt){bt.disabled=false;bt.textContent='Publish'} tangani(e) });
+}
+function portalContoh(jenis){
+  var c=[{title:'NUS & NTU applications are open',body:'The ASEAN Undergraduate Scholarship window is open. Students in grade XII who want to apply: meet your mentor this week to check your documents. #ASEANScholarship #NUS #NTU',date:hariIniStr(),category:'Admission',link:'https://www.nus.edu.sg/oam',pinned:true},
+    {title:'IELTS simulation on Saturday',body:'A full IELTS simulation will be held in the language lab on Saturday, 08.00–12.00. Bring a pencil and your student card.',date:hariIniStr(),category:'Event'}];
+  if(jenis==='json'){ unduhBlob(new Blob([JSON.stringify({posts:c},null,2)],{type:'application/json'}),'ptln-news-sample.json'); return }
+  var esc2=function(s){return xmlEsc(String(s))};
+  var badan=c.map(function(p){
+    return '<w:p><w:pPr><w:pStyle w:val="Heading1"/></w:pPr><w:r><w:t xml:space="preserve">'+esc2(p.title)+'</w:t></w:r></w:p>'+
+      '<w:p><w:r><w:t xml:space="preserve">Date: '+esc2(p.date)+'</w:t></w:r></w:p><w:p><w:r><w:t xml:space="preserve">Category: '+esc2(p.category)+'</w:t></w:r></w:p>'+
+      (p.link?'<w:p><w:r><w:t xml:space="preserve">Link: '+esc2(p.link)+'</w:t></w:r></w:p>':'')+'<w:p><w:r><w:t xml:space="preserve">'+esc2(p.body)+'</w:t></w:r></w:p>';
+  }).join('');
+  docxPolos('<w:p><w:pPr><w:pStyle w:val="Title"/></w:pPr><w:r><w:t>PTLN News</w:t></w:r></w:p><w:p><w:r><w:t xml:space="preserve">Every Heading 1 starts a new post. Optional lines: Date:, Category:, Link:. Paste a picture under a heading to give that post a picture.</w:t></w:r></w:p>'+badan,{judul:'PTLN news sample'})
+    .then(function(b){ unduhBlob(b,'ptln-news-sample.docx') }).catch(function(e){ toast(e.message,true) });
+}
+
+/* =======================================================
+   MASUK LEBIH CEPAT
+   Masuk dan data awal diambil dalam satu panggilan (masukLengkap).
+   Tombol menunjukkan tahapannya; bila server lambat bangun, pesannya
+   berganti dan pemakai tidak dibiarkan menebak. Saat halaman masuk
+   dibuka, server dibangunkan lebih dulu dengan panggilan ringan.
+   ======================================================= */
+var PESAN_TUNGGU=[[0,'Checking your account…'],[2500,'Loading your deck…'],[7000,'Waking up the school server — almost there…'],[16000,'Still working — the server is busy. Please keep this page open.'],[35000,'This is taking unusually long. You can wait, or press Sign in again.']];
+function tahapTunggu(el,cb){
+  var mulai=Date.now(), i=0;
+  function langkah(){
+    var t=Date.now()-mulai;
+    while(i<PESAN_TUNGGU.length&&PESAN_TUNGGU[i][0]<=t){ cb(PESAN_TUNGGU[i][1],i); i++ }
+  }
+  langkah();
+  var jam=setInterval(langkah,500);
+  return function(){ clearInterval(jam) };
+}
+function bangunkanServer(){
+  if(bangunkanServer._ok) return;
+  bangunkanServer._ok=true;
+  call('ping').catch(function(){ bangunkanServer._ok=false });
+}
+function doLogin(ev){
+  ev.preventDefault();
+  var b=q('btnIn'), form=q('formIn');
+  if(b.disabled) return false;
+  b.disabled=true; form.classList.add('memuat');
+  b.innerHTML='<span class="putar" aria-hidden="true"></span><span id="btnInTeks">Checking your account…</span>';
+  q('authMsg').innerHTML='';
+  var berhenti=tahapTunggu(b,function(t){ var x=q('btnInTeks'); if(x) x.textContent=t });
+  var pulih=function(){ berhenti(); b.disabled=false; form.classList.remove('memuat'); b.textContent='Sign in' };
+  try{ muatRef() }catch(e){}
+  call('masukLengkap',{email:q('inEmail').value,pass:q('inPass').value},S.refSidik||'').then(function(r){
+    if(!r||!r.ok){ pulih(); authErr((r&&r.error)||'Could not sign in.'); return }
+    store(KEY,r.token); S.token=r.token;
+    if(r.boot&&r.boot.ok){
+      berhenti();
+      try{ bootSelesai(r.boot) }catch(e){ pulih(); mulai() }
+      setTimeout(function(){ b.disabled=false; form.classList.remove('memuat'); b.textContent='Sign in' },400);
+    }else{ pulih(); mulai() }
+  }).catch(function(e){
+    pulih();
+    q('authMsg').innerHTML='<div class="note bad">'+esc(e.message)+'<div style="margin-top:9px"><button type="button" class="btn sea sm" style="width:auto" onclick="q(\'btnIn\').click()">Try again</button></div></div>';
+  });
+  return false;
+}
+
+/* =======================================================
+   CV BEASISWA RAMAH ATS
+   Langkah "ATS check" di penyusun CV: skor kesiapan ATS 0–100 dari
+   aturan yang bisa diperiksa (kontak, judul bagian baku, ringkasan,
+   kata kerja aksi, hasil berangka, panjang, tanggal, kata kunci
+   beasiswa), daftar perbaikan dengan tombol menuju bagiannya, dan
+   pencocok kata kunci dari deskripsi beasiswa yang ditempel siswa.
+   Skor ini mengukur seberapa mudah CV dibaca mesin dan penyeleksi —
+   bukan janji diterima.
+   ======================================================= */
+CV_URUTAN.beasiswa=['profil','pendidikan','prestasi','tes','organisasi','riset','relawan','kerja','sertifikat','keahlian','referensi'];
+var ATS_KERJA={
+  en:['achieved','analysed','analyzed','arranged','assisted','authored','built','calculated','championed','coached','collaborated','collected','completed','conducted','coordinated','created','delivered','designed','developed','directed','drafted','earned','edited','established','evaluated','expanded','facilitated','founded','generated','guided','helped','hosted','identified','improved','increased','initiated','introduced','investigated','launched','led','managed','mentored','moderated','motivated','organised','organized','oversaw','participated','performed','pioneered','planned','prepared','presented','produced','promoted','published','raised','ranked','recruited','reduced','represented','researched','served','solved','spearheaded','started','streamlined','supervised','supported','taught','tested','trained','translated','tutored','volunteered','won','wrote','competed','qualified','secured','awarded','mobilised','mobilized','campaigned','reached','doubled','tripled','memorized','memorised','recited','documented','measured','surveyed','programmed','coded','engineered'],
+  id:['memimpin','mengelola','mengorganisasi','menyelenggarakan','merancang','mengembangkan','membangun','meningkatkan','mengajar','membimbing','melatih','meneliti','menganalisis','menulis','menyusun','mempresentasikan','memenangkan','meraih','mewakili','menggerakkan','menginisiasi','memprakarsai','mendirikan','mengoordinasikan','membantu','menggalang','mengumpulkan','menerjemahkan','memproduksi','menciptakan','melaksanakan','menjalankan','mendampingi','mengedukasi','memandu','memfasilitasi','merekrut','menghimpun','mengikuti','menyelesaikan','menghafal','mengukur','menguji','memprogram','membuat','mengadakan','menjadi','menyajikan','menerbitkan']
+};
+var ATS_STOP=('a an the and or of to in on for with by at from as is are was were be been being this that these those it its their our your you we they he she his her them us '+
+  'will would should can could may might must shall do does did done have has had not no yes all any each every more most other some such only own same so than too very '+
+  'about above after again against between into through during before under over up down out off further then once here there when where why how what which who whom '+
+  'also including include includes per via etc e.g i.e must applicants applicant candidate candidates student students program programme programs programmes scholarship scholarships '+
+  'university universities apply application applications year years month months must required requirement requirements please information details eligible eligibility '+
+  'dan atau yang di ke dari untuk dengan pada dalam ini itu adalah sebagai juga akan oleh bagi serta para tersebut dapat harus telah sudah belum tidak bisa lebih setiap '+
+  'undergraduate postgraduate graduate excellent strong good great qualities quality potential involvement involved active actively key awarded award awards selection criteria show shown should '+
+  'demonstrate demonstrated ability abilities level high highly well new open provide provides offer offers support supported based within across available full part opportunity opportunities '+
+  'successful outstanding interest interested interests ensure able one two three first study studies studying course courses degree degrees field fields area areas make help world global '+
+  'calon peserta mahasiswa siswa beasiswa program pendaftar pendaftaran persyaratan syarat tahun bulan memiliki mampu baik kuat tinggi').split(/\s+/).reduce(function(o,w){o[w]=1;return o},{});
+/* Kompetensi yang hampir selalu dicari panitia beasiswa; ikut dicek bila muncul di deskripsi. */
+var ATS_KOMPETENSI=['leadership','community service','community','volunteer','research','innovation','academic excellence','academic','impact','teamwork','collaboration','communication',
+  'problem solving','critical thinking','initiative','integrity','resilience','entrepreneurship','sustainability','stem','science','technology','engineering','mathematics','public speaking',
+  'kepemimpinan','pengabdian','kontribusi','prestasi','penelitian','inovasi','kerja sama','komunikasi','integritas','kewirausahaan','berkelanjutan','sosial','organisasi','akademik'];
+
+function atsTeksCv(d){
+  var m=modelCv(Object.assign({},d)), t=[];
+  m.blok.forEach(function(b){ t.push(b.s||''); (b.r||[]).forEach(function(r){t.push(r.s||'')}); t.push(b.kiri||''); t.push(b.kanan||'') });
+  return t.join(' \n ');
+}
+function atsButir(d){
+  var out=[];
+  ['organisasi','relawan','kerja','riset','pendidikan'].forEach(function(k){
+    (d[k]||[]).forEach(function(x,i){ tlBaris(x.butir).forEach(function(s){ out.push({k:k,i:i,s:s}) }) });
+  });
+  return out;
+}
+function atsAkar(w){ return String(w).toLowerCase().replace(/(ies)$/,'y').replace(/(ing|ed|es|s)$/,'').replace(/[^a-z0-9\u00C0-\u024F]/g,'') }
+function atsKataKunci(teks){
+  teks=String(teks||'').toLowerCase().replace(/[’']/g,'');
+  if(teks.replace(/\s/g,'').length<40) return [];
+  var kata=teks.match(/[a-z\u00C0-\u024F][a-z0-9\u00C0-\u024F+\-]{2,}/g)||[], hit={}, bi={};
+  kata.forEach(function(w,i){
+    if(ATS_STOP[w]||/^\d/.test(w)) return;
+    hit[w]=(hit[w]||0)+1;
+    var n=kata[i+1]; if(n&&!ATS_STOP[n]) { var f=w+' '+n; bi[f]=(bi[f]||0)+1 }
+  });
+  var calon=[];
+  Object.keys(bi).forEach(function(f){ if(bi[f]>=2) calon.push({k:f,n:bi[f]*2.2}) });
+  ATS_KOMPETENSI.forEach(function(k){ if(teks.indexOf(k)>=0&&!calon.some(function(c){return c.k===k})) calon.push({k:k,n:(hit[k]||1)+2}) });
+  Object.keys(hit).forEach(function(w){ if(w.length>=4&&hit[w]>=2&&!calon.some(function(c){return c.k.indexOf(w)>=0})) calon.push({k:w,n:hit[w]}) });
+  if(calon.length<6) Object.keys(hit).sort(function(a,b){return hit[b]-hit[a]||b.length-a.length}).forEach(function(w){ if(calon.length<10&&w.length>=6&&!calon.some(function(c){return c.k.indexOf(w)>=0})) calon.push({k:w,n:hit[w]}) });
+  calon.sort(function(a,b){return b.n-a.n||b.k.length-a.k.length});
+  /* Kata tunggal yang sudah tercakup frasa yang lebih panjang dibuang ("community" bila ada "community service"). */
+  var kunci=calon.map(function(c){return c.k});
+  kunci=kunci.filter(function(k){ return !kunci.some(function(l){ return l!==k&&l.length>k.length&&(' '+l+' ').indexOf(' '+k+' ')>=0 }) });
+  return kunci.slice(0,15);
+}
+function atsAda(kunci,teksCv){
+  var t=' '+String(teksCv).toLowerCase().replace(/[^a-z0-9\u00C0-\u024F]+/g,' ')+' ';
+  return kunci.split(' ').every(function(w){
+    var a=atsAkar(w); if(!a) return true;
+    return new RegExp('\\s'+a.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'[a-z]*\\s').test(t);
+  });
+}
+function atsSkor(dok){
+  var d=dok.data||{}, b=dok.bahasa==='id'?'id':'en', ko=d.kontak||{}, hasil=[], fix=[];
+  function kriteria(k,label,maks,nilai,saran,ke){ nilai=Math.max(0,Math.min(maks,Math.round(nilai*10)/10)); hasil.push({k:k,l:label,maks:maks,n:nilai}); if(nilai<maks&&saran) fix.push({k:k,s:saran,ke:ke,kurang:maks-nilai}); }
+  /* 1. Kontak */
+  var em=String(ko.email||'').trim(), emSah=/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(em);
+  var lokal=em.split('@')[0].toLowerCase(), namaKata=tlTeks(ko.nama).toLowerCase().split(' ').filter(function(w){return w.length>=3});
+  var emPro=emSah&&!/(cute|imut|manis|cantik|ganteng|keren|love|baby|sexy|gamer|xx|lol|kece|princess|queen|king|unyu|cool)/.test(lokal)&&(namaKata.some(function(w){return lokal.indexOf(w)>=0})||!namaKata.length);
+  var nKontak=(tlTeks(ko.nama)?2.5:0)+(emSah?(emPro?2.5:1):0)+(/\d{9,}/.test(String(ko.telp||'').replace(/\D/g,''))?2.5:0)+(tlTeks(ko.kota)?2.5:0);
+  kriteria('kontak','Contact details',10,nKontak,!tlTeks(ko.nama)||!emSah?'Add your full name and a working email address.':!emPro?'Use a professional, name-based email (e.g. firstname.lastname@gmail.com).':
+    !/\d{9,}/.test(String(ko.telp||'').replace(/\D/g,''))?'Add an active phone number with the country code (+62 …).':'Add your city.','kontak');
+  /* 2. Ringkasan profil */
+  var wp=tlHitungKata(d.profil);
+  kriteria('profil','Profile summary (25–80 words)',10,wp>=25&&wp<=80?10:wp>=15&&wp<=110?6:wp>0?3:0,
+    !wp?'Write a 2–3 sentence profile: who you are, your academic focus, your strongest evidence and your goal.':wp<25?'Your profile is short ('+wp+' words) — add your strongest result and your goal.':'Your profile is long ('+wp+' words) — cut it to 2–3 sentences.','profil');
+  /* 3. Pendidikan */
+  var p0=(d.pendidikan||[]).filter(function(x){return tlTeks(x.sekolah)})[0]||{};
+  kriteria('pendidikan','Education with dates and results',10,(tlTeks(p0.sekolah)?2.5:0)+(tlTeks(p0.program)?2.5:0)+(p0.mulai&&(p0.selesai||p0.kini)?2.5:0)+(tlTeks(p0.rata)||tlTeks(p0.peringkat)?2.5:0),
+    !tlTeks(p0.sekolah)?'Add your school in Education.':!(p0.mulai&&(p0.selesai||p0.kini))?'Add start and (expected) graduation dates to Education.':!tlTeks(p0.rata)&&!tlTeks(p0.peringkat)?'Add your report average or class rank (if strong) — scholarship panels look for academic evidence.':'Add your level and stream (e.g. Senior High School – Science Stream).','pendidikan');
+  /* 4. Bukti beasiswa: prestasi, kepemimpinan, pengabdian */
+  var nPres=(d.prestasi||[]).filter(function(x){return tlTeks(x.gelar)||tlTeks(x.lomba)}).length;
+  var nOrg=(d.organisasi||[]).filter(function(x){return tlTeks(x.org)}).length, nRel=(d.relawan||[]).filter(function(x){return tlTeks(x.org)}).length;
+  var nLain=(d.riset||[]).filter(function(x){return tlTeks(x.judul)}).length+(d.kerja||[]).filter(function(x){return tlTeks(x.org)}).length+(d.sertifikat||[]).filter(function(x){return tlTeks(x.nama)}).length;
+  var nBukti=Math.min(3,nPres)*1.5+Math.min(2,nOrg)*2+Math.min(2,nRel)*1.5+Math.min(2,nLain)*1;
+  kriteria('bukti','Awards, leadership & service',12,nBukti,
+    !nPres?'Add at least one award or recognition (with level and organiser).':!nOrg?'Add a leadership or organisation role — almost every scholarship scores leadership.':!nRel?'Add community or volunteer service — scholarships look for people who give back.':'Add one more award, project or certificate that is relevant to the scholarship.',
+    !nPres?'prestasi':!nOrg?'organisasi':!nRel?'relawan':'riset');
+  /* 5–7. Mutu butir */
+  var butir=atsButir(d), kerja=ATS_KERJA[b].concat(b==='id'?ATS_KERJA.en:[]);
+  var aksi=butir.filter(function(x){ var w=String(x.s).trim().split(/\s+/)[0].toLowerCase().replace(/[^a-z\u00C0-\u024F]/g,''); return kerja.indexOf(w)>=0||(b==='en'&&/ed$/.test(w)&&w.length>4)||(b==='id'&&/^(me|mem|men|meng|meny|ber|di)/.test(w)&&w.length>5) });
+  var angka=butir.filter(function(x){return /\d/.test(x.s)}).concat((d.prestasi||[]).filter(function(x){return /\d/.test((x.gelar||'')+' '+(x.lomba||''))}).map(function(x){return {s:x.gelar}}));
+  var dasarAngka=butir.length+nPres;
+  var pAksi=butir.length?aksi.length/butir.length:0, pAngka=dasarAngka?angka.length/dasarAngka:0;
+  var bukanAksi=butir.filter(function(x){return aksi.indexOf(x)<0})[0], tanpaAngka=butir.filter(function(x){return !/\d/.test(x.s)})[0];
+  kriteria('aksi','Bullets start with action verbs',12,butir.length?(pAksi>=0.8?12:pAksi*13):0,
+    !butir.length?'Add 2–3 bullet points under each leadership, volunteer or project entry.':
+      'Start every bullet with an action verb ('+(b==='id'?'Memimpin, Merancang, Mengajar':'Led, Designed, Taught')+'…)'+(bukanAksi?': “'+String(bukanAksi.s).slice(0,60)+'…”':'')+'.',bukanAksi?bukanAksi.k:'organisasi');
+  kriteria('angka','Measurable results (numbers)',13,dasarAngka?(pAngka>=0.6?13:pAngka/0.6*13):0,
+    'Add numbers that prove scale or impact — people reached, hours, ranking, % improvement'+(tanpaAngka?': “'+String(tanpaAngka.s).slice(0,60)+'…”':'')+'.',tanpaAngka?tanpaAngka.k:'prestasi');
+  var teksSemua=atsTeksCv(d), saya=(teksSemua.match(b==='id'?/\b(saya|aku)\b/gi:/\b(I|me|my|mine)\b/g)||[]).length;
+  var simbol=/[\u{1F300}-\u{1FAFF}\u2600-\u27BF★☆✓✔♥]/u.test(teksSemua), panjang=butir.filter(function(x){return tlHitungKata(x.s)>35}).length;
+  kriteria('gaya','ATS-safe wording',8,8-Math.min(4,saya)-(simbol?2:0)-Math.min(2,panjang),
+    saya?'Remove first-person words ('+(b==='id'?'saya/aku':'I, my, me')+') from the CV — write “Led…”, not “I led…”.':simbol?'Remove emoji and decorative symbols — ATS systems drop or garble them.':'Split bullets longer than 35 words into two.',saya?'profil':'organisasi');
+  /* 8. Panjang */
+  var kata=tlJumlahKata(dok);
+  kriteria('panjang','Length: 1–2 pages',5,kata>=220&&kata<=800?5:kata>=150&&kata<=950?3:kata?1:0,kata<220?'The CV is thin ('+kata+' words). Fill in more evidence — aim for one full page.':'The CV is long ('+kata+' words). Keep it to two pages at most.',kata<220?'prestasi':'akhir');
+  /* 9. Tanggal */
+  var berdat=[], tanpa=[];
+  ['pendidikan','organisasi','relawan','kerja','riset'].forEach(function(k){ (d[k]||[]).forEach(function(x){ if(!tlTeks(x.sekolah||x.org||x.judul)) return; (x.mulai&&(x.selesai||x.kini)?berdat:tanpa).push(k) }) });
+  ['prestasi','sertifikat','tes'].forEach(function(k){ (d[k]||[]).forEach(function(x){ if(!tlTeks(x.gelar||x.lomba||x.nama)) return; (x.tgl?berdat:tanpa).push(k) }) });
+  var nTgl=berdat.length+tanpa.length;
+  kriteria('tanggal','Dates on every entry',5,nTgl?berdat.length/nTgl*5:0,'Add month and year to every entry — ATS systems sort experience by date.',tanpa[0]||'pendidikan');
+  /* 10. Kata kunci beasiswa */
+  var desk=(d.ats||{}).deskripsi||'', kunci=atsKataKunci(desk), cocok=kunci.filter(function(k){return atsAda(k,teksSemua)});
+  var pK=kunci.length?cocok.length/kunci.length:0;
+  kriteria('kunci','Scholarship keywords',15,kunci.length?(pK>=0.75?15:pK/0.75*15):0,
+    !kunci.length?'Paste the scholarship or program description below so the keywords can be matched.':'Work these keywords into your CV where they are true: '+kunci.filter(function(k){return cocok.indexOf(k)<0}).slice(0,6).join(', ')+'.',kunci.length?'profil':'');
+  /* nama berkas */
+  var total=Math.round(hasil.reduce(function(a,x){return a+x.n},0));
+  fix.sort(function(a,c){return c.kurang-a.kurang});
+  return {skor:Math.min(100,total),hasil:hasil,perbaikan:fix,kunci:kunci,cocok:cocok,butir:butir.length,kata:kata};
+}
+function atsTingkat(n){ return n>=90?{k:'ok',t:'Excellent — ready to send'}:n>=75?{k:'baik',t:'Good — a few fixes left'}:n>=55?{k:'sedang',t:'Needs work'}:{k:'lemah',t:'Not ready yet'} }
+function atsPanel(dok){
+  var A=atsSkor(dok), T=atsTingkat(A.skor);
+  if(S.tl) S.tl._atsSig=atsSidik(dok);
+  var h='<h2>ATS check &amp; scholarship keywords</h2><div class="sub">Scholarship portals and selection panels often screen CVs with an <b>Applicant Tracking System (ATS)</b> or a quick keyword scan. '+
+    'This check scores how easily your CV is read and matched — aim for <b>90–100</b> before you submit.</div>';
+  h+='<div class="ats-atas"><div class="ats-cincin '+T.k+'" style="--p:'+A.skor+'%"><b>'+A.skor+'</b><span>/ 100</span></div><div><div class="ats-t '+T.k+'">'+esc(T.t)+'</div>'+
+    '<div class="muted kecil">'+A.butir+' bullet point(s) · '+A.kata+' words'+(A.kunci.length?' · '+A.cocok.length+' of '+A.kunci.length+' keywords':'')+'</div>'+
+    '<div class="ats-aman">'+['One column, no tables or text boxes','Standard section headings','Contact details in the body, not the header','Standard fonts; real text PDF (selectable)'].map(function(s){return '<span>✓ '+esc(s)+'</span>'}).join('')+'</div></div></div>';
+  h+='<div class="ats-kriteria">'+A.hasil.map(function(x){ var p=Math.round(x.n/x.maks*100); return '<div class="ats-k"><span>'+esc(x.l)+'</span><i><b style="width:'+p+'%" class="'+(p>=90?'ok':p>=60?'sedang':'lemah')+'"></b></i><em>'+x.n+'/'+x.maks+'</em></div>' }).join('')+'</div>';
+  if(A.perbaikan.length){
+    h+='<h3 class="rk-h3">Fix these first</h3><ol class="ats-fix">'+A.perbaikan.slice(0,8).map(function(f){
+      return '<li><span>'+esc(f.s)+'</span>'+(f.ke&&f.ke!=='akhir'&&!S.tl.hanyaBaca?'<button class="btn ghost xs" onclick="S.tl.langkah=\''+f.ke+'\';gambarView();window.scrollTo(0,0)">Go to '+esc(tlLabelLangkah(dok,f.ke))+'</button>':'')+'</li>' }).join('')+'</ol>';
+  }else h+='<div class="note ok" style="margin-top:12px">Every ATS check passes. Ask your mentor to read it, then download the PDF.</div>';
+  h+='<h3 class="rk-h3">Scholarship or program description</h3>'+fArea('ats.deskripsi','Paste the “About”, “Eligibility” and “Selection criteria” text from the official scholarship page','e.g. The ASEAN Undergraduate Scholarship is awarded to students with excellent academic results, strong leadership qualities and active involvement in community service…',{rows:6,hint:'The text is saved with this CV only. Matching ignores simple word endings (-s, -ed, -ing).'});
+  if(A.kunci.length) h+='<div class="ats-chip">'+A.kunci.map(function(k){ var ok=A.cocok.indexOf(k)>=0; return '<span class="'+(ok?'ok':'no')+'">'+(ok?'✓ ':'+ ')+esc(k)+'</span>' }).join('')+'</div>'+
+    '<div class="hint">Green keywords already appear in your CV. Add the others <b>only where they are true</b> — in your profile, bullets or skills. Never copy the description word for word.</div>';
+  h+='<div class="note" style="margin-top:14px"><b>An honest note:</b> no CV, template or score can guarantee a scholarship — panels also weigh your grades, essays, recommendations and interview. A 90+ score means your CV is clear, complete and easy to match, which removes the most common reasons strong students are filtered out early.</div>';
+  return h;
+}
+/* Sisipkan langkah "ats" sebelum "akhir" pada CV. */
+(function(){
+  var lamaL=tlLangkahDok, lamaLb=tlLabelLangkah, lamaI=tlIsiLangkah, lamaV=viewTulis;
+  tlLangkahDok=function(dok){ var l=lamaL(dok); if(dok&&dok.jenis==='cv'&&l.indexOf('ats')<0){ var i=l.indexOf('akhir'); l.splice(i<0?l.length:i,0,'ats') } return l };
+  tlLabelLangkah=function(dok,k){ if(dok&&dok.jenis==='cv'&&k==='ats') return 'ATS check'; return lamaLb(dok,k) };
+  tlIsiLangkah=function(dok,k){
+    if(dok&&dok.jenis==='cv'&&k==='ats') return atsPanel(dok);
+    var h=lamaI(dok,k);
+    if(dok&&dok.jenis==='cv'&&k==='akhir') h=h.replace("[['sma','High-school applicant (bachelor’s)'],","[['sma','High-school applicant (bachelor’s)'],['beasiswa','Scholarship applicant — awards & leadership first'],");
+    return h;
+  };
+  viewTulis=function(){
+    var h=lamaV.apply(this,arguments);
+    if(S.user&&S.user.role==='siswa'&&!(S.tl&&(S.tl.dok||S.tl.memuat))) h=h.replace('onclick="tlBaruJenis(\'cv\',\'en\')">+ New in English</button>','onclick="tlBaruJenis(\'cv\',\'en\')">+ New in English</button><button class="btn gold sm" onclick="tlBaruCvBeasiswa()" title="Scholarship order, ATS check and keyword matching">+ Scholarship CV (ATS)</button>');
+    return h;
+  };
+  var lamaS=tlSegarkanPratinjau;
+  tlSegarkanPratinjau=function(){
+    lamaS.apply(this,arguments);
+    var t=S.tl; if(!t||!t.dok||t.dok.jenis!=='cv'||t.langkah!=='ats') return;
+    clearTimeout(t._atsJam);
+    t._atsJam=setTimeout(function(){
+      if(!S.tl||S.tl!==t||t.langkah!=='ats') return;
+      var sid=atsSidik(t.dok); if(sid===t._atsSig) return;
+      var ae=document.activeElement, p=ae&&ae.getAttribute&&ae.getAttribute('data-p'), pos=ae&&ae.selectionStart;
+      gambarView();
+      if(p){ var el=document.querySelector('[data-p="'+p+'"]'); if(el){ el.focus(); try{ el.setSelectionRange(pos,pos) }catch(e){} } }
+    },700);
+  };
+})();
+function tlBaruCvBeasiswa(){
+  var dok={id:'',jenis:'cv',bahasa:'en',judul:'Scholarship CV (ATS)',status:'Draft',data:tlDataAwal('cv','en')};
+  dok.data.urutan='beasiswa'; dok.data.ats={deskripsi:''};
+  S.tl={dok:dok,langkah:tlLangkahDok(dok)[0],kotor:true};
+  pindahTulis(); tlSimpan(true);
+}
+function atsSidik(dok){ try{ var A=atsSkor(dok); return A.skor+'|'+A.hasil.map(function(x){return x.n}).join(',')+'|'+A.kunci.join(',')+'|'+A.cocok.length }catch(e){ return '' } }
+
+
+/* =======================================================
+   TARGET KAMPUS → PELACAK OTOMATIS (sisi peramban)
+   Simpan deck mengembalikan daftar target baru bila siswa baru saja
+   memilih kampus yang ada di pelacak (mis. NUS/NTU). Beranda siswa
+   menampilkan kartu pemantauan intensif per kampus.
+   ======================================================= */
+function terimaPelacakDariSimpan(r){
+  if(!r||!r.asean) return;
+  S.asean=r.asean; if(r.pelacakProgram) S.pelacakProgram=r.pelacakProgram;
+  var A=asSt(); A.program=S.pelacakProgram||A.program; A.dimuat=Date.now();
+  var baru=r.pelacakBaru||[], lepas=r.pelacakLepas||[];
+  if(baru.length) toast('Added to '+baru.map(function(x){return x.pelacak+' · '+x.kode}).join(', ')+' — follow it on your Home page.');
+  else if(lepas.length) toast('Removed from '+lepas.map(function(x){return x.pelacak+' · '+x.kode}).join(', ')+' because the university left your deck.');
+  if(S.tab==='beranda'||S.tab==='pelacak') gambarView();
+}
+/* Kartu beranda siswa: satu kartu per kampus, lengkap dengan hitung mundur admisi,
+   lingkar progres, langkah fase, tiga langkah berikutnya, dan catatan mentor. */
+function asKartuSaya(){
+  var ts=asSemuaTarget(); if(!ts.length) return '';
+  var progs=asProgramSemua(), h='';
+  var urut=ts.slice().sort(function(a,b){
+    var pa=progs.filter(function(p){return p.id===(a.pelacak||'ASEAN')})[0], pb=progs.filter(function(p){return p.id===(b.pelacak||'ASEAN')})[0];
+    var ka=pa&&asKampus(a,pa), kb=pb&&asKampus(b,pb);
+    return ((a.status==='Completed')-(b.status==='Completed'))||((ka&&ka.tenggatAdmisi)||'9999').localeCompare((kb&&kb.tenggatAdmisi)||'9999');
+  });
+  var dekat=urut.filter(function(t){ var p=progs.filter(function(x){return x.id===(t.pelacak||'ASEAN')})[0], k=p&&asKampus(t,p); var m=k&&k.tenggatAdmisi?mundur(k.tenggatAdmisi):null; return m&&m.hari>=0&&m.hari<=30&&t.status!=='Completed' }).length;
+  h+='<div class="card tk-wadah"><div class="judul-baris"><div><div class="eyebrow">University targets · followed by your mentor</div><h2>'+(ortu()?'Your child’s university targets':'My university targets')+'</h2>'+
+    '<div class="sub">'+(ortu()?'Each university your child chose is followed step by step.':'Every university you choose in your deck is followed here automatically, step by step, until the admission deadline.')+
+    (dekat?' <b class="tk-awas">'+dekat+' deadline'+(dekat>1?'s':'')+' within 30 days.</b>':'')+'</div></div>'+
+    '<button class="btn ghost sm" onclick="pindah(\'pelacak\')">All steps</button></div><div class="tk-grid">';
+  urut.forEach(function(t){
+    var p=progs.filter(function(x){return x.id===(t.pelacak||'ASEAN')})[0]; if(!p) return;
+    var k=asKampus(t,p); if(!k) return;
+    var m=k.tenggatAdmisi?mundur(k.tenggatAdmisi):null, u=asUrgensi(t), cek=t.checklist||{};
+    var langkah=[]; k.fase.forEach(function(f,fi){ f.langkah.forEach(function(l){ langkah.push({id:l.id,t:l.t,fi:fi}) }) });
+    var berikut=langkah.filter(function(l){return !(cek[l.id]&&cek[l.id].ok)}).slice(0,3);
+    var selesai=langkah.length-langkah.filter(function(l){return !(cek[l.id]&&cek[l.id].ok)}).length;
+    h+='<article class="tk-kartu" '+asGaya(p,t.universitas)+'><div class="tk-atas"><div class="tk-nama"><span class="tk-kode">'+esc(t.universitas)+'</span><div><b>'+esc(k.nama)+'</b><span>'+esc(p.nama)+(t.program?' · '+esc(t.program):'')+'</span></div></div>'+
+      '<div class="tk-cincin" style="--p:'+t.progres+'%"><b>'+t.progres+'%</b></div></div>'+
+      '<div class="tk-dl">'+(m?'<div class="tk-hari '+m.kelas+'"><b>'+(m.hari<0?'Closed':m.hari===0?'Today':m.hari)+'</b><span>'+(m.hari>0?'days to the admission deadline':m.hari===0?'admission deadline':'deadline passed')+'</span></div><div class="tk-tgl">Deadline<br><b>'+esc(tglPanjang(k.tenggatAdmisi))+'</b>'+(k.bukaAdmisi?'<br><span>Opens '+esc(tglPanjang(k.bukaAdmisi))+'</span>':'')+'</div>':
+        '<div class="tk-hari"><b>—</b><span>admission deadline not set yet</span></div>')+'</div>'+
+      '<div class="tk-fase">'+k.fase.map(function(f,fi){
+        var ls=f.langkah, n=ls.filter(function(l){return cek[l.id]&&cek[l.id].ok}).length, st=n===ls.length?'ok':(fi+1===t.faseKe?'kini':'');
+        return '<div class="tk-f '+st+'" title="'+nilaiAttr(f.nama)+'"><i style="width:'+(ls.length?Math.round(n/ls.length*100):0)+'%"></i><span>'+(fi+1)+'</span></div>';
+      }).join('')+'</div>'+
+      '<div class="tk-meta">'+asStatusLencana(t.status)+'<span>Phase '+t.faseKe+' of '+k.fase.length+': '+esc(t.fase)+'</span><span>'+selesai+'/'+langkah.length+' steps</span>'+
+        (t.tenggat?'<span class="as-u u-'+u.k+'">Follow-up: '+esc(u.l)+'</span>':'')+'</div>'+
+      (berikut.length?'<ol class="tk-langkah">'+berikut.map(function(l,i){return '<li class="'+(i===0?'kini':'')+'"><span></span>'+esc(l.t)+'</li>'}).join('')+'</ol>':'<div class="note ok">All steps are done — well done!</div>')+
+      (t.catatan?'<div class="tk-catatan"><b>From your mentor</b>'+esc(t.catatan)+'</div>':'')+
+      (k.tautan?'<a class="tk-link" href="'+esc(k.tautan)+'" target="_blank" rel="noopener">Official admission page →</a>':'')+
+      '</article>';
+  });
+  h+='</div>';
+  /* Kampus lain di deck yang belum punya pelacak: tetap ditampilkan dengan tenggatnya. */
+  function kunciK(v){ return String(v||'').toLowerCase().replace(/\([^)]*\)/g,' ').replace(/[^a-z0-9]+/g,' ').trim() }
+  var adaKode={}; urut.forEach(function(t){ var p=progs.filter(function(x){return x.id===(t.pelacak||'ASEAN')})[0], k=p&&asKampus(t,p); if(k){ adaKode[kunciK(k.nama)]=1; adaKode[String(t.universitas).toLowerCase()]=1 } });
+  var lain=((S.deck&&S.deck.uni)||[]).filter(function(x){ if(!sv(x.kampus)) return false; var s=String(x.kampus).match(/\(([A-Za-z&.]{2,12})\)/);
+    return !adaKode[kunciK(x.kampus)]&&!adaKode[String(x.kampus).trim().toLowerCase()]&&!(s&&adaKode[s[1].toLowerCase()]) });
+  if(lain.length&&S.user.role==='siswa') h+='<div class="tk-lain"><b>Other universities in your deck</b>'+lain.map(function(x){ var m=sv(x.deadline)?mundur(x.deadline):null;
+    return '<span>'+esc(x.kampus)+(x.status?' · '+esc(x.status):'')+(m?' · <i class="dl '+m.kelas+'">'+esc(m.label)+'</i>':'')+'</span>' }).join('')+'</div>';
+  return h+'</div>';
+}
+function asSinkronDeck(){
+  var A=asSt(), bt=q('asSinkB'); if(bt){ bt.disabled=true; bt.textContent='Syncing…' }
+  call('pelacakSinkronDeck',S.token).then(function(r){
+    if(bt){ bt.disabled=false; bt.textContent='Sync with student decks' }
+    if(!r.ok){ if(r.error==='SESI_HABIS'){sesiHabis();return} toast(r.error,true); return }
+    A.program=r.program||A.program; S.pelacakProgram=A.program; A.target=(r.target||[]).map(asHitung); A.dimuat=Date.now();
+    toast(r.tambah.length||r.lepas.length?(r.tambah.length+' student target(s) added'+(r.lepas.length?', '+r.lepas.length+' released':'')+' from student decks.'):'Everything already matches the student decks.');
+    gambarView();
+  }).catch(function(e){ if(bt){ bt.disabled=false; bt.textContent='Sync with student decks' } tangani(e) });
+}
+
 var PDFJS_URL='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
 var PDFJS_WORKER='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 var PDFJS_JANJI=null;
@@ -17513,9 +18613,10 @@ function lihatBerkas(jenis,id,judul){
 (function(){
   try{ latarMulai() }catch(eL){}
   try{ var g=JSON.parse(localStorage.getItem(KUNCI_GALAT)||'[]'); if(Array.isArray(g)) S.galat=g.slice(0,20) }catch(e){}
+  try{ portalMulai() }catch(eP){}
   var t=readK(KEY);
   if(t){S.token=t;mulai()}
-  else{q('boot').classList.add('hidden');q('auth').classList.remove('hidden')}
+  else{q('boot').classList.add('hidden');q('auth').classList.remove('hidden');try{ bangunkanServer() }catch(eB){}}
 })();
 </script>
 </body>
