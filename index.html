@@ -3323,6 +3323,67 @@ html.latar-auth .ld-berita{background:rgba(247,250,244,.96)}
 .ats-lencana.baik{border-color:rgba(94,156,74,.5);color:#3F7A2F}
 .ats-lencana.sedang{border-color:rgba(199,125,26,.5);color:#8A5310;background:rgba(199,125,26,.07)}
 .ats-lencana.lemah{border-color:rgba(180,67,47,.45);color:#A6402C;background:rgba(180,67,47,.06)}
+
+/* karya siswa */
+.kr-angka{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin:14px 0 12px}
+.kr-angka div{padding:10px 12px;border-radius:12px;background:var(--kartu-2,#F4F6F2);border:1px solid var(--line)}
+.kr-angka b{display:block;font-family:var(--mono);font-size:22px}
+.kr-angka b.emas{color:#A9650F}.kr-angka b.merah{color:#A6402C}
+.kr-angka span{font-size:12px;color:var(--tinta-2)}
+.kr-tab{display:flex;flex-wrap:wrap;gap:4px;padding:4px;border-radius:12px;background:var(--kartu-2,#F2F5EE);margin-bottom:10px;width:fit-content;max-width:100%}
+.kr-tab button{border:0;background:transparent;padding:7px 12px;border-radius:9px;font:600 12.5px var(--sans);color:var(--tinta-2);cursor:pointer}
+.kr-tab button.on{background:var(--kartu);color:var(--tinta);box-shadow:0 1px 3px rgba(16,48,42,.1)}
+.kr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(380px,100%),1fr));gap:12px}
+.kr-siswa{margin:0}
+.kr-siswa-h{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.kr-siswa-h span{display:block;font-size:12px;color:var(--tinta-2)}
+.kr-nama{all:unset;cursor:pointer;font-weight:700;font-size:14.5px}
+.kr-nama:hover{color:var(--sea);text-decoration:underline}
+.kr-dok{padding:10px 0;border-top:1px solid var(--line)}
+.kr-dok-a{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.kr-dok-a b{font-size:13.5px;min-width:0;overflow-wrap:anywhere}
+.kr-dok-a .tag.emas{background:rgba(199,125,26,.14);color:#8A5310}
+.kr-dok-b{display:flex;align-items:center;gap:8px;margin-top:6px;font-size:11.5px}
+.kr-dok-b .t{flex:0 0 90px;height:6px;border-radius:6px;background:var(--line);overflow:hidden}
+.kr-dok-b .t i{display:block;height:100%;background:var(--sea)}
+.kr-dok-aksi{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.kr-berkas{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(240px,100%),1fr));gap:10px}
+.kr-belum{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(220px,100%),1fr));gap:8px;margin-top:10px}
+.kr-belum button{all:unset;cursor:pointer;display:flex;gap:10px;align-items:center;padding:8px 10px;border:1px solid var(--line);border-radius:12px}
+.kr-belum button:hover{border-color:var(--sea)}
+.kr-belum b{display:block;font-size:13px}.kr-belum i{font-style:normal;font-size:12px;color:var(--tinta-2)}
+@media (max-width:700px){ .kr-angka{grid-template-columns:repeat(2,minmax(0,1fr))} }
+
+/* bagikan WA */
+.wa-logo{display:inline-grid;place-content:center;width:40px;height:40px;border-radius:50%;border:0;background:#25D366;color:#fff;cursor:pointer;box-shadow:0 4px 12px -4px rgba(37,211,102,.6);transition:transform .12s}
+.wa-logo:hover{transform:scale(1.06)}
+.wa-logo svg{width:22px;height:22px}
+.wa-logo.kecil{width:30px;height:30px;box-shadow:none}
+.wa-logo.kecil svg{width:17px;height:17px}
+.wa-logo-ket{font-size:12.5px;color:#4A635D;align-self:center}
+.ld-baca-aksi{align-items:center}
+.wa-modal .ld-modal-isi{max-width:520px;padding:20px}
+.wa-kepala{display:flex;gap:10px;align-items:center;margin-bottom:12px;padding-right:36px}
+.wa-kepala b{display:block;font-size:16px;color:#001B16}
+.wa-kepala span{font-size:12px;color:#4A635D}
+.wa-bulat{width:38px;height:38px;flex:0 0 38px;border-radius:50%;background:#25D366;color:#fff;display:grid;place-content:center}
+.wa-bulat svg{width:22px;height:22px}
+.wa-layar{padding:14px;border-radius:14px;background:#E5DDD5;background-image:radial-gradient(rgba(0,0,0,.05) 1px,transparent 1px);background-size:10px 10px;max-height:46vh;overflow-y:auto}
+.wa-gelembung-wrap{display:flex;justify-content:flex-end}
+.wa-layar .ld-wa-gelembung{max-width:92%;margin:0;padding:6px 7px 18px 9px;position:relative}
+.wa-gb{display:grid;gap:3px;margin:-2px -4px 6px -6px;border-radius:8px;overflow:hidden}
+.wa-gb.n2,.wa-gb.n3,.wa-gb.n4{grid-template-columns:1fr 1fr}
+.wa-gb img{width:100%;max-height:260px;object-fit:cover;display:block}
+.wa-gb.n2 img,.wa-gb.n3 img,.wa-gb.n4 img{aspect-ratio:1;max-height:none}
+.wa-gb span{display:none}
+.wa-jam{position:absolute;right:8px;bottom:3px;font-style:normal;font-size:10.5px;color:#667781}
+.wa-aksi{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.wa-aksi .ld-btn{font-size:12.5px}
+.wa-aksi .ld-btn[disabled]{opacity:.6;cursor:progress}
+.wa-konfirm{margin-top:14px;padding:12px 14px;border-radius:12px;background:#F2F5EE;border:1px solid #D5DBD1}
+.wa-konfirm b{display:block;color:#001B16}
+.wa-konfirm span{font-size:12.5px;color:#4A635D}
+.wa-modal .hint{margin-top:8px;font-size:11.5px;color:#4A635D}
 </style>
 </head>
 <body>
@@ -3601,7 +3662,7 @@ var KEY='deckptln_token_v1';
    Ganti bila membuat deployment baru.
    ------------------------------------------------------- */
 var LAMBANG='<div class="lambang"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="DECK PTLN"><rect width="100" height="100" rx="24" fill="#EDF0EA"/><rect x="15.5" y="60" width="7.4" height="20" rx="3.2" fill="#10302A" opacity="0.55"/><rect x="27.3" y="52" width="7.4" height="28" rx="3.2" fill="#10302A" opacity="0.64"/><rect x="39.1" y="44" width="7.4" height="36" rx="3.2" fill="#10302A" opacity="0.73"/><rect x="50.900000000000006" y="36" width="7.4" height="44" rx="3.2" fill="#10302A" opacity="0.82"/><rect x="62.7" y="28" width="7.4" height="52" rx="3.2" fill="#10302A" opacity="0.91"/><rect x="74.5" y="18" width="7.4" height="62" rx="3.2" fill="#C77D1A" opacity="1"/></svg></div>';
-var VERSI_UI='2026.11.20-38';
+var VERSI_UI='2026.11.20-39';
 var KUNCI_ALAMAT='deckptln_apiurl_v1';
 
 /* Alamat Web App boleh ditimpa dari dalam aplikasi. Berguna bila di Apps
@@ -4560,7 +4621,7 @@ function ikon(n,kelas){
   return '<svg'+(kelas?' class="'+kelas+'"':'')+' viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" '+
     'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+p+'</svg>';
 }
-var IKON_TAB={dash:'dash',pekan:'bolt',a:'user',b:'file',c:'pena',d:'kampus',e:'medali',f:'pesawat',
+var IKON_TAB={karya:'catatan',dash:'dash',pekan:'bolt',a:'user',b:'file',c:'pena',d:'kampus',e:'medali',f:'pesawat',
   rapor:'buku',psi:'otak',banding:'kolom',konsul:'chat',dokumen:'map',layanan:'tas',kabar:'toa',kalender:'kalender',
   akun:'gerigi',pantau:'dash',rinci:'papan',dasbor:'dash',papan:'papan',detail:'periksa',catatan:'catatan',
   jadwal:'jam',database:'db',tkampus:'target',tbeasiswa:'medali',exec:'grafik',akunkelola:'kunci',reset:'perisai',
@@ -4877,6 +4938,7 @@ function butirNav(){
     b('pelacak','Target trackers',{meta:((S.pelacakProgram||[]).filter(function(p){return p.status!=='Arsip'}).length)||''});
     kel('Day to day');
     b('kalender','Calendar',{badgeHtml:lencanaAgenda()});
+    b('karya','Student work',{badge:(S.reviewMenunggu||[]).length});
     b('dokumen','Documents',{badgeHtml:lencanaDokumen()});
     b('fotosiswa','Student photos');
     b('contoh','Writing templates');
@@ -4903,6 +4965,7 @@ function butirNav(){
     kel('Leadership');
     b('beranda','Home');
     b('dasbor','Dashboard'); b('exec','Overview'); b('papan','All students');
+    b('karya','Student work');
     b('pelacak','Target trackers');
     b('rekapk','Custom recap');
     b('contoh','Writing templates');
@@ -5145,6 +5208,7 @@ function gambarViewInti(){
   if(S.tab==='kabar'){v.innerHTML=bimbing()?viewKirimKabar():viewKabarSiswa();return}
   if(S.tab==='kalender'){v.innerHTML=viewKalender();return}
   if(S.tab==='layanan'){v.innerHTML=viewLayanan();return}
+  if(S.tab==='karya'&&(bimbing()||pimpinan())){v.innerHTML=viewKarya();return}
   if(S.tab==='dokumen'){v.innerHTML=viewDokumen();return}
   if(S.tab==='database'&&!ortu()&&S.user.role!=='siswa'){v.innerHTML=viewDatabase();return}
   if(S.tab==='dasbor'&&!ortu()&&S.user.role!=='siswa'){v.innerHTML=(bimbing()?blokReviewMentor():'')+viewDasbor();return}
@@ -9541,7 +9605,7 @@ function layananBuang(id){
    ======================================================= */
 function viewDokumen(){
   setTimeout(dokMuatMini,40);
-  var guru=bimbing();
+  var guru=bimbing()||pimpinan(), mentorAsli=bimbing();
   var semua=(S.dokumen||[]).slice();
   var kelas={}; semua.forEach(function(d){ if(d.kelas) kelas[d.kelas]=1 });
 
@@ -9563,7 +9627,7 @@ function viewDokumen(){
       ? 'Every requested document, from submitted through to finished. '+r.length+' of '+semua.length+' shown.'
       : 'Everything you have handed in, and where each piece stands.')+
     '</div></div><div class="pick">'+
-    '<button class="btn gold sm" onclick="dokumenBaru()">'+(guru?'Add for a student':'Submit a document')+'</button>'+
+    (pimpinan()?'':'<button class="btn gold sm" onclick="dokumenBaru()">'+(guru?'Add for a student':'Submit a document')+'</button>')+
     (guru?'<button class="btn ghost sm" onclick="unduhDokumenCsv()">CSV</button>':'')+
     '</div></div>';
 
@@ -9605,7 +9669,7 @@ function viewDokumen(){
     isi.sort(function(a,b){
       var ta=a.tenggat||'9999', tb=b.tenggat||'9999';
       return ta.localeCompare(tb)||(b.diperbarui||'').localeCompare(a.diperbarui||'');
-    }).forEach(function(d){ h+=kartuDokumen(d,guru) });
+    }).forEach(function(d){ h+=kartuDokumen(d,mentorAsli) });
     h+='</div></div>';
   });
   return h+'</div></div>';
@@ -9619,7 +9683,7 @@ function kartuDokumen(d,guru){
     (d.berkas?'<button class="kan-mini" onclick="lihatBerkas(\'dokumen\',\''+esc(d.id)+'\','+esc(JSON.stringify(d.judul||'File'))+')" title="Open '+esc(d.berkas.nama)+'">'+
       (d.adaMini?'<img alt="" data-mini-dok="'+esc(d.id)+'"'+(S.miniDok&&S.miniDok[d.id]?' src="'+S.miniDok[d.id]+'"':'')+'>':'')+'<i>'+dokJenisIkon(d.berkas)+'</i></button>'+
       '<div class="kan-berkas">'+esc(d.berkas.nama)+' · '+(d.berkas.kb||0)+' KB</div>':'')+
-    (guru?'<button class="kan-siswa" onclick="bukaSiswa(\''+esc(d.siswaId)+'\')">'+
+    (guru||pimpinan()?'<button class="kan-siswa"'+(guru?' onclick="bukaSiswa(\''+esc(d.siswaId)+'\')"':'')+'>'+
       esc(d.nama||d.siswaId)+'<span class="eyebrow"> · '+esc(d.kelas||'—')+'</span></button>':'')+
     '<div class="kan-meta">'+
     (d.tenggat?'<span class="mono kecil">due '+esc(d.tenggat)+'</span>'+(ls||''):'<span class="eyebrow">no deadline</span>')+
@@ -9636,7 +9700,7 @@ function kartuDokumen(d,guru){
     });
     h+='</select>'+
       '<button class="btn ghost xs" onclick="dokumenCatat(\''+esc(d.id)+'\')">Note</button>';
-  }else{
+  }else if(!pimpinan()){
     h+='<button class="btn ghost xs" onclick="dokumenUbahMilik(\''+esc(d.id)+'\')">'+
        (d.status==='Revisi'?'Resubmit':'Edit')+'</button>';
   }
@@ -18698,7 +18762,7 @@ function ldKartu(x){
     '<div class="ld-kartu-isi"><div class="ld-kartu-meta"><span class="ld-chip k-'+esc(String(x.kategori).toLowerCase())+'">'+esc(x.kategori)+'</span>'+(x.sematkan?'<span class="ld-chip emas">📌 Disematkan</span>':'')+'<span class="ld-mono">'+esc(ldTglPendek(x.tanggal))+'</span></div>'+
     '<h3>'+esc(x.judul)+'</h3>'+(x.isi?'<p>'+esc(String(x.isi).replace(/\s+/g,' ').slice(0,190))+'</p>':'')+'</div>'+
     '<div class="ld-kartu-kaki"><span>'+esc(portalWaktu(x.tanggal))+'</span><span class="ld-aksi">'+
-      '<button type="button" class="ld-wa" title="Salin untuk WhatsApp" onclick="event.stopPropagation();waSalin(\''+esc(x.id)+'\')">'+ldIkonWa()+'Salin WA</button>'+
+
       '<b>Baca →</b></span></div></article>';
 }
 function ldIkonWa(){ return '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3a.5.5 0 0 0 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg>' }
@@ -18806,10 +18870,8 @@ function ldGambarBaca(b){
     sisa.slice(par.length).forEach(function(m){ h+='<figure class="ld-sela"><img alt="" src="'+esc(m.gambar)+'" loading="lazy">'+(m.ket?'<figcaption>'+esc(m.ket)+'</figcaption>':'')+'</figure>' });
   }
   if(b.tautan) h+='<a class="pt-link" href="'+esc(b.tautan)+'" target="_blank" rel="noopener"><span>'+esc(b.tautan.replace(/^https?:\/\//,'').split('/')[0])+'</span><b>Buka tautan →</b></a>';
-  h+='<div class="ld-baca-aksi"><button type="button" class="ld-btn wa" onclick="waSalin(\''+esc(b.id)+'\')">'+ldIkonWa()+'Salin teks WhatsApp</button>'+
-    '<button type="button" class="ld-btn jade" onclick="waKirim(\''+esc(b.id)+'\')">Kirim ke WhatsApp</button>'+
-    (navigator.share?'<button type="button" class="ld-btn garis" onclick="waBagiGambar(\''+esc(b.id)+'\')">Bagikan dengan gambar</button>':'')+'</div>'+
-    '<div class="ld-wa-pratinjau"><div class="ld-mono">PRATINJAU PESAN WHATSAPP</div><div class="ld-wa-gelembung">'+waHtml(waTeks(b))+'</div></div>';
+  /* Bagikan ke WhatsApp hanya untuk pembuat/pengelola berita: logo WA → pratinjau → salin atau kirim. */
+  if(waBoleh()) h+='<div class="ld-baca-aksi"><button type="button" class="wa-logo" onclick="waDialog(\''+esc(b.id)+'\')" title="Share to WhatsApp" aria-label="Share to WhatsApp">'+ldIkonWa()+'</button><span class="wa-logo-ket">Share to WhatsApp</span></div>';
   q('ldBacaIsi').innerHTML=h;
 }
 
@@ -18862,6 +18924,93 @@ function waBagiGambar(id){
   var data={title:b.judul,text:waTeks(b)};
   if(files.length&&navigator.canShare&&navigator.canShare({files:files})) data.files=files;
   navigator.share(data).catch(function(e){ if(e&&e.name!=='AbortError') toast('Sharing was not completed.',true) });
+}
+
+/* =======================================================
+   BAGIKAN KE WHATSAPP (khusus pembuat/pengelola berita)
+   Logo WA → jendela pratinjau pesan (dan gambarnya) → salin teks,
+   kirim beserta gambar, atau buka WhatsApp setelah konfirmasi.
+   ======================================================= */
+function waBoleh(){ return !!(S.user&&S.token&&bimbing()) }
+function waGambarBerita(b){
+  /* Data URL gambar untuk dibagikan: semua panel/gambar artikel, atau gambar berita. */
+  var f=b.format||'berita', med=(PORTAL.media[b.id]||[]).map(function(m){return m.gambar}).filter(Boolean);
+  var sp=ldGb(b);
+  var daftar=med.length?med:(sp?[sp]:[]);
+  return daftar.filter(function(g){return /^data:image\//.test(g)}).slice(0,10);
+}
+function waFile(d,i){
+  var p=d.split(','), bin=atob(p[1]), u=new Uint8Array(bin.length); for(var k=0;k<bin.length;k++) u[k]=bin.charCodeAt(k);
+  var tipe=(p[0].match(/data:([^;]+)/)||[])[1]||'image/jpeg';
+  return new File([u],'ptln-news-'+(i+1)+(/png/.test(tipe)?'.png':'.jpg'),{type:tipe});
+}
+function waDialog(id){
+  if(!waBoleh()) return;
+  var b=ldCariBerita(id); if(!b) return;
+  var lama=q('waModal'); if(lama) lama.remove();
+  var d=document.createElement('div'); d.id='waModal'; d.className='ld-modal wa-modal buka'; d.setAttribute('role','dialog'); d.setAttribute('aria-modal','true');
+  d.innerHTML='<div class="ld-modal-latar" data-tutup></div><div class="ld-modal-isi"><button type="button" class="ld-tutup" data-tutup aria-label="Close">×</button><div id="waIsi"></div></div>';
+  document.body.appendChild(d); document.documentElement.classList.add('ld-kunci');
+  d.addEventListener('click',function(e){ if(e.target.hasAttribute('data-tutup')) waTutup() });
+  var W={id:id,files:null,siap:false,konfirmasi:false};
+  S._wa=W;
+  function gambar(){
+    var b2=ldCariBerita(id)||b, gb=waGambarBerita(b2), teks=waTeks(b2);
+    W.files=gb.map(waFile); W.teks=teks;
+    var bisaFile=!!(navigator.canShare&&W.files.length&&navigator.canShare({files:W.files}));
+    var h='<div class="wa-kepala"><span class="wa-bulat">'+ldIkonWa()+'</span><div><b>Share to WhatsApp</b><span>Only you (the post’s author / manager) see this.</span></div></div>'+
+      '<div class="wa-layar">'+(W.memuat?'<div class="ld-baca-muat"><i></i><span>Preparing the pictures…</span></div>':'')+
+        '<div class="wa-gelembung-wrap"><div class="ld-wa-gelembung">'+(gb.length?'<div class="wa-gb n'+Math.min(gb.length,4)+'">'+gb.slice(0,4).map(function(g,i){return '<img alt="" src="'+esc(g)+'">'+(i===3&&gb.length>4?'<span>+'+(gb.length-4)+'</span>':'')}).join('')+'</div>':'')+waHtml(teks)+'<em class="wa-jam">'+new Date().toTimeString().slice(0,5)+' ✓✓</em></div></div></div>';
+    if(!W.konfirmasi){
+      h+='<div class="wa-aksi">'+
+        (gb.length?'<button type="button" class="ld-btn wa besar" id="waGbB"'+(W.memuat?' disabled':'')+'>'+ldIkonWa()+'Send with '+(gb.length>1?gb.length+' pictures':'picture')+'</button>':'')+
+        '<button type="button" class="ld-btn '+(gb.length?'garis':'wa besar')+'" id="waTeksB">'+(gb.length?'Send text only':ldIkonWa()+'Send to WhatsApp')+'</button>'+
+        '<button type="button" class="ld-btn garis" id="waSalinB">Copy text</button>'+
+        (gb.length?'<button type="button" class="ld-btn garis" id="waGbSalinB">Copy picture</button>':'')+'</div>'+
+        (gb.length&&!bisaFile?'<div class="hint">On this computer, “Send with picture” copies the picture first and opens WhatsApp — paste it there (Ctrl+V). On a phone the picture is attached directly.</div>':'');
+    }else{
+      h+='<div class="wa-konfirm"><b>Open WhatsApp now?</b><span>'+esc(W.konfirmasi==='gb'?'The picture has been copied — paste it into the chat, the text is filled in for you.':'WhatsApp opens with this message ready to send. Choose the chat or group there.')+'</span>'+
+        '<div class="wa-aksi"><button type="button" class="ld-btn wa besar" id="waLanjutB">'+ldIkonWa()+'Continue to WhatsApp</button><button type="button" class="ld-btn garis" id="waBatalB">Cancel</button></div></div>';
+    }
+    q('waIsi').innerHTML=h;
+    var on=function(i,f){ var el=q(i); if(el) el.onclick=f };
+    on('waSalinB',function(){ salinTeks(W.teks).then(function(){ toast('Message copied — paste it in a WhatsApp chat or group.') }).catch(function(e){ toast(e.message,true) }) });
+    on('waTeksB',function(){ W.konfirmasi='teks'; gambar() });
+    on('waBatalB',function(){ W.konfirmasi=false; gambar() });
+    on('waLanjutB',function(){ window.open('https://wa.me/?text='+encodeURIComponent(W.teks),'_blank','noopener'); waTutup() });
+    on('waGbSalinB',function(){ waSalinGambar(W.files[0]).then(function(){ toast('Picture copied — paste it in WhatsApp.') }).catch(function(e){ toast(e.message,true) }) });
+    on('waGbB',function(){
+      if(navigator.canShare&&navigator.canShare({files:W.files})){
+        /* Ponsel / peramban yang mendukung: gambar + teks langsung ke aplikasi WhatsApp. */
+        navigator.share({files:W.files,text:W.teks,title:b.judul}).then(function(){ waTutup() }).catch(function(e){ if(e&&e.name!=='AbortError') toast('Sharing was not completed.',true) });
+        return;
+      }
+      waSalinGambar(W.files[0]).then(function(){ W.konfirmasi='gb'; gambar() }).catch(function(){
+        W.files.forEach(function(f){ unduhBlob(f,f.name) });
+        toast('Pictures downloaded — attach them in WhatsApp.'); W.konfirmasi='gb'; gambar();
+      });
+    });
+  }
+  /* Gambar disiapkan saat jendela dibuka, supaya tombol kirim langsung bekerja (berbagi butuh klik pengguna). */
+  var perlu=((b.format&&b.format!=='berita')||b.nMedia)&&!PORTAL.media[id], perluGb=b.gambar&&!ldGb(b);
+  W.memuat=!!(perlu||perluGb);
+  gambar();
+  var tugas=[];
+  if(perlu) tugas.push(call('beritaMedia',id,S.token||'').then(function(r){ PORTAL.media[id]=(r&&r.ok&&r.media)||[] }).catch(function(){ PORTAL.media[id]=[] }));
+  if(perluGb) tugas.push(call('beritaGambar',S.token,[id]).then(function(r){ if(r&&r.ok&&r.gambar&&r.gambar[id]){ S.brGambar=S.brGambar||{}; S.brGambar[id]=r.gambar[id] } }).catch(function(){}));
+  if(tugas.length) Promise.all(tugas).then(function(){ if(S._wa===W&&q('waIsi')){ W.memuat=false; gambar() } });
+}
+function waTutup(){ var m=q('waModal'); if(m) m.remove(); S._wa=null; if(!document.querySelector('.ld-modal.buka')) document.documentElement.classList.remove('ld-kunci') }
+function waSalinGambar(file){
+  if(!file) return Promise.reject(new Error('No picture.'));
+  if(!(navigator.clipboard&&window.ClipboardItem&&window.isSecureContext)) return Promise.reject(new Error('This browser cannot copy pictures.'));
+  /* Papan klip hanya menerima PNG: gambar diubah dulu. */
+  return new Promise(function(res,rej){
+    var im=new Image(); im.onload=function(){ var c=document.createElement('canvas'); c.width=im.naturalWidth; c.height=im.naturalHeight; c.getContext('2d').drawImage(im,0,0);
+      c.toBlob(function(bl){ if(!bl) return rej(new Error('Picture could not be prepared.')); navigator.clipboard.write([new ClipboardItem({'image/png':bl})]).then(res,rej) },'image/png') };
+    im.onerror=function(){ rej(new Error('Picture could not be read.')) };
+    im.src=URL.createObjectURL(file);
+  });
 }
 /* Tautan WA "#berita=ID" langsung membuka beritanya. */
 function ldBukaDariTautan(){
@@ -18976,8 +19125,7 @@ brKartu=function(b){
     '<div class="brk-bawah"><div class="brk-utama">'+
       '<button type="button" class="btn sea xs" onclick="ldBaca(\''+id+'\')">'+(f==='berita'?'Read':'Open '+F.l.toLowerCase())+'</button>'+
       (b.tautan?'<a class="btn ghost xs" target="_blank" rel="noopener" href="'+esc(b.tautan)+'">Link ↗</a>':'')+
-      '<button type="button" class="btn ghost xs brk-wa" onclick="waSalin(\''+id+'\')" title="Copy as a WhatsApp message">'+ldIkonWa()+'Copy WA</button>'+
-      '<button type="button" class="btn ghost xs brk-wa ikon" onclick="waKirim(\''+id+'\')" title="Send to WhatsApp" aria-label="Send to WhatsApp">'+ldIkonWa()+'Send</button></div>'+
+      (waBoleh()?'<button type="button" class="wa-logo kecil" onclick="waDialog(\''+id+'\')" title="Share to WhatsApp" aria-label="Share to WhatsApp">'+ldIkonWa()+'</button>':'')+'</div>'+
     (bimbing()?'<div class="brk-staf"><button type="button" class="btn ghost xs" onclick="brUbah(\''+id+'\')">Edit</button>'+
       '<button type="button" class="btn ghost xs" onclick="brSemat(\''+id+'\')">'+(b.sematkan?'Unpin':'Pin')+'</button>'+
       '<button type="button" class="btn ghost xs bahaya" onclick="brHapus(\''+id+'\')">Delete</button></div>':'')+
@@ -19023,7 +19171,7 @@ function kartuPortal(){
   else h+='<ul class="pt-daftar">'+d.map(function(b){
     var F=LD_FORMAT[b.format]||LD_FORMAT.berita;
     return '<li><div><b>'+F.i+' '+esc(b.judul)+'</b><span class="muted kecil">'+esc(F.l)+' · '+esc((b.tanggal||'').slice(0,10))+(b.nMedia?' · '+b.nMedia+' picture(s)':'')+(b.sematkan?' · pinned':'')+(b.status!=='Aktif'?' · archived':'')+'</span></div>'+
-      '<span class="pick"><button class="btn ghost xs" onclick="waSalin(\''+esc(b.id)+'\')">Copy WA</button><button class="btn ghost xs" onclick="pindah(\'beranda\');brUbah(\''+esc(b.id)+'\')">Edit</button><button class="btn ghost xs" onclick="brSemat(\''+esc(b.id)+'\')">'+(b.sematkan?'Unpin':'Pin')+'</button>'+
+      '<span class="pick"><button class="wa-logo kecil" onclick="waDialog(\''+esc(b.id)+'\')" title="Share to WhatsApp" aria-label="Share to WhatsApp">'+ldIkonWa()+'</button><button class="btn ghost xs" onclick="pindah(\'beranda\');brUbah(\''+esc(b.id)+'\')">Edit</button><button class="btn ghost xs" onclick="brSemat(\''+esc(b.id)+'\')">'+(b.sematkan?'Unpin':'Pin')+'</button>'+
       '<button class="btn ghost xs bahaya" onclick="brHapus(\''+esc(b.id)+'\')">Delete</button></span></li>';
   }).join('')+'</ul>';
   return h+'</div>';
@@ -19528,6 +19676,102 @@ function asSinkronDeck(){
     gambarView();
   }).catch(function(e){ if(bt){ bt.disabled=false; bt.textContent='Sync with student decks' } tangani(e) });
 }
+
+
+/* =======================================================
+   KARYA SISWA (MENTOR · ADMIN · PIMPINAN)
+   Semua CV, esai, surat motivasi, personal statement, dan study plan
+   seluruh siswa — plus berkas yang mereka unggah — di satu halaman.
+   Bisa dicari, disaring per kelas/jenis/status, dibuka (dengan
+   ringkasan ATS untuk CV), diunduh, dan diberi catatan mentor.
+   ======================================================= */
+function krSt(){ return S.kr=S.kr||{bagian:'tulis',cari:'',kelas:'',jenis:'',status:'',data:null,muat:false} }
+function krMuat(paksa){
+  var K=krSt(); if(K.muat||(K.data&&!paksa&&Date.now()-K.waktu<60000)) return;
+  K.muat=true;
+  call('tulisanSemua',S.token).then(function(r){
+    K.muat=false;
+    if(!r||!r.ok){ if(r&&r.error==='SESI_HABIS'){ sesiHabis(); return } K.galat=(r&&r.error)||'Could not load.'; if(S.tab==='karya') gambarView(); return }
+    K.data=r; K.waktu=Date.now(); K.galat='';
+    if(r.berkas&&!bimbing()) S.dokumen=r.berkas;
+    if(S.tab==='karya') gambarView();
+  }).catch(function(e){ K.muat=false; K.galat=e.message; if(S.tab==='karya') gambarView() });
+}
+function krLabelJenis(j){ return (TL_JENIS[j]||{}).label||({es:'Essay',sp:'Study plan'}[j])||j }
+function viewKarya(){
+  var K=krSt(); krMuat(false);
+  var dok=(K.data&&K.data.dok)||[], siswa=(K.data&&K.data.siswa)||[], berkas=(K.data&&K.data.berkas)||S.dokumen||[];
+  var kelas={}; siswa.forEach(function(x){ if(x.kelas) kelas[x.kelas]=1 }); dok.forEach(function(x){ if(x.kelas) kelas[x.kelas]=1 });
+  var jenis={}; dok.forEach(function(x){ jenis[x.jenis]=1 });
+  var c=K.cari.toLowerCase();
+  function lolos(x){ return (!K.kelas||x.kelas===K.kelas)&&(!c||String(x.nama||'').toLowerCase().indexOf(c)>=0||String(x.judul||'').toLowerCase().indexOf(c)>=0) }
+  var tampilDok=dok.filter(function(x){ return lolos(x)&&(!K.jenis||x.jenis===K.jenis)&&(!K.status||x.status===K.status) });
+  var tampilBerkas=berkas.filter(lolos);
+  var punya={}; dok.forEach(function(x){ punya[x.siswaId]=1 }); berkas.forEach(function(x){ punya[x.siswaId]=1 });
+  var belum=siswa.filter(function(x){ return !punya[x.id]&&lolos(x) });
+  var review=dok.filter(function(x){return x.status==='Ready for review'}).length, cv=dok.filter(function(x){return x.jenis==='cv'}).length;
+  var h='<div class="card kr-kepala"><div class="judul-baris"><div><div class="eyebrow">Student work · every class</div><h2>CV, essays &amp; uploaded files</h2>'+
+    '<div class="sub">Everything students write in the app (CV, personal statement, motivation letter, essay, study plan) and every file they upload — open any of them to read, check the ATS score of a CV, download, or leave a note.</div></div>'+
+    '<button class="btn ghost sm" onclick="krMuat(true);S.kr.data=null;gambarView()">Refresh</button></div>'+
+    '<div class="kr-angka"><div><b>'+dok.length+'</b><span>documents written</span></div><div><b>'+cv+'</b><span>CVs</span></div><div><b class="emas">'+review+'</b><span>ready for review</span></div>'+
+      '<div><b>'+berkas.length+'</b><span>uploaded files</span></div><div><b class="merah">'+siswa.filter(function(x){return !punya[x.id]}).length+'</b><span>students with nothing yet</span></div></div>'+
+    '<div class="kr-tab"><button class="'+(K.bagian==='tulis'?'on':'')+'" onclick="S.kr.bagian=\'tulis\';gambarView()">CV &amp; essays · '+tampilDok.length+'</button>'+
+      '<button class="'+(K.bagian==='berkas'?'on':'')+'" onclick="S.kr.bagian=\'berkas\';gambarView()">Uploaded files · '+tampilBerkas.length+'</button>'+
+      '<button class="'+(K.bagian==='belum'?'on':'')+'" onclick="S.kr.bagian=\'belum\';gambarView()">Nothing yet · '+belum.length+'</button></div>'+
+    '<div class="filters ketat"><input type="search" placeholder="Search student or title" value="'+esc(K.cari)+'" oninput="S.kr.cari=this.value;clearTimeout(S.kr.t);S.kr.t=setTimeout(gambarView,200)">'+
+      '<select onchange="S.kr.kelas=this.value;gambarView()"><option value="">All classes</option>'+Object.keys(kelas).sort().map(function(k){return '<option'+(K.kelas===k?' selected':'')+'>'+esc(k)+'</option>'}).join('')+'</select>'+
+      (K.bagian==='tulis'?'<select onchange="S.kr.jenis=this.value;gambarView()"><option value="">All kinds</option>'+Object.keys(jenis).map(function(j){return '<option value="'+esc(j)+'"'+(K.jenis===j?' selected':'')+'>'+esc(krLabelJenis(j))+'</option>'}).join('')+'</select>'+
+        '<select onchange="S.kr.status=this.value;gambarView()"><option value="">Any status</option>'+['Draft','Ready for review','Final'].map(function(x){return '<option'+(K.status===x?' selected':'')+'>'+x+'</option>'}).join('')+'</select>':'')+
+    '</div></div>';
+  if(K.galat) return h+'<div class="note bad">'+esc(K.galat)+'</div>';
+  if(!K.data) return h+'<div class="card"><div class="empty"><b>Loading student work…</b></div></div>';
+  if(K.bagian==='tulis'){
+    if(!tampilDok.length) return h+'<div class="card"><div class="empty"><b>No documents match</b>Change the filters, or check “Nothing yet”.</div></div>';
+    var grup={}, urut=[];
+    tampilDok.forEach(function(x){ if(!grup[x.siswaId]){ grup[x.siswaId]={nama:x.nama,kelas:x.kelas,id:x.siswaId,dok:[]}; urut.push(x.siswaId) } grup[x.siswaId].dok.push(x) });
+    h+='<div class="kr-grid">'+urut.map(function(sid){ var g=grup[sid];
+      return '<div class="card kr-siswa"><div class="kr-siswa-h">'+avatarHtml(g.nama,g.id,'','kecil')+'<div><button class="kr-nama" onclick="bukaSiswa(\''+esc(g.id)+'\')">'+esc(g.nama)+'</button><span>'+esc(g.kelas||'—')+' · '+g.dok.length+' document(s)</span></div></div>'+
+        g.dok.map(function(x){
+          return '<div class="kr-dok"><div class="kr-dok-a"><span class="tag">'+esc(krLabelJenis(x.jenis))+'</span><b>'+esc(x.judul)+'</b><span class="tag tipis">'+(x.bahasa==='id'?'ID':'EN')+'</span>'+
+            '<span class="tag '+(x.status==='Final'?'done':x.status==='Ready for review'?'emas':'')+'">'+esc(x.status)+'</span></div>'+
+            '<div class="kr-dok-b"><div class="t"><i style="width:'+(x.progres||0)+'%"></i></div><span class="mono">'+(x.progres||0)+'% · '+(x.kata||0)+' words · '+esc(x.diperbarui||'')+'</span></div>'+
+            (x.catatan?'<div class="tl-catatan kecil"><b>'+esc(x.mentor||'Mentor')+'</b> · '+esc(x.catatanTgl||'')+'<div>'+esc(x.catatan)+'</div></div>':'')+
+            '<div class="kr-dok-aksi"><button class="btn sea xs" onclick="tlLihat(\''+esc(x.id)+'\')">'+(x.jenis==='cv'?'Open · ATS check':'Open')+'</button>'+
+            (bimbing()?'<button class="btn ghost xs" onclick="tlCatatanMentor(\''+esc(x.id)+'\')">'+(x.catatan?'Edit note':'Leave a note')+'</button>':'')+'</div></div>';
+        }).join('')+'</div>';
+    }).join('')+'</div>';
+    return h;
+  }
+  if(K.bagian==='berkas'){
+    if(!tampilBerkas.length) return h+'<div class="card"><div class="empty"><b>No uploaded files match</b>Files students hand in appear here and on the Documents board.</div></div>';
+    setTimeout(function(){ try{ dokMuatMini() }catch(e){} },40);
+    return h+'<div class="card"><div class="kr-berkas">'+tampilBerkas.slice().sort(function(a,b){return (b.diperbarui||'').localeCompare(a.diperbarui||'')}).map(function(d){ return kartuDokumen(d,bimbing()) }).join('')+'</div></div>';
+  }
+  if(!belum.length) return h+'<div class="card"><div class="empty"><b>Every student has started</b>Each student has at least one document or file.</div></div>';
+  return h+'<div class="card"><div class="sub">These students have not written a CV or essay in the app and have not uploaded a file yet.</div><div class="kr-belum">'+
+    belum.map(function(x){ return '<button onclick="bukaSiswa(\''+esc(x.id)+'\')">'+avatarHtml(x.nama,x.id,'','kecil')+'<span><b>'+esc(x.nama)+'</b><i>'+esc(x.kelas||'—')+'</i></span></button>' }).join('')+'</div></div>';
+}
+/* Halaman detail siswa: berkas yang diunggah siswa itu ikut tampil. */
+function blokBerkasSiswa(d){
+  var sid=d&&d.siswa&&d.siswa.id, f=(S.dokumen||[]).filter(function(x){return x.siswaId===sid});
+  setTimeout(function(){ try{ dokMuatMini() }catch(e){} },40);
+  return '<div class="card"><div class="judul-baris"><div><h2>Uploaded files</h2><div class="sub">Documents this student handed in (transcripts, certificates, essays, letters).</div></div>'+
+    '<button class="btn ghost sm" onclick="S.dokCari=\''+esc(d.siswa.nama).replace(/'/g,'')+'\';pindah(\'dokumen\')">Documents board</button></div>'+
+    (f.length?'<div class="kr-berkas">'+f.map(function(x){ return kartuDokumen(x,bimbing()) }).join('')+'</div>':'<div class="empty"><b>No files yet</b>Files the student uploads appear here.</div>')+'</div>';
+}
+(function(){
+  var lamaDetail=viewDetail;
+  viewDetail=function(){
+    var h=lamaDetail.apply(this,arguments);
+    if(!S.detail) return h;
+    var tanda='<div class="card"><h2>CV & essays</h2>';
+    var i=h.indexOf(tanda);
+    if(i<0) return h+blokBerkasSiswa(S.detail);
+    /* sisipkan sesudah blok CV & essays */
+    var akhir=h.indexOf('<div class="card"',i+tanda.length);
+    return akhir<0?h+blokBerkasSiswa(S.detail):h.slice(0,akhir)+blokBerkasSiswa(S.detail)+h.slice(akhir);
+  };
+})();
 
 var PDFJS_URL='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
 var PDFJS_WORKER='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
