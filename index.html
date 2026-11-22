@@ -3669,6 +3669,19 @@ html.latar-auth .ld-berita{background:rgba(247,250,244,.96)}
   .adm-jenis{display:flex}
   .adm-jenis button{flex:1;justify-content:center}
 }
+/* ===== v44 · rekap rapi PDF / Word / Excel ===== */
+.as-rekap-m{max-width:640px;width:calc(100vw - 32px)}
+.as-rk-pilih{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+.as-rk-op{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line,#e5e7eb);border-radius:12px;cursor:pointer}
+.as-rk-op.on{border-color:var(--sea,#0e7490);background:rgba(14,116,144,.06)}
+.as-rk-op input{margin-top:3px}
+.as-rk-op span{display:flex;flex-direction:column;gap:2px}
+.as-rk-op i{font-style:normal;font-size:12.5px;color:var(--ink2,#475569)}
+.as-rk-fmt{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 8px}
+.as-rk-fmt .btn{flex:1;min-width:110px;justify-content:center}
+.as-laci-rk{margin-top:10px;padding-top:10px;border-top:1px dashed var(--line,#e5e7eb)}
+.mode-ekspor #view .btn,.mode-ekspor #view .adm-jenis,.mode-ekspor #view .imp-drop,.mode-ekspor #view .filters input[type=search]{display:none!important}
+.mode-ekspor #view .adm-gulir,.mode-ekspor #view .as-gulir{overflow:visible!important;max-height:none!important}
 </style>
 </head>
 <body>
@@ -3947,7 +3960,7 @@ var KEY='deckptln_token_v1';
    Ganti bila membuat deployment baru.
    ------------------------------------------------------- */
 var LAMBANG='<div class="lambang"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="DECK PTLN"><rect width="100" height="100" rx="24" fill="#EDF0EA"/><rect x="15.5" y="60" width="7.4" height="20" rx="3.2" fill="#10302A" opacity="0.55"/><rect x="27.3" y="52" width="7.4" height="28" rx="3.2" fill="#10302A" opacity="0.64"/><rect x="39.1" y="44" width="7.4" height="36" rx="3.2" fill="#10302A" opacity="0.73"/><rect x="50.900000000000006" y="36" width="7.4" height="44" rx="3.2" fill="#10302A" opacity="0.82"/><rect x="62.7" y="28" width="7.4" height="52" rx="3.2" fill="#10302A" opacity="0.91"/><rect x="74.5" y="18" width="7.4" height="62" rx="3.2" fill="#C77D1A" opacity="1"/></svg></div>';
-var VERSI_UI='2026.11.22-43';
+var VERSI_UI='2026.11.22-44';
 var KUNCI_ALAMAT='deckptln_apiurl_v1';
 
 /* Alamat Web App boleh ditimpa dari dalam aplikasi. Berguna bila di Apps
@@ -22298,6 +22311,642 @@ function ipSeret(){
   z.addEventListener('dragleave',function(){ z.classList.remove('seret') });
   z.addEventListener('drop',function(e){ e.preventDefault(); z.classList.remove('seret'); var f=e.dataTransfer&&e.dataTransfer.files&&e.dataTransfer.files[0]; if(f) ipPilih(f) });
 }
+
+/* =======================================================
+   LAPORAN RAPI: PDF · WORD · EXCEL DARI SATU SUSUNAN
+   Satu "spec" laporan (judul, paragraf, tabel) dicetak ke tiga format
+   dengan isi yang sama. PDF digambar sebagai vektor: baris tabel tidak
+   pernah terpotong di batas halaman, judul kolom diulang di setiap
+   halaman, judul bagian tidak tertinggal sendirian di kaki halaman.
+   ======================================================= */
+function lapNama(s){ return String(s||'laporan').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,70)||'laporan' }
+function lapSekolah(){ return ((S.sekolah||'')+'').split(' · ')[0]||'SMAIT Al-Ittihad Pekanbaru' }
+function lapUnduh(spec,fmt){
+  var kerja=fmt==='pdf'?lapPdf(spec):fmt==='docx'?lapDocx(spec):lapXlsx(spec);
+  toast('Preparing the '+({pdf:'PDF',docx:'Word file',xlsx:'Excel file'}[fmt])+'…');
+  return kerja.then(function(){ toast('Downloaded.') }).catch(function(e){ try{ console.warn('[laporan]',e) }catch(x){} toast((e&&e.message)||'The file could not be created.',true) });
+}
+
+/* ---------- PDF (jsPDF, vektor) ---------- */
+var LAP_WARNA={tua:[16,48,42],emas:[199,125,26],teks:[20,35,29],redup:[85,112,106],garis:[205,214,206],belang:[246,248,245],
+  hijau:[21,128,61],merah:[185,28,28],kuning:[161,98,7],biru:[14,116,144]};
+function lapPdf(spec){
+  return muatLib('jspdf',function(){return !!(window.jspdf&&window.jspdf.jsPDF)}).then(function(){
+    var doc=new window.jspdf.jsPDF({unit:'pt',format:'a4',orientation:spec.lanskap?'landscape':'portrait',compress:true});
+    var W=doc.internal.pageSize.getWidth(), H=doc.internal.pageSize.getHeight(), M=34, atas=M+12, bawah=H-40, lebar=W-2*M, y=atas;
+    var C=LAP_WARNA;
+    function warna(a){ doc.setTextColor(a[0],a[1],a[2]) }
+    function T(s,x,yy,o){ doc.text(pdfAman(s),x,yy,o||{}) }
+    function baru(){ doc.addPage(); y=atas }
+    function muat(h){ if(y+h>bawah){ baru(); return true } return false }
+    function teks(isi,o){
+      o=o||{}; var sz=o.sz||9.5, lh=sz*1.32;
+      doc.setFont('helvetica',o.b?'bold':o.i?'italic':'normal'); doc.setFontSize(sz); warna(o.warna||C.teks);
+      var baris=doc.splitTextToSize(pdfAman(isi),o.lebar||lebar);
+      baris.forEach(function(b){ muat(lh); doc.text(b,(o.x||M)+(o.tengah?(o.lebar||lebar)/2:0),y+sz,o.tengah?{align:'center'}:{}); y+=lh });
+    }
+    /* Kop halaman pertama */
+    doc.setFont('helvetica','bold'); doc.setFontSize(9); warna(C.redup); T(spec.sekolah||lapSekolah(),W/2,y+6,{align:'center'});
+    doc.setFontSize(15); warna(C.tua);
+    var jb=doc.splitTextToSize(pdfAman(spec.judul||'Report'),lebar-40); jb.forEach(function(b,i){ doc.text(b,W/2,y+26+i*18,{align:'center'}) }); y+=26+(jb.length-1)*18;
+    if(spec.sub){ doc.setFont('helvetica','normal'); doc.setFontSize(9); warna(C.redup); doc.splitTextToSize(pdfAman(spec.sub),lebar-40).forEach(function(b){ y+=13; doc.text(b,W/2,y,{align:'center'}) }) }
+    y+=12; doc.setDrawColor(C.tua[0],C.tua[1],C.tua[2]); doc.setLineWidth(0.9); doc.line(M,y,W-M,y); y+=12;
+
+    function lebarKolom(t,sz){
+      var n=t.kepala.length, pad=4;
+      if(t.bobot){ var tot=t.bobot.reduce(function(a,b){return a+b},0); return t.bobot.map(function(b){return b/tot*lebar}) }
+      doc.setFontSize(sz);
+      var minK=[], ingin=[];
+      for(var i=0;i<n;i++){ minK.push(18); ingin.push(24) }
+      [t.kepala].concat(t.baris.slice(0,400)).forEach(function(r,ri){
+        doc.setFont('helvetica',ri===0?'bold':'normal');
+        for(var i=0;i<n;i++){
+          var s=pdfAman(r[i]==null?'':r[i]), kata=s.split(/\s+/).reduce(function(a,w){return Math.max(a,doc.getTextWidth(w))},0);
+          minK[i]=Math.max(minK[i],Math.min(kata,ri===0?70:110)+2*pad+1);
+          ingin[i]=Math.max(ingin[i],Math.min(doc.getTextWidth(s),ri===0?110:240)+2*pad+1);
+        }
+      });
+      var tMin=minK.reduce(function(a,b){return a+b},0), tIng=ingin.reduce(function(a,b){return a+b},0);
+      if(tMin>=lebar) return minK.map(function(w){return w/tMin*lebar});
+      if(tIng<=lebar) return ingin.map(function(w){return w/tIng*lebar});
+      var sisa=lebar-tMin, tambah=tIng-tMin;
+      return minK.map(function(w,i){return w+(ingin[i]-w)/tambah*sisa});
+    }
+    function tabel(t){
+      if(!t.baris.length){ teks(t.kosong||'No data.',{sz:8.5,warna:C.redup,i:true}); y+=6; return }
+      var sz=t.sz||(t.kepala.length>11?6.8:t.kepala.length>8?7.4:t.kepala.length>5?8:8.6), lh=sz*1.25, pad=4;
+      var lk=lebarKolom(t,sz);
+      /* Huruf diperkecil bila kata terpanjang tetap tidak muat di kolomnya. */
+      function pecah(r,bold){ doc.setFont('helvetica',bold?'bold':'normal'); doc.setFontSize(sz); return r.map(function(v,i){ return doc.splitTextToSize(pdfAman(v==null?'':v),Math.max(8,lk[i]-2*pad)) }) }
+      var kepSel=pecah(t.kepala,true), kepT=Math.max.apply(null,kepSel.map(function(x){return x.length}))*lh+2*pad;
+      function gambarKepala(lanjut){
+        doc.setFillColor(C.tua[0],C.tua[1],C.tua[2]); doc.rect(M,y,lebar,kepT,'F');
+        doc.setFont('helvetica','bold'); doc.setFontSize(sz); doc.setTextColor(255,255,255);
+        var x=M; kepSel.forEach(function(s,i){ doc.text(s,x+pad,y+pad+sz*0.95); x+=lk[i] });
+        if(lanjut&&t.judul){ doc.setFont('helvetica','italic'); doc.setFontSize(6.5); doc.setTextColor(C.redup[0],C.redup[1],C.redup[2]); doc.text(pdfAman(t.judul+' (continued)'),W-M,y-3,{align:'right'}) }
+        y+=kepT;
+      }
+      var sisaMin=kepT+lh*2+2*pad;
+      if(y+sisaMin>bawah) baru();
+      gambarKepala(false);
+      var belang=false;
+      t.baris.forEach(function(r,ri){
+        var grup=r.length===1&&t.kepala.length>1;
+        var sel=grup?[doc.splitTextToSize(pdfAman(r[0]),lebar-2*pad)]:pecah(r,false);
+        var nBaris=Math.max.apply(null,sel.map(function(x){return x.length})), tinggi=nBaris*lh+2*pad;
+        var mulai=0;
+        while(mulai<nBaris){
+          var muatBaris=Math.floor((bawah-y-2*pad)/lh);
+          if(muatBaris<Math.min(nBaris-mulai,2)&&!(y===atas+kepT)){ baru(); gambarKepala(true); continue }
+          if(muatBaris<1){ baru(); gambarKepala(true); continue }
+          var ambil=Math.min(nBaris-mulai,muatBaris);
+          /* Baris yang muat utuh di halaman berikutnya tidak dipecah. */
+          if(ambil<nBaris-mulai&&mulai===0&&tinggi<=bawah-atas-kepT-4){ baru(); gambarKepala(true); continue }
+          var th=ambil*lh+2*pad;
+          if(grup){ doc.setFillColor(232,239,234); doc.rect(M,y,lebar,th,'F') }
+          else if(belang){ doc.setFillColor(C.belang[0],C.belang[1],C.belang[2]); doc.rect(M,y,lebar,th,'F') }
+          var x=M;
+          sel.forEach(function(s,i){
+            var bag=s.slice(mulai,mulai+ambil); if(!bag.length){ x+=lk[i]; return }
+            var st=t.warnaKol!==undefined&&i===t.warnaKol?lapWarnaStatus(r[i]):null;
+            doc.setFont('helvetica',grup||(t.tebalKol===i)?'bold':'normal'); doc.setFontSize(sz);
+            warna(st||(grup?C.tua:C.teks));
+            var kanan=t.rata&&t.rata[i]==='r';
+            doc.text(bag,kanan?x+lk[i]-pad:x+pad,y+pad+sz*0.95,kanan?{align:'right'}:{});
+            x+=grup?lebar:lk[i];
+          });
+          doc.setDrawColor(C.garis[0],C.garis[1],C.garis[2]); doc.setLineWidth(0.4); doc.line(M,y+th,W-M,y+th);
+          y+=th; mulai+=ambil;
+          if(mulai<nBaris){ baru(); gambarKepala(true) }
+        }
+        if(!grup) belang=!belang; else belang=false;
+      });
+      y+=10;
+    }
+    function kv(b){
+      var pas=b.baris, kol=b.kolom||2, lk=lebar/kol, sz=8.8, lh=sz*1.3;
+      for(var i=0;i<pas.length;i+=kol/2*1){
+        var potong=pas.slice(i,i+kol/2), tinggi=0, bag=[];
+        potong.forEach(function(p,j){
+          doc.setFont('helvetica','bold'); doc.setFontSize(sz); var k=doc.splitTextToSize(pdfAman(p[0]),lk*0.42-6);
+          doc.setFont('helvetica','normal'); var v=doc.splitTextToSize(pdfAman(p[1]==null||p[1]===''?'—':p[1]),lk*1.58-10);
+          bag.push([k,v]); tinggi=Math.max(tinggi,Math.max(k.length,v.length)*lh+6);
+        });
+        muat(tinggi);
+        bag.forEach(function(p,j){
+          var x=M+j*lk*2;
+          doc.setFont('helvetica','bold'); doc.setFontSize(sz); warna(C.redup); doc.text(p[0],x,y+sz+2);
+          doc.setFont('helvetica','normal'); warna(C.teks); doc.text(p[1],x+lk*0.42,y+sz+2);
+        });
+        doc.setDrawColor(235,239,235); doc.setLineWidth(0.3); doc.line(M,y+tinggi,W-M,y+tinggi);
+        y+=tinggi;
+      }
+      y+=8;
+    }
+    function kpi(b){
+      var n=b.item.length, per=Math.min(6,n), lk=(lebar-(per-1)*6)/per, t=40;
+      for(var i=0;i<n;i+=per){
+        muat(t+6);
+        b.item.slice(i,i+per).forEach(function(it,j){
+          var x=M+j*(lk+6);
+          doc.setDrawColor(C.garis[0],C.garis[1],C.garis[2]); doc.setFillColor(250,251,249); doc.roundedRect(x,y,lk,t,4,4,'FD');
+          doc.setFont('helvetica','bold'); doc.setFontSize(14); warna(it[2]?LAP_WARNA[it[2]]||C.tua:C.tua); doc.text(pdfAman(String(it[1])),x+7,y+18);
+          doc.setFont('helvetica','normal'); doc.setFontSize(7); warna(C.redup); doc.text(doc.splitTextToSize(pdfAman(it[0]),lk-12).slice(0,2),x+7,y+29);
+        });
+        y+=t+8;
+      }
+    }
+    (spec.blok||[]).forEach(function(b,bi){
+      var berikut=(spec.blok||[])[bi+1];
+      if(b.t==='putus'){ if(y>atas+4) baru(); return }
+      if(b.t==='h1'||b.t==='h2'||b.t==='h3'){
+        var sz=b.t==='h1'?13:b.t==='h2'?11.5:10, ruang=sz*1.4+(berikut&&berikut.t==='tabel'?60:berikut?30:0);
+        if(y+ruang>bawah) baru();
+        if(b.t!=='h3'&&y>atas+2) y+=4;
+        if(b.t==='h1'){ doc.setFillColor(C.tua[0],C.tua[1],C.tua[2]); doc.rect(M,y,lebar,sz*1.7,'F'); doc.setFont('helvetica','bold'); doc.setFontSize(sz); doc.setTextColor(255,255,255);
+          doc.text(doc.splitTextToSize(pdfAman(b.teks),lebar-12)[0],M+6,y+sz*1.2); y+=sz*1.7+6; return }
+        teks(b.teks,{sz:sz,b:true,warna:b.t==='h2'?C.tua:C.teks});
+        if(b.t==='h2'){ doc.setDrawColor(C.emas[0],C.emas[1],C.emas[2]); doc.setLineWidth(1.1); doc.line(M,y+1,M+46,y+1); y+=6 } else y+=2;
+        return;
+      }
+      if(b.t==='p'){ teks(b.teks,{sz:b.kecil?8:9.2,warna:b.kecil?C.redup:C.teks,i:!!b.miring}); y+=4; return }
+      if(b.t==='kv'){ kv(b); return }
+      if(b.t==='kpi'){ kpi(b); return }
+      if(b.t==='tabel'){ tabel(b); return }
+    });
+    var n=doc.getNumberOfPages();
+    for(var p=1;p<=n;p++){
+      doc.setPage(p); doc.setFont('helvetica','normal'); doc.setFontSize(7.4); warna([124,145,139]);
+      T('DECK PTLN · '+(spec.kaki||spec.judul||''),M,H-14); T('Page '+p+' of '+n,W-M,H-14,{align:'right'});
+      if(p>1){ doc.setFontSize(7.4); T(spec.judul||'',W-M,atas-14,{align:'right'}) }
+    }
+    pdfHiasi(doc);
+    doc.save(lapNama(spec.nama||spec.judul)+'.pdf');
+  });
+}
+function lapWarnaStatus(v){
+  var t=String(v||'').toLowerCase();
+  if(/overdue|late|terlambat|not for me/.test(t)) return LAP_WARNA.merah;
+  if(/^done|completed|ready|joined|submitted|yes$|^ok/.test(t)) return LAP_WARNA.hijau;
+  if(/due today|due tomorrow|due in [1-7] day|soon|waiting|in progress/.test(t)) return LAP_WARNA.kuning;
+  return null;
+}
+
+/* ---------- Word ---------- */
+function lapHtml(spec){
+  var h='<p class="s"><b>'+esc(spec.sekolah||lapSekolah())+'</b></p><h1 class="s">'+esc(spec.judul||'Report')+'</h1>'+(spec.sub?'<p class="s m">'+esc(spec.sub)+'</p>':'');
+  (spec.blok||[]).forEach(function(b){
+    if(b.t==='putus') h+='<br style="page-break-before:always">';
+    else if(b.t==='h1'||b.t==='h2') h+='<h2>'+esc(b.teks)+'</h2>';
+    else if(b.t==='h3') h+='<h3>'+esc(b.teks)+'</h3>';
+    else if(b.t==='p') h+='<p'+(b.kecil?' class="m"':'')+'>'+esc(b.teks)+'</p>';
+    else if(b.t==='kv'){
+      var per=(b.kolom||2)/2; h+='<table class="kv">';
+      for(var i=0;i<b.baris.length;i+=per){ h+='<tr>'+b.baris.slice(i,i+per).map(function(p){return '<td class="g">'+esc(p[0])+'</td><td>'+esc(p[1]==null||p[1]===''?'—':p[1])+'</td>'}).join('')+'</tr>' }
+      h+='</table>';
+    }
+    else if(b.t==='kpi') h+='<table><thead><tr>'+b.item.map(function(x){return '<th>'+esc(x[0])+'</th>'}).join('')+'</tr></thead><tbody><tr>'+b.item.map(function(x){return '<td><b>'+esc(x[1])+'</b></td>'}).join('')+'</tr></tbody></table>';
+    else if(b.t==='tabel'){
+      if(!b.baris.length){ h+='<p class="m">'+esc(b.kosong||'No data.')+'</p>'; return }
+      h+='<table><thead><tr>'+b.kepala.map(function(x){return '<th>'+esc(x)+'</th>'}).join('')+'</tr></thead><tbody>'+
+        b.baris.map(function(r){ if(r.length===1&&b.kepala.length>1) return '<tr><td class="g" colspan="'+b.kepala.length+'">'+esc(r[0])+'</td></tr>';
+          return '<tr>'+r.map(function(v,i){ var kanan=b.rata&&b.rata[i]==='r'; var st=b.warnaKol===i&&lapWarnaStatus(v);
+            return '<td'+(kanan?' class="n"':'')+'>'+(st||b.tebalKol===i?'<b>'+esc(v)+'</b>':esc(v==null?'':v))+'</td>' }).join('')+'</tr>' }).join('')+'</tbody></table>';
+    }
+  });
+  return h;
+}
+function lapDocx(spec){
+  return htmlKeDocx(lapHtml(spec),{lanskap:!!spec.lanskap,judul:spec.judul,kaki:'DECK PTLN · '+(spec.kaki||spec.judul||''),margin:spec.lanskap?800:900})
+    .then(function(bl){ unduhBlob(bl,lapNama(spec.nama||spec.judul)+'.docx') });
+}
+
+/* ---------- Excel ---------- */
+function lapXlsx(spec){
+  return muatLib('xlsx',function(){return !!window.XLSX}).then(function(){
+    var wb=XLSX.utils.book_new(), dipakai={};
+    function nm(n){ n=String(n||'Sheet').replace(/[\\\/\?\*\[\]:]/g,' ').trim().slice(0,28)||'Sheet'; var a=n,i=2; while(dipakai[a.toLowerCase()]){ a=n.slice(0,25)+' '+(i++) } dipakai[a.toLowerCase()]=1; return a }
+    function angka(v){ if(typeof v==='number') return v; var s=String(v==null?'':v).trim(); if(/^-?\d+(\.\d+)?$/.test(s)&&s.length<15&&!/^0\d/.test(s)) return Number(s); var m=s.match(/^(-?\d+(\.\d+)?)%$/); if(m) return {v:Number(m[1])/100,z:'0%'}; return v==null?'':v }
+    function lembar(nama,judul,info,t){
+      var aoa=[[spec.sekolah||lapSekolah()],[judul]]; (info||[]).forEach(function(x){ aoa.push(x) }); aoa.push([]);
+      var awal=aoa.length;
+      aoa.push(t.kepala.slice());
+      t.baris.forEach(function(r){ aoa.push(r.map(function(v){ var a=angka(v); return a&&typeof a==='object'?a.v:a })) });
+      var ws=XLSX.utils.aoa_to_sheet(aoa);
+      t.baris.forEach(function(r,ri){ r.forEach(function(v,ci){ var a=angka(v); if(a&&typeof a==='object'){ var c=ws[XLSX.utils.encode_cell({r:awal+1+ri,c:ci})]; if(c){ c.t='n'; c.z=a.z } } }) });
+      var merges=[]; for(var m=0;m<awal-1;m++) merges.push({s:{r:m,c:0},e:{r:m,c:Math.max(t.kepala.length-1,0)}});
+      t.baris.forEach(function(r,ri){ if(r.length===1&&t.kepala.length>1) merges.push({s:{r:awal+1+ri,c:0},e:{r:awal+1+ri,c:t.kepala.length-1}}) });
+      ws['!merges']=merges;
+      ws['!autofilter']={ref:XLSX.utils.encode_range({s:{r:awal,c:0},e:{r:awal+t.baris.length,c:t.kepala.length-1}})};
+      XLSX.utils.book_append_sheet(wb,ws,nm(nama));
+    }
+    /* Lembar ringkas: judul, paragraf, angka utama, dan pasangan keterangan. */
+    var ring=[[spec.sekolah||lapSekolah()],[spec.judul||'Report']]; if(spec.sub) ring.push([spec.sub]); ring.push([]);
+    var adaRing=false, tabelLepas=[], judulAkhir='';
+    (spec.blok||[]).filter(function(b){return !b.pdfSaja}).forEach(function(b){
+      if(b.t==='h1'||b.t==='h2'||b.t==='h3'){ judulAkhir=b.teks; if(!b.lembarSaja){ ring.push([b.teks]); adaRing=true } }
+      else if(b.t==='p'){ ring.push([b.teks]); adaRing=true }
+      else if(b.t==='kv'){ b.baris.forEach(function(p){ ring.push([p[0],p[1]==null?'':p[1]]) }); ring.push([]); adaRing=true }
+      else if(b.t==='kpi'){ b.item.forEach(function(x){ ring.push([x[0],angka(x[1])&&typeof angka(x[1])==='object'?x[1]:angka(x[1])]) }); ring.push([]); adaRing=true }
+      else if(b.t==='tabel'&&b.baris.length) tabelLepas.push({t:b,judul:b.judul||judulAkhir});
+    });
+    if(adaRing){ var w0=XLSX.utils.aoa_to_sheet(ring); w0['!cols']=[{wch:34},{wch:70}]; XLSX.utils.book_append_sheet(wb,w0,nm('Summary')) }
+    tabelLepas.forEach(function(x){ lembar(x.t.lembar||x.judul||'Table',x.judul||spec.judul,x.t.info,x.t) });
+    if(!wb.SheetNames.length) throw new Error('There is nothing to put in a spreadsheet.');
+    XLSX.writeFile(wb,lapNama(spec.nama||spec.judul)+'.xlsx');
+  });
+}
+
+/* =======================================================
+   REKAP TARGET TRACKER: keseluruhan & detail per siswa
+   ======================================================= */
+function asRekapBuka(){
+  var prog=asProg(); if(!prog){ toast('Choose a tracker first.',true); return }
+  var R=S.asRekap=S.asRekap||{jenis:S.user.role==='siswa'||ortu()?'siswa':'ringkas',siswa:''};
+  if(S.user.role==='siswa'||ortu()) R.jenis='siswa';
+  var lama=q('asRekapM'); if(lama) lama.remove();
+  var v=document.createElement('div'); v.className='veil'; v.id='asRekapM';
+  v.innerHTML='<div class="modal as-rekap-m" role="dialog" aria-modal="true"><div class="hd"><b>Download recap · '+esc(prog.nama)+'</b><button class="btn ghost xs" onclick="q(\'asRekapM\').remove()">Close</button></div><div class="bd" id="asRekapIsi"></div></div>';
+  document.body.appendChild(v);
+  v.addEventListener('click',function(e){ if(e.target===v) v.remove() });
+  asRekapGambar();
+}
+function asRekapGambar(){
+  var el=q('asRekapIsi'); if(!el) return;
+  var R=S.asRekap, staf=bimbing()||pimpinan(), siswa=asRekapSiswa();
+  var h='';
+  if(staf){
+    h+='<div class="as-rk-pilih">'+[['ringkas','Overall recap','Totals, every university, the preparation list item by item, and one line per student with progress, overdue items and the next deadline.'],
+      ['siswa','Detail per student','Each student on their own pages: profile, universities, every preparation item with its due date and status, and every application step.'],
+      ['semua','Both','The overall recap followed by the detail of every student.']].map(function(o){
+      return '<label class="as-rk-op'+(R.jenis===o[0]?' on':'')+'"><input type="radio" name="asRkJ"'+(R.jenis===o[0]?' checked':'')+' onchange="S.asRekap.jenis=\''+o[0]+'\';asRekapGambar()"><span><b>'+o[1]+'</b><i>'+o[2]+'</i></span></label>' }).join('')+'</div>';
+    if(R.jenis!=='ringkas') h+='<label class="bidang"><span>Students</span><select onchange="S.asRekap.siswa=this.value"><option value="">All '+siswa.length+' students in the current view</option>'+
+      siswa.map(function(s){return '<option value="'+esc(s.id)+'"'+(R.siswa===s.id?' selected':'')+'>'+esc(s.nama)+(s.kelas?' · '+esc(s.kelas):'')+'</option>'}).join('')+'</select></label>';
+    var f=asSt().f||{}; h+='<div class="muted kecil">Uses the filters on the page'+(f.kelas?' (class '+esc(f.kelas)+')':'')+(f.uni&&f.uni!=='all'?' (university '+esc(f.uni)+')':'')+'.</div>';
+  }else h+='<p class="sub">Your preparation list, deadlines and every application step in this tracker.</p>';
+  h+='<div class="as-rk-fmt"><button class="btn sea" onclick="asRekapUnduh(\'pdf\')">'+ikon('unduh')+'PDF</button><button class="btn ghost" onclick="asRekapUnduh(\'docx\')">'+ikon('unduh')+'Word</button><button class="btn ghost" onclick="asRekapUnduh(\'xlsx\')">'+ikon('unduh')+'Excel</button></div>'+
+    '<div class="muted kecil">Tables never break across pages: a row that does not fit moves whole to the next page and the column headings repeat.</div>';
+  el.innerHTML=h;
+}
+function asRekapSiswa(){
+  var per={}, out=[];
+  asTersaring().forEach(function(t){ if(!per[t.siswaId]){ per[t.siswaId]={id:t.siswaId,nama:t.nama,kelas:t.kelas||''}; out.push(per[t.siswaId]) } });
+  return out.sort(function(a,b){ return (a.kelas+a.nama).localeCompare(b.kelas+b.nama) });
+}
+function asRekapUnduh(fmt){
+  var R=S.asRekap||{jenis:'ringkas'}, spec=asRekapSpec(R.jenis,R.siswa);
+  lapUnduh(spec,fmt);
+}
+function asStatusButir(t,x){
+  var ok=asButirOkStaf(t,x), due=asTenggatButir(t,x), c=(t.checklist||{})['pr:'+x.id]||{};
+  if(ok) return {teks:'Done',tgl:c.tgl||'',oleh:c.oleh||'',due:due,ok:true};
+  if(!due) return {teks:'Pending',due:'',ok:false};
+  var m=mundur(due);
+  if(!m) return {teks:'Pending',due:due,ok:false};
+  return {teks:m.hari<0?'Overdue '+Math.abs(m.hari)+' day'+(m.hari===-1?'':'s'):m.hari===0?'Due today':m.hari===1?'Due tomorrow':'Due in '+m.hari+' days',due:due,ok:false,lewat:m.hari<0,hari:m.hari};
+}
+function asButirOkStaf(t,x){
+  if(S.user.role==='siswa'&&typeof asButirOk==='function') return asButirOk(t,x);
+  var k=(t.checklist||{})['pr:'+x.id]; return !!(k&&k.ok);
+}
+function asTglL(t){ return t?tglPanjang(t):'' }
+function asRekapSpec(jenis,sid){
+  var prog=asProg(), A=asSt(), f=A.f||{}, semua=asTersaring(), ps=asPersyaratan(prog);
+  var siswaMode=S.user.role==='siswa'||ortu();
+  if(siswaMode) jenis='siswa';
+  var cakupan=[f.kelas?'Class '+f.kelas:'',f.uni&&f.uni!=='all'?'University '+f.uni:''].filter(Boolean).join(' · ');
+  var spec={judul:prog.nama+(jenis==='siswa'?' — student detail':jenis==='semua'?' — full recap':' — overall recap'),
+    sub:(cakupan?cakupan+' · ':'')+'Generated '+tglPanjang(hariIniStr())+(S.user?' by '+S.user.nama:''),
+    lanskap:true,blok:[],kaki:prog.nama,nama:prog.nama+'-'+(jenis==='siswa'?'student-detail':jenis==='semua'?'full-recap':'recap')+'-'+hariIniStr()};
+  var per={}, urut=[];
+  semua.forEach(function(t){ if(!per[t.siswaId]){ per[t.siswaId]={id:t.siswaId,nama:t.nama,kelas:t.kelas||'',t:[]}; urut.push(t.siswaId) } per[t.siswaId].t.push(t) });
+  urut.sort(function(a,b){ return (per[a].kelas+per[a].nama).localeCompare(per[b].kelas+per[b].nama) });
+  function ringkasSiswa(s){
+    var t0=s.t[0], st=ps.map(function(x){return asStatusButir(t0,x)});
+    var done=st.filter(function(x){return x.ok}).length, lewat=st.filter(function(x){return x.lewat}).length;
+    var depan=ps.map(function(x,i){return {x:x,s:st[i]}}).filter(function(y){return !y.s.ok&&y.s.due&&!y.s.lewat}).sort(function(a,b){return a.s.due<b.s.due?-1:1})[0];
+    var prog2=Math.round(s.t.reduce(function(a,t){return a+(t.progres||0)},0)/s.t.length);
+    return {done:done,lewat:lewat,depan:depan,progres:prog2,st:st};
+  }
+  if(jenis!=='siswa'){
+    var nT=semua.length, rata=nT?Math.round(semua.reduce(function(a,t){return a+(t.progres||0)},0)/nT):0;
+    var data=urut.map(function(id){ return {s:per[id],r:ringkasSiswa(per[id])} });
+    var totLewat=data.reduce(function(a,d){return a+d.r.lewat},0);
+    spec.blok.push({t:'kpi',item:[['Students',urut.length],['Targets (student × university)',nT],['Average step progress',rata+'%'],
+      ['Preparation items',ps.length],['Students with overdue items',data.filter(function(d){return d.r.lewat}).length,totLewat?'merah':''],['Completed targets',semua.filter(function(t){return t.status==='Completed'}).length,'hijau']]});
+    var kp=(A.keputusan||{})[prog.id];
+    if(kp&&prog.def.terbuka) spec.blok.push({t:'kv',kolom:4,baris:[['Joined',kp.ikut.length+' student(s)'],['Not for me',kp.tolak.length+' student(s)'],['Not decided yet',kp.belum.length+' student(s)'],['Tracker type',(AS_JENIS.filter(function(j){return j[0]===prog.def.jenis})[0]||['','Not set'])[1]]]});
+    /* Universitas */
+    spec.blok.push({t:'h2',teks:'Universities'});
+    spec.blok.push({t:'tabel',lembar:'Universities',judul:'Universities',kepala:['Code','University','Opens','Admission deadline','Students','Average progress','Completed','Overdue follow-ups'],rata:['','','','','r','r','r','r'],
+      baris:prog.def.kampus.filter(function(k){return !f.uni||f.uni==='all'||k.kode===f.uni}).map(function(k){ var ts=semua.filter(function(t){return t.universitas===k.kode});
+        return [k.kode,k.nama,asTglL(k.bukaAdmisi),asTglL(k.tenggatAdmisi),ts.length,(ts.length?Math.round(ts.reduce(function(a,t){return a+t.progres},0)/ts.length):0)+'%',ts.filter(function(t){return t.status==='Completed'}).length,
+          ts.filter(function(t){return t.tenggat&&t.tenggat<hariIniStr()&&t.status!=='Completed'}).length] })});
+    /* Daftar persiapan butir per butir */
+    if(ps.length){
+      spec.blok.push({t:'h2',teks:'Preparation list — item by item'});
+      spec.blok.push({t:'tabel',lembar:'Preparation items',judul:'Preparation list',kepala:['No','Item','Type','Deadline','Done','Overdue','Not yet','% done'],rata:['r','','','','r','r','r','r'],
+        baris:ps.map(function(x,i){ var st=data.map(function(d){return d.r.st[i]}), ok=st.filter(function(s){return s.ok}).length, lw=st.filter(function(s){return s.lewat}).length;
+          return [i+1,x.t,x.auto?'Required data ('+x.ket+')':'Document'+(x.ket?' — '+x.ket:''),x.tenggat?asTglL(x.tenggat):'Personal (per student)',ok,lw,st.length-ok-lw,(st.length?Math.round(ok/st.length*100):0)+'%'] })});
+    }
+    /* Satu baris per siswa */
+    spec.blok.push({t:'h2',teks:'Students — one line each'});
+    spec.blok.push({t:'tabel',lembar:'Students',judul:'Students',tebalKol:1,warnaKol:6,kepala:['No','Student','Class','Universities','Step progress','Preparation done','Overdue','Next deadline','Follow-up by','Status'],rata:['r','','','','r','r','','','',''],
+      baris:data.map(function(d,i){ var s=d.s, r=d.r;
+        return [i+1,s.nama,s.kelas,s.t.map(function(t){return t.universitas+(t.program?' ('+t.program+')':'')}).join(', '),r.progres+'%',r.done+'/'+ps.length,r.lewat?r.lewat+' overdue':'None',
+          r.depan?r.depan.x.t+' — '+asTglL(r.depan.s.due):'—',asTglL((s.t[0].checklist['dl:_t']||{}).tgl||s.t[0].tenggat||''),s.t.map(function(t){return t.status}).filter(function(v,j,a){return a.indexOf(v)===j}).join(', ')] })});
+    /* Matriks centang (Excel saja menampilkan seluruhnya; PDF/Word juga, tiap kolom = satu butir) */
+    if(ps.length&&ps.length<=24){
+      spec.blok.push({t:'h2',teks:'Preparation matrix'});
+      spec.blok.push({t:'p',kecil:true,teks:ps.map(function(x,i){return (i+1)+'. '+x.t}).join('  ·  ')});
+      spec.blok.push({t:'tabel',lembar:'Matrix',judul:'Preparation matrix',sz:ps.length>14?6.2:7,kepala:['Student','Class'].concat(ps.map(function(x,i){return String(i+1)})),
+        baris:data.map(function(d){ return [d.s.nama,d.s.kelas].concat(d.r.st.map(function(s){ return s.ok?'Done':s.lewat?'Late':s.due?s.due.slice(5).replace('-','/'):'—' })) })});
+    }
+    /* Tindak lanjut per universitas (seperti laporan lama) */
+    var D=asLaporanData();
+    D.grup.forEach(function(g){ spec.blok.push({t:'h3',teks:g.judul}); spec.blok.push({t:'tabel',lembar:g.kode,judul:g.judul,kepala:D.kepala,baris:g.baris,kosong:'No students in this university yet.',warnaKol:7}) });
+    if(kp&&prog.def.terbuka&&kp.tolak.length){
+      spec.blok.push({t:'h3',teks:'Not for me — reasons'});
+      spec.blok.push({t:'tabel',lembar:'Not for me',judul:'Not for me',kepala:['Student','Class','Reason','Date'],baris:kp.tolak.map(function(x){return [x.nama,x.kelas||'',x.alasan&&x.alasan!=='—'?x.alasan:'',x.tgl||'']})});
+    }
+  }
+  if(jenis!=='ringkas'){
+    var daftar=urut.filter(function(id){ return !sid||id===sid });
+    var semuaCek=[], semuaLangkah=[];
+    var banyak=daftar.length>1||jenis==='semua', awalBlok=spec.blok.length;
+    daftar.forEach(function(id,ni){
+      var s=per[id], r=ringkasSiswa(s), t0=s.t[0];
+      if(ni>0||jenis==='semua') spec.blok.push({t:'putus'});
+      spec.blok.push({t:'h1',teks:s.nama+(s.kelas?' · '+s.kelas:'')});
+      spec.blok.push({t:'kv',kolom:4,baris:[['Tracker',prog.nama],['Universities',s.t.map(function(t){return t.universitas+(t.program?' — '+t.program:'')}).join('; ')],
+        ['Step progress',r.progres+'%'],['Preparation done',r.done+' of '+ps.length+(ps.length?' ('+Math.round(r.done/ps.length*100)+'%)':'')],
+        ['Overdue items',r.lewat||'None'],['Next deadline',r.depan?r.depan.x.t+' — '+asTglL(r.depan.s.due):'—'],
+        ['Status',s.t.map(function(t){return t.universitas+': '+t.status}).join('; ')],['Added by',s.t.map(function(t){return t.guru}).filter(Boolean).filter(function(v,j,a){return a.indexOf(v)===j}).join(', ')||'—'],
+        ['Follow-up by',asTglL(t0.tenggat)||'—'],['Notes',s.t.map(function(t){return t.catatan}).filter(Boolean).join(' | ')||'—']]});
+      if(ps.length){
+        spec.blok.push({t:'h3',teks:'Preparation checklist'});
+        var rows=ps.map(function(x,i){ var st=r.st[i]; semuaCek.push([s.nama,s.kelas,i+1,x.t,x.auto?'Required data':'Document',asTglL(st.due),st.teks,asTglL(st.tgl||''),st.oleh||'']);
+          return [i+1,x.t,x.auto?'Required data':'Document'+(x.ket?' — '+x.ket:''),asTglL(st.due)||'—',st.teks,asTglL(st.tgl||'')||'—',st.oleh||''] });
+        spec.blok.push({t:'tabel',judul:'Preparation checklist · '+s.nama,lembar:daftar.length<=30?(s.nama.split(' ')[0]+' prep'):'',kepala:['No','Item','Type','Due','Status','Done on','Ticked by'],rata:['r','','','','','',''],warnaKol:4,baris:rows,sz:8});
+      }
+      s.t.forEach(function(t){
+        var k=asKampus(t); if(!k) return;
+        var baris=[];
+        k.fase.forEach(function(fz,fi){
+          baris.push(['Phase '+(fi+1)+' · '+fz.nama]);
+          fz.langkah.forEach(function(l,li){ var c=t.checklist[l.id]||{};
+            baris.push([(fi+1)+'.'+(li+1),l.t,c.ok?'Done':'Not yet',asTglL(c.tgl||'')||'',c.oleh||'']);
+            semuaLangkah.push([s.nama,s.kelas,t.universitas,'Phase '+(fi+1)+' · '+fz.nama,l.t,c.ok?'Done':'Not yet',c.tgl||'',c.oleh||'']) });
+        });
+        spec.blok.push({t:'h3',teks:'Application steps · '+k.nama+' ('+t.progres+'%'+(t.fase?' · now: '+t.fase:'')+')'});
+        spec.blok.push({t:'tabel',judul:'Steps · '+t.universitas+' · '+s.nama,kepala:['No','Step','Done','Date','By'],warnaKol:2,baris:baris,sz:8,lembar:''});
+      });
+    });
+    /* Excel: tabel panjang yang bisa disaring untuk semua siswa sekaligus; halaman per siswa hanya di PDF/Word. */
+    if(banyak) spec.blok.slice(awalBlok).forEach(function(b){ b.pdfSaja=true });
+    if(banyak&&jenis==='siswa') spec.blok.push({t:'tabel',xlsxSaja:true,lembar:'Students',judul:'Students',kepala:['Student','Class','Universities','Step progress','Preparation done','Overdue','Next deadline'],
+      baris:daftar.map(function(id){ var s=per[id], r=ringkasSiswa(s); return [s.nama,s.kelas,s.t.map(function(t){return t.universitas}).join(', '),r.progres+'%',r.done+'/'+ps.length,r.lewat,r.depan?r.depan.x.t+' — '+asTglL(r.depan.s.due):''] })});
+    if(banyak){
+      spec.blok.push({t:'tabel',lembarSaja:true,lembar:'Checklist detail',judul:'Preparation checklist — every student',kepala:['Student','Class','No','Item','Type','Due','Status','Done on','Ticked by'],baris:semuaCek,xlsxSaja:true});
+      spec.blok.push({t:'tabel',lembarSaja:true,lembar:'Steps detail',judul:'Application steps — every student',kepala:['Student','Class','University','Phase','Step','Done','Date','By'],baris:semuaLangkah,xlsxSaja:true});
+    }
+    if(!daftar.length) spec.blok.push({t:'p',teks:'No students in the current view.'});
+  }
+  return spec;
+}
+/* Tabel khusus Excel tidak dicetak di PDF/Word. */
+(function(){
+  var lamaPdf=lapPdf, lamaDocx=lapDocx;
+  function tanpa(spec){ var s=Object.assign({},spec); s.blok=(spec.blok||[]).filter(function(b){return !b.xlsxSaja}); return s }
+  lapPdf=function(spec){ return lamaPdf(tanpa(spec)) };
+  lapDocx=function(spec){ return lamaDocx(tanpa(spec)) };
+})();
+/* Tombol lama (PDF report / Excel / Word) diganti satu tombol rekap. */
+(function(){
+  var lamaVP=viewPelacak;
+  viewPelacak=function(){
+    var h=lamaVP.apply(this,arguments);
+    return h.replace(/<button class="btn ghost sm" onclick="asUnduh\('pdf'\)">[\s\S]*?asUnduh\('docx'\)">Word<\/button>/,
+      '<button class="btn ghost sm" onclick="asRekapBuka()">'+ikon('unduh')+'Download recap · PDF / Word / Excel</button>');
+  };
+  var lamaLaci=asLaciHtml;
+  asLaciHtml=function(){
+    var h=lamaLaci.apply(this,arguments), sid=asSt().laci;
+    if(!sid||!(bimbing()||pimpinan())) return h;
+    var tombol='<div class="pick ketat as-laci-rk"><span class="muted kecil">Recap of this student:</span>'+['pdf','docx','xlsx'].map(function(f){return '<button class="btn ghost xs" onclick="S.asRekap={jenis:\'siswa\',siswa:\''+esc(sid)+'\'};asRekapUnduh(\''+f+'\')">'+({pdf:'PDF',docx:'Word',xlsx:'Excel'}[f])+'</button>'}).join('')+'</div>';
+    var i=h.lastIndexOf('</div></div>');
+    return i<0?h+tombol:h.slice(0,i)+tombol+h.slice(i);
+  };
+})();
+
+/* =======================================================
+   LAPORAN SAPP: Word & Excel di samping PDF
+   ======================================================= */
+function sappPilihFormat(btn,dariDetail){
+  var lama=q('sappM'); if(lama) lama.remove();
+  var v=document.createElement('div'); v.className='veil'; v.id='sappM';
+  v.innerHTML='<div class="modal" role="dialog" aria-modal="true"><div class="hd"><b>SAPP progress report</b><button class="btn ghost xs" onclick="q(\'sappM\').remove()">Close</button></div>'+
+    '<div class="bd"><p class="sub">Choose the format. Every table keeps its rows whole across pages and repeats its column headings.</p><div class="as-rk-fmt">'+
+    '<button class="btn sea" onclick="q(\'sappM\').remove();sappUnduh(\'pdf\','+(dariDetail?'true':'false')+')">'+ikon('unduh')+'PDF</button>'+
+    '<button class="btn ghost" onclick="q(\'sappM\').remove();sappUnduh(\'docx\','+(dariDetail?'true':'false')+')">'+ikon('unduh')+'Word</button>'+
+    '<button class="btn ghost" onclick="q(\'sappM\').remove();sappUnduh(\'xlsx\','+(dariDetail?'true':'false')+')">'+ikon('unduh')+'Excel</button></div></div></div>';
+  document.body.appendChild(v);
+  v.addEventListener('click',function(e){ if(e.target===v) v.remove() });
+}
+function sappUnduh(fmt,dariDetail){
+  if(fmt==='pdf'){ window.__sappLangsung(null,dariDetail); return }
+  var id=(dariDetail&&S.detail&&S.detail.siswa)?S.detail.siswa.id:'';
+  toast('Preparing the report…');
+  var args=['laporanSiswa',S.token]; if(id) args.push(id);
+  call.apply(null,args).then(function(r){
+    if(!r.ok){ if(r.error==='SESI_HABIS'){sesiHabis();return} toast(r.error,true); return }
+    var l=susunLaporanProgres(r);
+    return htmlLaporanKeBerkas(l.html,fmt,l.namaBerkas);
+  }).catch(function(e){ toast('Could not prepare the report: '+e.message,true) });
+}
+/* HTML laporan (dengan grafik SVG) → Word atau Excel. */
+function htmlLaporanKeBerkas(html,fmt,nama){
+  var wadah=document.createElement('div'); wadah.style.cssText='position:fixed;left:-10000px;top:0;width:800px;background:#fff';
+  wadah.innerHTML=html; document.body.appendChild(wadah);
+  var svgs=Array.prototype.slice.call(wadah.querySelectorAll('svg'));
+  return Promise.all(svgs.map(gambarSvg)).then(function(g){
+    svgs.forEach(function(s,i){ if(!g[i]){ s.remove(); return } var im=document.createElement('img'); im.src=g[i].src; im.width=Math.min(560,g[i].w); im.height=Math.round(im.width*g[i].h/g[i].w); s.parentNode.replaceChild(im,s) });
+    wadah.querySelectorAll('.hal').forEach(function(x,i){ if(i>0){ var br=document.createElement('br'); br.setAttribute('style','page-break-before:always'); x.parentNode.insertBefore(br,x) } });
+    if(fmt==='docx') return htmlKeDocx(wadah.innerHTML,{judul:nama,kaki:'DECK PTLN · '+nama,margin:900}).then(function(bl){ unduhBlob(bl,lapNama(nama)+'.docx') });
+    return muatLib('xlsx',function(){return !!window.XLSX}).then(function(){
+      var wb=XLSX.utils.book_new(), dipakai={};
+      function nm(n){ n=String(n||'Sheet').replace(/[\\\/\?\*\[\]:]/g,' ').trim().slice(0,28)||'Sheet'; var a=n,i=2; while(dipakai[a.toLowerCase()]){ a=n.slice(0,25)+' '+(i++) } dipakai[a.toLowerCase()]=1; return a }
+      Array.prototype.forEach.call(wadah.querySelectorAll('table'),function(t,i){
+        if(t.closest('table')!==t||t.querySelectorAll('tr').length<2) return;
+        var j='', el=t; for(var k=0;k<30&&el;k++){ var p=el.previousElementSibling; while(p){ if(/bab|hjudul|judul/.test(p.className||'')||/^H[1-4]$/.test(p.tagName)){ j=p.textContent.trim(); break } p=p.previousElementSibling } if(j) break; el=el.parentElement }
+        if(t.closest('.idn')&&(!j||/progress|preparation|laporan|report/i.test(j))) j='Identity';
+        var ws=XLSX.utils.table_to_sheet(t,{raw:true});
+        XLSX.utils.book_append_sheet(wb,ws,nm(j||('Table '+(i+1))));
+      });
+      if(!wb.SheetNames.length) throw new Error('This report has no tables.');
+      XLSX.writeFile(wb,lapNama(nama)+'.xlsx');
+    });
+  }).then(function(){ wadah.remove(); toast('Downloaded.') },function(e){ wadah.remove(); throw e });
+}
+(function(){
+  window.__sappLangsung=unduhLaporanProgres;
+  unduhLaporanProgres=function(btn,dariDetail){ sappPilihFormat(btn,dariDetail) };
+  if(typeof sappTopbar==='function') sappTopbar=function(){ sappPilihFormat(null,false) };
+})();
+
+/* =======================================================
+   "Download this page → PDF" tanpa potongan
+   Halaman ditangkap seperti biasa, lalu titik potong tiap halaman
+   dipilih di celah yang aman: tidak di tengah baris tabel, baris teks,
+   gambar, atau judul (judul ikut ke halaman berikutnya bersama isinya).
+   Tabel yang bersambung mendapat ulangan baris judul kolom.
+   ======================================================= */
+function petaPutusDari(v){
+  var vr=v.getBoundingClientRect(), atas=vr.top, out={larang:[],tabel:[],kartu:[]};
+  function iv(r,ext){ if(!r||r.height<=0.5||r.width<=0.5) return; out.larang.push([r.top-atas,r.bottom-atas+(ext||0)]) }
+  Array.prototype.forEach.call(v.querySelectorAll('tr,img,svg,canvas,input,select,textarea,button,.tag,.dl,.tb-r,.tb-h,.as-bar,.as-k,.km-st,.br-chip'),function(el){
+    var r=el.getBoundingClientRect(); if(r.height<900) iv(r);
+  });
+  Array.prototype.forEach.call(v.querySelectorAll('h1,h2,h3,h4,.eyebrow,.judul-baris'),function(el){
+    var r=el.getBoundingClientRect(); if(r.height<300) iv(r,/^H|eyebrow/.test(el.tagName+' '+el.className)?44:0);
+  });
+  Array.prototype.forEach.call(v.querySelectorAll('li,.note,.as-siap-r,.as-komit-b,.br-adm-l li,.imp-riwayat li'),function(el){
+    var r=el.getBoundingClientRect(); if(r.height<160) iv(r);
+  });
+  /* Setiap baris teks */
+  var jalan=document.createTreeWalker?v.ownerDocument.createTreeWalker(v,NodeFilter.SHOW_TEXT,null,false):null, n=0, rg=v.ownerDocument.createRange();
+  while(jalan&&jalan.nextNode()&&n<40000){
+    var t=jalan.currentNode; if(!t.nodeValue||!t.nodeValue.trim()) continue;
+    rg.selectNodeContents(t);
+    var rs=rg.getClientRects(); for(var i=0;i<rs.length;i++){ iv(rs[i]); n++ }
+  }
+  Array.prototype.forEach.call(v.querySelectorAll('table'),function(t){
+    var r=t.getBoundingClientRect(); if(r.height<=0) return;
+    var kep=t.tHead||(t.rows[0]&&Array.prototype.every.call(t.rows[0].cells,function(c){return c.tagName==='TH'})?t.rows[0]:null);
+    if(!kep) return; var k=kep.getBoundingClientRect();
+    out.tabel.push({y0:r.top-atas,y1:r.bottom-atas,h0:k.top-atas,h1:k.bottom-atas,x0:r.left-vr.left,x1:r.right-vr.left});
+  });
+  Array.prototype.forEach.call(v.querySelectorAll('.tb'),function(t){
+    var h=t.querySelector('.tb-h'); if(!h) return; var r=t.getBoundingClientRect(), k=h.getBoundingClientRect();
+    out.tabel.push({y0:r.top-atas,y1:r.bottom-atas,h0:k.top-atas,h1:k.bottom-atas,x0:r.left-vr.left,x1:r.right-vr.left});
+  });
+  Array.prototype.forEach.call(v.querySelectorAll('.card'),function(c){ var r=c.getBoundingClientRect(); if(r.height>0) out.kartu.push([r.top-atas,r.bottom-atas]) });
+  return out;
+}
+function tangkapView(tanpaKop){
+  return muatLib('h2c',function(){return !!window.html2canvas}).then(function(){
+    var v=q('view');
+    document.body.classList.add('mode-ekspor');
+    var lebar=Math.max(v.scrollWidth,v.offsetWidth), tinggi=v.scrollHeight;
+    var skala=Math.max(0.5,Math.min(2,15000/(tinggi+80),15000/lebar));
+    var latar=getComputedStyle(document.body).backgroundColor||'#ffffff';
+    if(/rgba\(0, 0, 0, 0\)|transparent/.test(latar)) latar=(typeof temaAktif==='function'&&temaAktif()==='malam')?'#0C110F':'#ffffff';
+    var gelap=(typeof temaAktif==='function'&&temaAktif()==='malam');
+    window.__putus=null;
+    return html2canvas(v,{scale:skala,backgroundColor:latar,useCORS:true,logging:false,width:lebar,height:tinggi,
+      windowWidth:Math.max(document.documentElement.clientWidth,lebar+320),
+      onclone:function(doc){ doc.body.classList.add('mode-ekspor'); try{ var vk=doc.getElementById('view'); if(vk) window.__putus=petaPutusDari(vk) }catch(e){ window.__putus=null } }
+    }).then(function(cv){
+      document.body.classList.remove('mode-ekspor');
+      cv.__skala=skala; cv.__putus=window.__putus;
+      if(tanpaKop) return cv;
+      var kop=Math.round(64*skala), out=document.createElement('canvas');
+      out.width=cv.width; out.height=cv.height+kop;
+      var g=out.getContext('2d');
+      g.fillStyle=latar; g.fillRect(0,0,out.width,out.height);
+      g.fillStyle=gelap?'#E8EFEA':'#14231D';
+      g.font='600 '+Math.round(19*skala)+'px system-ui,-apple-system,Segoe UI,sans-serif';
+      g.fillText('DECK PTLN · '+judulEkspor(),Math.round(20*skala),Math.round(30*skala));
+      g.fillStyle=gelap?'#9FB2A9':'#5E6F68';
+      g.font=Math.round(12*skala)+'px system-ui,-apple-system,Segoe UI,sans-serif';
+      g.fillText((S.user?S.user.nama+' · ':'')+new Date().toLocaleString(),Math.round(20*skala),Math.round(50*skala));
+      g.drawImage(cv,0,kop);
+      return out;
+    },function(e){ document.body.classList.remove('mode-ekspor'); throw e });
+  });
+}
+/** Membagi tinggi kanvas menjadi halaman. Mengembalikan [{dari, sampai, kepala:{h0,h1}|null}] dalam piksel kanvas. */
+function bagiHalaman(Htot,P,peta,sk){
+  var larang=[], tabel=[], kartu=[];
+  if(peta){
+    larang=peta.larang.map(function(x){return [x[0]*sk,x[1]*sk]}).filter(function(x){return x[1]-x[0]<P*0.98});
+    tabel=peta.tabel.map(function(t){return {y0:t.y0*sk,y1:t.y1*sk,h0:t.h0*sk,h1:t.h1*sk}}).filter(function(t){return t.h1-t.h0<P*0.3});
+    kartu=peta.kartu.map(function(x){return [x[0]*sk,x[1]*sk]}).filter(function(x){return x[1]-x[0]<P*0.45});
+  }
+  larang.sort(function(a,b){return a[0]-b[0]});
+  function aman(y,daftar){
+    for(var putar=0;putar<2000;putar++){
+      var kena=null;
+      for(var i=0;i<daftar.length;i++){ var a=daftar[i]; if(a[0]>=y) break; if(a[0]<y-0.5&&y<a[1]-0.5){ if(!kena||a[0]<kena[0]) kena=a } }
+      if(!kena) return y;
+      y=Math.floor(kena[0]);
+    }
+    return y;
+  }
+  var hal=[], pos=0, aman2=larang.concat(kartu).sort(function(a,b){return a[0]-b[0]});
+  while(pos<Htot-1&&hal.length<500){
+    var kep=null;
+    tabel.forEach(function(t){ if(pos>t.h1+1&&pos<t.y1-2) kep=t });
+    var hh=kep?Math.ceil(kep.h1-kep.h0):0, cap=P-hh, batas=pos+cap, akhir;
+    if(batas>=Htot) akhir=Htot;
+    else{
+      akhir=aman(batas,aman2);                                   /* utuhkan juga kartu kecil */
+      if(akhir<=pos+cap*0.55) akhir=aman(batas,larang);          /* kartu terlalu tinggi: cukup baris & teks */
+      if(akhir<=pos+cap*0.12) akhir=batas;                       /* unsur raksasa (mis. gambar sangat tinggi) */
+    }
+    hal.push({dari:pos,sampai:akhir,kepala:kep?{h0:kep.h0,h1:kep.h1}:null});
+    pos=akhir;
+  }
+  return hal;
+}
+function eksporPdf(){
+  return Promise.all([tangkapView(true),muatLib('jspdf',function(){return !!(window.jspdf&&window.jspdf.jsPDF)})]).then(function(h){
+    var cv=h[0], JsPDF=window.jspdf.jsPDF;
+    var lanskap=cv.width>cv.height*0.9||!!q('view').querySelector('table.board');
+    var pdf=new JsPDF({orientation:lanskap?'l':'p',unit:'mm',format:'a4',compress:true});
+    var W=pdf.internal.pageSize.getWidth(), H=pdf.internal.pageSize.getHeight(), m=10, kop=17, kaki=10;
+    var lebarMm=W-2*m, pxPerMm=cv.width/lebarMm, tinggiHalPx=Math.floor((H-kop-kaki-6)*pxPerMm);
+    var halaman=bagiHalaman(cv.height,tinggiHalPx,cv.__putus,cv.__skala||1);
+    window.__halTerakhir={hal:halaman,putus:cv.__putus,skala:cv.__skala||1,P:tinggiHalPx};
+    var sek=((S.sekolah||'')+'').split(' · ')[0]||'SMAIT Al-Ittihad Pekanbaru', judul=judulEkspor(), waktu=new Date().toLocaleString();
+    halaman.forEach(function(hl,i){
+      var hk=hl.kepala?Math.ceil(hl.kepala.h1-hl.kepala.h0):0, hIsi=Math.ceil(hl.sampai-hl.dari);
+      var potong=document.createElement('canvas'); potong.width=cv.width; potong.height=Math.max(1,hk+hIsi);
+      var g=potong.getContext('2d');
+      g.fillStyle='#ffffff'; g.fillRect(0,0,potong.width,potong.height);
+      if(hk) g.drawImage(cv,0,Math.floor(hl.kepala.h0),cv.width,hk,0,0,cv.width,hk);
+      g.drawImage(cv,0,Math.floor(hl.dari),cv.width,hIsi,0,hk,cv.width,hIsi);
+      if(i) pdf.addPage();
+      pdf.setFillColor(16,48,42); pdf.rect(0,0,W,kop-3,'F');
+      pdf.setFillColor(199,125,26); pdf.rect(0,kop-3,W*0.32,1.2,'F');
+      pdf.setTextColor(255,255,255); pdf.setFont('helvetica','bold'); pdf.setFontSize(11.5);
+      pdf.text(pdfAman('DECK PTLN · '+judul),m,7.6);
+      pdf.setFont('helvetica','normal'); pdf.setFontSize(7.6); pdf.setTextColor(199,234,224);
+      pdf.text(pdfAman(sek+' · Study Abroad Preparation'),m,11.6);
+      pdf.text(pdfAman((S.user?S.user.nama+' · ':'')+waktu),W-m,11.6,{align:'right'});
+      pdf.addImage(potong.toDataURL('image/jpeg',0.92),'JPEG',m,kop+2,lebarMm,potong.height/pxPerMm,undefined,'FAST');
+      pdf.setDrawColor(213,219,209); pdf.setLineWidth(0.3); pdf.line(m,H-kaki+2,W-m,H-kaki+2);
+      pdf.setFontSize(7.5); pdf.setTextColor(124,145,139);
+      pdf.text(pdfAman('DECK PTLN · '+judul),m,H-4);
+      pdf.text('Page '+(i+1)+' of '+halaman.length,W-m,H-4,{align:'right'});
+    });
+    pdf.save(namaEkspor('pdf'));
+  }).catch(function(e){
+    if(typeof cetakPdf==='function'){
+      var b=salinBersih();
+      cetakPdf(slug(judulEkspor()),judulEkspor(),[S.user?S.user.nama:'',new Date().toLocaleDateString()],'<section>'+b.innerHTML+'</section>');
+      return;
+    }
+    throw e;
+  });
+}
+/* Cetak lewat peramban (Save as PDF): baris tabel utuh, judul kolom berulang. */
+(function(){
+  var aturan='thead{display:table-header-group}tfoot{display:table-footer-group}tr,td,th,img,svg,li,.kotak{page-break-inside:avoid;break-inside:avoid}'+
+    'h1,h2,h3,h4,.bab,.hjudul{page-break-after:avoid;break-after:avoid}table{page-break-inside:auto}';
+  var lamaC=gayaCetak; gayaCetak=function(){ var g=lamaC.apply(this,arguments); return g.replace('</style>',aturan+'</style>') };
+  var lamaS=gayaSapp; gayaSapp=function(){ var g=lamaS.apply(this,arguments); return g.replace('</style>',aturan+'</style>') };
+})();
 
 /* =======================================================
    JALAN
