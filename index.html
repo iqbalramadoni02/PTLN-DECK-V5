@@ -3384,6 +3384,262 @@ html.latar-auth .ld-berita{background:rgba(247,250,244,.96)}
 .wa-konfirm b{display:block;color:#001B16}
 .wa-konfirm span{font-size:12.5px;color:#4A635D}
 .wa-modal .hint{margin-top:8px;font-size:11.5px;color:#4A635D}
+
+/* ---------- v40 · pelacak per kelas ---------- */
+.as-cakupan{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:6px 0 2px}
+.as-cakupan .eyebrow{margin:0}
+.as-ck{display:inline-flex;align-items:center;padding:3px 10px;border-radius:99px;background:#E7F1EC;color:#0F4A3A;font-weight:600;font-size:12px;line-height:1.3;font-family:inherit;border:1px solid #C9DED3}
+.as-ck.semua{background:transparent;color:var(--tinta-2,#55706A);border-style:dashed}
+.as-ck-ubah{border:0;background:none;color:var(--sea,#0F6E5A);font-weight:600;font-size:12px;font-family:inherit;cursor:pointer;text-decoration:underline;padding:2px 4px}
+.as-prog button .as-prog-kls{display:block;font-style:normal;font-size:11px;font-weight:700;color:#0F6E5A;margin-top:2px}
+.as-prog button.on .as-prog-kls{color:inherit;opacity:.9}
+.as-kelas{padding:12px 14px !important}
+.as-kelas-h{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px;margin-bottom:8px}
+.as-kelas-r{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin}
+.as-kelas-r button{flex:0 0 auto;min-width:118px;text-align:left;border:1px solid var(--line,#D6DFD6);background:var(--kartu,#fff);border-radius:12px;padding:8px 12px;cursor:pointer;display:flex;flex-direction:column;gap:2px;color:inherit}
+.as-kelas-r button b{font-size:14px}
+.as-kelas-r button span{font-size:11.5px;color:var(--tinta-2,#55706A)}
+.as-kelas-r button i{display:block;height:4px;border-radius:9px;background:#E3EAE4;overflow:hidden;margin-top:4px}
+.as-kelas-r button i em{display:block;height:100%;background:#1F8A5B}
+.as-kelas-r button.on{background:#10302A;border-color:#10302A;color:#fff}
+.as-kelas-r button.on span{color:#CFE3DA}
+.as-kelas-r button.luar{border-style:dashed}
+.as-kelas-sel{min-width:130px}
+.as-ed-kelas{margin:14px 0 6px;padding:12px 14px;border:1px solid var(--line,#D6DFD6);border-radius:14px;background:var(--latar-2,#F6F8F5)}
+.as-ed-kelas-h{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:8px}
+.as-ed-kelas-h .muted{display:block;margin-top:2px}
+.as-ed-kelas-b{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:6px}
+.as-ed-tk{border:1px solid #10302A;background:transparent;color:#10302A;border-radius:99px;padding:4px 10px;font-weight:700;font-size:12px;font-family:inherit;cursor:pointer;min-width:84px}
+.as-ed-tk.on{background:#10302A;color:#fff}
+.as-ed-kc{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:99px;border:1px solid var(--line,#D6DFD6);background:var(--kartu,#fff);font-size:13px;cursor:pointer}
+.as-ed-kc.on{border-color:#0F6E5A;background:#E7F1EC;color:#0F4A3A;font-weight:600}
+.as-ed-kc input{margin:0}
+:root[data-tema="malam"] .as-ck{background:#173A31;color:#CFE3DA;border-color:#24564A}
+:root[data-tema="malam"] .as-kelas-r button.on,:root[data-tema="malam"] .as-ed-tk.on{background:#CFE3DA;color:#10302A;border-color:#CFE3DA}
+:root[data-tema="malam"] .as-ed-tk{color:#CFE3DA;border-color:#CFE3DA}
+:root[data-tema="malam"] .as-ed-kc.on{background:#173A31;color:#CFE3DA}
+
+/* ---------- v40 · letters & files ---------- */
+.km-angka{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:12px}
+.km-angka div{border:1px solid var(--line,#D6DFD6);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column}
+.km-angka b{font-size:22px;line-height:1.1}
+.km-angka span{font-size:12px;color:var(--tinta-2,#55706A)}
+.km-angka .emas{color:#B07A12}.km-angka .merah{color:#B3261E}.km-angka .hijau{color:#1F7A4F}
+@media (max-width:640px){ .km-angka{grid-template-columns:repeat(2,minmax(0,1fr))} }
+.km-daftar{display:flex;flex-direction:column;gap:10px}
+.km-k{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 14px !important;border-left:4px solid #9DB3A8}
+.km-k.km-needs-changes{border-left-color:#C2410C}
+.km-k.km-revised,.km-k.km-sent{border-left-color:#B07A12}
+.km-k.km-approved{border-left-color:#1F7A4F}
+.km-k.baru{box-shadow:0 0 0 2px rgba(176,122,18,.35)}
+.km-k-ikon{width:48px;height:58px;border-radius:8px;border:0;background:linear-gradient(160deg,#B3261E,#7F1D1D);color:#fff;font-weight:800;font-size:13px;line-height:1;font-family:inherit;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+.km-k-ikon span{font-weight:600;font-size:10px;line-height:1;font-family:inherit;opacity:.85;background:rgba(255,255,255,.18);padding:2px 5px;border-radius:5px}
+.km-k-isi{min-width:0}
+.km-k-a{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.km-k-judul{border:0;background:none;padding:0;font-weight:700;font-size:15px;line-height:1.3;font-family:inherit;color:inherit;cursor:pointer;text-align:left}
+.km-k-judul:hover{text-decoration:underline}
+.km-k-b{font-size:12.5px;color:var(--tinta-2,#55706A);margin-top:3px}
+.km-k-c{font-size:12.5px;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.km-k-aksi{display:flex;flex-direction:column;gap:6px;align-items:stretch}
+@media (max-width:640px){ .km-k{grid-template-columns:auto minmax(0,1fr)} .km-k-aksi{grid-column:1/-1;flex-direction:row} .km-k-aksi .btn{flex:1} .km-k-c{white-space:normal} }
+.km-st{display:inline-flex;align-items:center;padding:2px 8px;border-radius:99px;font-weight:700;font-size:11px;line-height:1.5;font-family:inherit;background:#F3EAD3;color:#7A5410}
+.km-st.km-needs-changes{background:#FCE7DB;color:#9A3412}
+.km-st.km-approved{background:#DDF1E5;color:#14593A}
+.km-baru{display:inline-flex;padding:2px 8px;border-radius:99px;background:#B3261E;color:#fff;font-weight:700;font-size:11px;line-height:1.5;font-family:inherit}
+.km-form-g{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+.km-form-kiri{display:flex;flex-direction:column;gap:10px}
+.km-form-kanan{display:flex;flex-direction:column;gap:6px;min-width:0}
+.km-form-s{max-height:340px;overflow:auto}
+.km-berkas-pilih{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:10px;background:#E7F1EC;font-size:13px}
+.km-berkas-pilih svg{width:16px;height:16px}
+.km-berkas-pilih span{margin-left:auto;color:var(--tinta-2,#55706A)}
+.km-pilih-pdf{align-self:flex-start;margin-top:6px;cursor:pointer}
+@media (max-width:820px){ .km-form-g{grid-template-columns:1fr} }
+.km-veil{align-items:stretch !important;justify-content:center;padding:2vh 1.5vw !important}
+.km-modal{width:min(1320px,100%);max-width:none !important;max-height:96vh;display:flex;flex-direction:column;padding:0 !important;overflow:hidden}
+.km-hd{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 16px !important;border-bottom:1px solid var(--line,#D6DFD6)}
+.km-hd-j{display:flex;flex-direction:column;gap:3px;min-width:0}
+.km-hd-j b{font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.km-bd{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 400px}
+.km-kiri{display:flex;flex-direction:column;min-height:0;background:#E9EDE7}
+.km-vbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;padding:8px 12px;background:var(--kartu,#fff);border-bottom:1px solid var(--line,#D6DFD6)}
+.km-versi{display:flex;flex-wrap:wrap;gap:4px}
+.km-versi button{border:1px solid var(--line,#D6DFD6);background:transparent;border-radius:99px;padding:3px 10px;font-weight:600;font-size:12px;font-family:inherit;cursor:pointer;color:inherit}
+.km-versi button.on{background:#10302A;color:#fff;border-color:#10302A}
+.km-pdf{flex:1;overflow:auto;padding:14px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.km-hal{position:relative;max-width:100%}
+.km-hal span{position:absolute;top:-1px;left:-1px;background:#10302A;color:#fff;font-weight:700;font-size:10px;line-height:1;font-family:inherit;padding:4px 7px;border-radius:0 0 6px 0;z-index:1}
+.km-kanan{display:flex;flex-direction:column;min-height:0;border-left:1px solid var(--line,#D6DFD6);background:var(--kartu,#fff);overflow:auto}
+.km-info{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px 14px;border-bottom:1px solid var(--line,#D6DFD6)}
+.km-info div{display:flex;flex-direction:column;font-size:13px}
+.km-info span{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--tinta-2,#55706A)}
+.km-pesan{margin:10px 14px 0;padding:10px 12px;border-radius:10px;background:#F3EAD3;font-size:13px}
+.km-pesan div{margin-top:4px;white-space:pre-line}
+.km-panduan{margin:10px 14px 0;padding:10px 12px;border-radius:10px;background:#E7F1EC;font-size:13px;color:#0F4A3A}
+.km-utas{flex:1;min-height:140px;overflow:auto;padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+.km-kosong{text-align:center;padding:16px 0}
+.km-c{max-width:88%;padding:8px 11px;border-radius:12px;background:#F1F4F0;font-size:13.5px}
+.km-c.siswa{align-self:flex-end;background:#E3EEF9;border-bottom-right-radius:4px}
+.km-c.guru{align-self:flex-start;border-bottom-left-radius:4px}
+.km-c-h{display:flex;flex-wrap:wrap;gap:2px 8px;align-items:baseline;margin-bottom:3px}
+.km-c-h span{font-size:11px;color:var(--tinta-2,#55706A)}
+.km-c-t{white-space:pre-line;overflow-wrap:anywhere}
+.km-sis{align-self:center;text-align:center;font-size:12px;color:var(--tinta-2,#55706A);max-width:94%}
+.km-sis svg{width:12px;height:12px;vertical-align:-2px}
+.km-sis div{margin-top:2px;color:var(--tinta,#10302A);font-size:12.5px}
+.km-sis.setuju{color:#14593A;font-weight:600}
+.km-v{border:0;background:none;color:var(--sea,#0F6E5A);font-weight:700;font-size:12px;font-family:inherit;text-decoration:underline;cursor:pointer;padding:0}
+.km-tulis{padding:10px 14px 14px;border-top:1px solid var(--line,#D6DFD6);display:flex;flex-direction:column;gap:8px}
+.km-tulis-b{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.km-tulis-b input[type=file]{flex:1 1 180px;min-width:0;font-size:12.5px}
+.km-hal-in{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--tinta-2,#55706A)}
+.km-hal-in input{width:56px}
+.km-ok{display:inline-flex;align-items:center;gap:5px;color:#14593A;font-weight:700;font-size:13px}
+.km-ok svg{width:14px;height:14px}
+.km-versi-baru{display:flex;flex-direction:column;gap:4px;padding:10px 12px;border:1px dashed #9DB3A8;border-radius:10px}
+.km-hapus{align-self:flex-start}
+.km-baca{padding:12px 14px;border-top:1px solid var(--line,#D6DFD6)}
+@media (max-width:900px){
+  .km-veil{padding:0 !important}
+  .km-modal{max-height:100vh;height:100vh;border-radius:0 !important}
+  .km-bd{grid-template-columns:1fr;grid-template-rows:minmax(300px,55vh) auto;overflow:auto}
+  .km-kanan{border-left:0;border-top:1px solid var(--line,#D6DFD6);overflow:visible}
+  .km-utas{max-height:none;overflow:visible;flex:none;min-height:0}
+}
+:root[data-tema="malam"] .km-kiri,:root[data-tema="malam"] .km-pdf{background:#0F1412}
+:root[data-tema="malam"] .km-c{background:#1C2622}
+:root[data-tema="malam"] .km-c.siswa{background:#1B2C3C}
+:root[data-tema="malam"] .km-pesan{background:#3A2F17}
+:root[data-tema="malam"] .km-panduan,:root[data-tema="malam"] .km-berkas-pilih{background:#173A31;color:#CFE3DA}
+:root[data-tema="malam"] .km-versi button.on{background:#CFE3DA;color:#10302A}
+.km-deck{display:inline-flex;padding:2px 8px;border-radius:99px;background:#E7F1EC;color:#0F4A3A;font-weight:700;font-size:11px;line-height:1.5;font-family:inherit;border:1px solid #C9DED3}
+.km-deck-info{display:flex;gap:10px;padding:10px 12px;border-radius:10px;background:#E7F1EC;color:#0F4A3A;font-size:13px}
+.km-deck-info>svg{width:18px;height:18px;flex:none;margin-top:2px}
+.km-deck-info span{display:block;margin:2px 0 6px}
+.km-deck-info .tl-cek span{display:inline;margin:0}
+.km-info-l{grid-column:1/-1}
+:root[data-tema="malam"] .km-deck,:root[data-tema="malam"] .km-deck-info{background:#173A31;color:#CFE3DA;border-color:#24564A}
+.kr-kiriman{display:flex;flex-direction:column;gap:12px}
+.kr-kiriman .km-k{box-shadow:none;border-top:1px solid var(--line,#D6DFD6);border-right:1px solid var(--line,#D6DFD6);border-bottom:1px solid var(--line,#D6DFD6)}
+
+/* ---------- v40 · pelacak terbuka, daftar persiapan, berita ---------- */
+.as-siap{border-left:3px solid #B07A12 !important}
+.as-siap-due{font-style:normal;font-size:11px;font-weight:700;color:#9A3412;background:#FCE7DB;border-radius:99px;padding:1px 7px;margin-left:4px}
+.as-siap-saya .judul-baris{align-items:center}
+.as-siap-pc{min-width:160px;text-align:right}
+.as-siap-pc b{font-size:28px;line-height:1}
+.as-siap-pc .as-bar{margin-top:6px}
+.as-siap-saya .as-siap{border:0 !important;padding:0 !important;background:none !important}
+.as-siap-saya .tl-cek{padding:7px 4px;border-bottom:1px dashed var(--line,#D6DFD6)}
+.as-info{padding:14px 16px !important}
+.as-info.kosong{display:flex;flex-direction:column;gap:2px;border-style:dashed}
+.as-info-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(260px,100%),1fr));gap:10px;margin-top:8px}
+.as-info-k{display:flex;flex-direction:column;gap:3px;text-align:left;border:1px solid var(--line,#D6DFD6);background:var(--kartu,#fff);border-radius:12px;padding:10px 12px;cursor:pointer;color:inherit;font-family:inherit}
+.as-info-k:hover{border-color:#0F6E5A;box-shadow:0 2px 10px rgba(16,48,42,.08)}
+.as-info-k b{font-size:14px;line-height:1.3}
+.as-info-f{font-size:11px;font-weight:700;color:#0F6E5A;text-transform:uppercase;letter-spacing:.04em}
+.as-matriks{padding:14px 16px !important}
+.as-mx th{font-size:11px;font-weight:600;vertical-align:bottom;min-width:92px;max-width:140px;white-space:normal;line-height:1.25}
+.as-mx th span{display:block;font-size:10px;color:var(--tinta-2,#55706A)}
+.as-mx th:first-child{min-width:180px}
+.as-mx-c{text-align:center}
+.as-mx-c.ok{background:#E5F4E4}
+.as-mx-n{white-space:nowrap;text-align:center}
+.as-buka{padding:16px !important}
+.as-buka-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(330px,100%),1fr));gap:12px;margin-top:10px}
+.as-buka-k{border:1px solid var(--line,#D6DFD6);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:8px;background:var(--kartu,#fff)}
+.as-buka-k.sudah{border-color:#9BC9B4;background:#F4FAF6}
+.as-buka-h{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+.as-buka-h b{font-size:15px}
+.as-buka-k p{margin:0;font-size:13px;color:var(--tinta-2,#55706A)}
+.as-buka-m{display:flex;flex-wrap:wrap;gap:6px}
+.as-buka-m span{font-size:12px;background:#F1F4F0;border-radius:99px;padding:2px 9px}
+.as-gabung{display:flex;flex-direction:column;gap:8px;border-top:1px dashed var(--line,#D6DFD6);padding-top:8px}
+.as-ed-siswa{margin:14px 0 6px;padding:12px 14px;border:1px solid #E7C98B;border-radius:14px;background:#FFFBF2;display:flex;flex-direction:column;gap:6px}
+.as-ed-sub{margin:10px 0 0;font-size:13.5px}
+.as-ed-berita{display:flex;flex-direction:column;gap:4px;max-height:260px;overflow:auto}
+.as-ed-b{display:flex;gap:8px;align-items:flex-start;padding:6px 8px;border:1px solid var(--line,#D6DFD6);border-radius:10px;background:var(--kartu,#fff);cursor:pointer}
+.as-ed-b.on{border-color:#0F6E5A;background:#E7F1EC}
+.as-ed-b span{display:flex;flex-direction:column}
+.as-ed-b i{font-style:normal;font-size:11.5px;color:var(--tinta-2,#55706A)}
+.as-imp-r{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:8px 0}
+.as-imp-r div{border:1px solid var(--line,#D6DFD6);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:3px}
+.as-imp-r span{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--tinta-2,#55706A)}
+.as-imp-r em{align-self:flex-start}
+.as-imp-l{display:flex;flex-direction:column;gap:4px;font-size:13px}
+.as-imp-o{margin:0;padding-left:20px;font-size:13px;line-height:1.6}
+@media (max-width:760px){ .as-imp-r{grid-template-columns:1fr 1fr} .as-siap-pc{min-width:0;width:100%;text-align:left} }
+:root[data-tema="malam"] .as-ed-siswa{background:#2A2414;border-color:#5A4A22}
+:root[data-tema="malam"] .as-buka-k.sudah,:root[data-tema="malam"] .as-mx-c.ok{background:#173A31}
+:root[data-tema="malam"] .as-buka-m span{background:#1C2622}
+.as-tbl.as-mx th{white-space:normal !important;overflow:visible;text-overflow:clip}
+.as-mx-c input{width:18px !important;height:18px !important;min-width:0 !important;padding:0 !important;margin:0 auto;display:block;box-shadow:none !important}
+/* ===== v41 · jenis pelacak, data wajib, tenggat pribadi ===== */
+.as-due{display:inline-block;font-style:normal;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;white-space:nowrap;background:var(--line,#e5e7eb);color:var(--ink2,#475569);margin-left:6px}
+.as-due.aman{background:rgba(14,116,144,.12);color:#0e7490}
+.as-due.minggu{background:rgba(202,138,4,.15);color:#a16207}
+.as-due.dekat{background:rgba(234,88,12,.15);color:#c2410c}
+.as-due.lewat{background:rgba(220,38,38,.14);color:#b91c1c}
+.as-due.ok{background:rgba(22,163,74,.12);color:#15803d}
+.as-siap-r{display:flex;align-items:center;gap:4px 8px;flex-wrap:wrap;border-bottom:1px dashed var(--line,#e5e7eb);padding:4px 0}
+.as-siap-r:last-child{border-bottom:0}
+.as-siap-r .tl-cek{border-bottom:0 !important}
+.as-pilih-m .hd{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.as-siap-r .tl-cek{flex:1 1 260px;min-width:0}
+.as-siap-r.auto{background:rgba(202,138,4,.06);border-radius:8px;padding:2px 6px}
+.as-wajib{font-size:10px;letter-spacing:.04em;text-transform:uppercase;color:#a16207;background:rgba(202,138,4,.14);padding:1px 6px;border-radius:4px;margin-right:4px}
+.as-siap-saya.telat{border-left:4px solid #dc2626}
+.as-telat,.as-depan{display:flex;gap:8px;align-items:flex-start;padding:8px 12px;border-radius:10px;margin:10px 0 0;font-size:13px}
+.as-telat{background:rgba(220,38,38,.09);color:#991b1b}
+.as-depan{background:rgba(14,116,144,.08)}
+.as-telat svg,.as-depan svg{width:16px;height:16px;flex:none;margin-top:2px}
+.as-jenis{font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;background:rgba(14,116,144,.1);color:#0e7490}
+.as-komit{margin:8px 0;padding:10px 12px;border-radius:10px;background:rgba(202,138,4,.08);font-size:13px}
+.as-komit ul{margin:6px 0 6px 18px;padding:0}
+.as-komit li{margin:2px 0}
+.as-komit>span{display:block;font-size:12px;color:var(--ink2,#475569)}
+.as-tolak{margin-top:12px}
+.as-tolak summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--ink2,#475569)}
+.as-pilih-m{max-width:720px;width:calc(100vw - 32px)}
+.as-pilih-st{padding:10px 12px;border-radius:10px;background:rgba(234,88,12,.1);margin-bottom:10px;font-size:14px}
+.as-pilih-st.ok{background:rgba(22,163,74,.1)}
+.as-pilih-l{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.as-pilih-b{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) auto;gap:8px;align-items:center;padding:8px 10px;border:1px solid var(--line,#e5e7eb);border-radius:10px}
+.as-pilih-b>div{display:flex;flex-direction:column;min-width:0}
+.as-pilih-b input{min-width:0}
+.as-pilih-tambah{border-top:1px dashed var(--line,#e5e7eb);padding-top:12px}
+.as-kp-g{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:8px}
+.as-kp-g>div{padding:10px 12px;border-radius:10px;border:1px solid var(--line,#e5e7eb)}
+.as-kp-g>div>b{font-size:22px;display:block}
+.as-kp-g>div>span{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.as-kp-g .ikut{background:rgba(22,163,74,.07)}
+.as-kp-g .tolak{background:rgba(220,38,38,.06)}
+.as-kp-g .belum{background:rgba(202,138,4,.08)}
+.as-kp-n{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+.as-kp-n span{font-size:12px;background:var(--card,#fff);border:1px solid var(--line,#e5e7eb);border-radius:999px;padding:1px 8px}
+.as-kp-n i{color:var(--ink2,#475569)}
+.as-mx-c.telat{background:rgba(220,38,38,.09)}
+.as-mx-c i{display:block;font-style:normal;font-size:10px;color:#b91c1c}
+.as-mx-c.ok i{display:none}
+.as-mx-n.merah b{color:#b91c1c}
+.as-mx th.auto{box-shadow:inset 0 4px 0 #ca8a04}
+.as-ed-jenis{padding:12px;border-radius:12px;background:rgba(14,116,144,.05);margin-bottom:14px}
+.as-komit-k.telat{border-left:4px solid #dc2626}
+.as-komit-l{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.as-komit-b{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:8px 10px;border:1px solid var(--line,#e5e7eb);border-radius:10px}
+.as-komit-b.lewat{border-color:rgba(220,38,38,.4);background:rgba(220,38,38,.05)}
+.as-komit-b>span{flex:1 1 220px;min-width:0;display:flex;flex-direction:column}
+.as-komit-b>span i{font-style:normal;font-size:12px;color:var(--ink2,#475569)}
+.as-gerbang-wajib{display:flex;gap:10px;align-items:flex-start;margin-bottom:12px}
+.as-gerbang-wajib.telat{border-color:rgba(220,38,38,.4);background:rgba(220,38,38,.06)}
+.as-gerbang-wajib svg{width:18px;height:18px;flex:none}
+@media (max-width:640px){
+  .as-kp-g{grid-template-columns:1fr}
+  .as-pilih-b{grid-template-columns:1fr auto}
+  .as-pilih-b>div{grid-column:1/-1}
+  .as-due{margin-left:28px}
+  .as-siap-r .btn{margin-left:28px}
+}
 </style>
 </head>
 <body>
@@ -3662,7 +3918,7 @@ var KEY='deckptln_token_v1';
    Ganti bila membuat deployment baru.
    ------------------------------------------------------- */
 var LAMBANG='<div class="lambang"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="DECK PTLN"><rect width="100" height="100" rx="24" fill="#EDF0EA"/><rect x="15.5" y="60" width="7.4" height="20" rx="3.2" fill="#10302A" opacity="0.55"/><rect x="27.3" y="52" width="7.4" height="28" rx="3.2" fill="#10302A" opacity="0.64"/><rect x="39.1" y="44" width="7.4" height="36" rx="3.2" fill="#10302A" opacity="0.73"/><rect x="50.900000000000006" y="36" width="7.4" height="44" rx="3.2" fill="#10302A" opacity="0.82"/><rect x="62.7" y="28" width="7.4" height="52" rx="3.2" fill="#10302A" opacity="0.91"/><rect x="74.5" y="18" width="7.4" height="62" rx="3.2" fill="#C77D1A" opacity="1"/></svg></div>';
-var VERSI_UI='2026.11.20-39';
+var VERSI_UI='2026.11.22-41';
 var KUNCI_ALAMAT='deckptln_apiurl_v1';
 
 /* Alamat Web App boleh ditimpa dari dalam aplikasi. Berguna bila di Apps
@@ -4664,7 +4920,7 @@ function gambarTopbar(){
     (siswa?'<span id="save" class="save '+esc(S.simpanTanda.cls)+'" title="Your deck saves itself as you type"><span class="s-t">'+esc(S.simpanTanda.txt)+'</span></span>':'')+
     '<button class="pil '+esc(sk.st)+'" onclick="sinkronSekarang()" title="Checks the spreadsheet every 45 seconds. Click to check now.">'+
     '<span class="titik"></span><span class="pil-t">'+esc(teksSk)+'</span></button>'+
-    (siswa?'<button class="pil lonceng-sembunyi" onclick="sappTopbar()" title="Download the 7-page progress report (SAPP)">'+ikon('unduh')+'<span class="pil-t">SAPP report</span></button>':'')+
+    (siswa||ortu()?'<button class="pil lonceng-sembunyi" onclick="sappTopbar()" title="Download the full progress report (SAPP): grades, tests, documents, trackers and preparation lists, letters from school, CV &amp; essays, and every achievement">'+ikon('unduh')+'<span class="pil-t">SAPP report</span></button>':'')+
     (function(){ var n=0; try{ n=butirNotif().length }catch(e){}
       return '<button class="lonceng" onclick="bukaNotif(this)" title="What is waiting for you" aria-label="Notifications">'+ikon('lonceng')+
         (n?'<span class="titik-n">'+(n>9?'9+':n)+'</span>':'')+'</button>' })()+
@@ -4903,7 +5159,7 @@ function butirNav(){
     b('tulis','CV & essays',{badge:(S.tulisan||[]).filter(function(x){return x.catatan&&x.status!=='Final'}).length});
     b('contoh','Writing templates');
     b('admisi','Admission dates');
-    if((S.asean||[]).length) b('pelacak','My trackers');
+    if((S.asean||[]).length||(S.pelacakTerbuka||[]).length) b('pelacak','My trackers',{badge:(S.pelacakTerbuka||[]).filter(function(p){return !p.sudah}).length||undefined});
     kel('With your mentor');
     b('konsul','Consultations',{badge:lencanaKonsul()});
     b('dokumen','My documents',{badge:(S.dokumen||[]).filter(function(x){return x.status==='Revisi'}).length});
@@ -5197,7 +5453,7 @@ function gambarViewInti(){
   if(S.tab==='beranda'){v.innerHTML=viewBeranda();return}
   if(S.tab==='admisi'){v.innerHTML=viewAdmisi();return}
   if(S.tab==='asean') S.tab='pelacak';
-  if(S.tab==='pelacak'&&(bimbing()||pimpinan()||(S.asean||[]).length)){v.innerHTML=viewPelacak();return}
+  if(S.tab==='pelacak'&&(bimbing()||pimpinan()||(S.asean||[]).length||(S.pelacakTerbuka||[]).length)){v.innerHTML=viewPelacak();return}
   if(S.tab==='fotosiswa'&&bimbing()){v.innerHTML=viewFotoSiswa();return}
   if(S.tab==='contoh'){v.innerHTML=viewContoh();return}
   if(S.tab==='rekapk'&&(bimbing()||pimpinan())){v.innerHTML=viewRekapK();return}
@@ -8361,6 +8617,10 @@ function cekRevisi(){
     if(r.revKonsul!==undefined){
       if(S.revKonsul&&r.revKonsul!==S.revKonsul) tarikKonsultasi();
       S.revKonsul=r.revKonsul;
+    }
+    if(r.revKirim!==undefined){
+      if(S.revKirim&&r.revKirim!==S.revKirim&&typeof kmMuat==='function') kmMuat();
+      S.revKirim=r.revKirim;
     }
     if(!S.rev){ S.rev=r.rev; return }
     if(r.rev===S.rev) return;
@@ -16174,7 +16434,7 @@ function asTemplatAsean(){
 }
 
 /* ---------- keadaan ---------- */
-function asSt(){ return S.as=S.as||{program:[],target:[],f:{uni:'all',cari:'',urg:'all'},mode:'kampus',buka:{},antre:{},demo:false,pilih:''} }
+function asSt(){ var A=S.as=S.as||{program:[],target:[],f:{uni:'all',cari:'',urg:'all',kelas:''},mode:'kampus',buka:{},antre:{},demo:false,pilih:''}; if(A.f.kelas===undefined) A.f.kelas=''; return A }
 function asProgramSemua(){
   var A=asSt();
   if(A.demo) return [A.demoP];
@@ -16226,7 +16486,9 @@ function asSemuaTarget(){
   if(S.user.role==='siswa'||ortu()) return (S.asean||[]).map(function(t){ t.pelacak=t.pelacak||'ASEAN'; return asHitung(t) });
   return A.target||[];
 }
-function asData(){ var p=asProg(); return p?asSemuaTarget().filter(function(t){return (t.pelacak||'ASEAN')===p.id}):[] }
+function asDataProg(){ var p=asProg(); return p?asSemuaTarget().filter(function(t){return (t.pelacak||'ASEAN')===p.id}):[] }
+/* Saringan kelas berlaku untuk semua tampilan, angka, dan laporan pelacak. */
+function asData(){ var k=asSt().f.kelas, d=asDataProg(); return k?d.filter(function(t){return asKunciKelas(t.kelas)===asKunciKelas(k)}):d }
 function asUrgensi(t){
   if(t.status==='Completed') return {k:'selesai',l:'Completed'};
   if(!t.tenggat) return {k:'kosong',l:'No follow-up date'};
@@ -16281,7 +16543,7 @@ function viewPelacak(){
   if(A.editor) return asEditorHtml();
   var semuaP=asProgramSemua(), prog=asProg();
   var h='<div class="card as-kepala"><div class="judul-baris"><div><div class="eyebrow">Target trackers</div>'+
-    '<h2>'+(prog?esc(prog.nama):'Target trackers')+'</h2><div class="sub">'+
+    '<h2>'+(prog?esc(prog.nama):'Target trackers')+'</h2>'+(prog?asCakupanHtml(prog):'')+'<div class="sub">'+
     (prog&&prog.deskripsi?esc(prog.deskripsi)+' ':'')+
     (staf?'Grouped by university and focused on each admission deadline. Ticking a step anywhere updates the student’s card, the table and their deck.':'Your progress, step by step. Your mentor ticks each step as it is done.')+'</div></div>'+
     '<div class="pick">'+
@@ -16297,7 +16559,8 @@ function viewPelacak(){
     var tampil=semuaP.filter(function(p){return p.status!=='Arsip'||A.lihatArsip||p.id===A.pilih});
     h+='<div class="as-prog">'+tampil.map(function(p){
       var n=asSemuaTarget().filter(function(t){return (t.pelacak||'ASEAN')===p.id}).length;
-      return '<button class="'+(prog&&p.id===prog.id?'on':'')+(p.status==='Arsip'?' arsip':'')+'" onclick="asPilih(\''+esc(p.id)+'\')"><b>'+esc(p.nama)+'</b><span>'+p.def.kampus.length+' universit'+(p.def.kampus.length===1?'y':'ies')+' · '+n+' target'+(n===1?'':'s')+(p.status==='Arsip'?' · archived':'')+'</span></button>';
+      return '<button class="'+(prog&&p.id===prog.id?'on':'')+(p.status==='Arsip'?' arsip':'')+'" onclick="asPilih(\''+esc(p.id)+'\')"><b>'+esc(p.nama)+'</b><span>'+p.def.kampus.length+' universit'+(p.def.kampus.length===1?'y':'ies')+' · '+n+' target'+(n===1?'':'s')+(p.status==='Arsip'?' · archived':'')+'</span>'+
+        ((p.def.kelas||[]).length?'<em class="as-prog-kls">'+esc(asRingkasKelas(p.def.kelas))+'</em>':'')+'</button>';
     }).join('')+
     (staf&&semuaP.some(function(p){return p.status==='Arsip'})?'<button class="as-prog-arsip" onclick="S.as.lihatArsip=!S.as.lihatArsip;gambarView()">'+(A.lihatArsip?'Hide archived':'Show archived')+'</button>':'')+'</div>';
   }
@@ -16330,6 +16593,11 @@ function viewPelacak(){
   }
   h+='<button class="as-k'+(lewat?' merah':'')+'" onclick="asSaring(\'urg\',\'lewat\')"><span>Overdue follow-ups</span><b>'+lewat+'</b><i>'+(lewat?'Needs action today':'Nothing overdue')+'</i></button></div>';
 
+  if(staf&&!A.demo) h+=asKelasChipHtml(prog);
+  if(!semua.length&&A.f.kelas){
+    return h+asTenggatPita(prog)+'<div class="card" style="margin-top:16px"><div class="empty"><b>No students from class '+esc(A.f.kelas)+' in this tracker yet</b>'+
+      (asBolehUbah()?'<button class="btn gold xs" onclick="asTambahBuka()">Add students from '+esc(A.f.kelas)+'</button> ':'')+'<button class="btn ghost xs" onclick="asSaringKelas(\'\')">Show all classes</button></div></div>'+asLaciHtml();
+  }
   if(!semua.length){
     return h+asTenggatPita(prog)+'<div class="card" style="margin-top:16px"><div class="empty"><b>No students in this tracker yet</b>'+
       (asBolehUbah()?'Press Add students to start tracking'+(staf&&!A.demo?', or Try with sample data to see how it works':'')+'.':'Your mentor has not added you yet.')+'</div></div>'+asLaciHtml();
@@ -16339,6 +16607,7 @@ function viewPelacak(){
   h+='<div class="card as-saring"><div class="as-tab"><button class="'+(f.uni==='all'?'on':'')+'" onclick="asSaring(\'uni\',\'all\')">All universities</button>'+
     ks.map(function(k){ var w=asWarna(prog,k.kode); return '<button class="'+(f.uni===k.kode?'on':'')+'" style="'+(f.uni===k.kode?'background:'+w.a+';color:#fff':'')+'" onclick="asSaring(\'uni\',\''+esc(k.kode)+'\')">'+esc(k.kode)+'</button>' }).join('')+'</div>'+
     '<input type="search" placeholder="Search student name" value="'+esc(f.cari)+'" oninput="S.as.f.cari=this.value;asGambarIsi()">'+
+    (staf&&!A.demo?'<select class="as-kelas-sel" title="Show one class only" onchange="asSaringKelas(this.value)"><option value="">All classes</option>'+asKelasPilihan(prog).map(function(k){return '<option'+(asKunciKelas(f.kelas)===asKunciKelas(k)?' selected':'')+'>'+esc(k)+'</option>'}).join('')+'</select>':'')+
     '<select onchange="asSaring(\'urg\',this.value)">'+[['all','All urgency'],['lewat','Overdue'],['dekat','Due in 3 days'],['selesai','Completed']].map(function(x){return '<option value="'+x[0]+'"'+(f.urg===x[0]?' selected':'')+'>'+x[1]+'</option>'}).join('')+'</select>'+
     '<div class="as-mode">'+[['kampus','By university'],['grup','By student'],['flat','Action list']].map(function(x){return '<button class="'+(A.mode===x[0]?'on':'')+'" onclick="S.as.mode=\''+x[0]+'\';asGambarIsi()">'+x[1]+'</button>'}).join('')+'</div></div>';
   h+='<div id="asIsi">'+asIsiHtml()+'</div>';
@@ -16568,7 +16837,7 @@ function asKirim(){
 /* ---------- menambah siswa ---------- */
 function asTambahBuka(siswaId,kode){
   var A=asSt(), prog=asProg(); if(!prog) return;
-  A.tambah={siswa:siswaId?[siswaId]:[],kampus:kode?[kode]:(prog.def.kampus.length===1?[prog.def.kampus[0].kode]:[]),prog:{},tenggat:'',cari:'',kelas:''};
+  A.tambah={siswa:siswaId?[siswaId]:[],kampus:kode?[kode]:(prog.def.kampus.length===1?[prog.def.kampus[0].kode]:[]),prog:{},tenggat:'',cari:'',kelas:A.f.kelas||''};
   if(S.tab!=='pelacak') pindah('pelacak'); else gambarView();
   setTimeout(function(){ var e=q('asTambahCari'); if(e&&!siswaId) e.focus() },60);
 }
@@ -16586,7 +16855,8 @@ function asTambahHtml(){
     h+='<div class="isi-grid"><label class="bidang s2"><span>Student name (sample)</span><input value="'+esc(e.namaDemo||'')+'" oninput="S.as.tambah.namaDemo=this.value" placeholder="e.g. Siti Nurhaliza"></label>'+
       '<label class="bidang"><span>ASEAN country</span><select onchange="S.as.tambah.negara=this.value">'+AS_NEGARA.map(function(n){return '<option'+((e.negara||'Indonesia')===n?' selected':'')+'>'+n+'</option>'}).join('')+'</select></label></div>';
   }else{
-    var kelas={}; (S.ringkasan||[]).forEach(function(x){ if(x.kelas) kelas[x.kelas]=1 });
+    var kelas={}; (S.ringkasan||[]).forEach(function(x){ if(x.kelas&&asKelasDalam(prog,x.kelas)) kelas[x.kelas]=1 });
+    if((prog.def.kelas||[]).length) h+='<div class="note kecil">This tracker is for <b>'+esc(prog.def.kelas.join(', '))+'</b> only — students from other classes are not listed.</div>';
     h+='<div class="filters ketat"><input id="asTambahCari" type="search" value="'+esc(e.cari)+'" placeholder="Search name" oninput="S.as.tambah.cari=this.value;asTambahDaftar()">'+
       '<select onchange="S.as.tambah.kelas=this.value;asTambahDaftar()"><option value="">All classes</option>'+Object.keys(kelas).sort().map(function(k){return '<option'+(e.kelas===k?' selected':'')+'>'+esc(k)+'</option>'}).join('')+'</select>'+
       '<button class="btn ghost xs" onclick="asTambahSemua(true)">Select shown</button><button class="btn ghost xs" onclick="asTambahSemua(false)">Clear</button>'+
@@ -16598,12 +16868,13 @@ function asTambahHtml(){
 function asTambahKampus(kd,on){ var e=asSt().tambah, i=e.kampus.indexOf(kd); if(on&&i<0) e.kampus.push(kd); if(!on&&i>=0) e.kampus.splice(i,1); gambarView() }
 function asTambahTersaring(){
   var e=asSt().tambah, c=(e.cari||'').toLowerCase();
-  return (S.ringkasan||[]).filter(function(x){ return (!e.kelas||x.kelas===e.kelas)&&(!c||(x.nama+' '+x.kelas).toLowerCase().indexOf(c)>=0) })
+  var prog=asProg();
+  return (S.ringkasan||[]).filter(function(x){ return asKelasDalam(prog,x.kelas)&&(!e.kelas||asKunciKelas(x.kelas)===asKunciKelas(e.kelas))&&(!c||(x.nama+' '+x.kelas).toLowerCase().indexOf(c)>=0) })
     .sort(function(a,b){return (a.kelas+a.nama).localeCompare(b.kelas+b.nama)}).slice(0,400);
 }
 function asTambahDaftarHtml(){
   var e=asSt().tambah, ada={}, prog=asProg();
-  asData().forEach(function(t){ (ada[t.siswaId]=ada[t.siswaId]||[]).push(t.universitas) });
+  asDataProg().forEach(function(t){ (ada[t.siswaId]=ada[t.siswaId]||[]).push(t.universitas) });
   var d=asTambahTersaring();
   if(!d.length) return '<div class="muted kecil">No students match.</div>';
   return d.map(function(x){
@@ -16722,11 +16993,11 @@ function asKodeDari(nama){
   var w=String(nama||'').replace(/\b(of|the|and|for|de|di|dan)\b/gi,' ').split(/[^A-Za-z0-9]+/).filter(Boolean);
   return (w.length>1?w.map(function(x){return x[0]}).join(''):(w[0]||'U').slice(0,6)).toUpperCase().slice(0,8);
 }
-function asEditorBaru(){ asSt().editor={langkah:'templat',templat:'umum',id:'',nama:'',deskripsi:'',beasiswa:'',kampus:[],buka:{}}; gambarView(); window.scrollTo({top:0}) }
+function asEditorBaru(){ var k=asSt().f.kelas; asSt().editor={langkah:'templat',templat:'umum',id:'',nama:'',deskripsi:'',beasiswa:'',kampus:[],buka:{},kelas:k?[k]:[]}; gambarView(); window.scrollTo({top:0}) }
 function asEditorUbah(id){
   var p=asProgId(id); if(!p) return;
   var d=JSON.parse(JSON.stringify(p.def));
-  asSt().editor={langkah:'isi',id:p.id,nama:p.nama,deskripsi:p.deskripsi||'',beasiswa:d.beasiswa||'',profilAsean:!!d.profilAsean,status:p.status,
+  asSt().editor={langkah:'isi',id:p.id,nama:p.nama,deskripsi:p.deskripsi||'',beasiswa:d.beasiswa||'',profilAsean:!!d.profilAsean,status:p.status,kelas:(d.kelas||[]).slice(),
     kampus:d.kampus.map(function(k){ delete k.tenggatAdmisi; delete k.bukaAdmisi; delete k.sumberTenggat; k.syaratTeks=(k.syarat||[]).join('\n'); return k }),buka:{}};
   gambarView(); window.scrollTo({top:0});
 }
@@ -16762,7 +17033,8 @@ function asEditorHtml(){
   h+='<div class="isi-grid"><label class="bidang s2"><span>Tracker name</span><input value="'+esc(E.nama)+'" placeholder="e.g. Japan MEXT 2027" oninput="S.as.editor.nama=this.value"></label>'+
     '<label class="bidang s2"><span>Scholarship name (optional — added to students’ decks)</span><input value="'+esc(E.beasiswa||'')+'" placeholder="e.g. MEXT Scholarship" oninput="S.as.editor.beasiswa=this.value"></label>'+
     '<label class="bidang s4"><span>Description</span><input value="'+esc(E.deskripsi)+'" oninput="S.as.editor.deskripsi=this.value"></label>'+
-    '<div class="bidang s4"><span>Options</span><label class="tl-cek"><input type="checkbox"'+(E.profilAsean?' checked':'')+' onchange="S.as.editor.profilAsean=this.checked"> <span>Ask for ASEAN nationality on each student’s profile</span></label></div></div>';
+    '<div class="bidang s4"><span>Options</span><label class="tl-cek"><input type="checkbox"'+(E.profilAsean?' checked':'')+' onchange="S.as.editor.profilAsean=this.checked"> <span>Ask for ASEAN nationality on each student’s profile</span></label></div></div>'+
+    asEdKelasHtml();
   h+='<h3 class="rk-h3">Universities · '+E.kampus.length+'</h3><datalist id="asEdKampusL">'+(S.univ||[]).slice(0,2500).map(function(u){return '<option value="'+esc(u.nama)+'">'}).join('')+'</datalist>'+
     '<div class="pick ketat"><input id="asEdKampus" list="asEdKampusL" placeholder="Type or pick a university from the database" style="flex:1 1 280px" onkeydown="if(event.key===\'Enter\'){event.preventDefault();asEditorTambahKampus()}">'+
     '<button class="btn sea sm" onclick="asEditorTambahKampus()">'+ikon('plus')+'Add university</button>'+
@@ -16784,7 +17056,8 @@ function asEditorHtml(){
         '<label class="bidang"><span>Applications open</span><input type="date" value="'+esc(k.buka||'')+'" onchange="asEdK('+i+').buka=this.value"></label>'+
         '<label class="bidang s2"><span>Official page</span><input type="url" value="'+esc(k.tautan||'')+'" placeholder="https://" onchange="asEdK('+i+').tautan=this.value"></label>'+
         '<label class="bidang"><span>Colour</span><input type="color" value="'+esc(k.warna||w[0])+'" onchange="asEdK('+i+').warna=this.value;gambarView()"></label>'+
-        '<label class="bidang"><span>Accent</span><input type="color" value="'+esc(k.warna2||w[1])+'" onchange="asEdK('+i+').warna2=this.value;gambarView()"></label></div>';
+        '<label class="bidang"><span>Accent</span><input type="color" value="'+esc(k.warna2||w[1])+'" onchange="asEdK('+i+').warna2=this.value;gambarView()"></label>'+
+        '<div class="bidang s4"><label class="tl-cek"><input type="checkbox"'+(k.generik?' checked':'')+' onchange="asEdK('+i+').generik=this.checked"> <span><b>This is a programme or region, not one university</b> — e.g. a scholarship or “Universities in Malaysia”. Students then choose their own universities and majors in Gate D.</span></label></div></div>';
       k.fase.forEach(function(f,fi){
         h+='<div class="as-ed-f"><div class="as-ed-fh"><span class="as-fk">Phase '+(fi+1)+'</span><input value="'+esc(f.nama)+'" onchange="asEdK('+i+').fase['+fi+'].nama=this.value">'+
           '<button class="btn ghost xs" onclick="asEdFaseGeser('+i+','+fi+',-1)"'+(fi?'':' disabled')+'>↑</button><button class="btn ghost xs" onclick="asEdFaseGeser('+i+','+fi+',1)"'+(fi<k.fase.length-1?'':' disabled')+'>↓</button>'+
@@ -16809,7 +17082,7 @@ function asEditorHtml(){
     h+='</div>';
   });
   h+='<div class="pick" style="margin-top:14px"><button class="btn gold" id="asEdSimpanB" onclick="asEditorSimpan()">'+(E.id?'Save tracker':'Create tracker')+'</button>'+
-    (E.id?'<button class="btn ghost" onclick="asArsip(\''+esc(E.id)+'\')">'+(E.status==='Arsip'?'Restore':'Archive')+'</button><button class="btn ghost bahaya" onclick="asHapusProgram(\''+esc(E.id)+'\')">Delete tracker</button>':'')+
+    (E.id?'<button class="btn ghost" onclick="asEdDuplikat()" title="Make a copy of this tracker for another class">Duplicate for another class</button><button class="btn ghost" onclick="asArsip(\''+esc(E.id)+'\')">'+(E.status==='Arsip'?'Restore':'Archive')+'</button><button class="btn ghost bahaya" onclick="asHapusProgram(\''+esc(E.id)+'\')">Delete tracker</button>':'')+
     '<span class="eyebrow">Students already in the tracker keep their ticks for steps that still exist.</span></div></div>';
   return h;
 }
@@ -16835,8 +17108,8 @@ function asEditorSimpan(){
   if(!E.kampus.length){ toast('Add at least one university.',true); return }
   var kosong=E.kampus.filter(function(k){ return !k.fase.some(function(f){ return f.langkah.some(function(l){return sv(l.t)}) }) });
   if(kosong.length){ toast(kosong[0].nama+' has no steps yet.',true); return }
-  var def={beasiswa:E.beasiswa||'',profilAsean:!!E.profilAsean,kampus:E.kampus.map(function(k){
-    return {kode:k.kode,nama:k.nama,negara:k.negara||'',warna:k.warna||'',warna2:k.warna2||'',deadline:k.deadline||'',buka:k.buka||'',tautan:k.tautan||'',
+  var def={beasiswa:E.beasiswa||'',profilAsean:!!E.profilAsean,kelas:(E.kelas||[]).slice(),kampus:E.kampus.map(function(k){
+    return {kode:k.kode,nama:k.nama,generik:!!k.generik,negara:k.negara||'',warna:k.warna||'',warna2:k.warna2||'',deadline:k.deadline||'',buka:k.buka||'',tautan:k.tautan||'',
       fase:k.fase.map(function(f){ return {id:f.id,nama:f.nama,langkah:f.langkah.filter(function(l){return sv(l.t)}).map(function(l){return {id:l.id,t:l.t,tanda:l.tanda||''}})} }).filter(function(f){return f.langkah.length}),
       manfaat:(k.manfaat||[]).filter(function(m){return sv(m[0])||sv(m[1])}),syarat:String(k.syaratTeks||'').split('\n').map(function(x){return x.trim()}).filter(Boolean)};
   })};
@@ -16876,7 +17149,8 @@ function asHapusProgram(id){
 
 /* ---------- laporan tetap per kampus (PDF / Excel) ---------- */
 function asLaporanData(){
-  var prog=asProg(), r=asTersaring();
+  var prog=asProg(), r=asTersaring(), kls=asSt().f.kelas;
+  if(kls) prog=Object.assign({},prog,{nama:prog.nama+' · Class '+kls});
   var ks=prog.def.kampus.filter(function(k){return asSt().f.uni==='all'||k.kode===asSt().f.uni}).slice().sort(function(a,b){return (a.tenggatAdmisi||'9999')<(b.tenggatAdmisi||'9999')?-1:1});
   var kepala=['No','Student','Class','Programme','Progress','Current phase','Next step','Status','Follow-up by','Notes'];
   var grup=ks.map(function(k){
@@ -19717,6 +19991,7 @@ function viewKarya(){
       '<div><b>'+berkas.length+'</b><span>uploaded files</span></div><div><b class="merah">'+siswa.filter(function(x){return !punya[x.id]}).length+'</b><span>students with nothing yet</span></div></div>'+
     '<div class="kr-tab"><button class="'+(K.bagian==='tulis'?'on':'')+'" onclick="S.kr.bagian=\'tulis\';gambarView()">CV &amp; essays · '+tampilDok.length+'</button>'+
       '<button class="'+(K.bagian==='berkas'?'on':'')+'" onclick="S.kr.bagian=\'berkas\';gambarView()">Uploaded files · '+tampilBerkas.length+'</button>'+
+      '<button class="'+(K.bagian==='kiriman'?'on':'')+'" onclick="S.kr.bagian=\'kiriman\';gambarView()">From school · '+(S.kiriman||[]).filter(lolos).length+'</button>'+
       '<button class="'+(K.bagian==='belum'?'on':'')+'" onclick="S.kr.bagian=\'belum\';gambarView()">Nothing yet · '+belum.length+'</button></div>'+
     '<div class="filters ketat"><input type="search" placeholder="Search student or title" value="'+esc(K.cari)+'" oninput="S.kr.cari=this.value;clearTimeout(S.kr.t);S.kr.t=setTimeout(gambarView,200)">'+
       '<select onchange="S.kr.kelas=this.value;gambarView()"><option value="">All classes</option>'+Object.keys(kelas).sort().map(function(k){return '<option'+(K.kelas===k?' selected':'')+'>'+esc(k)+'</option>'}).join('')+'</select>'+
@@ -19741,6 +20016,15 @@ function viewKarya(){
         }).join('')+'</div>';
     }).join('')+'</div>';
     return h;
+  }
+  if(K.bagian==='kiriman'){
+    var km=(S.kiriman||[]).filter(lolos);
+    if(!km.length) return h+'<div class="card"><div class="empty"><b>No letters or files sent yet</b>Transcripts, recommendation letters and other PDFs sent to students from Letters &amp; files appear here, per student.</div></div>';
+    var gk={}, uk=[]; km.forEach(function(x){ if(!gk[x.siswaId]){ gk[x.siswaId]={nama:x.nama,kelas:x.kelas,id:x.siswaId,d:[]}; uk.push(x.siswaId) } gk[x.siswaId].d.push(x) });
+    uk.sort(function(a,b){ return (String(gk[a].kelas)+gk[a].nama).localeCompare(String(gk[b].kelas)+gk[b].nama) });
+    return h+'<div class="kr-kiriman">'+uk.map(function(sid){ var g=gk[sid], ok=g.d.filter(function(x){return x.status==='Approved'}).length;
+      return '<div class="card kr-siswa"><div class="kr-siswa-h">'+avatarHtml(g.nama,g.id,'','kecil')+'<div><button class="kr-nama" onclick="bukaSiswa(\''+esc(g.id)+'\')">'+esc(g.nama)+'</button><span>'+esc(g.kelas||'—')+' · '+g.d.length+' file(s) · '+ok+' approved</span></div></div>'+
+        '<div class="km-daftar">'+g.d.map(kmKartuHtml).join('')+'</div></div>' }).join('')+'</div>';
   }
   if(K.bagian==='berkas'){
     if(!tampilBerkas.length) return h+'<div class="card"><div class="empty"><b>No uploaded files match</b>Files students hand in appear here and on the Documents board.</div></div>';
@@ -19836,6 +20120,1532 @@ function lihatBerkas(jenis,id,judul){
     wadah.innerHTML='<div class="note bad">'+esc(e.message)+'</div>';
   });
 }
+
+
+/* =======================================================
+   PELACAK TARGET PER KELAS
+   Satu pelacak bisa dibatasi ke kelas tertentu (mis. XII.1 saja) —
+   cakupannya lebih sempit dan fokus. Di halaman Target trackers,
+   mentor juga bisa menyaring satu kelas: angka, tampilan per kampus,
+   daftar tindakan, dan laporan PDF/Excel/Word ikut kelas itu.
+   ======================================================= */
+function asNormKelas(v){
+  var t=String(v==null?'':v).toUpperCase().replace(/\s+/g,' ').trim(); if(!t) return '';
+  var m=t.match(/^(XII|XI|X|12|11|10)\b[\s.\-]*(?:IPA|IPS|PA|MIPA)?[\s.\-]*([1-6])\b/)||t.match(/^(XII|XI|X)([1-6])$/);
+  if(!m) return t;
+  return ({'10':'X','11':'XI','12':'XII'}[m[1]]||m[1])+'.'+m[2];
+}
+function asKunciKelas(v){ return asNormKelas(v).toLowerCase().replace(/[^a-z0-9]+/g,'') }
+function asKelasDalam(prog,kelas){
+  var ks=(prog&&prog.def&&prog.def.kelas)||[]; if(!ks.length) return true;
+  var k=asKunciKelas(kelas); return !!k&&ks.some(function(x){return asKunciKelas(x)===k});
+}
+function asTingkat(k){ var m=asNormKelas(k).match(/^(XII|XI|X)\b/); return m?m[1]:'' }
+/* "XII.1, XII.2, XII.3" → "XII.1–3"; kelas lain tetap ditulis lengkap. */
+function asRingkasKelas(ks){
+  var per={}, lain=[];
+  (ks||[]).forEach(function(k){ var n=asNormKelas(k), m=n.match(/^(XII|XI|X)\.(\d)$/); if(m) (per[m[1]]=per[m[1]]||[]).push(+m[2]); else lain.push(k) });
+  var out=[];
+  ['X','XI','XII'].forEach(function(t){ var a=(per[t]||[]).sort(); if(!a.length) return;
+    var urut=a.every(function(x,i){return !i||x===a[i-1]+1});
+    out.push(a.length===1?t+'.'+a[0]:urut?t+'.'+a[0]+'–'+a[a.length-1]:a.map(function(x){return t+'.'+x}).join(', ')) });
+  return 'Class '+out.concat(lain).join(', ');
+}
+function asCakupanHtml(prog){
+  var ks=(prog.def&&prog.def.kelas)||[];
+  if(!ks.length) return bimbing()?'<div class="as-cakupan"><span class="as-ck semua">All classes</span><button class="as-ck-ubah" onclick="asEditorUbah(\''+esc(prog.id)+'\')">Limit to a class</button></div>':'';
+  return '<div class="as-cakupan"><span class="eyebrow">For</span>'+ks.map(function(k){return '<span class="as-ck">'+esc(k)+'</span>'}).join('')+
+    (bimbing()?'<button class="as-ck-ubah" onclick="asEditorUbah(\''+esc(prog.id)+'\')">Change classes</button>':'')+'</div>';
+}
+/* Semua kelas yang dikenal: siswa aktif, ringkasan papan, dan cakupan pelacak. */
+function kelasSemuaKlien(tambahan){
+  var m={}, out=[];
+  function t(k){ k=String(k||'').trim(); if(!k) return; var kk=asKunciKelas(k); if(!kk||m[kk]) return; m[kk]=1; out.push(asNormKelas(k)) }
+  (S.daftarKelas||[]).forEach(t); (S.ringkasan||[]).forEach(function(x){ t(x.kelas) }); (tambahan||[]).forEach(t);
+  function nilai(k){ var mm=k.match(/^(XII|XI|X)\.(\d)$/); return mm?({X:1,XI:2,XII:3}[mm[1]]*10+(+mm[2])):999 }
+  return out.sort(function(a,b){ return nilai(a)-nilai(b)||a.localeCompare(b) });
+}
+function asKelasPilihan(prog){
+  var ks=(prog.def&&prog.def.kelas)||[];
+  if(ks.length) return kelasSemuaKlien(ks).filter(function(k){return asKelasDalam(prog,k)});
+  var ada={}; asDataProg().forEach(function(t){ if(t.kelas) ada[asKunciKelas(t.kelas)]=1 });
+  return kelasSemuaKlien().filter(function(k){ return ada[asKunciKelas(k)] });
+}
+function asSaringKelas(k){ var A=asSt(); A.f.kelas=k||''; A.laci=null; gambarView() }
+function asKelasChipHtml(prog){
+  var d=asDataProg(), per={};
+  d.forEach(function(t){ var k=asNormKelas(t.kelas)||'—'; per[k]=per[k]||{siswa:{},n:0,sel:0}; per[k].siswa[t.siswaId]=1; per[k].n++; if(t.status==='Completed') per[k].sel++ });
+  var daftar=asKelasPilihan(prog); Object.keys(per).forEach(function(k){ if(daftar.indexOf(k)<0) daftar.push(k) });
+  if(daftar.length<2&&!asSt().f.kelas) return '';
+  var aktif=asKunciKelas(asSt().f.kelas);
+  return '<div class="card as-kelas"><div class="as-kelas-h"><b>By class</b><span class="muted kecil">Pick a class to narrow every view, number and report to it.</span></div><div class="as-kelas-r">'+
+    (function(){ var n=Object.keys(d.reduce(function(o,t){o[t.siswaId]=1;return o},{})).length; return '<button class="'+(!aktif?'on':'')+'" onclick="asSaringKelas(\'\')"><b>All classes</b><span>'+n+' student'+(n===1?'':'s')+'</span></button>' })()+
+    daftar.map(function(k){ var x=per[k]||{siswa:{},n:0,sel:0}, ns=Object.keys(x.siswa).length, luar=!asKelasDalam(prog,k);
+      return '<button class="'+(aktif===asKunciKelas(k)?'on':'')+(luar?' luar':'')+'" onclick="asSaringKelas(\''+esc(k)+'\')"'+(luar?' title="Outside this tracker’s classes — added by hand"':'')+'><b>'+esc(k)+'</b><span>'+ns+' student'+(ns===1?'':'s')+' · '+x.n+' target'+(x.n===1?'':'s')+'</span>'+
+        (x.n?'<i><em style="width:'+Math.round(x.sel/x.n*100)+'%"></em></i>':'')+'</button>' }).join('')+'</div></div>';
+}
+
+/* ---------- editor: memilih kelas ---------- */
+function asEdKelasHtml(){
+  var E=asSt().editor; E.kelas=E.kelas||[];
+  var semua=kelasSemuaKlien(E.kelas.concat(S.kelasOpsi&&!(S.daftarKelas||[]).length?S.kelasOpsi:[]));
+  var per={}; semua.forEach(function(k){ var t=asTingkat(k)||'Other'; (per[t]=per[t]||[]).push(k) });
+  var pilih={}; E.kelas.forEach(function(k){ pilih[asKunciKelas(k)]=1 });
+  var h='<div class="as-ed-kelas"><div class="as-ed-kelas-h"><div><h3 class="rk-h3" style="margin:0">Classes</h3><span class="muted kecil">'+
+    (E.kelas.length?'Only students of <b>'+esc(E.kelas.join(', '))+'</b> are added — automatically from their decks, or with Add students.':'Leave empty to cover every class. Pick classes to keep this tracker focused on them.')+'</span></div>'+
+    (E.kelas.length?'<button class="btn ghost xs" onclick="S.as.editor.kelas=[];gambarView()">All classes</button>':'')+'</div>';
+  ['XII','XI','X','Other'].forEach(function(t){
+    var ks=per[t]; if(!ks||!ks.length) return;
+    var semuaPilih=ks.every(function(k){return pilih[asKunciKelas(k)]});
+    h+='<div class="as-ed-kelas-b"><button class="as-ed-tk'+(semuaPilih?' on':'')+'" onclick="asEdKelasTingkat(\''+t+'\','+(semuaPilih?'false':'true')+')">'+(t==='Other'?'Other':'Grade '+t)+'</button>'+
+      ks.map(function(k){ var on=pilih[asKunciKelas(k)];
+        return '<label class="as-ed-kc'+(on?' on':'')+'"><input type="checkbox"'+(on?' checked':'')+' onchange="asEdKelasTogel(\''+esc(k)+'\',this.checked)"> '+esc(k)+'</label>' }).join('')+'</div>';
+  });
+  if(!semua.length) h+='<div class="muted kecil">No classes found yet — students’ classes appear here once they have accounts.</div>';
+  return h+'</div>';
+}
+function asEdKelasTogel(k,on){
+  var E=asSt().editor, kk=asKunciKelas(k);
+  E.kelas=(E.kelas||[]).filter(function(x){return asKunciKelas(x)!==kk});
+  if(on) E.kelas.push(asNormKelas(k));
+  gambarView();
+}
+function asEdKelasTingkat(t,on){
+  var E=asSt().editor, ks=kelasSemuaKlien(E.kelas).filter(function(k){return (asTingkat(k)||'Other')===t});
+  ks.forEach(function(k){ var kk=asKunciKelas(k); E.kelas=E.kelas.filter(function(x){return asKunciKelas(x)!==kk}); if(on) E.kelas.push(k) });
+  gambarView();
+}
+function asEdDuplikat(){
+  var E=asSt().editor; if(!E) return;
+  E.id=''; E.status='Aktif'; E.nama=E.nama.replace(/\s*\((copy|salinan)\)$/i,'')+' (copy)'; E.kelas=[];
+  E.kampus.forEach(function(k){ k.fase.forEach(function(f){ delete f.id; f.langkah.forEach(function(l){ delete l.id }) }) });
+  toast('This is now a new tracker. Choose its classes, rename it, then press Create tracker.');
+  gambarView(); window.scrollTo({top:0});
+}
+
+/* =======================================================
+   LETTERS & FILES — BERKAS DARI SEKOLAH UNTUK SISWA
+   Guru/admin mengirim PDF (mis. surat rekomendasi kepala sekolah)
+   langsung ke siswa lewat deck. Siswa membukanya di aplikasi,
+   mengunduhnya, dan menulis apa yang kurang. Guru membalas dan
+   mengunggah versi baru — sampai siswa menekan Approve.
+   ======================================================= */
+BATAS_KHUSUS.kirimanKirim=120000; BATAS_KHUSUS.kirimanTanggapi=120000; BATAS_KHUSUS.kirimanHapus=45000;
+ULANG_KHUSUS.kirimanKirim=0; ULANG_KHUSUS.kirimanTanggapi=0; ULANG_KHUSUS.kirimanHapus=0;
+IKON_TAB.kiriman='file';
+var KM_BATAS_MB=10;
+
+function kmSt(){ return S.km=S.km||{cari:'',kelas:'',status:'',form:null,draf:{}} }
+function kmGuru(){ return bimbing()||pimpinan() }  /* guru, admin, kepala & wakil kepala sekolah boleh mengirim */
+function kmSiswa(){ return S.user&&S.user.role==='siswa' }
+function kmBolehTanggap(){ return kmGuru()||kmSiswa() }
+function kmJenisDeck(){ return S.jenisKirimanDeck||['Diploma & academic transcript','Sworn translation of diploma & transcript','Curriculum Vitae (CV)','Recommendation letter 1','Recommendation letter 2','Birth certificate & family card','Police clearance certificate (SKCK)'] }
+function kmCari(id){ return (S.kiriman||[]).filter(function(k){return k.id===id})[0]||null }
+function kmBaruSaya(){
+  return (S.kiriman||[]).filter(function(k){ return k.baru>0&&(kmSiswa()||(kmGuru()&&k.milikSaya)) });
+}
+function kmWaktu(ms){
+  if(!ms) return '';
+  var d=new Date(Number(ms)), b=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return d.getDate()+' '+b[d.getMonth()]+(d.getFullYear()!==new Date().getFullYear()?' '+d.getFullYear():'')+', '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
+}
+function kmStatusLabel(st){ return {'Sent':'Sent · waiting for the student','Needs changes':'Needs changes','Revised':'Revised · check again','Approved':'Approved'}[st]||st }
+function kmLencana(st){ return '<span class="km-st km-'+String(st||'').toLowerCase().replace(/\s+/g,'-')+'">'+esc(st==='Sent'?'Sent':st)+'</span>' }
+function kmTerakhir(k){
+  var c=(k.komentar||[]).slice(-1)[0];
+  if(!c) return 'Sent '+kmWaktu((k.versi[0]||{}).waktu);
+  if(c.jenis==='versi') return c.nama+' uploaded version '+c.v+' · '+kmWaktu(c.waktu);
+  if(c.jenis==='setuju') return c.nama+' approved · '+kmWaktu(c.waktu);
+  if(c.jenis==='status') return c.teks+' · '+kmWaktu(c.waktu);
+  return c.nama+': “'+String(c.teks||'').slice(0,90)+(String(c.teks||'').length>90?'…':'')+'” · '+kmWaktu(c.waktu);
+}
+
+/* ---------- data ---------- */
+var KM_MUAT=false;
+function kmMuat(){
+  if(KM_MUAT||!S.token) return Promise.resolve();
+  KM_MUAT=true;
+  return call('kirimanDaftar',S.token).then(function(r){
+    KM_MUAT=false;
+    if(!r||!r.ok){ if(r&&r.error==='SESI_HABIS') sesiHabis(); return }
+    kmTerapkan(r.kiriman||[]);
+    if(r.rev) S.revKirim=r.rev;
+    if(r.jenis) S.jenisKiriman=r.jenis;
+    if(r.jenisDeck) S.jenisKirimanDeck=r.jenisDeck;
+  }).catch(function(){ KM_MUAT=false });
+}
+function kmTerapkan(daftar){
+  var lama=JSON.stringify(S.kiriman||[]);
+  S.kiriman=daftar;
+  if(lama===JSON.stringify(daftar)) return;
+  try{ gambarNav(); gambarTopbar() }catch(e){}
+  if(q('kmModal')) kmPanelSegarkan();
+  else if((S.tab==='kiriman'||S.tab==='detail')&&!S.detailDirty&&!(S.km&&S.km.form)) gambarView();
+}
+(function(){
+  var lama=terapkanBootstrap;
+  terapkanBootstrap=function(r,awal){
+    var h=lama.apply(this,arguments);
+    if(r&&r.kiriman) S.kiriman=r.kiriman; else if(!S.kiriman) S.kiriman=[];
+    if(r&&r.jenisKiriman) S.jenisKiriman=r.jenisKiriman;
+    if(r&&r.jenisKirimanDeck) S.jenisKirimanDeck=r.jenisKirimanDeck;
+    if(r&&r.revKirim) S.revKirim=r.revKirim;
+    return h;
+  };
+})();
+
+/* ---------- menu, lonceng, dan rute ---------- */
+(function(){
+  var lamaNav=butirNav;
+  butirNav=function(){
+    var d=lamaNav.apply(this,arguments), r=S.user.role;
+    var label=(r==='siswa'||r==='ortu')?'Letters from school':'Letters & files';
+    var baru=kmBaruSaya().reduce(function(s,k){return s+k.baru},0);
+    var item={id:'kiriman',label:label};
+    if(baru) item.badge=baru;
+    else if(kmGuru()||pimpinan()){ var n=(S.kiriman||[]).filter(function(k){return k.status==='Needs changes'}).length; if(n) item.meta=n+' to fix' }
+    var setelah=r==='ortu'?'tulis':'dokumen', i=-1;
+    d.forEach(function(x,j){ if(x.id===setelah) i=j });
+    if(i<0) d.push(item); else d.splice(i+1,0,item);
+    return d;
+  };
+  var lamaNotif=butirNotif;
+  butirNotif=function(){
+    var out=lamaNotif.apply(this,arguments);
+    try{
+      kmBaruSaya().slice(0,4).forEach(function(k){
+        out.unshift({ikon:'file',judul:(kmSiswa()?(k.dilihatSiswa?k.baru+' update'+(k.baru>1?'s':''):'New file')+' · '+k.judul:k.baru+' new comment'+(k.baru>1?'s':'')+' · '+k.judul),
+          ket:kmSiswa()?('From '+k.guru):k.nama+' · '+k.kelas,buka:function(){ pindah('kiriman'); setTimeout(function(){ kmBuka(k.id) },60) }});
+      });
+    }catch(e){}
+    return out;
+  };
+  var lamaInti=gambarViewInti;
+  gambarViewInti=function(){
+    if(S.tab==='kiriman'){ q('view').innerHTML=viewKiriman(); return }
+    return lamaInti.apply(this,arguments);
+  };
+})();
+
+/* ---------- halaman ---------- */
+function viewKiriman(){
+  var K=kmSt(), staf=kmGuru()||pimpinan(), d=S.kiriman||[];
+  var h='<div class="card km-kepala"><div class="judul-baris"><div><div class="eyebrow">'+(staf?'Letters & files · every class':'From your mentors')+'</div>'+
+    '<h2>'+(staf?'Letters &amp; files for students':ortu()?'Letters from school':'Letters from school')+'</h2>'+
+    '<div class="sub">'+(staf?'Send a PDF — such as a recommendation letter from the principal — straight to a student. They read and download it in the app and comment on anything that needs fixing; you reply and upload a corrected version until they approve it.':
+      ortu()?'Letters and files the school sent to your child, with every version and comment.':
+      'Letters and files from your mentors, such as a recommendation letter. Read each one carefully. If something is wrong or missing, write a comment; when it is correct, press Approve.')+'</div></div>'+
+    '<div class="pick">'+(kmGuru()?'<button class="btn gold sm" onclick="kmFormBuka()">'+ikon('kirim')+'Send a file</button>':'')+
+    '<button class="btn ghost sm" onclick="kmMuat().then(function(){gambarView()})">Refresh</button></div></div>';
+  if(staf&&d.length){
+    var n=function(f){return d.filter(f).length};
+    h+='<div class="km-angka"><div><b>'+d.length+'</b><span>files sent</span></div>'+
+      '<div><b class="emas">'+n(function(k){return k.status==='Sent'||k.status==='Revised'})+'</b><span>waiting for the student</span></div>'+
+      '<div><b class="merah">'+n(function(k){return k.status==='Needs changes'})+'</b><span>need changes</span></div>'+
+      '<div><b class="hijau">'+n(function(k){return k.status==='Approved'})+'</b><span>approved</span></div></div>';
+  }
+  h+='</div>';
+  if(K.form) h+=kmFormHtml();
+  if(!d.length){
+    return h+'<div class="card"><div class="empty"><b>'+(staf?'Nothing sent yet':'No letters yet')+'</b>'+
+      (kmGuru()?'Press Send a file to send a PDF to one student, several students, or a whole class.':'Files your mentors send you will appear here.')+'</div></div>';
+  }
+  var tampil=d;
+  if(staf){
+    var kelas={}; d.forEach(function(k){ if(k.kelas) kelas[k.kelas]=1 });
+    var c=K.cari.toLowerCase();
+    tampil=d.filter(function(k){ return (!K.kelas||k.kelas===K.kelas)&&(!K.status||k.status===K.status)&&(!c||(k.nama+' '+k.judul+' '+k.jenis).toLowerCase().indexOf(c)>=0) });
+    h+='<div class="card km-saring"><div class="filters ketat"><input type="search" placeholder="Search student or title" value="'+esc(K.cari)+'" oninput="S.km.cari=this.value;clearTimeout(S.km.t);S.km.t=setTimeout(gambarView,200)">'+
+      '<select onchange="S.km.kelas=this.value;gambarView()"><option value="">All classes</option>'+kelasSemuaKlien(Object.keys(kelas)).filter(function(k){return kelas[k]}).map(function(k){return '<option'+(K.kelas===k?' selected':'')+'>'+esc(k)+'</option>'}).join('')+'</select>'+
+      '<select onchange="S.km.status=this.value;gambarView()"><option value="">Any status</option>'+(S.statusKiriman||['Sent','Needs changes','Revised','Approved']).map(function(x){return '<option'+(K.status===x?' selected':'')+'>'+esc(x)+'</option>'}).join('')+'</select></div></div>';
+    if(!tampil.length) return h+'<div class="card"><div class="empty kecil"><b>Nothing matches</b>Change the filters.</div></div>';
+  }
+  return h+'<div class="km-daftar">'+tampil.map(kmKartuHtml).join('')+'</div>';
+}
+function kmKartuHtml(k){
+  var staf=kmGuru()||pimpinan(), v=k.versi[k.versi.length-1]||{};
+  return '<div class="card km-k km-'+esc(k.status.toLowerCase().replace(/\s+/g,'-'))+(k.baru?' baru':'')+'">'+
+    '<button class="km-k-ikon" onclick="kmBuka(\''+esc(k.id)+'\')" title="Open">PDF<span>v'+(v.v||1)+'</span></button>'+
+    '<div class="km-k-isi"><div class="km-k-a"><button class="km-k-judul" onclick="kmBuka(\''+esc(k.id)+'\')">'+esc(k.judul)+'</button>'+
+      '<span class="tag tipis">'+esc(k.jenis)+'</span>'+kmLencana(k.status)+(k.baru?'<span class="km-baru">'+k.baru+' new</span>':'')+
+      (k.barisDeck?'<span class="km-deck" title="Counted in the student’s preparation progress">Gate B · '+(k.status==='Approved'||(k.selesai&&k.status!=='Needs changes')?'Done':'In progress')+'</span>':'')+'</div>'+
+      '<div class="km-k-b">'+(staf?'<b>'+esc(k.nama)+'</b> · '+esc(k.kelas||'—')+' · ':'')+'from '+esc(k.guru||'your mentor')+' · '+esc(kmWaktu((k.versi[0]||{}).waktu)||k.tanggal)+'</div>'+
+      '<div class="km-k-c">'+esc(kmTerakhir(k))+'</div></div>'+
+    '<div class="km-k-aksi"><button class="btn sea xs" onclick="kmBuka(\''+esc(k.id)+'\')">'+(kmSiswa()&&k.status!=='Approved'?'Open &amp; review':'Open')+'</button>'+
+      '<button class="btn ghost xs" onclick="unduhBerkas(\'kiriman\',\''+esc(k.id)+'|'+(v.v||1)+'\')">'+ikon('unduh')+'Download</button></div></div>';
+}
+
+/* ---------- formulir kirim (guru/admin) ---------- */
+function kmFormBuka(siswaId){
+  var K=kmSt();
+  K.form={siswa:siswaId?[siswaId]:[],judul:'',jenis:(S.jenisKiriman||['Diploma & academic transcript'])[0],pesan:'',cari:'',kelas:'',kabari:true,berkas:null,selesai:true};
+  if(S.tab!=='kiriman') pindah('kiriman'); else gambarView();
+  window.scrollTo({top:0});
+}
+function kmFormHtml(){
+  var F=kmSt().form, kelas={};
+  (S.ringkasan||[]).forEach(function(x){ if(x.kelas) kelas[x.kelas]=1 });
+  return '<div class="card form-blok km-form"><div class="judul-baris rapat"><h3>Send a file to students</h3><button class="btn ghost xs" onclick="S.km.form=null;gambarView()">Cancel</button></div>'+
+    '<div class="km-form-g"><div class="km-form-kiri">'+
+      '<label class="bidang"><span>Title</span><input id="kmJudul" value="'+esc(F.judul)+'" maxlength="160" placeholder="e.g. Recommendation letter from the principal" oninput="S.km.form.judul=this.value"></label>'+
+      '<label class="bidang"><span>Document type</span><select onchange="S.km.form.jenis=this.value;gambarView()">'+
+        '<optgroup label="Counts in the student’s deck · Gate B Documents">'+kmJenisDeck().map(function(j){return '<option'+(F.jenis===j?' selected':'')+'>'+esc(j)+'</option>'}).join('')+'</optgroup>'+
+        '<optgroup label="Other files">'+(S.jenisKiriman||[]).filter(function(j){return kmJenisDeck().indexOf(j)<0}).map(function(j){return '<option'+(F.jenis===j?' selected':'')+'>'+esc(j)+'</option>'}).join('')+'</optgroup></select></label>'+
+      (kmJenisDeck().indexOf(F.jenis)>=0?'<div class="km-deck-info">'+ikon('centang')+'<div><b>Updates the student’s preparation progress</b><span>The row “'+esc(F.jenis)+'” in Gate B · Documents is filled in for every student you choose.</span>'+
+        '<label class="tl-cek"><input type="checkbox"'+(F.selesai?' checked':'')+' onchange="S.km.form.selesai=this.checked"> <span>This is the final document — mark it <b>Done</b> now. Untick to show it as <b>In progress</b> until the student approves.</span></label></div></div>':
+        '<div class="muted kecil">This type does not change the deck progress.</div>')+
+      '<label class="bidang"><span>Message to the student (optional)</span><textarea rows="3" maxlength="2000" placeholder="e.g. Please check your name, programme and university. Tell me if anything is wrong." oninput="S.km.form.pesan=this.value">'+esc(F.pesan)+'</textarea></label>'+
+      '<div class="bidang"><span>PDF file (max '+KM_BATAS_MB+' MB)</span>'+
+        (F.berkas?'<div class="km-berkas-pilih">'+ikon('file')+'<b>'+esc(F.berkas.name)+'</b><span>'+Math.max(1,Math.round(F.berkas.size/1024))+' KB</span></div>':'')+
+        '<label class="btn ghost sm km-pilih-pdf">'+ikon('unggah')+(F.berkas?'Choose another PDF':'Choose PDF')+'<input type="file" accept="application/pdf,.pdf" onchange="kmFormBerkas(this)" hidden></label></div>'+
+      '<label class="tl-cek"><input type="checkbox"'+(F.kabari?' checked':'')+' onchange="S.km.form.kabari=this.checked"> <span>Also tell the student by email</span></label>'+
+    '</div><div class="km-form-kanan"><b>Students</b>'+
+      '<div class="filters ketat"><input type="search" placeholder="Search name" value="'+esc(F.cari)+'" oninput="S.km.form.cari=this.value;kmFormDaftar()">'+
+        '<select onchange="S.km.form.kelas=this.value;kmFormDaftar()"><option value="">All classes</option>'+kelasSemuaKlien(Object.keys(kelas)).filter(function(k){return kelas[k]}).map(function(k){return '<option'+(F.kelas===k?' selected':'')+'>'+esc(k)+'</option>'}).join('')+'</select>'+
+        '<button class="btn ghost xs" onclick="kmFormSemua(true)">Select shown</button><button class="btn ghost xs" onclick="kmFormSemua(false)">Clear</button></div>'+
+      '<div class="muted kecil" id="kmFormN">'+F.siswa.length+' selected</div><div class="as-t-s km-form-s" id="kmFormDaftar">'+kmFormDaftarHtml()+'</div>'+
+    '</div></div>'+
+    '<div class="pick ketat"><button class="btn gold sm" id="kmKirimB" onclick="kmFormKirim()">'+ikon('kirim')+'Send</button>'+
+    '<span class="eyebrow">Each student gets their own copy and their own comment thread.</span></div></div>';
+}
+function kmFormTersaring(){
+  var F=kmSt().form, c=(F.cari||'').toLowerCase();
+  return (S.ringkasan||[]).filter(function(x){ return (!F.kelas||x.kelas===F.kelas)&&(!c||(x.nama+' '+x.kelas).toLowerCase().indexOf(c)>=0) })
+    .sort(function(a,b){return (String(a.kelas)+a.nama).localeCompare(String(b.kelas)+b.nama)}).slice(0,400);
+}
+function kmFormDaftarHtml(){
+  var F=kmSt().form, d=kmFormTersaring();
+  var dipilih=F.siswa.filter(function(id){ return !d.some(function(x){return x.id===id}) }).map(function(id){ return (S.ringkasan||[]).filter(function(x){return x.id===id})[0] }).filter(Boolean);
+  d=dipilih.concat(d);
+  if(!d.length) return '<div class="muted kecil">No students match.</div>';
+  return d.map(function(x){
+    var on=F.siswa.indexOf(x.id)>=0;
+    return '<label class="as-t-o'+(on?' on':'')+'"><input type="checkbox"'+(on?' checked':'')+' onchange="kmFormSiswa(\''+esc(x.id)+'\',this.checked)">'+
+      avatarHtml(x.nama,x.id,x.email,'kecil')+'<span><b>'+esc(x.nama)+'</b><i>'+esc(x.kelas||'—')+'</i></span></label>';
+  }).join('');
+}
+function kmFormDaftar(){ var el=q('kmFormDaftar'); if(el) el.innerHTML=kmFormDaftarHtml(); var n=q('kmFormN'); if(n) n.textContent=kmSt().form.siswa.length+' selected' }
+function kmFormSiswa(id,on){ var F=kmSt().form, i=F.siswa.indexOf(id); if(on&&i<0) F.siswa.push(id); if(!on&&i>=0) F.siswa.splice(i,1); kmFormDaftar() }
+function kmFormSemua(on){ var F=kmSt().form; if(!on) F.siswa=[]; else kmFormTersaring().forEach(function(x){ if(F.siswa.indexOf(x.id)<0) F.siswa.push(x.id) }); kmFormDaftar() }
+function kmFormBerkas(inp){
+  var f=inp.files&&inp.files[0], F=kmSt().form; if(!f) return;
+  if(!/\.pdf$/i.test(f.name)&&f.type!=='application/pdf'){ toast('Choose a PDF file.',true); inp.value=''; return }
+  if(f.size>KM_BATAS_MB*1024*1024){ toast('That file is '+(f.size/1048576).toFixed(1)+' MB. The limit is '+KM_BATAS_MB+' MB.',true); inp.value=''; return }
+  F.berkas=f;
+  if(!sv(F.judul)){ F.judul=f.name.replace(/\.pdf$/i,'').replace(/[_-]+/g,' ').trim() }
+  gambarView();
+}
+function kmBacaBerkas(f){
+  return new Promise(function(res,rej){ var fr=new FileReader(); fr.onload=function(){ res({nama:f.name,data:String(fr.result)}) }; fr.onerror=function(){ rej(new Error('The file could not be read.')) }; fr.readAsDataURL(f) });
+}
+function kmFormKirim(){
+  var F=kmSt().form; if(!F) return;
+  if(sv(F.judul).length<3){ toast('Give the file a title.',true); var j=q('kmJudul'); if(j) j.focus(); return }
+  if(!F.siswa.length){ toast('Choose at least one student.',true); return }
+  if(!F.berkas){ toast('Attach the PDF file.',true); return }
+  var b=q('kmKirimB'); if(b){ b.disabled=true; b.textContent='Uploading…' }
+  kmBacaBerkas(F.berkas).then(function(berkas){
+    return call('kirimanKirim',S.token,{siswaIds:F.siswa,judul:F.judul,jenis:F.jenis,pesan:F.pesan,berkas:berkas,kabari:F.kabari,selesai:F.selesai});
+  }).then(function(r){
+    if(b){ b.disabled=false; b.innerHTML=ikon('kirim')+'Send' }
+    if(!r.ok){ if(r.error==='SESI_HABIS'){ sesiHabis(); return } toast(r.error,true); return }
+    S.kiriman=r.kiriman||[]; kmSt().form=null;
+    toast('Sent to '+r.terkirim+' student'+(r.terkirim===1?'':'s')+(r.deck?' · progress updated in '+r.deck+' deck'+(r.deck===1?'':'s')+' (Gate B · '+r.barisDeck+')':'')+(r.dikabari?' · '+r.dikabari+' email'+(r.dikabari===1?'':'s')+' sent':'')+'.');
+    S._brWaktu=0;
+    gambarNav(); gambarView();
+  }).catch(function(e){ if(b){ b.disabled=false; b.innerHTML=ikon('kirim')+'Send' } tangani(e) });
+}
+
+/* ---------- jendela tinjau: PDF + utas komentar ---------- */
+function kmBuka(id){
+  var k=kmCari(id); if(!k) { toast('This file is no longer available.',true); return }
+  var lama=q('kmModal'); if(lama) lama.remove();
+  var K=kmSt(); K.buka=id; K.versi=k.versi.length;
+  var v=document.createElement('div'); v.className='veil km-veil'; v.id='kmModal';
+  v.innerHTML='<div class="modal km-modal" role="dialog" aria-modal="true" aria-label="'+esc(k.judul)+'">'+
+    '<div class="hd km-hd"><div class="km-hd-j"><b id="kmJudulM">'+esc(k.judul)+'</b><span id="kmSubM"></span></div><button class="btn xs" onclick="kmTutup()">Close</button></div>'+
+    '<div class="km-bd"><div class="km-kiri"><div class="km-vbar" id="kmVbar"></div><div class="km-pdf" id="kmPdf"></div></div><div class="km-kanan" id="kmPanel"></div></div></div>';
+  document.body.appendChild(v);
+  v.addEventListener('click',function(e){ if(e.target===v) kmTutup() });
+  document.addEventListener('keydown',kmEsc);
+  kmPanelSegarkan();
+  kmTampilVersi(k.versi.length);
+  /* Ditandai sudah dilihat — lencana "new" hilang di menu dan lonceng. */
+  if(kmBolehTanggap()&&(k.baru||(kmSiswa()&&!k.dilihatSiswa))){
+    k.baru=0; if(kmSiswa()) k.dilihatSiswa=Date.now();
+    try{ gambarNav(); gambarTopbar() }catch(e){}
+    call('kirimanTanggapi',S.token,id,{aksi:'lihat'}).catch(function(){});
+  }
+}
+function kmEsc(e){ if(e.key==='Escape'&&q('kmModal')&&!document.querySelector('.veil:not(.km-veil)')) kmTutup() }
+function kmTutup(){
+  var K=kmSt(), el=q('kmModal'); if(el) el.remove();
+  document.removeEventListener('keydown',kmEsc);
+  K.buka=null;
+  if(S.tab==='kiriman'||S.tab==='detail') gambarView();
+}
+function kmVbarHtml(k){
+  var K=kmSt();
+  return '<div class="km-versi">'+k.versi.map(function(v){
+      return '<button class="'+(K.versi===v.v?'on':'')+'" onclick="kmTampilVersi('+v.v+')" title="'+esc((v.oleh||'')+' · '+kmWaktu(v.waktu))+'">v'+v.v+(v.v===k.versi.length?' · latest':'')+'</button>' }).join('')+'</div>'+
+    '<button class="btn ghost xs" onclick="unduhBerkas(\'kiriman\',\''+esc(k.id)+'|'+K.versi+'\')">'+ikon('unduh')+'Download v'+K.versi+'</button>';
+}
+function kmTampilVersi(n){
+  var K=kmSt(), k=kmCari(K.buka); if(!k) return;
+  K.versi=n;
+  var vb=q('kmVbar'); if(vb) vb.innerHTML=kmVbarHtml(k);
+  var w=q('kmPdf'); if(!w) return;
+  w.innerHTML='<div class="load" style="min-height:260px"><div class="spin"></div><div class="eyebrow">Opening version '+n+'…</div></div>';
+  var token=(K.render=(K.render||0)+1);
+  ambilBerkasKlien('kiriman',k.id+'|'+n).then(function(r){
+    if(K.render!==token||!q('kmPdf')) return;
+    return kmRenderPdf(w,r,function(){ return K.render===token&&!!q('kmPdf') });
+  }).catch(function(e){ if(e.message==='SESI_HABIS') return; w.innerHTML='<div class="note bad">'+esc(e.message)+'</div>' });
+}
+function kmRenderPdf(wadah,r,hidup){
+  return muatPdfJs().then(function(lib){
+    var bin=atob(r.data), u=new Uint8Array(bin.length); for(var i=0;i<bin.length;i++) u[i]=bin.charCodeAt(i);
+    return lib.getDocument({data:u}).promise.then(function(pdf){
+      if(!hidup()) return;
+      wadah.innerHTML='<div class="pr-info">'+pdf.numPages+' page'+(pdf.numPages>1?'s':'')+' · '+esc(r.nama||'')+'</div>';
+      var maks=Math.min(pdf.numPages,30), urut=Promise.resolve();
+      for(var n=1;n<=maks;n++)(function(n){
+        urut=urut.then(function(){ if(!hidup()) return; return pdf.getPage(n).then(function(pg){
+          var lebar=Math.min(wadah.clientWidth-16,860), vp0=pg.getViewport({scale:1}), dpr=window.devicePixelRatio||1, skala=lebar/vp0.width*dpr;
+          var vp=pg.getViewport({scale:skala}), c=document.createElement('canvas');
+          c.width=vp.width; c.height=vp.height; c.style.width=(vp.width/dpr)+'px'; c.className='pr-hal';
+          var bungkus=document.createElement('div'); bungkus.className='km-hal'; bungkus.innerHTML='<span>Page '+n+'</span>'; bungkus.appendChild(c);
+          wadah.appendChild(bungkus);
+          return pg.render({canvasContext:c.getContext('2d'),viewport:vp}).promise;
+        }) });
+      })(n);
+      if(pdf.numPages>maks) urut.then(function(){ wadah.insertAdjacentHTML('beforeend','<div class="pr-info">Showing the first '+maks+' pages — download the file to read the rest.</div>') });
+      return urut;
+    });
+  }).catch(function(){
+    var url=URL.createObjectURL(blobDari(r));
+    wadah.innerHTML='<iframe class="pr-frame" src="'+url+'" title="PDF preview"></iframe><div class="pr-info">If the preview stays blank, use Download.</div>';
+  });
+}
+function kmPanelSegarkan(){
+  var K=kmSt(), k=kmCari(K.buka), p=q('kmPanel'); if(!p) return;
+  if(!k){ p.innerHTML='<div class="note">This file was removed.</div>'; return }
+  var ta=q('kmTeks'); if(ta) K.draf[k.id]=ta.value;
+  var sub=q('kmSubM'); if(sub) sub.innerHTML=kmLencana(k.status)+' <span class="muted kecil">'+esc(k.jenis)+(kmGuru()||pimpinan()?' · '+esc(k.nama)+' · '+esc(k.kelas||''):'')+'</span>';
+  var vb=q('kmVbar'); if(vb) vb.innerHTML=kmVbarHtml(k);
+  p.innerHTML=kmPanelHtml(k);
+  var ta2=q('kmTeks'); if(ta2&&K.draf[k.id]) ta2.value=K.draf[k.id];
+  var u=p.querySelector('.km-utas'); if(u) u.scrollTop=u.scrollHeight;
+}
+function kmPanelHtml(k){
+  var siswa=kmSiswa(), guru=kmGuru();
+  var h='<div class="km-info"><div><span>Status</span><b>'+esc(kmStatusLabel(k.status))+'</b></div>'+
+    '<div><span>'+(siswa||ortu()?'From':'Sent by')+'</span><b>'+esc(k.guru||'—')+'</b></div>'+
+    (guru||pimpinan()?'<div><span>Student</span><b>'+esc(k.nama)+' · '+esc(k.kelas||'—')+'</b></div>':'')+
+    '<div><span>Versions</span><b>'+k.versi.length+'</b></div>'+
+    (k.barisDeck?'<div class="km-info-l"><span>In the deck</span><b>Gate B · '+esc(k.barisDeck)+' — '+(k.status==='Approved'||(k.selesai&&k.status!=='Needs changes')?'Done':'In progress')+'</b></div>':'')+'</div>';
+  if(k.pesan) h+='<div class="km-pesan"><b>Message from '+esc(k.guru||'your mentor')+'</b><div>'+esc(k.pesan)+'</div></div>';
+  if(siswa&&k.status!=='Approved') h+='<div class="km-panduan">Read every page. Is your name, class, programme and university right? Is anything missing? Write what needs fixing — your mentor will send a corrected version.</div>';
+  h+='<div class="km-utas">';
+  if(!k.komentar.length) h+='<div class="muted kecil km-kosong">No comments yet.</div>';
+  k.komentar.forEach(function(c){
+    if(c.jenis==='versi'){ h+='<div class="km-sis"><span>'+ikon('unggah')+' <b>'+esc(c.nama)+'</b> uploaded <button class="km-v" onclick="kmTampilVersi('+c.v+')">version '+c.v+'</button> · '+esc(kmWaktu(c.waktu))+'</span>'+(c.teks?'<div>'+esc(c.teks)+'</div>':'')+'</div>'; return }
+    if(c.jenis==='setuju'){ h+='<div class="km-sis setuju"><span>'+ikon('centang')+' <b>'+esc(c.nama)+'</b> approved version '+c.v+' · '+esc(kmWaktu(c.waktu))+'</span>'+(c.teks?'<div>'+esc(c.teks)+'</div>':'')+'</div>'; return }
+    if(c.jenis==='status'){ h+='<div class="km-sis"><span>'+esc(c.nama)+' · '+esc(c.teks)+' · '+esc(kmWaktu(c.waktu))+'</span></div>'; return }
+    var saya=(siswa&&c.peran==='siswa')||(guru&&c.peran==='guru'&&c.nama===S.user.nama);
+    h+='<div class="km-c '+(c.peran==='siswa'?'siswa':'guru')+(saya?' saya':'')+'"><div class="km-c-h"><b>'+esc(c.nama)+'</b><span>'+(c.peran==='siswa'?'Student':'Mentor')+' · v'+(c.v||1)+(c.hal?' · page '+esc(c.hal):'')+' · '+esc(kmWaktu(c.waktu))+'</span></div><div class="km-c-t">'+esc(c.teks)+'</div></div>';
+  });
+  h+='</div>';
+  if(siswa){
+    h+='<div class="km-tulis"><label class="bidang"><span>'+(k.status==='Approved'?'Found something else? Write it here':'What needs fixing?')+'</span>'+
+      '<textarea id="kmTeks" rows="3" maxlength="1000" placeholder="e.g. My name is written “Raihan” — it should be “Rayhan” (page 1). The programme should be Computer Science."></textarea></label>'+
+      '<div class="km-tulis-b"><label class="km-hal-in"><span>Page</span><input id="kmHal" inputmode="numeric" maxlength="4" placeholder="—"></label>'+
+      '<button class="btn gold sm" id="kmKomB" onclick="kmKomentar()">'+ikon('kirim')+'Send comment</button>'+
+      (k.status!=='Approved'?'<button class="btn sea sm" onclick="kmSetuju()">'+ikon('centang')+'Approve — it’s correct</button>':'<span class="km-ok">'+ikon('centang')+'You approved this file</span>')+'</div></div>';
+  }else if(guru){
+    h+='<div class="km-tulis"><label class="bidang"><span>Reply to '+esc(k.nama.split(' ')[0])+'</span><textarea id="kmTeks" rows="3" maxlength="1000" placeholder="e.g. Fixed — please check version '+(k.versi.length+1)+'."></textarea></label>'+
+      '<div class="km-tulis-b"><button class="btn gold sm" id="kmKomB" onclick="kmKomentar()">'+ikon('kirim')+'Reply</button>'+
+      '<select title="Status" onchange="kmStatus(this.value)">'+(S.statusKiriman||['Sent','Needs changes','Revised','Approved']).map(function(s){return '<option'+(k.status===s?' selected':'')+'>'+esc(s)+'</option>'}).join('')+'</select></div>'+
+      '<div class="km-versi-baru"><b>Upload a corrected version (v'+(k.versi.length+1)+')</b><span class="muted kecil">The note in the box above goes with it.</span>'+
+        '<div class="km-tulis-b"><input type="file" id="kmFileV" accept="application/pdf,.pdf"><button class="btn sea sm" id="kmVerB" onclick="kmVersi()">'+ikon('unggah')+'Upload v'+(k.versi.length+1)+'</button></div></div>'+
+      (k.milikSaya||S.user.role==='admin'?'<button class="btn ghost xs bahaya km-hapus" onclick="kmHapus()">Delete this file</button>':'')+'</div>';
+  }else{
+    h+='<div class="muted kecil km-baca">'+(ortu()?'Only your child and the mentors can comment.':'Read-only.')+'</div>';
+  }
+  return h;
+}
+function kmTanggap(data,tombol,label){
+  var K=kmSt(), id=K.buka; if(!id) return Promise.resolve(null);
+  if(tombol){ tombol.disabled=true; tombol.dataset.label=tombol.innerHTML; tombol.textContent=label||'Sending…' }
+  return call('kirimanTanggapi',S.token,id,data).then(function(r){
+    if(tombol){ tombol.disabled=false; tombol.innerHTML=tombol.dataset.label }
+    if(!r.ok){ if(r.error==='SESI_HABIS'){ sesiHabis(); return null } toast(r.error,true); return null }
+    if(r.deck) S._brWaktu=0;
+    K.draf[id]='';
+    var ta=q('kmTeks'); if(ta) ta.value='';
+    S.kiriman=r.kiriman||[]; gambarNav(); gambarTopbar(); kmPanelSegarkan();
+    return r;
+  }).catch(function(e){ if(tombol){ tombol.disabled=false; tombol.innerHTML=tombol.dataset.label } tangani(e); return null });
+}
+function kmKomentar(){
+  var ta=q('kmTeks'), t=sv(ta&&ta.value); if(!t){ toast('Write your comment first.',true); if(ta) ta.focus(); return }
+  var hal=q('kmHal');
+  kmTanggap({aksi:'komentar',teks:t,hal:hal?sv(hal.value):''},q('kmKomB')).then(function(r){
+    if(r) toast(kmSiswa()?'Comment sent — your mentor has been told.':'Reply sent.');
+  });
+}
+function kmSetuju(){
+  tanya('Approve this file? Your mentor will know it is correct and final.',function(){
+    var ta=q('kmTeks');
+    kmTanggap({aksi:'setuju',teks:sv(ta&&ta.value)},null).then(function(r){ if(r) toast('Approved. Thank you!') });
+  },'Approve');
+}
+function kmStatus(st){ kmTanggap({aksi:'status',status:st},null).then(function(r){ if(r) toast('Status: '+st) }) }
+function kmVersi(){
+  var inp=q('kmFileV'), f=inp&&inp.files&&inp.files[0];
+  if(!f){ toast('Choose the corrected PDF first.',true); return }
+  if(!/\.pdf$/i.test(f.name)&&f.type!=='application/pdf'){ toast('Choose a PDF file.',true); return }
+  if(f.size>KM_BATAS_MB*1024*1024){ toast('The limit is '+KM_BATAS_MB+' MB.',true); return }
+  var b=q('kmVerB'), ta=q('kmTeks');
+  if(b){ b.disabled=true; b.textContent='Uploading…' }
+  kmBacaBerkas(f).then(function(berkas){
+    if(b) b.disabled=false;
+    return kmTanggap({aksi:'versi',berkas:berkas,teks:sv(ta&&ta.value)},b,'Uploading…');
+  }).then(function(r){
+    if(!r) return;
+    var k=kmCari(kmSt().buka); if(k) kmTampilVersi(k.versi.length);
+    toast('Version '+(k?k.versi.length:'')+' sent to the student.');
+  }).catch(function(e){ if(b){ b.disabled=false } tangani(e) });
+}
+function kmHapus(){
+  var K=kmSt(), k=kmCari(K.buka); if(!k) return;
+  tanya('Delete “'+k.judul+'” for '+k.nama+'? Every version and comment is removed.',function(){
+    call('kirimanHapus',S.token,k.id).then(function(r){
+      if(!r.ok){ toast(r.error,true); return }
+      S.kiriman=r.kiriman||[]; kmTutup(); gambarNav(); toast('Deleted.');
+    }).catch(tangani);
+  },'Delete',true);
+}
+
+/* ---------- halaman detail siswa (mentor): kiriman untuk siswa ini ---------- */
+(function(){
+  var lamaDetail=viewDetail;
+  viewDetail=function(){
+    var h=lamaDetail.apply(this,arguments);
+    if(!S.detail||!S.detail.siswa) return h;
+    var sid=S.detail.siswa.id, d=(S.kiriman||[]).filter(function(k){return k.siswaId===sid});
+    var blok='<div class="card km-detail"><div class="judul-baris"><div><h2>Letters &amp; files sent</h2><div class="sub">PDFs sent to this student (for example a recommendation letter), with their comments and versions.</div></div>'+
+      (kmGuru()?'<button class="btn gold sm" onclick="kmFormBuka(\''+esc(sid)+'\')">'+ikon('kirim')+'Send a file</button>':'')+'</div>'+
+      (d.length?'<div class="km-daftar">'+d.map(kmKartuHtml).join('')+'</div>':'<div class="empty kecil"><b>Nothing sent yet</b></div>')+'</div>';
+    var tanda='<div class="card"><div class="judul-baris"><div><h2>Uploaded files</h2>';
+    var i=h.indexOf(tanda);
+    return i<0?h+blok:h.slice(0,i)+blok+h.slice(i);
+  };
+})();
+
+
+/* =======================================================
+   PELACAK YANG BISA DIIKUTI SISWA
+   · Daftar persiapan (persyaratan beasiswa) → preparation list siswa,
+     dicentang siswa atau mentor, ikut menghitung progres, dan masuk
+     ke Gerbang B · Checklist per application.
+   · Berita terkait dari mentor tampil di dalam pelacak.
+   · Artikel berita tentang pelacak terbit/diperbarui otomatis.
+   · Satu berkas JSON → pelacak + persyaratan + berita sekaligus.
+   ======================================================= */
+BATAS_KHUSUS.pelacakImpor=180000; ULANG_KHUSUS.pelacakImpor=0;
+BATAS_KHUSUS.pelacakGabung=90000; ULANG_KHUSUS.pelacakGabung=0;
+BATAS_KHUSUS.pelacakSiapkan=60000; ULANG_KHUSUS.pelacakSiapkan=0;
+
+function asPersyaratan(prog){ return (prog&&prog.def&&prog.def.persyaratan)||[] }
+(function(){
+  var lamaHitung=asHitung;
+  asHitung=function(t){
+    lamaHitung(t);
+    var prog=asProgId(t.pelacak)||asProg(), ps=asPersyaratan(prog);
+    if(!ps.length||!asKampus(t)) return t;
+    var cek=t.checklist||{}, ls=asLangkah(t);
+    var nL=ls.filter(function(x){return cek[x.id]&&cek[x.id].ok}).length;
+    var nP=ps.filter(function(x){return cek['pr:'+x.id]&&cek['pr:'+x.id].ok}).length, tot=ls.length+ps.length;
+    t.progres=tot?Math.round((nL+nP)/tot*100):0; t.siap={n:nP,dari:ps.length};
+    if(t.progres>=100) t.status='Completed';
+    else if(t.status==='Completed') t.status='In Progress';
+    else if(nL+nP>0&&t.status==='Not Started') t.status='In Progress';
+    if(!t.langkahBerikut){ var b=ps.filter(function(x){return !(cek['pr:'+x.id]&&cek['pr:'+x.id].ok)})[0]; if(b) t.langkahBerikut='Prepare: '+b.t }
+    return t;
+  };
+  var lamaCek=asCeklisHtml;
+  asCeklisHtml=function(t,ubah){
+    var h=lamaCek(t,ubah), ps=asPersyaratan(asProgId(t.pelacak)||asProg());
+    if(!ps.length||h.indexOf('as-ceklis')<0) return h;
+    return h.replace(/<\/div>$/,asSiapBlok(t,ubah||kmSiswaPunya(t))+'</div>');
+  };
+  /* Berita pelacak bisa dibuka di pembaca yang sama dengan Beranda. */
+  var lamaCari=ldCariBerita;
+  ldCariBerita=function(id){ return lamaCari(id)||(S.beritaLacak||[]).filter(function(x){return x.id===id})[0]||null };
+  var lamaBoot=terapkanBootstrap;
+  terapkanBootstrap=function(r,awal){ var h=lamaBoot.apply(this,arguments); if(r&&r.pelacakTerbuka) S.pelacakTerbuka=r.pelacakTerbuka; return h };
+})();
+function kmSiswaPunya(t){ return S.user&&S.user.role==='siswa'&&t&&t.siswaId===S.user.id }
+function asSiapBlok(t,boleh){
+  var ps=asPersyaratan(asProgId(t.pelacak)||asProg()), cek=t.checklist||{};
+  var n=ps.filter(function(x){return cek['pr:'+x.id]&&cek['pr:'+x.id].ok}).length;
+  return '<div class="as-cf as-siap"><div class="as-cf-h"><b>Preparation list</b><span>'+n+'/'+ps.length+'</span></div>'+
+    ps.map(function(x){ var c=cek['pr:'+x.id], ok=c&&c.ok;
+      return '<label class="tl-cek"><input type="checkbox"'+(ok?' checked':'')+(boleh?'':' disabled')+' onchange="asSiapkan(\''+esc(t.id)+'\',\''+esc(x.id)+'\',this.checked)"> <span>'+esc(x.t)+
+        (x.ket?' <em class="muted">· '+esc(x.ket)+'</em>':'')+(x.tenggat?' <em class="as-siap-due">due '+esc(tglPanjang(x.tenggat))+'</em>':'')+(ok&&c.tgl?' <em class="muted">· '+esc(c.tgl)+'</em>':'')+'</span></label>' }).join('')+'</div>';
+}
+function asSiapkan(tid,pid,ok){
+  var A=asSt(), t=asCari(tid); if(!t) return;
+  if(A.demo){ toast('Sample data — not saved'); return }
+  /* Tampilan langsung berubah; server mencerminkan ke target lain di pelacak yang sama dan ke deck. */
+  asSemuaTarget().filter(function(x){return x.siswaId===t.siswaId&&x.pelacak===t.pelacak}).forEach(function(x){
+    x.checklist=x.checklist||{}; if(ok) x.checklist['pr:'+pid]={ok:true,tgl:hariIniStr(),oleh:S.user.nama}; else delete x.checklist['pr:'+pid]; asHitung(x) });
+  asTanda('Saving…'); asSegarkanTampil();
+  call('pelacakSiapkan',S.token,tid,pid,!!ok).then(function(r){
+    if(!r.ok){ if(r.error==='SESI_HABIS'){ sesiHabis(); return } asTanda('Not saved'); toast(r.error,true); return }
+    if(S.user.role==='siswa') S.asean=r.target||[]; else A.target=(r.target||[]).map(asHitung);
+    asTanda('Saved '+new Date().toTimeString().slice(0,5)+(r.deck?' · deck updated':''));
+    asSegarkanTampil();
+  }).catch(function(e){ asTanda('Not saved'); tangani(e) });
+}
+
+/* ---------- halaman pelacak: siswa & mentor ---------- */
+(function(){
+  var lamaVP=viewPelacak;
+  viewPelacak=function(){
+    var A=asSt();
+    if(A.impor) return asImporHtml();
+    if(A.editor) return lamaVP();
+    var siswa=S.user.role==='siswa';
+    var prog=asProg();
+    if(siswa&&!prog&&!A.demo){
+      asMuat(false);
+      return '<div class="card as-kepala"><div class="eyebrow">My trackers</div><h2>Trackers you can join</h2><div class="sub">Your mentors open trackers for scholarships and universities. Join one to get its preparation list — tick each item when it is ready, and your mentor sees your progress.</div></div>'+asTerbukaHtml();
+    }
+    var h=lamaVP();
+    if(!prog||A.demo) return h+(siswa?asTerbukaHtml():'');
+    var sisip=(siswa?asSiapSayaHtml(prog):'')+asInfoHtml(prog);
+    var i=h.indexOf('<div class="as-kpi">');
+    h=i<0?h+sisip:h.slice(0,i)+sisip+h.slice(i);
+    if(!siswa&&asPersyaratan(prog).length){
+      var j=h.indexOf('<div class="card as-saring">'), m=asMatriksHtml(prog);
+      h=j<0?h+m:h.slice(0,j)+m+h.slice(j);
+    }
+    return h+(siswa?asTerbukaHtml():'');
+  };
+})();
+/* Siswa: daftar persiapan miliknya untuk pelacak yang sedang dibuka. */
+function asSiapSayaHtml(prog){
+  var ps=asPersyaratan(prog), t=asData()[0]; if(!ps.length||!t) return '';
+  var cek=t.checklist||{}, n=ps.filter(function(x){return cek['pr:'+x.id]&&cek['pr:'+x.id].ok}).length, pc=Math.round(n/ps.length*100);
+  return '<div class="card as-siap-saya"><div class="judul-baris"><div><div class="eyebrow">Your preparation list</div><h2>'+n+' of '+ps.length+' ready</h2>'+
+    '<div class="sub">Tick an item once the document is ready. Your mentor sees it straight away, and it also appears in Gate B · Checklist per application.</div></div>'+
+    '<div class="as-siap-pc"><b>'+pc+'%</b><div class="as-bar"><i style="width:'+pc+'%"></i></div></div></div>'+asSiapBlok(t,true)+'</div>';
+}
+/* Berita yang dibagikan mentor di pelacak ini. */
+function asInfoHtml(prog){
+  var ids=(prog.def.berita||[]).slice(); if(prog.def.beritaOto&&ids.indexOf(prog.def.beritaOto)<0) ids.unshift(prog.def.beritaOto);
+  var semua=((S.beranda&&S.beranda.berita)||[]).concat(S.beritaLacak||[]), peta={};
+  semua.forEach(function(b){ if(!peta[b.id]) peta[b.id]=b });
+  var d=ids.map(function(id){return peta[id]}).filter(Boolean);
+  if(!d.length) return bimbing()&&!asSt().demo?'<div class="card as-info kosong"><b>Information for students</b><span class="muted kecil">Link news posts to this tracker (Edit tracker → For students) so students read them while they prepare.</span></div>':'';
+  return '<div class="card as-info"><div class="judul-baris rapat"><div><div class="eyebrow">Information from your mentor</div><h3>Read these before you prepare</h3></div></div><div class="as-info-g">'+
+    d.map(function(b){ var F=(typeof LD_FORMAT!=='undefined'&&LD_FORMAT[b.format||'berita'])||{l:'News',i:''};
+      return '<button class="as-info-k" onclick="ldBaca(\''+esc(b.id)+'\')"><span class="as-info-f">'+esc((F.i?F.i+' ':'')+F.l)+(b.id===prog.def.beritaOto?' · summary':'')+'</span><b>'+esc(b.judul)+'</b><span class="muted kecil">'+esc(tglPanjang(String(b.tanggal||'').slice(0,10)))+'</span></button>' }).join('')+'</div></div>';
+}
+/* Mentor: siapa sudah menyiapkan apa — satu baris per siswa, satu kolom per persyaratan. */
+function asMatriksHtml(prog){
+  var ps=asPersyaratan(prog), per={}, urut=[];
+  asData().forEach(function(t){ if(!per[t.siswaId]){ per[t.siswaId]=t; urut.push(t.siswaId) } });
+  if(!urut.length) return '';
+  var ubah=bimbing();
+  var h='<div class="card as-matriks"><div class="judul-baris rapat"><div><div class="eyebrow">Preparation list</div><h3>Who has prepared what</h3><div class="sub">'+ps.length+' requirement(s). Students tick their own items; you can tick here too.</div></div></div>'+
+    '<div class="as-gulir"><table class="as-tbl as-mx"><thead><tr><th>Student</th><th>Ready</th>'+ps.map(function(x,i){return '<th title="'+esc(x.t)+'"><span>'+(i+1)+'</span>'+esc(x.t.length>34?x.t.slice(0,33)+'…':x.t)+'</th>'}).join('')+'</tr></thead><tbody>';
+  urut.sort(function(a,b){ return (per[a].kelas+per[a].nama).localeCompare(per[b].kelas+per[b].nama) }).forEach(function(sid){
+    var t=per[sid], cek=t.checklist||{}, n=ps.filter(function(x){return cek['pr:'+x.id]&&cek['pr:'+x.id].ok}).length;
+    h+='<tr><td><button class="as-nama" onclick="asLaciBuka(\''+esc(sid)+'\')">'+esc(t.nama)+'</button><div class="muted kecil">'+esc(t.kelas||'')+'</div></td><td class="as-mx-n"><b>'+n+'/'+ps.length+'</b></td>'+
+      ps.map(function(x){ var ok=cek['pr:'+x.id]&&cek['pr:'+x.id].ok;
+        return '<td class="as-mx-c'+(ok?' ok':'')+'"><input type="checkbox"'+(ok?' checked':'')+(ubah?'':' disabled')+' title="'+esc(x.t)+'" onchange="asSiapkan(\''+esc(t.id)+'\',\''+esc(x.id)+'\',this.checked)"></td>' }).join('')+'</tr>';
+  });
+  return h+'</tbody></table></div></div>';
+}
+
+/* ---------- siswa: pelacak terbuka ---------- */
+function asTerbuka(){ return S.pelacakTerbuka||[] }
+(function(){
+  var lamaMuat=asMuat;
+  asMuat=function(paksa){
+    var A=asSt(); if(A.muat||(!paksa&&A.dimuat&&Date.now()-A.dimuat<60000)) return;
+    A.muat=true;
+    call('pelacakDaftar',S.token).then(function(r){
+      A.muat=false;
+      if(!r||!r.ok){ if(r&&r.error==='SESI_HABIS') sesiHabis(); else if(r) A.galat=r.error; if(S.tab==='pelacak') gambarView(); return }
+      if(Object.keys(A.antre).length) return;
+      A.program=r.program||[]; S.pelacakProgram=A.program;
+      if(r.terbuka) S.pelacakTerbuka=r.terbuka;
+      if(r.beritaLacak) S.beritaLacak=r.beritaLacak;
+      if(S.user.role==='siswa'||ortu()) S.asean=r.target||[];
+      else A.target=(r.target||[]).map(asHitung);
+      A.dimuat=Date.now(); A.galat='';
+      try{ gambarNav() }catch(e){}
+      if(S.tab==='pelacak') gambarView();
+    }).catch(function(e){ A.muat=false; A.galat=e.message; if(S.tab==='pelacak') gambarView() });
+  };
+})();
+function asTerbukaHtml(){
+  var d=asTerbuka(); if(!d.length) return '';
+  var A=asSt();
+  return '<div class="card as-buka"><div class="judul-baris rapat"><div><div class="eyebrow">Open trackers</div><h2>Join a tracker</h2><div class="sub">Pick the scholarships and universities you are preparing for. Each one gives you a preparation list and the information your mentor shared.</div></div></div><div class="as-buka-g">'+
+    d.map(function(p){
+      var ks=p.def.kampus, ps=asPersyaratan(p), dl=ks.map(function(k){return k.tenggatAdmisi}).filter(Boolean).sort()[0], m=dl?mundur(dl):null;
+      var g=A.gabung&&A.gabung.id===p.id?A.gabung:null;
+      return '<div class="as-buka-k'+(p.sudah?' sudah':'')+'"><div class="as-buka-h"><b>'+esc(p.nama)+'</b>'+(p.sudah?'<span class="km-st km-approved">Joined</span>':'')+'</div>'+
+        (p.deskripsi?'<p>'+esc(p.deskripsi)+'</p>':'')+
+        '<div class="as-buka-m"><span>'+ks.length+' universit'+(ks.length===1?'y':'ies')+'</span><span>'+ps.length+' item(s) to prepare</span>'+((p.def.berita||[]).length?'<span>'+p.def.berita.length+' news post(s)</span>':'')+
+          (dl?'<span>Closes '+esc(tglPanjang(dl))+(m?' · <b class="dl '+m.kelas+'">'+esc(m.label)+'</b>':'')+'</span>':'')+'</div>'+
+        (g?asGabungForm(p,g):p.sudah?'<div class="pick ketat"><button class="btn ghost xs" onclick="asPilihSiswa(\''+esc(p.id)+'\')">Open</button><button class="btn ghost xs" onclick="asKeluar(\''+esc(p.id)+'\')">Leave</button></div>':
+          '<div class="pick ketat"><button class="btn gold sm" onclick="asGabungBuka(\''+esc(p.id)+'\')">'+ikon('plus')+'Join</button></div>')+'</div>';
+    }).join('')+'</div></div>';
+}
+function asPilihSiswa(id){ var A=asSt(); A.pilih=id; window.scrollTo({top:0}); gambarView() }
+function asGabungBuka(id){
+  var p=asTerbuka().filter(function(x){return x.id===id})[0]; if(!p) return;
+  var A=asSt(); A.gabung={id:id,kampus:p.def.kampus.length===1?[p.def.kampus[0].kode]:[],program:''};
+  if(p.def.kampus.length===1) asGabung(); else gambarView();
+}
+function asGabungForm(p,g){
+  return '<div class="as-gabung"><b>Which universities?</b><div class="as-t-k">'+p.def.kampus.map(function(k){ var on=g.kampus.indexOf(k.kode)>=0;
+      return '<label class="rk-kl'+(on?' on':'')+'"><input type="checkbox"'+(on?' checked':'')+' onchange="asGabungKampus(\''+esc(k.kode)+'\',this.checked)"> <b>'+esc(k.kode)+'</b> '+esc(k.nama)+(k.tenggatAdmisi?' <em class="muted">· closes '+esc(tglPanjang(k.tenggatAdmisi))+'</em>':'')+'</label>' }).join('')+'</div>'+
+    '<label class="bidang"><span>Programme you want (optional)</span><input value="'+esc(g.program)+'" oninput="S.as.gabung.program=this.value" placeholder="e.g. Computer Science"></label>'+
+    '<div class="pick ketat"><button class="btn gold sm" id="asGabungB" onclick="asGabung()">Join tracker</button><button class="btn ghost sm" onclick="S.as.gabung=null;gambarView()">Cancel</button></div></div>';
+}
+function asGabungKampus(k,on){ var g=asSt().gabung, i=g.kampus.indexOf(k); if(on&&i<0) g.kampus.push(k); if(!on&&i>=0) g.kampus.splice(i,1); gambarView() }
+function asGabung(){
+  var A=asSt(), g=A.gabung; if(!g) return;
+  if(!g.kampus.length){ toast('Choose at least one university.',true); return }
+  var b=q('asGabungB'); if(b){ b.disabled=true; b.textContent='Joining…' }
+  call('pelacakGabung',S.token,g.id,g.kampus,g.program).then(function(r){
+    if(b){ b.disabled=false; b.textContent='Join tracker' }
+    if(!r.ok){ if(r.error==='SESI_HABIS'){ sesiHabis(); return } toast(r.error,true); return }
+    S.asean=r.target||[]; A.program=r.program||[]; S.pelacakProgram=A.program; S.pelacakTerbuka=r.terbuka||[];
+    A.pilih=g.id; A.gabung=null; A.dimuat=0;
+    toast('You joined. Your preparation list is ready — it is also in Gate B.'); gambarNav(); window.scrollTo({top:0}); gambarView();
+    asMuat(true);
+  }).catch(function(e){ if(b){ b.disabled=false; b.textContent='Join tracker' } tangani(e) });
+}
+function asKeluar(id){
+  var p=asTerbuka().filter(function(x){return x.id===id})[0];
+  tanya('Leave “'+(p?p.nama:'this tracker')+'”? Your ticks in its preparation list are removed.',function(){
+    call('pelacakKeluar',S.token,id).then(function(r){
+      if(!r.ok){ toast(r.error,true); return }
+      var A=asSt(); S.asean=r.target||[]; A.program=r.program||[]; S.pelacakProgram=A.program; S.pelacakTerbuka=r.terbuka||[]; A.pilih='';
+      toast('You left the tracker.'); gambarNav(); gambarView();
+    }).catch(tangani);
+  },'Leave',true);
+}
+
+/* ---------- editor: untuk siswa ---------- */
+(function(){
+  var lamaUbah=asEditorUbah;
+  asEditorUbah=function(id){
+    lamaUbah(id);
+    var p=asProgId(id), E=asSt().editor; if(!p||!E) return;
+    E.terbuka=!!p.def.terbuka; E.umumkan=!!p.def.umumkan;
+    E.persyaratan=JSON.parse(JSON.stringify(p.def.persyaratan||[])); E.berita=(p.def.berita||[]).slice();
+    gambarView();
+  };
+  var lamaBaru=asEditorBaru;
+  asEditorBaru=function(){ lamaBaru(); var E=asSt().editor; E.terbuka=true; E.umumkan=true; E.persyaratan=[]; E.berita=[]; gambarView() };
+})();
+function asEdSiswaHtml(){
+  var E=asSt().editor; E.persyaratan=E.persyaratan||[]; E.berita=E.berita||[];
+  var semuaB=((S.beranda&&S.beranda.berita)||[]).filter(function(b){return b.status!=='Arsip'}), c=String(E.cariB||'').toLowerCase();
+  var tampil=semuaB.filter(function(b){ return E.berita.indexOf(b.id)>=0||!c||String(b.judul).toLowerCase().indexOf(c)>=0 }).slice(0,40);
+  var h='<div class="as-ed-siswa"><h3 class="rk-h3" style="margin:0 0 6px">For students</h3>'+
+    '<label class="tl-cek"><input type="checkbox"'+(E.terbuka?' checked':'')+' onchange="S.as.editor.terbuka=this.checked"> <span><b>Students can join this tracker themselves</b> (from My trackers'+((E.kelas||[]).length?', only '+esc(E.kelas.join(', ')):'')+')</span></label>'+
+    '<label class="tl-cek"><input type="checkbox"'+(E.umumkan?' checked':'')+' onchange="S.as.editor.umumkan=this.checked"> <span><b>Post a news article about this tracker</b> and update it every time you save (requirements, deadlines, how to join)</span></label>'+
+    '<h4 class="as-ed-sub">Preparation list · '+E.persyaratan.length+'</h4><div class="muted kecil">The scholarship requirements. Every student in the tracker gets this list; ticking an item raises their progress and fills Gate B · Checklist per application.</div>'+
+    E.persyaratan.map(function(x,i){
+      return '<div class="as-ed-l"><span class="as-ed-n">'+(i+1)+'</span><input value="'+esc(x.t)+'" placeholder="e.g. Scan of report cards semester 1–4 (one PDF)" onchange="S.as.editor.persyaratan['+i+'].t=this.value">'+
+        '<input value="'+esc(x.ket||'')+'" placeholder="Note (optional)" style="flex:0 1 220px" onchange="S.as.editor.persyaratan['+i+'].ket=this.value">'+
+        '<input type="date" value="'+esc(x.tenggat||'')+'" title="Due date (optional)" style="flex:0 0 150px" onchange="S.as.editor.persyaratan['+i+'].tenggat=this.value">'+
+        '<button class="btn ghost xs" onclick="asEdPrGeser('+i+',-1)"'+(i?'':' disabled')+'>↑</button><button class="btn ghost xs bahaya" onclick="S.as.editor.persyaratan.splice('+i+',1);gambarView()">×</button></div>' }).join('')+
+    '<div class="pick ketat"><button class="btn ghost xs" onclick="S.as.editor.persyaratan.push({t:\'\',ket:\'\',tenggat:\'\'});gambarView()">'+ikon('plus')+'Add requirement</button>'+
+      '<button class="btn ghost xs" onclick="asEdPrTempel()">Paste a list</button></div>'+
+    '<h4 class="as-ed-sub">Related news · '+E.berita.length+'</h4><div class="muted kecil">Posts you already published that students should read while preparing.</div>'+
+    '<input type="search" placeholder="Search your news posts" value="'+esc(E.cariB||'')+'" oninput="S.as.editor.cariB=this.value;clearTimeout(S.as._tB);S.as._tB=setTimeout(gambarView,250)" style="margin:6px 0">'+
+    '<div class="as-ed-berita">'+(tampil.length?tampil.map(function(b){ var on=E.berita.indexOf(b.id)>=0;
+      return '<label class="as-ed-b'+(on?' on':'')+'"><input type="checkbox"'+(on?' checked':'')+' onchange="asEdBerita(\''+esc(b.id)+'\',this.checked)"> <span><b>'+esc(b.judul)+'</b><i>'+esc(tglPanjang(String(b.tanggal||'').slice(0,10)))+' · '+esc(b.kategori||'')+'</i></span></label>' }).join(''):'<div class="muted kecil">No news posts yet.</div>')+'</div></div>';
+  return h;
+}
+function asEdPrGeser(i,d){ var a=asSt().editor.persyaratan, j=i+d; if(j<0||j>=a.length) return; var t=a[i]; a[i]=a[j]; a[j]=t; gambarView() }
+function asEdBerita(id,on){ var E=asSt().editor, i=E.berita.indexOf(id); if(on&&i<0) E.berita.push(id); if(!on&&i>=0) E.berita.splice(i,1); gambarView() }
+function asEdPrTempel(){
+  tanyaIsian('Paste a requirement list','One requirement per line. Bullets and numbers are removed.','',function(v){
+    if(v===null) return;
+    var E=asSt().editor;
+    String(v).split(/\n+/).map(function(x){return x.replace(/^\s*(?:[-•●▪*]|\d+[.)])\s*/,'').trim()}).filter(Boolean).forEach(function(t){ E.persyaratan.push({t:t,ket:'',tenggat:''}) });
+    gambarView();
+  },'Add');
+}
+(function(){
+  var lamaEd=asEditorHtml;
+  asEditorHtml=function(){
+    var h=lamaEd(), E=asSt().editor;
+    if(E.langkah==='templat') return h;
+    var tanda='<h3 class="rk-h3">Universities · ';
+    var i=h.indexOf(tanda);
+    return i<0?h:h.slice(0,i)+asEdSiswaHtml()+h.slice(i);
+  };
+  var lamaSimpan=asEditorSimpan;
+  asEditorSimpan=function(){
+    var E=asSt().editor; if(!E) return;
+    E.persyaratan=(E.persyaratan||[]).filter(function(x){return sv(x.t)});
+    /* def tambahan dititipkan lewat pemanggilan berikut */
+    window.__asTambahDef={terbuka:!!E.terbuka,umumkan:!!E.umumkan,persyaratan:E.persyaratan,berita:(E.berita||[]).slice()};
+    return lamaSimpan.apply(this,arguments);
+  };
+})();
+/* Panggilan pelacakProgramSimpan menyertakan bagian "For students", dan hasil artikelnya dilaporkan. */
+(function(){
+  var lamaCall=call;
+  call=function(nama){
+    if(nama==='pelacakProgramSimpan'&&window.__asTambahDef&&arguments[2]&&arguments[2].def){
+      Object.assign(arguments[2].def,window.__asTambahDef); window.__asTambahDef=null;
+      return lamaCall.apply(this,arguments).then(function(r){
+        if(r&&r.ok){
+          if(r.berita){ S.beranda=S.beranda||{}; S.beranda.berita=r.berita }
+          if(r.artikel) setTimeout(function(){ toast(r.artikel.baru?'News article about this tracker posted.':'News article about this tracker updated.') },1200);
+          if(r.galatArtikel) setTimeout(function(){ toast('Tracker saved, but the news article was not: '+r.galatArtikel,true) },1200);
+        }
+        return r;
+      });
+    }
+    return lamaCall.apply(this,arguments);
+  };
+})();
+
+/* ---------- impor JSON: pelacak + persyaratan + berita ---------- */
+(function(){
+  var lamaVP=viewPelacak;
+  viewPelacak=function(){
+    var h=lamaVP(), A=asSt();
+    if(!bimbing()||A.editor||A.impor||A.demo) return h;
+    var tombol='<button class="btn ghost sm" onclick="q(\'asImporF\').click()" title="Create or update a tracker, its preparation list and its news from one JSON file">'+ikon('unggah')+'Import JSON</button>'+
+      '<input type="file" id="asImporF" accept=".json,application/json" hidden onchange="asImporBerkas(this.files[0]);this.value=\'\'">'+
+      '<button class="btn ghost sm" onclick="asImporContoh()">Sample JSON</button>';
+    var i=h.indexOf('<span class="as-simpan" id="asSimpanSt">');
+    return i<0?h:h.slice(0,i)+tombol+h.slice(i);
+  };
+})();
+function asA(o){ var a=[].slice.call(arguments,1); for(var i=0;i<a.length;i++){ var v=o&&o[a[i]]; if(v!==undefined&&v!==null&&v!=='') return v } return '' }
+function asTglImpor(v){ var t=admTgl?admTgl(v):''; return /^\d{4}-\d\d-\d\d$/.test(t||'')?t:(/^\d{4}-\d\d-\d\d$/.test(String(v||''))?String(v):'') }
+function asImporLangkah(x){
+  if(typeof x==='string') return {t:x.trim(),tanda:''};
+  var t=String(asA(x,'text','t','step','langkah','name','nama','title')||'').trim();
+  var m=String(asA(x,'marks','tanda','mark','meaning')||'').toLowerCase();
+  var tanda={admission:'admisi',application:'admisi',admisi:'admisi',scholarship:'beasiswa',beasiswa:'beasiswa',interview:'wawancara',wawancara:'wawancara',offer:'tawaran',tawaran:'tawaran',essaydraft:'esaiDraf',esaidraf:'esaiDraf',essayfinal:'esaiFinal',esaifinal:'esaiFinal'}[m.replace(/[^a-z]/g,'')]||'';
+  return {t:t,tanda:tanda};
+}
+function asImporFase(arr){
+  if(!Array.isArray(arr)||!arr.length) return null;
+  if(arr.every(function(x){return typeof x==='string'})) return [{nama:'Steps',langkah:arr.map(asImporLangkah)}];
+  var f=arr.map(function(x,i){ if(typeof x==='string') return {nama:x,langkah:[{t:x,tanda:''}]};
+    var l=asA(x,'steps','langkah','items','tasks'); return {nama:String(asA(x,'name','nama','title','phase','fase')||('Phase '+(i+1))),langkah:(Array.isArray(l)?l:[]).map(asImporLangkah).filter(function(s){return s.t})} }).filter(function(x){return x.langkah.length});
+  return f.length?f:null;
+}
+function asImporKelas(v){
+  if(!v||/^(all|semua|semua kelas|all classes)$/i.test(String(v))) return [];
+  var a=Array.isArray(v)?v:String(v).split(/[,;]+/), out=[];
+  a.map(function(x){return String(x).trim()}).filter(Boolean).forEach(function(x){
+    if(/^(XII|XI|X|12|11|10)$/i.test(x)){ var t={'12':'XII','11':'XI','10':'X'}[x]||x.toUpperCase(); kelasSemuaKlien().filter(function(k){return asTingkat(k)===t}).forEach(function(k){ if(out.indexOf(k)<0) out.push(k) }); if(!out.some(function(k){return asTingkat(k)===t})) [1,2,3,4,5,6].forEach(function(n){ out.push(t+'.'+n) }) }
+    else { var n=asNormKelas(x); if(out.indexOf(n)<0) out.push(n) }
+  });
+  return out;
+}
+function asNormImpor(j){
+  var t=j.tracker||j.pelacak||j.program||j;
+  var nama=String(asA(t,'name','nama','title','judul')||'').trim();
+  var beasiswa=String(asA(t,'scholarship','beasiswa')||'').trim();
+  var faseUmum=asImporFase(asA(t,'phases','fase','tahapan','steps','langkah'));
+  var ks=asA(t,'universities','kampus','campuses','targets','universitas');
+  var kampus=(Array.isArray(ks)?ks:[]).map(function(k,i){
+    if(typeof k==='string') k={name:k};
+    var nm=String(asA(k,'name','nama','university','kampus')||'').trim(); if(!nm) return null;
+    var man=asA(k,'benefits','manfaat'); if(man&&!Array.isArray(man)&&typeof man==='object') man=Object.keys(man).map(function(x){return [x,String(man[x])]});
+    man=(Array.isArray(man)?man:[]).map(function(m){ return Array.isArray(m)?[String(m[0]||''),String(m[1]||'')]:[String(asA(m,'name','nama','label')||''),String(asA(m,'value','nilai','detail')||'')] });
+    var sy=asA(k,'requirements','syarat','notes','catatan'); sy=Array.isArray(sy)?sy.map(String):(sy?String(sy).split(/\n+/):[]);
+    return {kode:String(asA(k,'code','kode','short')||asKodeDari(nm)).toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,12)||('U'+(i+1)),nama:nm,negara:String(asA(k,'country','negara')||''),
+      warna:String(asA(k,'colour','color','warna')||''),warna2:'',deadline:asTglImpor(asA(k,'deadline','tenggat','closes','tutup')),buka:asTglImpor(asA(k,'opens','buka','open')),
+      tautan:String(asA(k,'link','url','tautan','website')||''),fase:asImporFase(asA(k,'phases','fase','tahapan','steps'))||faseUmum||asFaseUmum(beasiswa?'beasiswa':'umum'),manfaat:man,syarat:sy};
+  }).filter(Boolean);
+  if(!kampus.length){
+    var nmK=beasiswa||nama;
+    kampus=[{kode:asKodeDari(nmK).slice(0,12)||'PROG',nama:nmK,negara:String(asA(t,'country','negara')||''),warna:'',warna2:'',deadline:asTglImpor(asA(t,'deadline','tenggat','closes')),buka:asTglImpor(asA(t,'opens','buka')),
+      tautan:String(asA(t,'link','url','tautan','website')||''),fase:faseUmum||asFaseUmum('beasiswa'),manfaat:[],syarat:[]}];
+  }
+  var ps=asA(t,'preparationList','preparation','requirements','persyaratan','checklist','preparationItems');
+  var persyaratan=(Array.isArray(ps)?ps:[]).map(function(x){ if(typeof x==='string') return {t:x.trim(),ket:'',tenggat:''};
+    return {t:String(asA(x,'item','t','text','name','nama','requirement')||'').trim(),ket:String(asA(x,'note','ket','notes','detail','keterangan')||''),tenggat:asTglImpor(asA(x,'due','deadline','tenggat'))} }).filter(function(x){return x.t});
+  var bj=asA(t,'relatedNews','beritaTerkait','linkedNews'); bj=Array.isArray(bj)?bj.map(String):[];
+  var posts=asA(j,'news','berita','posts','articles'); if(!Array.isArray(posts)){ posts=asA(t,'news','berita','posts'); }
+  posts=(Array.isArray(posts)?posts:[]).filter(function(x){return x&&typeof x==='object'}).map(portalNormal).filter(function(b){return b.judul&&b.judul.length>=3});
+  var bool=function(v,def){ if(v===''||v===undefined) return def; return !(v===false||/^(false|no|tidak|0)$/i.test(String(v))) };
+  var tr={nama:nama,deskripsi:String(asA(t,'description','deskripsi','about')||''),
+    def:{beasiswa:beasiswa,profilAsean:false,kelas:asImporKelas(asA(t,'classes','kelas','class')),terbuka:bool(asA(t,'openToStudents','open','terbuka','studentsCanJoin'),true),
+      umumkan:bool(asA(t,'announce','postNews','umumkan','autoNews'),true),persyaratan:persyaratan,berita:bj.filter(function(x){return /^BR-/i.test(x)}),kampus:kampus}};
+  return {tracker:tr,berita:posts,beritaJudul:bj.filter(function(x){return !/^BR-/i.test(x)})};
+}
+function asImporBerkas(file){
+  if(!file) return;
+  var A=asSt(); A.impor={memuat:true,nama:file.name}; gambarView();
+  file.text().then(function(t){
+    var j; try{ j=JSON.parse(String(t).replace(/^\uFEFF/,'')) }catch(e){ throw new Error('This is not valid JSON: '+e.message) }
+    var p=asNormImpor(j);
+    if(sv(p.tracker.nama).length<3) throw new Error('The JSON needs a tracker name ("name").');
+    /* Gambar berita diperkecil di peramban, seperti impor berita biasa. */
+    return p.berita.reduce(function(q2,b){ return q2.then(function(){
+      var batas=b.format==='infografis'?MEDIA_BATAS:150000, lebar=b.format==='infografis'?MEDIA_LEBAR:1400;
+      if(b.format!=='berita'&&!b.media.length&&b.gambar){ b.media=[{gambar:b.gambar,ket:''}]; b.gambar='' }
+      return b.media.reduce(function(q3,m){ return q3.then(function(){ return mediaKecil(m.gambar,lebar,batas).then(function(d){ m.gambar=d }).catch(function(){ m.gambar='' }) }) },Promise.resolve()).then(function(){
+        b.media=b.media.filter(function(m){return m.gambar});
+        if(!b.gambar&&b.media.length) return sampulDari(b.media[0].gambar).then(function(s){ b.gambar=s }).catch(function(){});
+        if(b.gambar&&!/^https:/i.test(b.gambar)) return mediaKecil(b.gambar,900,47000).then(function(d){ b.gambar=d }).catch(function(){ b.gambar='' });
+      });
+    }) },Promise.resolve()).then(function(){ return p });
+  }).then(function(p){
+    var ada=(A.program||[]).filter(function(x){return x.nama.toLowerCase()===p.tracker.nama.toLowerCase()})[0];
+    A.impor={nama:file.name,paket:p,ada:ada?ada.id:''}; gambarView();
+  }).catch(function(e){ A.impor={nama:file.name,galat:e.message}; gambarView() });
+}
+function asImporHtml(){
+  var I=asSt().impor;
+  var h='<div class="card as-ed"><div class="judul-baris"><div><div class="eyebrow">Import a tracker · '+esc(I.nama||'')+'</div><h2>Check before creating</h2></div>'+
+    '<div class="pick"><button class="btn ghost sm" onclick="S.as.impor=null;gambarView()">Cancel</button></div></div>';
+  if(I.memuat) return h+'<div class="load" style="min-height:140px"><div class="spin"></div><div class="eyebrow">Reading the file…</div></div></div>';
+  if(I.galat) return h+'<div class="note bad">'+esc(I.galat)+'</div><button class="btn ghost sm" onclick="asImporContoh()">Download the sample JSON</button></div>';
+  var p=I.paket, d=p.tracker.def;
+  h+='<div class="as-imp-r"><div><span>Tracker</span><b>'+esc(p.tracker.nama)+'</b>'+(I.ada?'<em class="km-st">Updates the existing tracker</em>':'<em class="km-st km-approved">New</em>')+'</div>'+
+    '<div><span>Classes</span><b>'+esc((d.kelas||[]).length?d.kelas.join(', '):'All classes')+'</b></div>'+
+    '<div><span>Students can join</span><b>'+(d.terbuka?'Yes':'No')+'</b></div>'+
+    '<div><span>News article about it</span><b>'+(d.umumkan?'Posted and kept up to date':'No')+'</b></div></div>';
+  if(p.tracker.deskripsi) h+='<p class="sub">'+esc(p.tracker.deskripsi)+'</p>';
+  h+='<h3 class="rk-h3">Universities / programmes · '+d.kampus.length+'</h3><div class="as-imp-l">'+d.kampus.map(function(k){
+    return '<div><b>'+esc(k.kode)+'</b> '+esc(k.nama)+(k.deadline?' · closes '+esc(tglPanjang(k.deadline)):'')+' · '+k.fase.length+' phase(s), '+k.fase.reduce(function(s,f){return s+f.langkah.length},0)+' step(s)</div>' }).join('')+'</div>';
+  h+='<h3 class="rk-h3">Preparation list · '+d.persyaratan.length+'</h3>'+(d.persyaratan.length?'<ol class="as-imp-o">'+d.persyaratan.map(function(x){return '<li>'+esc(x.t)+(x.ket?' <span class="muted">— '+esc(x.ket)+'</span>':'')+(x.tenggat?' <span class="muted">· due '+esc(tglPanjang(x.tenggat))+'</span>':'')+'</li>'}).join('')+'</ol>':'<div class="muted kecil">No requirements in the file.</div>');
+  h+='<h3 class="rk-h3">News</h3><div class="as-imp-l">'+
+    (p.berita.length?p.berita.map(function(b){return '<div>'+esc(b.judul)+' <span class="muted">· '+esc(b.format)+(b.media.length?' · '+b.media.length+' picture(s)':'')+' — posted and linked (or linked if it already exists)</span></div>'}).join(''):'')+
+    (p.beritaJudul.length?p.beritaJudul.map(function(x){ var ada=((S.beranda&&S.beranda.berita)||[]).some(function(b){return b.judul.toLowerCase()===x.toLowerCase()}); return '<div>'+esc(x)+' <span class="muted">· '+(ada?'existing post — linked':'not found yet — skipped')+'</span></div>' }).join(''):'')+
+    (!p.berita.length&&!p.beritaJudul.length?'<div class="muted kecil">No news in the file.</div>':'')+'</div>';
+  h+='<div class="pick" style="margin-top:14px"><button class="btn gold" id="asImpB" onclick="asImporTerapkan()">'+(I.ada?'Update tracker':'Create tracker')+'</button><span class="eyebrow">Students already in it keep their ticks.</span></div></div>';
+  return h;
+}
+function asImporTerapkan(){
+  var A=asSt(), I=A.impor; if(!I||!I.paket) return;
+  var b=q('asImpB'); if(b){ b.disabled=true; b.textContent='Creating…' }
+  var p=JSON.parse(JSON.stringify(I.paket)); if(I.ada) p.tracker.id=I.ada;
+  p.berita=p.berita.map(function(x){ return {judul:x.judul,isi:x.isi,tanggal:x.tanggal,kategori:x.kategori,tautan:x.tautan,gambar:x.gambar,sematkan:x.sematkan,sampai:x.sampai,format:x.format||'berita',media:x.media||[]} });
+  call('pelacakImpor',S.token,p).then(function(r){
+    if(b){ b.disabled=false; b.textContent='Create tracker' }
+    if(!r.ok){ if(r.error==='SESI_HABIS'){ sesiHabis(); return } toast(r.error,true); return }
+    A.program=r.program||[]; S.pelacakProgram=A.program; A.target=(r.target||[]).map(asHitung); A.pilih=r.id; A.impor=null; A.dimuat=0;
+    if(r.berita){ S.beranda=S.beranda||{}; S.beranda.berita=r.berita; S._brWaktu=0 }
+    toast((r.diperbarui?'Tracker updated':'Tracker created')+(r.otomatis?' · '+r.otomatis+' student(s) added from their decks':'')+(r.jumlahBerita?' · '+r.jumlahBerita+' news post(s) published':'')+(r.artikel?' · summary article '+(r.artikel.baru?'posted':'updated'):'')+'.');
+    gambarNav(); gambarView(); asMuat(true);
+  }).catch(function(e){ if(b){ b.disabled=false; b.textContent='Create tracker' } tangani(e) });
+}
+var AS_CONTOH_IMPOR={
+  tracker:{
+    name:'Beasiswa Garuda 2027',
+    scholarship:'Beasiswa Garuda 2027',
+    description:'Beasiswa S1 penuh dari Kemdiktisaintek bersama LPDP ke perguruan tinggi terbaik dunia. Pendaftaran 12 November 2026 – 4 Januari 2027.',
+    classes:'XII',
+    openToStudents:true,
+    announce:true,
+    deadline:'2027-01-04', opens:'2026-11-12', link:'https://beasiswagaruda.kemdiktisaintek.go.id',
+    phases:[
+      {name:'Pendaftaran online',steps:['Pilih 2 dari 10 tema prioritas','Pilih 3 perguruan tinggi per tema sesuai sebaran (1 Amerika/Kanada, 2 Eropa, 1 Australia/Selandia Baru, 2 Asia)','Buat akun di beasiswalpdp-terintegrasi.kemenkeu.go.id','Lengkapi profil dan personal statement',{text:'Unggah dokumen dan submit sebelum 4 Januari 2027',marks:'admission'}]},
+      {name:'Seleksi',steps:['Ikuti Tes Bakat Skolastik 18–22 Januari 2027 (bila belum punya SAT ≥ 1.200)','Cek pengumuman seleksi administrasi 5 Februari 2027',{text:'Ikuti wawancara penempatan',marks:'interview'}]},
+      {name:'Penetapan',steps:[{text:'Ditetapkan sebagai penerima dan tujuan studi',marks:'offer'},'Siapkan keberangkatan (intake Juli 2027/2028)']}
+    ],
+    preparationList:[
+      {item:'KTP / KIA / paspor',note:'scan berwarna'},
+      {item:'Kartu Keluarga'},
+      {item:'Scan rapor semester I–IV (digabung 1 PDF)',note:'rata-rata minimal 85'},
+      {item:'Sertifikat tes IQ',note:'minimal 120; lembaga psikologi PT terakreditasi minimal Baik; maks. 2 tahun'},
+      {item:'Sertifikat SAT ≥ 1.200, atau siap ikut TBS 18–22 Januari 2027'},
+      {item:'Sertifikat bahasa Inggris',note:'IELTS 6,5 (tiap band 6,0) / TOEFL iBT 86 / TOEFL ITP 550'},
+      {item:'Surat keterangan sehat jasmani & rohani, termasuk buta warna',note:'faskes pemerintah, maks. 6 bulan'},
+      {item:'Surat keterangan bebas narkoba'},
+      {item:'Personal statement',note:'pengalaman, cita-cita, alasan bidang prioritas, rencana pengabdian'},
+      {item:'Sertifikat prestasi 3 tahun terakhir (opsional, 1 PDF)'},
+      {item:'Bukti kondisi ekonomi (opsional: KIP/PKH/KKS, slip gaji, rekening koran, rekening listrik)'}
+    ],
+    relatedNews:['Syarat Lengkap Beasiswa Garuda 2027: Rapor, IQ, SAT/TBS, dan Sertifikat Bahasa','Checklist Dokumen Beasiswa Garuda 2027: Isian Online, Dokumen Wajib, dan Dokumen Pendukung']
+  },
+  news:[{title:'Beasiswa Garuda 2027: bergabung di pelacak PTLN',format:'article',category:'Scholarship',body:['Siswa kelas XII yang ingin mendaftar Beasiswa Garuda 2027: buka DECK PTLN → My trackers → Join.','Setelah bergabung, kamu mendapat daftar persiapan dokumen. Centang setiap dokumen yang sudah siap — mentor memantau progresmu.'],link:'https://beasiswagaruda.kemdiktisaintek.go.id'}]
+};
+function asImporContoh(){
+  var bl=new Blob([JSON.stringify(AS_CONTOH_IMPOR,null,2)],{type:'application/json'});
+  unduhBlob(bl,'contoh-pelacak-beasiswa.json');
+  toast('Sample downloaded. Fill it in, then use Import JSON.');
+}
+
+
+/* =======================================================
+   LAPORAN SAPP LENGKAP
+   Halaman tambahan: ringkasan update & pencapaian (30 hari terakhir),
+   pelacak target & daftar persiapan, dokumen & berkas (termasuk berkas
+   dari sekolah dan unggahan), tulisan & konsultasi, riwayat pencapaian
+   lengkap, dan lampiran isi deck per gerbang. Orang tua bisa
+   mengunduhnya dari bilah atas.
+   ======================================================= */
+var SAPP_ID={'Done':'Selesai','In progress':'Berjalan','Not started':'Belum','Not required':'Tidak diperlukan','Ready':'Siap','Submitted':'Terkirim',
+  'Approved':'Disetujui','Needs changes':'Perlu perbaikan','Revised':'Versi baru dikirim','Sent':'Terkirim','Completed':'Selesai','In Progress':'Berjalan',
+  'Not Started':'Belum','Waiting for Student':'Menunggu siswa','Final':'Final','Draft':'Draf','Ready for review':'Siap diperiksa','Pending':'Menunggu',
+  'Accepted':'Diterima','Rejected':'Ditolak','Asked':'Sudah diminta','Agreed':'Bersedia','Written':'Sudah ditulis','Not asked yet':'Belum diminta','Declined':'Menolak',
+  'Verified':'Terverifikasi','Not checked':'Belum diperiksa','Needs revision':'Perlu revisi','Dikirim':'Dikirim','Diperiksa':'Diperiksa','Revisi':'Revisi','Selesai':'Selesai',
+  'Cancelled':'Dibatalkan','Scheduled':'Terjadwal','Practised':'Sudah latihan','Real interview done':'Wawancara selesai','Not scheduled':'Belum terjadwal'};
+function sappSt(v){ return SAPP_ID[v]||v||'—' }
+function sappTgl(t){ t=String(t||'').slice(0,10); if(!/^\d{4}-\d\d-\d\d$/.test(t)) return t||'—'; var p=t.split('-'); return (+p[2])+' '+BULAN_ID[+p[1]-1].slice(0,3)+' '+p[0] }
+function sappTabel(kepala,baris,kelas){
+  if(!baris.length) return '<div class="kosong">Belum ada data.</div>';
+  return '<table><tr>'+kepala.map(function(k){return '<th>'+esc(k)+'</th>'}).join('')+'</tr>'+
+    baris.map(function(b){ return '<tr>'+b.map(function(c,i){ var kl=(kelas||[])[i]; return '<td'+(kl?' class="'+kl+'"':'')+'>'+(c&&c.__html?c.__html:esc(kosongStrip(c)))+'</td>' }).join('')+'</tr>' }).join('')+'</table>';
+}
+function sappCentang(ok){ return {__html:ok?'<b style="color:#1F7A4F">✓</b>':'<span style="color:#999">—</span>'} }
+function sappRinciHalaman(d){
+  var R=d.rinci||{}, T=R.tabel||{}, hari=new Date(), batas=new Date(hari.getTime()-30*864e5).toISOString().slice(0,10);
+  var hal=[];
+  /* 1. Ringkasan update & pencapaian */
+  var dok=(T.dok||[]).filter(function(r){return r.st!=='Not required'}), dokOk=dok.filter(function(r){return r.st==='Done'}).length;
+  var pel=R.pelacak||[], siapN=0, siapT=0, sudah={};
+  pel.forEach(function(p){ var k=p.pelacak; if(sudah[k]) return; sudah[k]=1; siapT+=p.siap.length; siapN+=p.siap.filter(function(x){return x.ok}).length });
+  var km=R.kiriman||[], tl=R.tulisan||[], un=R.unggahan||[], ks=R.konsultasi||[];
+  var baru=(R.riwayat||[]).filter(function(e){return e.tgl>=batas});
+  var h='<div class="hal"><div class="hjudul">Update &amp; Pencapaian Terbaru</div>'+
+    '<div class="kartu">'+
+      '<div><div class="l">Dokumen Gerbang B</div><div class="v">'+dokOk+'/'+dok.length+'</div><div class="k">dokumen selesai</div></div>'+
+      '<div><div class="l">Daftar persiapan</div><div class="v">'+siapN+'/'+siapT+'</div><div class="k">persyaratan beasiswa siap</div></div>'+
+      '<div><div class="l">Pelacak target</div><div class="v">'+pel.length+'</div><div class="k">rata-rata progres '+(pel.length?Math.round(pel.reduce(function(s,p){return s+(p.progres||0)},0)/pel.length):0)+'%</div></div>'+
+      '<div><div class="l">Berkas dari sekolah</div><div class="v">'+km.filter(function(k){return k.status==='Approved'}).length+'/'+km.length+'</div><div class="k">disetujui</div></div>'+
+    '</div><div class="kartu">'+
+      '<div><div class="l">CV &amp; esai</div><div class="v">'+tl.filter(function(x){return x.status==='Final'}).length+'/'+tl.length+'</div><div class="k">tulisan final</div></div>'+
+      '<div><div class="l">Berkas diunggah</div><div class="v">'+un.length+'</div><div class="k">'+un.filter(function(x){return x.status==='Selesai'}).length+' diterima mentor</div></div>'+
+      '<div><div class="l">Konsultasi</div><div class="v">'+ks.filter(function(x){return x.status==='Completed'}).length+'</div><div class="k">sesi selesai dari '+ks.length+' permintaan</div></div>'+
+      '<div><div class="l">Pencapaian 30 hari</div><div class="v">'+baru.length+'</div><div class="k">sejak '+esc(sappTgl(batas))+'</div></div>'+
+    '</div>';
+  h+='<div class="bab">YANG BARU DICAPAI (30 HARI TERAKHIR)</div>'+(baru.length?sappTabel(['Tanggal','Bidang','Pencapaian'],baru.map(function(e){return [sappTgl(e.tgl),e.jenis,e.teks]}),['c','c',null]):
+    '<div class="kosong">Belum ada pencapaian bertanggal dalam 30 hari terakhir.</div>');
+  h+='<div class="catat">Halaman ini merangkum semua yang sudah dipersiapkan siswa di DECK PTLN — dokumen, persyaratan beasiswa, berkas dari sekolah, tulisan, tes, dan konsultasi — supaya orang tua dan sekolah melihat kemajuannya secara utuh.</div></div>';
+  hal.push(h);
+
+  /* 2. Pelacak target & daftar persiapan */
+  h='<div class="hal"><div class="hjudul">Pelacak Target &amp; Daftar Persiapan</div>';
+  if(!pel.length) h+='<div class="kosong">Siswa belum tercatat di pelacak target mana pun.</div>';
+  var siapTampil={};
+  pel.forEach(function(p){
+    h+='<div class="bab">'+esc(p.pelacak)+' · '+esc(p.kampus)+(p.program?' — '+esc(p.program):'')+'</div>'+
+      sappTabel(['Status','Progres','Fase aktif','Tenggat admisi','Tindak lanjut','Catatan mentor'],[[sappSt(p.status),p.progres+'%',p.fase,p.tenggat?sappTgl(p.tenggat):'—',p.tindakLanjut?sappTgl(p.tindakLanjut):'—',p.catatan||'—']],['c','c',null,'c','c',null]);
+    if(p.langkah.length) h+=sappTabel(['Fase','Langkah','Selesai','Tanggal'],p.langkah.map(function(l){return [l.fase,l.t,sappCentang(l.ok),l.tgl?sappTgl(l.tgl):'']}),[null,null,'c','c']);
+    if(p.siap.length&&!siapTampil[p.pelacak]){
+      siapTampil[p.pelacak]=1;
+      h+='<div style="font-weight:700;font-size:9pt;margin:2mm 0 1mm">Daftar persiapan (persyaratan beasiswa) — '+p.siap.filter(function(x){return x.ok}).length+' dari '+p.siap.length+' siap</div>'+
+        sappTabel(['No','Persyaratan','Siap','Tanggal siap','Tenggat'],p.siap.map(function(x,i){return [i+1,x.t,sappCentang(x.ok),x.tgl?sappTgl(x.tgl):'',x.tenggat?sappTgl(x.tenggat):'']}),['c',null,'c','c','c']);
+    }
+  });
+  hal.push(h+'</div>');
+
+  /* 3. Dokumen & berkas */
+  h='<div class="hal"><div class="hjudul">Dokumen &amp; Berkas</div>';
+  h+='<div class="bab">DOKUMEN &amp; BERKAS LEGAL (GERBANG B)</div>'+sappTabel(['Dokumen','Format / syarat','Status','Tanggal selesai','Catatan'],(T.dok||[]).map(function(r){return [r.nama,r.format,sappSt(r.st),r.tgl?sappTgl(r.tgl):'',String(r.cat||'').replace(/\[Letters & files\]\s*/g,'Dari sekolah: ')]}),[null,null,'c','c',null]);
+  h+='<div class="bab">SURAT REKOMENDASI</div>'+sappTabel(['Pemberi','Peran','Diminta','Status','Dibutuhkan','Untuk'],(T.rekom||[]).map(function(r){return [r.guru,r.peran,r.diminta?sappTgl(r.diminta):'',sappSt(r.st),r.tenggat?sappTgl(r.tenggat):'',r.untuk]}),[null,null,'c','c','c',null]);
+  h+='<div class="bab">CEKLIS BERKAS PER PENDAFTARAN</div>'+sappTabel(['Untuk','Item','Status','Tenggat'],(T.berkas||[]).map(function(r){return [r.untuk,r.item,sappSt(r.st),r.tenggat?sappTgl(r.tenggat):'']}),[null,null,'c','c']);
+  h+='<div class="bab">BERKAS DARI SEKOLAH (SURAT REKOMENDASI, TRANSKRIP, DLL.)</div>'+sappTabel(['Judul','Jenis','Status','Versi','Dikirim','Disetujui','Pengirim'],km.map(function(k){return [k.judul,k.jenis,sappSt(k.status),k.versi,sappTgl(k.dikirim),k.disetujui?sappTgl(k.disetujui):'—',k.guru]}),[null,null,'c','c','c','c',null]);
+  h+='<div class="bab">BERKAS YANG DIUNGGAH SISWA</div>'+sappTabel(['Judul','Jenis','Status','Tanggal','Catatan mentor'],un.map(function(x){return [x.judul,x.jenis,sappSt(x.status),sappTgl(x.tanggal),x.catatan]}),[null,null,'c','c',null]);
+  hal.push(h+'</div>');
+
+  /* 4. Tulisan, tes, wawancara, konsultasi */
+  h='<div class="hal"><div class="hjudul">Tulisan, Persiapan Seleksi &amp; Konsultasi</div>';
+  var jenisTl={cv:'CV',ps:'Personal statement',ml:'Motivation letter',es:'Essay',sp:'Study plan'};
+  h+='<div class="bab">CV &amp; ESAI</div>'+sappTabel(['Jenis','Judul','Bahasa','Status','Kelengkapan','Kata','Diperbarui'],tl.map(function(x){return [jenisTl[x.jenis]||x.jenis,x.judul,x.bahasa==='id'?'Indonesia':'Inggris',sappSt(x.status),(x.progres||0)+'%',x.kata||0,sappTgl(x.diperbarui)]}),[null,null,'c','c','c','c','c']);
+  h+='<div class="bab">ESAI &amp; SURAT MOTIVASI (GERBANG E)</div>'+sappTabel(sappKepala('esai'),(T.esai||[]).map(function(r){return sappBaris('esai',r)}));
+  h+='<div class="bab">PERSIAPAN WAWANCARA</div>'+sappTabel(sappKepala('wawancara'),(T.wawancara||[]).map(function(r){return sappBaris('wawancara',r)}));
+  h+='<div class="bab">RIWAYAT KONSULTASI</div>'+sappTabel(['Tanggal','Kategori','Topik','Mentor','Status'],ks.map(function(x){return [sappTgl(x.tanggal),x.kategori,x.topik,x.mentor,sappSt(x.status)]}),['c',null,null,null,'c'])+
+    '<div class="catat">Isi percakapan konsultasi bersifat pribadi; laporan hanya memuat topik, tanggal, dan statusnya.</div>';
+  hal.push(h+'</div>');
+
+  /* 5. Riwayat lengkap */
+  var rw=R.riwayat||[];
+  hal.push('<div class="hal"><div class="hjudul">Riwayat Pencapaian Lengkap</div>'+(rw.length?sappTabel(['No','Tanggal','Bidang','Pencapaian'],rw.map(function(e,i){return [i+1,sappTgl(e.tgl),e.jenis,e.teks]}),['c','c','c',null]):'<div class="kosong">Belum ada pencapaian bertanggal.</div>')+'</div>');
+  return hal;
+}
+/* Lampiran: isi setiap tabel deck sesuai skema (judul kolom dari aplikasi). */
+function sappKolom(k){ var t=(S.tabel||{})[k]; if(t) return t.cols; var hasil=null; ((S.schema||{}).sections||[]).forEach(function(s){ (s.tables||[]).forEach(function(x){ if(x.k===k) hasil=x.cols }) }); return hasil||[] }
+function sappKepala(k){ return sappKolom(k).filter(function(c){return c.t!=='link'}).map(function(c){return c.l}) }
+function sappBaris(k,r){ return sappKolom(k).filter(function(c){return c.t!=='link'}).map(function(c){ var v=r[c.k]; if(c.t==='select') return sappSt(v); if(c.t==='date') return v?sappTgl(v):''; return v==null?'':String(v) }) }
+function sappLampiran(d){
+  var T=(d.rinci||{}).tabel||{}, sc=(S.schema||{}).sections||[];
+  if(!sc.length) return '';
+  var h='<div class="hal"><div class="hjudul">Lampiran — Isi Lengkap Deck per Gerbang</div>';
+  sc.forEach(function(sec){
+    var tabs=(sec.tables||[]).filter(function(t){return (T[t.k]||[]).length});
+    if(!tabs.length) return;
+    h+='<div class="bab">'+esc(sec.kode+' · '+sec.label)+'</div>';
+    tabs.forEach(function(t){ h+='<div style="font-weight:700;font-size:9pt;margin:2mm 0 1mm">'+esc(t.label)+'</div>'+sappTabel(sappKepala(t.k),T[t.k].map(function(r){return sappBaris(t.k,r)})) });
+  });
+  return h+'<div class="catat">Kolom tautan berkas tidak dicetak; berkasnya tetap ada di DECK PTLN.</div></div>';
+}
+(function(){
+  var lama=susunLaporanProgres;
+  susunLaporanProgres=function(d){
+    var l=lama(d);
+    if(!d.rinci) return l;
+    var km=(l.html.match(/<div class="kaki">[\s\S]*?<\/div>/)||[''])[0];
+    var tanda='<div class="hal"><div class="hjudul">Rekomendasi</div>';
+    var i=l.html.indexOf(tanda), j=i<0?-1:l.html.lastIndexOf('<div class="kaki">',i);
+    var hal=sappRinciHalaman(d);
+    if(j>=0) l.html=l.html.slice(0,j)+hal.map(function(p){return km+p}).join('')+l.html.slice(j);
+    else l.html+=hal.map(function(p){return km+p}).join('');
+    var lamp=sappLampiran(d); if(lamp) l.html+=lamp+km;
+    return l;
+  };
+  var lamaUnduh=unduhLaporanProgres;
+  unduhLaporanProgres=function(btn,dariDetail){
+    if(btn&&!btn.textContent) btn.textContent=LABEL_TOMBOL_LAPORAN;
+    return lamaUnduh(btn,dariDetail);
+  };
+})();
+function sappTopbar(){
+  toast('Preparing the full progress report (SAPP)…');
+  unduhLaporanProgres(null);
+}
+
+/* Orang tua: tombol laporan lengkap di halaman Overview. */
+(function(){
+  if(typeof viewPantau!=='function') return;
+  var lama=viewPantau;
+  viewPantau=function(){
+    var h=lama.apply(this,arguments);
+    return '<div class="card sapp-ortu"><div class="judul-baris"><div><div class="eyebrow">Full progress report</div><h2>Everything your child has prepared</h2>'+
+      '<div class="sub">Grades, tests, documents, scholarship trackers and preparation lists, letters from school, CV &amp; essays, consultations, and every achievement with its date — in one printable report (save it as PDF).</div></div>'+
+      '<button class="btn gold sm" onclick="this.textContent=\'Preparing…\';sappTopbar();var b=this;setTimeout(function(){b.textContent=\'Download SAPP report\'},4000)">'+ikon('unduh')+'Download SAPP report</button></div></div>'+h;
+  };
+})();
+
+/* =======================================================
+   JENIS PELACAK, DATA WAJIB, TENGGAT PRIBADI, JOIN / NOT FOR ME
+   Bergabung = berkomitmen: data deck yang wajib (universitas & jurusan,
+   data diri, nilai rapor) dan setiap dokumen persyaratan langsung punya
+   tenggat pribadi. Hitung mundur, tanda terlambat, beranda, lonceng,
+   dan email harian membuat siswa terus bergerak.
+   ======================================================= */
+BATAS_KHUSUS.pelacakTolak=45000; ULANG_KHUSUS.pelacakTolak=0; ULANG_KHUSUS.pelacakIngatkan=0;
+var AS_JENIS=[['beasiswa','Scholarship'],['kampus','Universities / region'],['','Not set (older trackers)']];
+var AS_WAJIB=[['pilih','University & major','Gate D'],['profil','Personal data','Gate A · Student profile'],['rapor','All report-card grades','Transcript']];
+
+/* ---------- cermin pemeriksaan data wajib di server ---------- */
+function asSemWajib(kelas){
+  var t=(asNormKelas(kelas)||'').match(/^(XII|XI|X)\b/), gen=new Date().getMonth()+1<=6;
+  if(!t) return [];
+  if(t[1]==='X') return gen?['s1']:[];
+  if(t[1]==='XI') return gen?['s1','s2','s3']:['s1','s2'];
+  return gen?['s1','s2','s3','s4','s5']:['s1','s2','s3','s4'];
+}
+function asCekProfil(d){ var r=(d.profil||[]).filter(function(x){return x&&sv(x.item)}), n=r.filter(function(x){return sv(x.detail)}).length; return {ok:r.length>0&&n===r.length,n:n,dari:r.length} }
+function asCekRapor(d,kelas){
+  var sem=asSemWajib(kelas), n=0, dari=0, kurang=[];
+  sem.forEach(function(s){ var r=(((d.rapor||{}).sem||{})[s]||[]).filter(function(x){return x&&sv(x.mapel)});
+    if(!r.length){ dari++; kurang.push(s); return }
+    r.forEach(function(x){ dari++; if(sv(x.nilai)!=='') n++; else if(kurang.indexOf(s)<0) kurang.push(s) }) });
+  return {ok:sem.length?(n===dari&&dari>0):true,n:n,dari:dari,kurang:kurang,sem:sem};
+}
+function asBarisPilih(d,prog,kodes){
+  var D=prog.def, nyata=D.kampus.filter(function(k){return !k.generik&&kodes.indexOf(k.kode)>=0}), wil=(D.wilayah||[]).map(function(x){return x.toLowerCase()}), nama=String(D.beasiswa||'').toLowerCase();
+  return (d.uni||[]).filter(function(u){
+    if(!u||!sv(u.kampus)) return false;
+    if(u.lacak===prog.id) return true;
+    if(D.jenis==='beasiswa'&&nama&&String(u.beasiswa||'').toLowerCase().indexOf(nama)>=0) return true;
+    if(wil.length&&wil.indexOf(String(u.negara||'').toLowerCase())>=0) return true;
+    return nyata.some(function(k){ return admKunci(u.kampus)===admKunci(k.nama)||String(u.kampus).toLowerCase().indexOf(k.kode.toLowerCase())>=0 });
+  });
+}
+function asCekPilih(d,prog,kodes){
+  var D=prog.def, nyata=D.kampus.filter(function(k){return !k.generik&&kodes.indexOf(k.kode)>=0});
+  var rows=asBarisPilih(d,prog,kodes), perlu=D.minKampus||nyata.length||1, n=rows.filter(function(u){return sv(u.jurusan)}).length;
+  return {ok:n>=perlu,n:n,dari:perlu,baris:rows};
+}
+function asKodesSaya(prog){ return asSemuaTarget().filter(function(t){return t.pelacak===prog.id&&t.siswaId===S.user.id}).map(function(t){return t.universitas}) }
+function asCekWajibKlien(prog,id){
+  if(S.user.role!=='siswa'||!S.deck) return null;
+  if(id==='_pilih') return asCekPilih(S.deck,prog,asKodesSaya(prog));
+  if(id==='_profil') return asCekProfil(S.deck);
+  if(id==='_rapor') return asCekRapor(S.deck,S.user.kelas);
+  return null;
+}
+function asTenggatButir(t,x){ return x.tenggat||((t.checklist||{})['dl:'+x.id]||{}).tgl||'' }
+function asButirOk(t,x){
+  var prog=asProgId(t.pelacak)||asProg();
+  if(x.auto&&kmSiswaPunya(t)){ var c=asCekWajibKlien(prog,x.id); if(c) return c.ok }
+  var k=(t.checklist||{})['pr:'+x.id]; return !!(k&&k.ok);
+}
+function asDueChip(tgl,ok){
+  if(!tgl) return '';
+  if(ok) return '<em class="as-due ok">done · due '+esc(tglPanjang(tgl))+'</em>';
+  var m=mundur(tgl); if(!m) return '<em class="as-due">due '+esc(tglPanjang(tgl))+'</em>';
+  var k=m.hari<0?'lewat':m.hari<=3?'dekat':m.hari<=7?'minggu':'aman';
+  var l=m.hari<0?Math.abs(m.hari)+' day'+(m.hari===-1?'':'s')+' overdue':m.hari===0?'due today':m.hari===1?'due tomorrow':'due in '+m.hari+' days';
+  return '<em class="as-due '+k+'" title="'+esc(tglPanjang(tgl))+'">'+esc(l)+' · '+esc(tglPanjang(tgl))+'</em>';
+}
+function asWajibAksi(prog,x){
+  if(x.id==='_pilih') return '<button class="btn gold xs" onclick="asPilihBuka(\''+esc(prog.id)+'\')">Choose now</button>';
+  if(x.id==='_profil') return '<button class="btn gold xs" onclick="pindah(\'a\')">Fill in Gate A</button>';
+  if(x.id==='_rapor') return '<button class="btn gold xs" onclick="pindah(\'rapor\')">Enter grades</button>';
+  return '';
+}
+function asWajibInfo(prog,x){
+  var c=asCekWajibKlien(prog,x.id); if(!c) return '';
+  if(x.id==='_pilih') return c.n+' of '+c.dari+' universit'+(c.dari===1?'y':'ies')+' with a major';
+  if(x.id==='_profil') return c.n+' of '+c.dari+' rows filled';
+  if(x.id==='_rapor') return c.sem.length?(c.n+' of '+c.dari+' grades · semester '+c.sem.map(function(s){return s.slice(1)}).join(', ')):'no finished semester yet';
+  return '';
+}
+
+/* ---------- daftar persiapan dengan tenggat (menggantikan versi sebelumnya) ---------- */
+function asSiapBlok(t,boleh){
+  var prog=asProgId(t.pelacak)||asProg(), ps=asPersyaratan(prog), siswaIni=kmSiswaPunya(t);
+  var item=ps.map(function(x,i){ return {x:x,i:i,ok:asButirOk(t,x),due:asTenggatButir(t,x)} });
+  if(siswaIni) item.sort(function(a,b){ return (a.due||'9999')<(b.due||'9999')?-1:(a.due||'9999')>(b.due||'9999')?1:a.i-b.i });
+  var n=item.filter(function(y){return y.ok}).length;
+  return '<div class="as-cf as-siap"><div class="as-cf-h"><b>Preparation list</b><span>'+n+'/'+ps.length+'</span></div>'+
+    item.map(function(y){ var x=y.x, c=(t.checklist||{})['pr:'+x.id], kunci=x.auto&&siswaIni;
+      return '<div class="as-siap-r'+(y.ok?' ok':'')+(x.auto?' auto':'')+'"><label class="tl-cek"><input type="checkbox"'+(y.ok?' checked':'')+(boleh&&!kunci?'':' disabled')+
+        ' onchange="asSiapkan(\''+esc(t.id)+'\',\''+esc(x.id)+'\',this.checked)"> <span>'+(x.auto?'<b class="as-wajib">Required data</b> ':'')+esc(x.t)+
+        (x.ket&&!x.auto?' <em class="muted">· '+esc(x.ket)+'</em>':'')+(x.auto?' <em class="muted">· '+esc(siswaIni?asWajibInfo(prog,x):x.ket)+'</em>':'')+
+        (y.ok&&c&&c.tgl?' <em class="muted">· '+esc(c.tgl)+'</em>':'')+'</span></label>'+asDueChip(y.due,y.ok)+
+        (kunci&&!y.ok?asWajibAksi(prog,x):'')+'</div>' }).join('')+'</div>';
+}
+function asSiapSayaHtml(prog){
+  var ps=asPersyaratan(prog), t=asData()[0]; if(!ps.length||!t) return '';
+  var item=ps.map(function(x){ return {x:x,ok:asButirOk(t,x),due:asTenggatButir(t,x)} });
+  var n=item.filter(function(y){return y.ok}).length, pc=Math.round(n/ps.length*100), hari=hariIniStr();
+  var lewat=item.filter(function(y){return !y.ok&&y.due&&y.due<hari}), depan=item.filter(function(y){return !y.ok&&y.due&&y.due>=hari}).sort(function(a,b){return a.due<b.due?-1:1})[0];
+  var akhir=item.map(function(y){return y.due}).filter(Boolean).sort().pop();
+  var m=depan?mundur(depan.due):null;
+  return '<div class="card as-siap-saya'+(lewat.length?' telat':'')+'"><div class="judul-baris"><div><div class="eyebrow">Your commitment · '+esc(prog.nama)+'</div><h2>'+n+' of '+ps.length+' done</h2>'+
+    '<div class="sub">Every item has its own deadline'+(akhir?' — everything by <b>'+esc(tglPanjang(akhir))+'</b>':'')+'. Required data ticks itself once your deck is complete; tick documents yourself when they are ready.</div></div>'+
+    '<div class="as-siap-pc"><b>'+pc+'%</b><div class="as-bar"><i style="width:'+pc+'%"></i></div></div></div>'+
+    (lewat.length?'<div class="as-telat">'+ikon('awas')+'<b>'+lewat.length+' item'+(lewat.length>1?'s are':' is')+' overdue.</b> '+esc(lewat.map(function(y){return y.x.t}).slice(0,2).join(' · '))+(lewat.length>2?' …':'')+'</div>':'')+
+    (depan?'<div class="as-depan">'+ikon('jam')+'<span>Next deadline: <b>'+esc(depan.x.t)+'</b> — '+esc(tglPanjang(depan.due))+(m?' · <b class="dl '+m.kelas+'">'+esc(m.label)+'</b>':'')+'</span></div>':'')+
+    asSiapBlok(t,true)+'</div>';
+}
+
+/* ---------- memilih universitas & jurusan (Gerbang D) ---------- */
+function asPilihBuka(pid){
+  var prog=asProgId(pid)||asTerbuka().filter(function(p){return p.id===pid})[0]; if(!prog) return;
+  S.asPilih={id:pid,kampus:'',jurusan:''};
+  var lama=q('asPilihM'); if(lama) lama.remove();
+  var v=document.createElement('div'); v.className='veil'; v.id='asPilihM';
+  v.innerHTML='<div class="modal as-pilih-m" role="dialog" aria-modal="true"><div class="hd"><b>Universities &amp; majors · '+esc(prog.nama)+'</b><button class="btn xs" onclick="asPilihTutup()">Done</button></div><div class="bd" id="asPilihIsi"></div></div>';
+  document.body.appendChild(v);
+  v.addEventListener('click',function(e){ if(e.target===v) asPilihTutup() });
+  asPilihGambar();
+}
+function asPilihTutup(){ var m=q('asPilihM'); if(m) m.remove(); S.asPilih=null; if(S.tab==='pelacak'||S.tab==='beranda'||S.tab==='d') gambarView() }
+function asPilihGambar(){
+  var P=S.asPilih, el=q('asPilihIsi'); if(!P||!el) return;
+  var prog=asProgId(P.id)||asTerbuka().filter(function(p){return p.id===P.id})[0], D=prog.def, c=asCekPilih(S.deck,prog,asKodesSaya(prog));
+  var wil=(D.wilayah||[]).map(function(x){return x.toLowerCase()});
+  var daftar=(S.univ||[]).filter(function(u){ return !wil.length||wil.indexOf(String(u.negara||'').toLowerCase())>=0 }).slice(0,2500);
+  var prg=P.kampus?programKampus(P.kampus):null, jur=[];
+  if(prg&&prg.fakultas) prg.fakultas.forEach(function(f){ (f.program||f.prodi||[]).forEach(function(x){ var n=typeof x==='string'?x:(x.nama||x.program||''); if(n&&jur.indexOf(n)<0) jur.push(n) }) });
+  var h='<div class="as-pilih-st'+(c.ok?' ok':'')+'"><b>'+c.n+' of '+c.dari+'</b> universit'+(c.dari===1?'y':'ies')+' with a major'+(c.ok?' — complete. You can still add more.':' — add '+(c.dari-c.n)+' more.')+
+    (D.wilayah&&D.wilayah.length?' <span class="muted">Region: '+esc(D.wilayah.join(', '))+'</span>':'')+'</div>';
+  h+='<div class="as-pilih-l">'+(c.baris.length?c.baris.map(function(u){ var i=S.deck.uni.indexOf(u);
+      return '<div class="as-pilih-b"><div><b>'+esc(u.kampus)+'</b><span class="muted kecil">'+esc(u.negara||'')+'</span></div>'+
+        '<input value="'+esc(u.jurusan||'')+'" placeholder="Major, e.g. Computer Science" onchange="asPilihJurusan('+i+',this.value)">'+(sv(u.jurusan)?'<span class="km-st km-approved">✓</span>':'<span class="km-st km-needs-changes">major?</span>')+'</div>' }).join(''):
+    '<div class="muted kecil">No university yet.</div>')+'</div>';
+  h+='<div class="as-pilih-tambah"><b>Add a university</b><datalist id="asPilihUL">'+daftar.map(function(u){return '<option value="'+esc(u.nama)+'">'+esc(u.negara||'')+'</option>'}).join('')+'</datalist>'+
+    '<datalist id="asPilihJL">'+jur.map(function(x){return '<option value="'+esc(x)+'">'}).join('')+'</datalist>'+
+    '<div class="isi-grid"><label class="bidang s2"><span>University'+(wil.length?' ('+esc(D.wilayah.join(', '))+')':'')+'</span><input id="asPilihU" list="asPilihUL" value="'+esc(P.kampus)+'" placeholder="Type to search the database" onchange="S.asPilih.kampus=this.value;muatProgram(this.value,function(){asPilihGambar()});asPilihGambar()"></label>'+
+    '<label class="bidang s2"><span>Major</span><input id="asPilihJ" list="asPilihJL" value="'+esc(P.jurusan)+'" placeholder="'+(prg&&prg.ada===false?'Type the major':'Pick or type the major')+'" oninput="S.asPilih.jurusan=this.value"></label></div>'+
+    '<div class="pick ketat"><button class="btn gold sm" onclick="asPilihTambah()">'+ikon('plus')+'Add to Gate D</button><span class="muted kecil">Saved to your deck automatically.</span></div></div>';
+  el.innerHTML=h;
+}
+function asPilihJurusan(i,v){ var u=S.deck.uni[i]; if(!u) return; u.jurusan=v; ubah(); asPilihGambar() }
+function asPilihTambah(){
+  var P=S.asPilih, prog=asProgId(P.id); if(!P||!prog) return;
+  var k=sv(q('asPilihU')&&q('asPilihU').value), j=sv(q('asPilihJ')&&q('asPilihJ').value);
+  if(!k){ toast('Choose a university.',true); return }
+  if(!j){ toast('Write the major you want.',true); return }
+  var ref=(S.univ||[]).filter(function(u){return admKunci(u.nama)===admKunci(k)})[0];
+  if((S.deck.uni||[]).some(function(u){return admKunci(u.kampus)===admKunci(k)})){
+    var ada=S.deck.uni.filter(function(u){return admKunci(u.kampus)===admKunci(k)})[0]; ada.jurusan=ada.jurusan||j; ada.lacak=ada.lacak||prog.id;
+    if(prog.def.beasiswa&&!sv(ada.beasiswa)) ada.beasiswa=prog.def.beasiswa;
+  }else{
+    var kosong=(S.deck.uni||[]).filter(function(u){return !sv(u.kampus)&&!sv(u.negara)})[0];
+    var u=kosong||mkUni(); if(!kosong){ S.deck.uni=S.deck.uni||[]; S.deck.uni.push(u) }
+    u.kampus=ref?ref.nama:k; u.negara=ref?ref.negara||'':u.negara; u.jurusan=j; u.beasiswa=prog.def.beasiswa||u.beasiswa||''; u.status=u.status||'Not started'; u.hasil=u.hasil||'Pending'; u.lacak=prog.id;
+    if(ref){ u.daftar=ref.daftar||u.daftar||''; u.umum=ref.umum||u.umum||''; u.syarat=ref.syarat||u.syarat||''; u.web=ref.web||u.web||'' }
+    var db=programKampus(u.kampus);
+    if(db&&db.ada) db.fakultas.forEach(function(f){ (f.program||[]).forEach(function(x){ if(x.program===j) u.fakultas=f.nama }) });
+  }
+  S.asPilih.kampus=''; S.asPilih.jurusan='';
+  ubah(); asPilihGambar(); toast('Added to Gate D.');
+}
+
+/* ---------- Join / Not for me ---------- */
+function asTerbukaHtml(){
+  var d=asTerbuka(); if(!d.length) return '';
+  var A=asSt(), aktif=d.filter(function(p){return p.keputusan!=='Tidak ikut'}), tolak=d.filter(function(p){return p.keputusan==='Tidak ikut'});
+  function kartu(p){
+    var ks=p.def.kampus, ps=asPersyaratan(p), dl=ks.map(function(k){return k.tenggatAdmisi}).filter(Boolean).sort()[0], m=dl?mundur(dl):null;
+    var wajib=ps.filter(function(x){return x.auto}), dok=ps.filter(function(x){return !x.auto});
+    var g=A.gabung&&A.gabung.id===p.id?A.gabung:null;
+    return '<div class="as-buka-k'+(p.sudah?' sudah':'')+'"><div class="as-buka-h"><b>'+esc(p.nama)+'</b><span class="as-jenis">'+esc((AS_JENIS.filter(function(j){return j[0]===p.def.jenis})[0]||['',''])[1]||'Tracker')+'</span>'+(p.sudah?'<span class="km-st km-approved">Joined</span>':'')+'</div>'+
+      (p.deskripsi?'<p>'+esc(p.deskripsi)+'</p>':'')+
+      '<div class="as-buka-m">'+(p.def.wilayah&&p.def.wilayah.length?'<span>'+esc(p.def.wilayah.join(', '))+'</span>':'<span>'+ks.length+' universit'+(ks.length===1?'y':'ies')+'</span>')+
+        (dl?'<span>Closes '+esc(tglPanjang(dl))+(m?' · <b class="dl '+m.kelas+'">'+esc(m.label)+'</b>':'')+'</span>':'')+'</div>'+
+      (ps.length&&!p.sudah?'<div class="as-komit"><b>If you join, you commit to:</b><ul>'+wajib.map(function(x){return '<li>'+esc(x.t)+'</li>'}).join('')+
+        (dok.length?'<li>Preparing '+dok.length+' document'+(dok.length>1?'s':'')+' ('+esc(dok.slice(0,3).map(function(x){return x.t}).join(', '))+(dok.length>3?' …':'')+')</li>':'')+
+        '</ul><span>Each item gets its own deadline'+(dl?' before '+esc(tglPanjang(dl)):'')+'. Your mentor sees your progress.</span></div>':'')+
+      (g?asGabungForm(p,g):p.sudah?'<div class="pick ketat"><button class="btn sea xs" onclick="asPilihSiswa(\''+esc(p.id)+'\')">Open</button><button class="btn ghost xs" onclick="asKeluar(\''+esc(p.id)+'\')">Leave</button></div>':
+        p.keputusan==='Tidak ikut'?'<div class="pick ketat"><span class="muted kecil">You chose not to join'+(p.alasan?' — “'+esc(p.alasan)+'”':'')+'.</span><button class="btn gold xs" onclick="asGabungBuka(\''+esc(p.id)+'\')">Join after all</button><button class="btn ghost xs" onclick="asTolakBatal(\''+esc(p.id)+'\')">Undo</button></div>':
+        '<div class="pick ketat"><button class="btn gold sm" onclick="asGabungBuka(\''+esc(p.id)+'\')">'+ikon('plus')+'Join</button><button class="btn ghost sm" onclick="asTolak(\''+esc(p.id)+'\')">Not for me</button></div>')+'</div>';
+  }
+  var belum=aktif.filter(function(p){return !p.sudah}).length;
+  return '<div class="card as-buka"><div class="judul-baris rapat"><div><div class="eyebrow">Open trackers'+(belum?' · '+belum+' waiting for your decision':'')+'</div><h2>Join or not?</h2><div class="sub">Decide for each one. Joining gives you a personal deadline for every item you must complete — your universities and majors, your personal data, your report-card grades, and the documents.</div></div></div>'+
+    '<div class="as-buka-g">'+aktif.map(kartu).join('')+'</div>'+
+    (tolak.length?'<details class="as-tolak"><summary>Not for me · '+tolak.length+'</summary><div class="as-buka-g">'+tolak.map(kartu).join('')+'</div></details>':'')+'</div>';
+}
+function asTolak(id){
+  var p=asTerbuka().filter(function(x){return x.id===id})[0];
+  tanyaIsian('Not joining “'+(p?p.nama:'')+'”?','Why not? (optional — your mentor sees this)','',function(v){
+    if(v===null) return;
+    call('pelacakTolak',S.token,id,String(v||'').trim()||'—').then(function(r){
+      if(!r.ok){ toast(r.error,true); return }
+      S.pelacakTerbuka=r.terbuka||[]; toast('Noted. You can still join later.'); gambarNav(); gambarView();
+    }).catch(tangani);
+  },'Not for me');
+}
+function asTolakBatal(id){
+  call('pelacakTolak',S.token,id,null).then(function(r){ if(!r.ok){ toast(r.error,true); return } S.pelacakTerbuka=r.terbuka||[]; gambarNav(); gambarView() }).catch(tangani);
+}
+(function(){
+  /* Sebelum bergabung: siswa melihat komitmennya dan menyetujuinya. */
+  var lamaGabung=asGabung;
+  asGabung=function(){
+    var A=asSt(), g=A.gabung; if(!g) return;
+    if(g.setuju) return lamaGabung();
+    var p=asTerbuka().filter(function(x){return x.id===g.id})[0], ps=asPersyaratan(p);
+    if(!ps.length){ g.setuju=true; return lamaGabung() }
+    tanya('Join “'+p.nama+'”? You commit to completing '+ps.length+' item'+(ps.length>1?'s':'')+', each with a personal deadline. Your mentor will see when you are late.',function(){ g.setuju=true; lamaGabung() },'Join');
+  };
+  /* Simpan keputusan mentor-view dari pelacakDaftar. */
+  var lamaCall2=call;
+  call=function(nama){
+    var p=lamaCall2.apply(this,arguments);
+    if(nama==='pelacakDaftar') return p.then(function(r){ if(r&&r.ok&&r.keputusan) asSt().keputusan=r.keputusan; return r });
+    if(nama==='pelacakGabung') return p.then(function(r){
+      if(r&&r.ok) setTimeout(function(){
+        var prog=asProgId(asSt().pilih); if(!prog) return;
+        var pil=asPersyaratan(prog).filter(function(x){return x.id==='_pilih'})[0];
+        if(pil&&!(asCekWajibKlien(prog,'_pilih')||{}).ok) asPilihBuka(prog.id);
+      },400);
+      return r;
+    });
+    return p;
+  };
+})();
+
+/* ---------- mentor: keputusan siswa, matriks dengan tenggat ---------- */
+function asKeputusanHtml(prog){
+  if(!prog.def.terbuka) return '';
+  var o=(asSt().keputusan||{})[prog.id]; if(!o) return '';
+  function nama(l,teks){ return l.length?'<div class="as-kp-n">'+l.slice(0,60).map(function(x){return '<span title="'+esc((x.kelas||'')+(x.alasan?' · '+x.alasan:''))+'">'+esc(x.nama)+(teks&&x.alasan&&x.alasan!=='—'?' <i>“'+esc(x.alasan)+'”</i>':'')+'</span>'}).join('')+(l.length>60?'<span>+'+(l.length-60)+'</span>':'')+'</div>':'<div class="muted kecil">—</div>' }
+  return '<div class="card as-kp"><div class="judul-baris rapat"><div><div class="eyebrow">Student decisions</div><h3>Who joined '+esc(prog.nama)+'</h3></div>'+
+    (bimbing()&&o.belum.length?'<button class="btn gold sm" id="asIngatB" onclick="asIngatkan(\''+esc(prog.id)+'\')">'+ikon('kirim')+'Remind '+o.belum.length+' undecided by email</button>':'')+'</div>'+
+    '<div class="as-kp-g"><div class="ikut"><b>'+o.ikut.length+'</b><span>Joined</span>'+nama(o.ikut)+'</div>'+
+    '<div class="tolak"><b>'+o.tolak.length+'</b><span>Not for me</span>'+nama(o.tolak,true)+'</div>'+
+    '<div class="belum"><b>'+o.belum.length+'</b><span>Not decided yet</span>'+nama(o.belum)+'</div></div></div>';
+}
+function asIngatkan(id){
+  var b=q('asIngatB'); if(b){ b.disabled=true; b.textContent='Sending…' }
+  call('pelacakIngatkan',S.token,id).then(function(r){
+    if(b){ b.disabled=false }
+    if(!r.ok){ toast(r.error,true); return }
+    toast(r.terkirim+' reminder email'+(r.terkirim===1?'':'s')+' sent.'); if(b) b.textContent='Reminded';
+  }).catch(tangani);
+}
+function asMatriksHtml(prog){
+  var ps=asPersyaratan(prog), per={}, urut=[], hari=hariIniStr();
+  asData().forEach(function(t){ if(!per[t.siswaId]){ per[t.siswaId]=t; urut.push(t.siswaId) } });
+  if(!urut.length) return '';
+  var ubah=bimbing();
+  var h='<div class="card as-matriks"><div class="judul-baris rapat"><div><div class="eyebrow">Preparation list</div><h3>Who has prepared what</h3><div class="sub">'+ps.length+' item(s). Required data ticks itself from each student’s deck; red = past its deadline.</div></div></div>'+
+    '<div class="as-gulir"><table class="as-tbl as-mx"><thead><tr><th>Student</th><th>Done</th><th>Late</th>'+ps.map(function(x,i){return '<th title="'+esc(x.t)+'" class="'+(x.auto?'auto':'')+'"><span>'+(i+1)+(x.auto?' · data':'')+'</span>'+esc(x.t.length>34?x.t.slice(0,33)+'…':x.t)+'</th>'}).join('')+'</tr></thead><tbody>';
+  urut.sort(function(a,b){ return (per[a].kelas+per[a].nama).localeCompare(per[b].kelas+per[b].nama) }).forEach(function(sid){
+    var t=per[sid], cek=t.checklist||{}, n=0, telat=0;
+    var sel=ps.map(function(x){ var ok=cek['pr:'+x.id]&&cek['pr:'+x.id].ok, due=asTenggatButir(t,x), lewat=!ok&&due&&due<hari; if(ok) n++; if(lewat) telat++;
+      return '<td class="as-mx-c'+(ok?' ok':lewat?' telat':'')+'"><input type="checkbox"'+(ok?' checked':'')+(ubah?'':' disabled')+' title="'+esc(x.t+(due?' · due '+due:''))+'" onchange="asSiapkan(\''+esc(t.id)+'\',\''+esc(x.id)+'\',this.checked)">'+(due&&!ok?'<i>'+esc(due.slice(5).replace('-','/'))+'</i>':'')+'</td>' });
+    h+='<tr><td><button class="as-nama" onclick="asLaciBuka(\''+esc(sid)+'\')">'+esc(t.nama)+'</button><div class="muted kecil">'+esc(t.kelas||'')+'</div></td><td class="as-mx-n"><b>'+n+'/'+ps.length+'</b></td><td class="as-mx-n'+(telat?' merah':'')+'"><b>'+telat+'</b></td>'+sel.join('')+'</tr>';
+  });
+  return h+'</tbody></table></div></div>';
+}
+(function(){
+  var lamaVP=viewPelacak;
+  viewPelacak=function(){
+    var h=lamaVP(), A=asSt(), prog=asProg();
+    if(A.editor||A.impor||A.demo||!prog||!(bimbing()||pimpinan())) return h;
+    var kp=asKeputusanHtml(prog); if(!kp) return h;
+    var i=h.indexOf('<div class="as-kpi">');
+    return i<0?h+kp:h.slice(0,i)+kp+h.slice(i);
+  };
+})();
+
+/* ---------- editor: jenis, kawasan, data wajib, jeda ---------- */
+(function(){
+  var lamaUbah=asEditorUbah;
+  asEditorUbah=function(id){
+    lamaUbah(id);
+    var p=asProgId(id), E=asSt().editor; if(!p||!E) return;
+    E.jenis=p.def.jenis||''; E.wilayah=(p.def.wilayah||[]).join(', '); E.minKampus=p.def.minKampus||''; E.jeda=p.def.jeda===undefined?7:p.def.jeda;
+    E.wajib=(p.def.wajib||[]).slice();
+    E.persyaratan=(E.persyaratan||[]).filter(function(x){return !/^_/.test(x.id||'')});
+    gambarView();
+  };
+  var lamaBaru=asEditorBaru;
+  asEditorBaru=function(){ lamaBaru(); var E=asSt().editor; E.jenis='beasiswa'; E.wilayah=''; E.minKampus=''; E.jeda=7; E.wajib=['pilih','profil','rapor']; gambarView() };
+  var lamaSiswa=asEdSiswaHtml;
+  asEdSiswaHtml=function(){
+    var E=asSt().editor; E.wajib=E.wajib||[];
+    var h='<div class="as-ed-jenis"><h3 class="rk-h3" style="margin:0 0 6px">Tracker type &amp; what joining means</h3><div class="isi-grid">'+
+      '<label class="bidang"><span>Type</span><select onchange="S.as.editor.jenis=this.value;gambarView()">'+AS_JENIS.map(function(j){return '<option value="'+j[0]+'"'+((E.jenis||'')===j[0]?' selected':'')+'>'+j[1]+'</option>'}).join('')+'</select></label>'+
+      '<label class="bidang s2"><span>Region / countries (optional)</span><input value="'+esc(E.wilayah||'')+'" placeholder="e.g. Malaysia, Singapore" onchange="S.as.editor.wilayah=this.value"><span class="hint">Students pick universities from these countries.</span></label>'+
+      '<label class="bidang"><span>Universities each student must choose</span><input type="number" min="1" max="12" value="'+esc(E.minKampus||'')+'" placeholder="auto" onchange="S.as.editor.minKampus=this.value"></label>'+
+      '<label class="bidang"><span>Finish documents … days before the admission deadline</span><input type="number" min="0" max="60" value="'+esc(E.jeda===undefined?7:E.jeda)+'" onchange="S.as.editor.jeda=this.value"></label></div>'+
+      '<div class="bidang"><span>Data every student must complete in the deck after joining (each gets a deadline)</span>'+AS_WAJIB.map(function(w){ var on=E.wajib.indexOf(w[0])>=0;
+        return '<label class="tl-cek"><input type="checkbox"'+(on?' checked':'')+' onchange="asEdWajib(\''+w[0]+'\',this.checked)"> <span><b>'+w[1]+'</b> <em class="muted">· '+w[2]+'</em></span></label>' }).join('')+'</div>'+
+      '<div class="muted kecil">Deadlines: items without a fixed date are spread from the day a student joins until the admission deadline minus the days above. Required data comes first.</div></div>';
+    return h+lamaSiswa();
+  };
+  /* def tambahan ikut terkirim bersama "For students" */
+  var lamaCall3=call;
+  call=function(nama){
+    if(nama==='pelacakProgramSimpan'&&arguments[2]&&arguments[2].def&&asSt().editor){
+      var E=asSt().editor, d=arguments[2].def;
+      d.jenis=E.jenis||''; d.wilayah=String(E.wilayah||'').split(/[,;]+/).map(function(x){return x.trim()}).filter(Boolean);
+      d.minKampus=Number(E.minKampus)||0; d.jeda=E.jeda===''?7:Number(E.jeda); d.wajib=(E.wajib||[]).slice();
+    }
+    return lamaCall3.apply(this,arguments);
+  };
+})();
+function asEdWajib(w,on){ var E=asSt().editor, i=E.wajib.indexOf(w); if(on&&i<0) E.wajib.push(w); if(!on&&i>=0) E.wajib.splice(i,1); gambarView() }
+
+/* ---------- impor JSON: jenis, kawasan, data wajib ---------- */
+(function(){
+  var lamaNorm=asNormImpor;
+  asNormImpor=function(j){
+    var p=lamaNorm(j), t=j.tracker||j.pelacak||j.program||j, d=p.tracker.def;
+    var jn=String(asA(t,'type','jenis','kind')||'').toLowerCase();
+    d.jenis=/scholar|beasiswa/.test(jn)?'beasiswa':/univ|kampus|region|wilayah/.test(jn)?'kampus':(d.beasiswa?'beasiswa':'');
+    var wl=asA(t,'region','regions','wilayah','countries','negara'); d.wilayah=(Array.isArray(wl)?wl:String(wl||'').split(/[,;]+/)).map(function(x){return String(x).trim()}).filter(Boolean);
+    d.minKampus=Number(asA(t,'minUniversities','minKampus','universitiesToChoose'))||0;
+    var jd=asA(t,'bufferDays','jeda','finishDaysBefore'); d.jeda=jd===''?7:Number(jd);
+    var wj=asA(t,'requiredData','dataWajib','wajib');
+    if(wj===''||wj===true) d.wajib=d.jenis?['pilih','profil','rapor']:[];
+    else if(wj===false) d.wajib=[];
+    else d.wajib=(Array.isArray(wj)?wj:String(wj).split(/[,;]+/)).map(function(x){ x=String(x).toLowerCase(); return /univ|major|kampus|jurusan|pilih/.test(x)?'pilih':/personal|profil|data diri|biodata/.test(x)?'profil':/report|rapor|grade|nilai/.test(x)?'rapor':'' }).filter(Boolean);
+    var ks=asA(t,'universities','kampus','campuses','targets','universitas');
+    if(!(Array.isArray(ks)&&ks.length)) d.kampus.forEach(function(k){ k.generik=true });
+    else d.kampus.forEach(function(k,i){ var src=ks[i]; if(src&&typeof src==='object'&&(src.generic||src.generik||src.region)) k.generik=true });
+    return p;
+  };
+  var lamaImpHtml=asImporHtml;
+  asImporHtml=function(){
+    var h=lamaImpHtml(), I=asSt().impor; if(!I||!I.paket) return h;
+    var d=I.paket.tracker.def;
+    var blok='<div class="as-imp-r"><div><span>Type</span><b>'+esc((AS_JENIS.filter(function(x){return x[0]===d.jenis})[0]||['','Not set'])[1])+'</b></div>'+
+      '<div><span>Region</span><b>'+esc((d.wilayah||[]).join(', ')||'—')+'</b></div>'+
+      '<div><span>Required data after joining</span><b>'+esc((d.wajib||[]).map(function(w){return (AS_WAJIB.filter(function(x){return x[0]===w})[0]||['',w])[1]}).join(', ')||'None')+'</b></div>'+
+      '<div><span>Documents finished</span><b>'+(d.jeda===undefined?7:d.jeda)+' days before the deadline</b></div></div>';
+    var i=h.indexOf('<h3 class="rk-h3">Universities');
+    return i<0?h:h.slice(0,i)+blok+h.slice(i);
+  };
+})();
+AS_CONTOH_IMPOR.tracker.type='scholarship';
+AS_CONTOH_IMPOR.tracker.minUniversities=6;
+AS_CONTOH_IMPOR.tracker.bufferDays=7;
+AS_CONTOH_IMPOR.tracker.requiredData=['university & major','personal data','report-card grades'];
+
+/* ---------- tekanan: beranda, gerbang, langkah berikut, lonceng ---------- */
+function asKomitmenSaya(){
+  if(S.user.role!=='siswa') return [];
+  var out=[], hari=hariIniStr();
+  (S.pelacakProgram||[]).forEach(function(prog){
+    var t=asSemuaTarget().filter(function(x){return x.pelacak===prog.id&&x.siswaId===S.user.id})[0]; if(!t) return;
+    asPersyaratan(prog).forEach(function(x){
+      var ok=asButirOk(t,x); if(ok) return;
+      var due=asTenggatButir(t,x);
+      out.push({prog:prog,t:t,x:x,due:due,lewat:!!(due&&due<hari),hari:due?(mundur(due)||{}).hari:null});
+    });
+  });
+  return out.sort(function(a,b){ return (a.due||'9999')<(b.due||'9999')?-1:1 });
+}
+function asKomitmenKartu(){
+  var k=asKomitmenSaya(); if(!k.length) return '';
+  var wajib=k.filter(function(y){return y.x.auto}), lewat=k.filter(function(y){return y.lewat});
+  var tampil=wajib.concat(k.filter(function(y){return !y.x.auto&&(y.lewat||(y.hari!==null&&y.hari<=14))})).slice(0,8);
+  if(!tampil.length) return '';
+  return '<div class="card as-komit-k'+(lewat.length?' telat':'')+'"><div class="judul-baris rapat"><div><div class="eyebrow">Your tracker commitments</div><h2>'+(lewat.length?lewat.length+' overdue — finish these first':'Due soon')+'</h2></div><button class="btn ghost sm" onclick="pindah(\'pelacak\')">My trackers</button></div>'+
+    '<div class="as-komit-l">'+tampil.map(function(y){
+      return '<div class="as-komit-b'+(y.lewat?' lewat':'')+'"><span><b>'+esc(y.x.t)+'</b><i>'+esc(y.prog.nama)+(y.x.auto?' · '+esc(asWajibInfo(y.prog,y.x)):'')+'</i></span>'+asDueChip(y.due,false)+
+        (y.x.auto?asWajibAksi(y.prog,y.x):'<button class="btn ghost xs" onclick="S.as=S.as||{};asSt().pilih=\''+esc(y.prog.id)+'\';pindah(\'pelacak\')">Open</button>')+'</div>' }).join('')+'</div></div>';
+}
+(function(){
+  var lamaInti=gambarViewInti;
+  gambarViewInti=function(){
+    var h=lamaInti.apply(this,arguments);
+    try{
+      if(S.user&&S.user.role==='siswa'){
+        var v=q('view'), tab=S.tab;
+        if(tab==='beranda'){ var kk=asKomitmenKartu(); if(kk) v.insertAdjacentHTML('afterbegin',kk) }
+        var peta={d:'_pilih',a:'_profil',rapor:'_rapor'};
+        if(peta[tab]){
+          var b=asKomitmenSaya().filter(function(y){return y.x.id===peta[tab]});
+          if(b.length) v.insertAdjacentHTML('afterbegin','<div class="note as-gerbang-wajib'+(b.some(function(y){return y.lewat})?' telat':'')+'">'+ikon('awas')+'<div><b>Required by '+esc(b.map(function(y){return y.prog.nama}).join(', '))+':</b> '+esc(b[0].x.t)+
+            ' — '+esc(asWajibInfo(b[0].prog,b[0].x))+'. '+asDueChip(b[0].due,false)+(tab==='d'?' <button class="btn gold xs" onclick="asPilihBuka(\''+esc(b[0].prog.id)+'\')">Choose universities &amp; majors</button>':'')+'</div></div>');
+        }
+      }
+    }catch(e){}
+    return h;
+  };
+  var lamaLangkah=langkahBeranda;
+  langkahBeranda=function(d,p){
+    var out=lamaLangkah.apply(this,arguments);
+    try{
+      asKomitmenSaya().filter(function(y){return y.lewat||(y.hari!==null&&y.hari<=7)}).slice(0,3).reverse().forEach(function(y){
+        out.unshift({ikon:y.lewat?'awas':'jam',warna:y.lewat?'bad':'warn',t:y.x.t,s:y.prog.nama+' · '+(y.lewat?Math.abs(y.hari)+' day(s) overdue':y.hari===0?'due today':'due in '+y.hari+' day(s)'),
+          aksi:y.x.id==='_pilih'?"asPilihBuka('"+y.prog.id+"')":y.x.id==='_profil'?"pindah('a')":y.x.id==='_rapor'?"pindah('rapor')":"pindah('pelacak')"});
+      });
+    }catch(e){}
+    return out;
+  };
+  var lamaNotif=butirNotif;
+  butirNotif=function(){
+    var out=lamaNotif.apply(this,arguments);
+    try{
+      var k=asKomitmenSaya(), lewat=k.filter(function(y){return y.lewat}), dekat=k.filter(function(y){return !y.lewat&&y.hari!==null&&y.hari<=3});
+      if(lewat.length) out.unshift({ikon:'awas',judul:lewat.length+' tracker item'+(lewat.length>1?'s':'')+' overdue',ket:lewat.slice(0,2).map(function(y){return y.x.t}).join(' · '),buka:function(){ pindah('pelacak') }});
+      if(dekat.length) out.unshift({ikon:'jam',judul:dekat.length+' tracker item'+(dekat.length>1?'s':'')+' due within 3 days',ket:dekat.slice(0,2).map(function(y){return y.x.t}).join(' · '),buka:function(){ pindah('pelacak') }});
+      var bel=asTerbuka().filter(function(p){return !p.sudah&&p.keputusan!=='Tidak ikut'});
+      if(bel.length) out.push({ikon:'bendera',judul:bel.length+' tracker'+(bel.length>1?'s':'')+' waiting for your decision',ket:bel.map(function(p){return p.nama}).slice(0,2).join(', '),buka:function(){ pindah('pelacak') }});
+    }catch(e){}
+    return out;
+  };
+})();
+
 
 /* =======================================================
    JALAN
