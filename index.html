@@ -3640,6 +3640,35 @@ html.latar-auth .ld-berita{background:rgba(247,250,244,.96)}
   .as-due{margin-left:28px}
   .as-siap-r .btn{margin-left:28px}
 }
+/* ===== v43 · jadwal beasiswa, database, impor umum ===== */
+.adm-jenis{display:inline-flex;gap:4px;margin-top:14px;padding:4px;border-radius:12px;background:var(--line,#e5e7eb);flex-wrap:wrap}
+.adm-jenis button{display:inline-flex;align-items:center;gap:6px;border:0;background:transparent;padding:7px 14px;border-radius:9px;font:inherit;font-weight:600;font-size:13px;cursor:pointer;color:var(--ink2,#475569)}
+.adm-jenis button svg{width:15px;height:15px}
+.adm-jenis button i{font-style:normal;font-size:11px;background:rgba(0,0,0,.07);padding:0 7px;border-radius:999px}
+.adm-jenis button.on{background:var(--card,#fff);color:var(--ink,#0f172a);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.adm-jenis-pilih{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;margin:12px 0 4px;padding:10px 12px;border-radius:10px;background:rgba(14,116,144,.07)}
+.tag.bea{background:rgba(202,138,4,.14);color:#a16207;border-color:transparent}
+.ref-kartu .sub{max-width:720px}
+.ip-kartu .ip-jenis{min-width:260px;max-width:360px}
+.ip-kartu .judul-baris{align-items:flex-start;gap:12px;flex-wrap:wrap}
+.ip-angka{display:grid;grid-template-columns:repeat(3,minmax(0,140px));gap:8px;margin:10px 0}
+.ip-angka>div{padding:8px 12px;border-radius:10px;border:1px solid var(--line,#e5e7eb)}
+.ip-angka>div b{display:block;font-size:20px}
+.ip-angka>div span{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--ink2,#475569)}
+.ip-angka .baru{background:rgba(22,163,74,.07)}
+.ip-angka .ubah{background:rgba(202,138,4,.09)}
+.ip-chips{display:flex;flex-wrap:wrap;gap:4px;margin:8px 0}
+.ip-trk{display:flex;flex-direction:column;gap:2px;padding:10px 12px;border-radius:10px;background:rgba(14,116,144,.07);margin:8px 0}
+.ip-trk span{font-size:13px;color:var(--ink2,#475569)}
+.ip-kol{margin:8px 0}
+.ip-kol summary{cursor:pointer;font-weight:700;font-size:13px}
+.imp-drop.seret{outline:2px dashed var(--sea,#0e7490);outline-offset:-6px}
+@media (max-width:640px){
+  .ip-angka{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .ip-kartu .ip-jenis{min-width:0;width:100%;max-width:none}
+  .adm-jenis{display:flex}
+  .adm-jenis button{flex:1;justify-content:center}
+}
 </style>
 </head>
 <body>
@@ -3918,7 +3947,7 @@ var KEY='deckptln_token_v1';
    Ganti bila membuat deployment baru.
    ------------------------------------------------------- */
 var LAMBANG='<div class="lambang"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="DECK PTLN"><rect width="100" height="100" rx="24" fill="#EDF0EA"/><rect x="15.5" y="60" width="7.4" height="20" rx="3.2" fill="#10302A" opacity="0.55"/><rect x="27.3" y="52" width="7.4" height="28" rx="3.2" fill="#10302A" opacity="0.64"/><rect x="39.1" y="44" width="7.4" height="36" rx="3.2" fill="#10302A" opacity="0.73"/><rect x="50.900000000000006" y="36" width="7.4" height="44" rx="3.2" fill="#10302A" opacity="0.82"/><rect x="62.7" y="28" width="7.4" height="52" rx="3.2" fill="#10302A" opacity="0.91"/><rect x="74.5" y="18" width="7.4" height="62" rx="3.2" fill="#C77D1A" opacity="1"/></svg></div>';
-var VERSI_UI='2026.11.22-41';
+var VERSI_UI='2026.11.22-43';
 var KUNCI_ALAMAT='deckptln_apiurl_v1';
 
 /* Alamat Web App boleh ditimpa dari dalam aplikasi. Berguna bila di Apps
@@ -20946,13 +20975,14 @@ function asImporLangkah(x){
   var t=String(asA(x,'text','t','step','langkah','name','nama','title')||'').trim();
   var m=String(asA(x,'marks','tanda','mark','meaning')||'').toLowerCase();
   var tanda={admission:'admisi',application:'admisi',admisi:'admisi',scholarship:'beasiswa',beasiswa:'beasiswa',interview:'wawancara',wawancara:'wawancara',offer:'tawaran',tawaran:'tawaran',essaydraft:'esaiDraf',esaidraf:'esaiDraf',essayfinal:'esaiFinal',esaifinal:'esaiFinal'}[m.replace(/[^a-z]/g,'')]||'';
-  return {t:t,tanda:tanda};
+  var id=String(asA(x,'id')||'').replace(/[^A-Za-z0-9_]/g,'').slice(0,40);
+  return id?{id:id,t:t,tanda:tanda}:{t:t,tanda:tanda};
 }
 function asImporFase(arr){
   if(!Array.isArray(arr)||!arr.length) return null;
   if(arr.every(function(x){return typeof x==='string'})) return [{nama:'Steps',langkah:arr.map(asImporLangkah)}];
   var f=arr.map(function(x,i){ if(typeof x==='string') return {nama:x,langkah:[{t:x,tanda:''}]};
-    var l=asA(x,'steps','langkah','items','tasks'); return {nama:String(asA(x,'name','nama','title','phase','fase')||('Phase '+(i+1))),langkah:(Array.isArray(l)?l:[]).map(asImporLangkah).filter(function(s){return s.t})} }).filter(function(x){return x.langkah.length});
+    var l=asA(x,'steps','langkah','items','tasks'), fid=String(asA(x,'id')||'').replace(/[^A-Za-z0-9_]/g,'').slice(0,20); return {id:fid||undefined,nama:String(asA(x,'name','nama','title','phase','fase')||('Phase '+(i+1))),langkah:(Array.isArray(l)?l:[]).map(asImporLangkah).filter(function(s){return s.t})} }).filter(function(x){return x.langkah.length});
   return f.length?f:null;
 }
 function asImporKelas(v){
@@ -20977,7 +21007,7 @@ function asNormImpor(j){
     man=(Array.isArray(man)?man:[]).map(function(m){ return Array.isArray(m)?[String(m[0]||''),String(m[1]||'')]:[String(asA(m,'name','nama','label')||''),String(asA(m,'value','nilai','detail')||'')] });
     var sy=asA(k,'requirements','syarat','notes','catatan'); sy=Array.isArray(sy)?sy.map(String):(sy?String(sy).split(/\n+/):[]);
     return {kode:String(asA(k,'code','kode','short')||asKodeDari(nm)).toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,12)||('U'+(i+1)),nama:nm,negara:String(asA(k,'country','negara')||''),
-      warna:String(asA(k,'colour','color','warna')||''),warna2:'',deadline:asTglImpor(asA(k,'deadline','tenggat','closes','tutup')),buka:asTglImpor(asA(k,'opens','buka','open')),
+      warna:String(asA(k,'colour','color','warna')||''),warna2:String(asA(k,'colour2','color2','warna2','accent')||''),deadline:asTglImpor(asA(k,'deadline','tenggat','closes','tutup')),buka:asTglImpor(asA(k,'opens','buka','open')),
       tautan:String(asA(k,'link','url','tautan','website')||''),fase:asImporFase(asA(k,'phases','fase','tahapan','steps'))||faseUmum||asFaseUmum(beasiswa?'beasiswa':'umum'),manfaat:man,syarat:sy};
   }).filter(Boolean);
   if(!kampus.length){
@@ -20987,13 +21017,13 @@ function asNormImpor(j){
   }
   var ps=asA(t,'preparationList','preparation','requirements','persyaratan','checklist','preparationItems');
   var persyaratan=(Array.isArray(ps)?ps:[]).map(function(x){ if(typeof x==='string') return {t:x.trim(),ket:'',tenggat:''};
-    return {t:String(asA(x,'item','t','text','name','nama','requirement')||'').trim(),ket:String(asA(x,'note','ket','notes','detail','keterangan')||''),tenggat:asTglImpor(asA(x,'due','deadline','tenggat'))} }).filter(function(x){return x.t});
+    return {id:String(asA(x,'id')||'').replace(/[^A-Za-z0-9_]/g,'').slice(0,30)||undefined,t:String(asA(x,'item','t','text','name','nama','requirement')||'').trim(),ket:String(asA(x,'note','ket','notes','detail','keterangan')||''),tenggat:asTglImpor(asA(x,'due','deadline','tenggat'))} }).filter(function(x){return x.t});
   var bj=asA(t,'relatedNews','beritaTerkait','linkedNews'); bj=Array.isArray(bj)?bj.map(String):[];
   var posts=asA(j,'news','berita','posts','articles'); if(!Array.isArray(posts)){ posts=asA(t,'news','berita','posts'); }
   posts=(Array.isArray(posts)?posts:[]).filter(function(x){return x&&typeof x==='object'}).map(portalNormal).filter(function(b){return b.judul&&b.judul.length>=3});
   var bool=function(v,def){ if(v===''||v===undefined) return def; return !(v===false||/^(false|no|tidak|0)$/i.test(String(v))) };
   var tr={nama:nama,deskripsi:String(asA(t,'description','deskripsi','about')||''),
-    def:{beasiswa:beasiswa,profilAsean:false,kelas:asImporKelas(asA(t,'classes','kelas','class')),terbuka:bool(asA(t,'openToStudents','open','terbuka','studentsCanJoin'),true),
+    def:{beasiswa:beasiswa,profilAsean:(function(v){ return v===''?undefined:!(v===false||/^(false|no|tidak|0)$/i.test(String(v))) })(asA(t,'aseanProfile','profilAsean','citizenshipProfile')),kelas:asImporKelas(asA(t,'classes','kelas','class')),terbuka:bool(asA(t,'openToStudents','open','terbuka','studentsCanJoin'),true),
       umumkan:bool(asA(t,'announce','postNews','umumkan','autoNews'),true),persyaratan:persyaratan,berita:bj.filter(function(x){return /^BR-/i.test(x)}),kampus:kampus}};
   return {tracker:tr,berita:posts,beritaJudul:bj.filter(function(x){return !/^BR-/i.test(x)})};
 }
@@ -21646,6 +21676,628 @@ function asKomitmenKartu(){
   };
 })();
 
+
+/* =======================================================
+   JADWAL BEASISWA · DATABASE KAMPUS & BEASISWA · IMPOR UMUM
+   - Admission dates kini punya dua jenis: Universities dan Scholarships.
+   - Kampus dan beasiswa baru bisa ditambahkan ke database (tab
+     UNIVERSITAS / BEASISWA) lewat formulir atau impor.
+   - Halaman "Import JSON / Excel" membaca berkas apa pun, mengenali
+     setiap lembar/bagiannya (jadwal kampus, jadwal beasiswa, database
+     kampus, database beasiswa, pelacak, berita, data siswa), dan
+     menandai baris mana yang baru dan mana yang memperbarui data lama.
+   ======================================================= */
+BATAS_KHUSUS.refTerapkan=120000; ULANG_KHUSUS.refTerapkan=0;
+
+/* ---------- kolom jadwal: Type & nama beasiswa ---------- */
+ADM_BIDANG.unshift(['jenis',/^(type|jenis|kind|jenis jadwal|category|kategori)$/]);
+ADM_BIDANG.forEach(function(b){ if(b[0]==='kampus') b[1]=/universit|kampus|campus|institution|institusi|perguruan|^name$|^nama$|school name|college|scholarship|beasiswa/ });
+ADM_LABEL.jenis='Type (University / Scholarship)'; ADM_LABEL.kampus='University / scholarship';
+function admJenisDari(v){ var t=String(v||'').toLowerCase(); if(!t) return ''; return /beasiswa|scholar|grant|funding/.test(t)?'Beasiswa':'Kampus' }
+function admJenisAktif(){ return (S.adm&&S.adm.jenis)==='Beasiswa'?'Beasiswa':'Kampus' }
+function admBea(){ return admJenisAktif()==='Beasiswa' }
+
+/* Panggilan admisiTerapkan selalu membawa jenisnya. */
+(function(){
+  var lamaCall=call;
+  call=function(nama){
+    if(nama==='admisiTerapkan'&&arguments[2]&&typeof arguments[2]==='object'){
+      var p=arguments[2];
+      if(!p.jenis){
+        if(!p.berkas&&S.adm&&S.adm.edit&&(p.baris||[]).length===1) p.baris[0].jenis=p.baris[0].jenis||S.adm.edit.jenis||admJenisAktif();
+        else if(S.adm&&S.adm.impor&&S.adm.impor.data&&!p._umum) p.jenis=S.adm.impor.jenis||admJenisAktif();
+      }
+      delete p._umum;
+    }
+    return lamaCall.apply(this,arguments);
+  };
+})();
+
+/* ---------- halaman Admission dates ---------- */
+function admSaring(semua){
+  var A=S.adm, hari=hariIniStr(), f=A.filter||'depan', cari=(A.cari||'').toLowerCase(), j=admJenisAktif();
+  return semua.filter(function(a){
+    if((a.jenis||'Kampus')!==j) return false;
+    if(A.negara&&a.negara!==A.negara) return false;
+    if(cari&&(a.kampus+' '+a.program+' '+a.negara+' '+a.catatan).toLowerCase().indexOf(cari)<0) return false;
+    if(f==='depan') return a.status!=='Arsip'&&(!a.tutup||a.tutup>=hari);
+    if(f==='buka') return a.status!=='Arsip'&&a.buka&&a.buka<=hari&&(!a.tutup||a.tutup>=hari);
+    if(f==='lewat') return a.status!=='Arsip'&&a.tutup&&a.tutup<hari;
+    if(f==='arsip') return a.status==='Arsip';
+    return true;
+  }).sort(function(a,b){ return (a.tutup||'9999')<(b.tutup||'9999')?-1:(a.tutup||'9999')>(b.tutup||'9999')?1:a.kampus.localeCompare(b.kampus) });
+}
+function viewAdmisi(){
+  admMuat(false);
+  var kelola=bimbing(), A=S.adm=S.adm||{}, bea=admBea();
+  var semua=admDaftar(), nK=semua.filter(function(a){return a.jenis!=='Beasiswa'}).length, nB=semua.length-nK;
+  var h='<div class="card adm-hero"><div class="judul-baris"><div><div class="eyebrow">Admissions calendar</div><h2>'+(bea?'Scholarship admission dates':'University admission dates')+'</h2>'+
+    '<div class="sub">When each '+(bea?'scholarship':'application')+' window opens and closes. These dates feed the calendar, the home page and every student’s deadline reminders.'+
+    (kelola?' Import the whole list at once from Excel or JSON, or edit a row directly.':'')+'</div></div>'+
+    '<div class="pick">'+(kelola?'<label class="btn sea sm">'+ikon('unggah')+'Import Excel / JSON<input type="file" hidden accept=".xlsx,.xls,.csv,.ods,.json" onchange="admPilihBerkas(this.files[0]);this.value=\'\'"></label>'+
+      '<button class="btn gold sm" onclick="admBarisBaru()">'+ikon('plus')+(bea?'Add a scholarship date':'Add a date')+'</button>':'')+
+    '<button class="btn ghost sm" onclick="admUnduh(\'xlsx\')">'+ikon('unduh')+'Excel</button>'+
+    '<button class="btn ghost sm" onclick="admUnduh(\'json\')">'+ikon('unduh')+'JSON</button></div></div>'+
+    '<div class="adm-jenis" role="tablist"><button class="'+(bea?'':'on')+'" onclick="admPilihJenis(\'Kampus\')">'+ikon('kampus')+'Universities <i>'+nK+'</i></button>'+
+    '<button class="'+(bea?'on':'')+'" onclick="admPilihJenis(\'Beasiswa\')">'+ikon('medali')+'Scholarships <i>'+nB+'</i></button></div></div>';
+  if(kelola) h+=refKartuHtml();
+  if(A.impor) h+=admImporHtml();
+  if(A.edit) h+=admFormHtml();
+  if(S.refEdit) h+=refFormHtml();
+  var negara={}; semua.forEach(function(a){ if(a.negara&&(a.jenis||'Kampus')===admJenisAktif()) negara[a.negara]=1 });
+  var f=A.filter||'depan', r=admSaring(semua);
+  h+='<div class="card"><div class="filters ketat">'+
+    '<input type="search" placeholder="Search '+(bea?'scholarship':'university')+', programme, notes" value="'+esc(A.cari||'')+'" oninput="S.adm.cari=this.value;admTabelUlang()">'+
+    '<select onchange="S.adm.negara=this.value;gambarView()"><option value="">'+(bea?'All countries / providers':'All countries')+'</option>'+
+    Object.keys(negara).sort().map(function(n){return '<option'+(A.negara===n?' selected':'')+'>'+esc(n)+'</option>'}).join('')+'</select>'+
+    '<select onchange="S.adm.filter=this.value;gambarView()">'+
+    [['depan','Upcoming & open'],['buka','Open now'],['lewat','Closed'],['semua','All dates'],['arsip','Archived']].map(function(o){return '<option value="'+o[0]+'"'+(f===o[0]?' selected':'')+'>'+o[1]+'</option>'}).join('')+'</select>'+
+    '<span class="muted kecil">'+(bea?nB:nK)+' row(s)'+(semua.length?' · last change '+esc(admTerakhir(semua)):'')+'</span></div>'+
+    '<div id="admTabel">'+admTabelHtml(r)+'</div></div>';
+  if(kelola){
+    h+='<div class="card"><div class="judul-baris"><div><h2>Import history</h2><div class="sub">Undo puts the calendar — and the UNIVERSITAS / BEASISWA tabs, when they were changed — back exactly as they were before that import.</div></div>'+
+      '<button class="btn ghost sm" onclick="admRiwayat()">Refresh</button></div><div id="admRiwayat">'+admRiwayatHtml()+'</div></div>';
+    if(!S._admRiwayatDimuat){ S._admRiwayatDimuat=true; setTimeout(admRiwayat,60) }
+  }
+  return h;
+}
+function admPilihJenis(j){ S.adm=S.adm||{}; S.adm.jenis=j; S.adm.negara=''; if(S.adm.edit&&!S.adm.edit.id) S.adm.edit.jenis=j; gambarView() }
+function admTabelUlang(){ var el=q('admTabel'); if(!el){ gambarView(); return } el.innerHTML=admTabelHtml(admSaring(admDaftar())) }
+(function(){
+  var lamaTabel=admTabelHtml;
+  admTabelHtml=function(r){
+    var h=lamaTabel(r);
+    if(admBea()) h=h.replace('<th>University</th>','<th>Scholarship</th>').replace('Programme / route</th>','Level / route</th>')
+      .replace(/Import the admission calendar[^<]*/,'Import scholarship dates from Excel or JSON, or add one with “Add a scholarship date”.');
+    return h;
+  };
+})();
+function admBarisBaru(){ var j=admJenisAktif(); S.adm.edit={id:'',jenis:j,kampus:'',negara:'',program:j==='Beasiswa'?'Undergraduate':'Undergraduate',intake:'',buka:'',tutup:'',umum:'',tautan:'',catatan:'',status:'Aktif'}; gambarView(); setTimeout(function(){var e=q('admKampus'); if(e) e.focus()},60) }
+function admFormHtml(){
+  var e=S.adm.edit, bea=(e.jenis||admJenisAktif())==='Beasiswa';
+  var daftar=(bea?(S.bea||[]).map(function(b){return b.nama}):(S.univ||[]).slice(0,2000).map(function(u){return u.nama})).map(function(n){return '<option value="'+esc(n)+'">'}).join('');
+  function f(k,lab,tipe,kelas,ph){ return '<label class="bidang '+(kelas||'')+'"><span>'+lab+'</span><input '+(k==='kampus'?'id="admKampus" list="admKampusL" ':'')+'type="'+(tipe||'text')+'" value="'+esc(e[k]||'')+'" placeholder="'+esc(ph||'')+'" oninput="S.adm.edit.'+k+'=this.value"></label>' }
+  return '<div class="card form-blok"><div class="judul-baris rapat"><h3>'+(e.id?(bea?'Edit scholarship date':'Edit admission date'):(bea?'New scholarship date':'New admission date'))+'</h3><button class="btn ghost xs" onclick="S.adm.edit=null;gambarView()">Cancel</button></div>'+
+    '<datalist id="admKampusL">'+daftar+'</datalist><div class="isi-grid">'+
+    '<label class="bidang"><span>Type</span><select onchange="S.adm.edit.jenis=this.value;gambarView()"><option value="Kampus"'+(bea?'':' selected')+'>University</option><option value="Beasiswa"'+(bea?' selected':'')+'>Scholarship</option></select></label>'+
+    f('kampus',bea?'Scholarship':'University','text','s2',bea?'e.g. MEXT Scholarship — type or pick from the database':'Type or pick from the database')+
+    f('negara',bea?'Country / provider':'Country')+f('program',bea?'Level / route':'Programme / route','text','',bea?'e.g. Undergraduate, embassy route':'e.g. Undergraduate, MEXT, early round')+
+    f('intake','Intake','text','','e.g. Aug 2027')+f('buka','Applications open','date')+f('tutup','Deadline','date')+f('umum','Results announced','date')+
+    f('tautan','Official link','url','s2','https://')+f('catatan','Notes','text','s2')+
+    '<label class="bidang"><span>Status</span><select onchange="S.adm.edit.status=this.value"><option value="Aktif"'+(e.status!=='Arsip'?' selected':'')+'>Active</option><option value="Arsip"'+(e.status==='Arsip'?' selected':'')+'>Archived</option></select></label>'+
+    '</div><div class="pick ketat"><button class="btn gold sm" id="admSimpanB" onclick="admSimpanSatu()">Save</button><span class="eyebrow">Students see the change on their home page and calendar straight away.</span></div></div>';
+}
+(function(){
+  /* Pratinjau impor: pilihan jenis baris + kolom Type. */
+  var lamaPilih=admPilihBerkas;
+  admPilihBerkas=function(file,opsi){
+    lamaPilih(file);
+    var tunggu=function(n){
+      var I=S.adm&&S.adm.impor; if(!I) return;
+      if(I.memuat){ if(n<200) setTimeout(function(){tunggu(n+1)},50); return }
+      if(!I.data) return;
+      var jenis=(opsi&&opsi.jenis)||'';
+      if(!jenis){ var iK=I.kol.indexOf('kampus'); jenis=iK>=0&&/scholar|beasiswa/i.test(String(I.judul[iK]))?'Beasiswa':admJenisAktif() }
+      I.jenis=jenis; if(opsi&&opsi.berkas) I.berkas=opsi.berkas;
+      S.adm.jenis=jenis; gambarView();
+    };
+    tunggu(0);
+  };
+  var lamaImpHtml=admImporHtml;
+  admImporHtml=function(){
+    var h=lamaImpHtml(), I=S.adm.impor;
+    if(!I||!I.data) return h;
+    var adaKol=I.kol.indexOf('jenis')>=0;
+    var blok='<div class="adm-jenis-pilih"><b>These rows are</b>'+
+      '<label class="tl-cek"><input type="radio" name="admJenisImp"'+(I.jenis!=='Beasiswa'?' checked':'')+' onchange="S.adm.impor.jenis=\'Kampus\';S.adm.jenis=\'Kampus\';gambarView()"> <span>University admission dates</span></label>'+
+      '<label class="tl-cek"><input type="radio" name="admJenisImp"'+(I.jenis==='Beasiswa'?' checked':'')+' onchange="S.adm.impor.jenis=\'Beasiswa\';S.adm.jenis=\'Beasiswa\';gambarView()"> <span>Scholarship admission dates</span></label>'+
+      (adaKol?'<span class="muted kecil">A <b>Type</b> column was found — each row uses its own type; empty cells use this choice.</span>':'')+'</div>';
+    h=h.replace('<div class="imp-opsi">',blok+'<div class="imp-opsi">');
+    h=h.replace('Also write the dates into the <b>JADWAL PENDAFTARAN</b> column of the UNIVERSITAS tab for matching universities',
+      'Also write the dates into the database — <b>JADWAL PENDAFTARAN</b> (UNIVERSITAS tab) for universities, <b>PERIODE PENDAFTARAN</b> (BEASISWA tab) for scholarships');
+    h=h.replace('<b>Replace everything</b> — the calendar becomes exactly this file.','<b>Replace everything</b> — the '+(I.jenis==='Beasiswa'?'scholarship':'university')+' dates become exactly this file (the other type is kept).');
+    if(I.jenis==='Beasiswa') h=h.replace('<th>University</th>','<th>Scholarship</th>').replace(/<span class="dl jauh">in database<\/span>/g,'<span class="dl jauh">listed</span>');
+    return h;
+  };
+  var lamaHasil=admHasilHtml;
+  admHasilHtml=function(x){
+    var h=lamaHasil(x);
+    if(x&&x.bea) h=h.replace('</div>',' BEASISWA tab: '+(x.bea.galat?esc(x.bea.galat):x.bea.diubah+' scholarship'+(x.bea.diubah===1?'':'s')+' updated'+(x.bea.jumlahTidakCocok?', '+x.bea.jumlahTidakCocok+' name(s) not found there':''))+'.</div>');
+    return h;
+  };
+})();
+function admRiwayatHtml(){
+  var d=S.admRiwayat||[];
+  if(!d.length) return '<div class="empty kecil"><b>No imports yet</b>Each import is backed up here so it can be undone.</div>';
+  return '<ul class="imp-riwayat">'+d.map(function(x){
+    var juga=[x.univ?'UNIVERSITAS dates':'',x.refUniv?'UNIVERSITAS database':'',x.refBea?'BEASISWA database':''].filter(Boolean).join(', ');
+    return '<li><div><b>'+esc(x.berkas||'app')+'</b><span class="muted"> · '+esc(x.waktu)+' · '+esc(x.oleh)+(juga?' · also changed '+esc(juga):'')+'</span></div>'+
+      (x.status==='Dibatalkan'?'<span class="tag tipis">Undone</span>':'<button class="btn ghost xs" onclick="admBatal(\''+esc(x.id)+'\')">Undo</button>')+'</li>';
+  }).join('')+'</ul>';
+}
+function admUnduh(jenis){
+  var d=admDaftar().slice().sort(function(a,b){return ((a.jenis||'')+(a.tutup||'9999'))<((b.jenis||'')+(b.tutup||'9999'))?-1:1});
+  var head=['ID','Type','University / scholarship','Country','Programme / route','Intake','Opens','Deadline','Results','Official link','Notes','Status'];
+  var rows=d.map(function(a){ return [a.id,a.jenis==='Beasiswa'?'Scholarship':'University',a.kampus,a.negara,a.program,a.intake,a.buka,a.tutup,a.umum,a.tautan,a.catatan,a.status==='Arsip'?'Archived':'Active'] });
+  if(!rows.length) rows=[['','University','National University of Singapore (NUS)','Singapore','Undergraduate','Aug 2027','2026-12-16','2027-02-17','2027-07-15','https://nus.edu.sg/oam','Example row — replace with real dates','Active'],
+    ['','Scholarship','MEXT Scholarship','Japan','Undergraduate · embassy route','Apr 2028','2027-04-15','2027-05-31','2027-07-31','https://www.studyinjapan.go.jp','Example row','Active']];
+  var nama='admission-dates-'+hariIniStr();
+  if(jenis==='json'){
+    var ob=function(r){ return {id:r[0],type:r[1],name:r[2],country:r[3],programme:r[4],intake:r[5],opens:r[6],deadline:r[7],results:r[8],link:r[9],notes:r[10],status:r[11]} };
+    unduhBlob(new Blob([JSON.stringify({app:'DECK PTLN',jenis:'admission dates',diekspor:new Date().toISOString(),
+      admissions:rows.filter(function(r){return r[1]==='University'}).map(ob),scholarshipDates:rows.filter(function(r){return r[1]==='Scholarship'}).map(ob)},null,2)],{type:'application/json'}),nama+'.json');
+    return;
+  }
+  muatLib('xlsx',function(){return !!window.XLSX}).then(function(){
+    var wb=XLSX.utils.book_new();
+    [['University dates','University'],['Scholarship dates','Scholarship']].forEach(function(x){
+      var rr=rows.filter(function(r){return r[1]===x[1]});
+      var ws=XLSX.utils.aoa_to_sheet([head].concat(rr));
+      ws['!cols']=[{wch:12},{wch:12},{wch:44},{wch:14},{wch:22},{wch:12},{wch:12},{wch:12},{wch:12},{wch:36},{wch:40},{wch:10}];
+      XLSX.utils.book_append_sheet(wb,ws,x[0]);
+    });
+    XLSX.writeFile(wb,nama+'.xlsx');
+  }).catch(function(e){ toast(e.message||'Excel could not be created.',true) });
+}
+
+/* ---------- beranda: jadwal beasiswa ikut tampil ---------- */
+function brTargetSaya(){
+  var d=S.deck||(S.detail&&S.detail.deck)||null, out={};
+  if(!d||!(S.user.role==='siswa'||ortu())) return out;
+  (d.uni||[]).forEach(function(u){ if(sv(u.kampus)) out[admKunci(u.kampus)]=u.kampus });
+  (d.sch||[]).forEach(function(s){ if(sv(s.nama)) out[admKunci(s.nama)]=s.nama });
+  return out;
+}
+(function(){
+  var lama=brAdmisiDaftar;
+  brAdmisiDaftar=function(daftar,peta){
+    var h=lama(daftar,peta);
+    /* Penanda "Scholarship" untuk baris beasiswa, pada urutan yang sama. */
+    var tampil=daftar.slice(0,S.brAdmSemua?120:12), i=0;
+    return h.replace(/<span class="br-adm-tag">/g,function(m){ var a=tampil[i++]; return a&&a.jenis==='Beasiswa'?m+'<span class="tag tipis bea">Scholarship</span>':m });
+  };
+})();
+
+/* ---------- database: kampus & beasiswa baru ---------- */
+var REF_UNIV_F=[
+  ['nama','University name',/^(nama universitas|university|universitas|nama kampus|kampus|campus|institution|university name|name|nama)$/],
+  ['negara','Country',/^(negara|country|nation)$|country/],
+  ['daftarBiaya','Application fee / year',/biaya pendaftaran|application fee/],
+  ['kuliah','Tuition / year',/biaya kuliah|tuition/],
+  ['hidup','Living cost / year',/biaya hidup|living/],
+  ['web','Official website',/website|web|url|link|situs/],
+  ['syarat','Qualification for Indonesian applicants',/kualifikasi|qualification|requirement|persyaratan|syarat|entry/],
+  ['umum','Results announced',/pengumuman|result|announce/],
+  ['daftar','Application period (text)',/jadwal pendaftaran|application period|application window|admission period|pendaftaran|period/],
+  ['beaTerkait','Related scholarships',/beasiswa terkait|related scholarship|scholarship/],
+  ['qs','QS rank',/qs|rank|peringkat/],
+  ['jurusan','Majors offered (separate with ;)',/jurusan|major|programmes?|programs?|prodi|courses?|faculties/],
+  ['mataUang','Currency',/mata uang|currency/],
+  ['minGpa','Min GPA',/gpa|ipk/],['minIelts','Min IELTS',/ielts/],['minToefl','Min TOEFL iBT',/toefl/],
+  ['intake','Intake',/intake/],
+  ['ket','Notes',/keterangan|notes?|catatan|remark|description/]
+];
+var REF_BEA_F=[
+  ['nama','Scholarship name',/^(nama beasiswa|scholarship|beasiswa|scholarship name|name|nama|programme name)$/],
+  ['tutupKuliah','Covers tuition (Yes/No)',/menutup kuliah|covers? tuition|tuition cover/],
+  ['tutupHidup','Covers living (Yes/No)',/menutup hidup|covers? living|living cover|stipend cover/],
+  ['nilai','Amount per year',/nilai dana|amount|value|stipend|nilai/],
+  ['mataUang','Currency',/mata uang|currency/],
+  ['wilayah','Region / country',/wilayah|region|country|negara|provider|penyelenggara/],
+  ['periode','Application period (text)',/periode|period|application window|jadwal|pendaftaran/],
+  ['link','Official link',/link|url|web|situs/],
+  ['syarat','Main requirements',/persyaratan|requirement|syarat|eligib/],
+  ['cakupan','Coverage',/cakupan|coverage|benefit|manfaat|covers$/],
+  ['tipe','Type (e.g. Fully funded)',/^tipe$|^type$|funding type|jenis/],
+  ['ikatan','Bond',/ikatan|bond/]
+];
+function refPeta(judul,univ){
+  var F=univ?REF_UNIV_F:REF_BEA_F, pakai={};
+  return judul.map(function(j){
+    var t=String(j==null?'':j).toLowerCase().replace(/[_\-]+/g,' ').replace(/\s+/g,' ').trim(); if(!t) return '';
+    for(var i=0;i<F.length;i++){ if(!pakai[F[i][0]]&&F[i][2].test(t)){ pakai[F[i][0]]=1; return F[i][0] } }
+    return '';
+  });
+}
+function refKartuHtml(){
+  var nU=(S.univ||[]).length, nB=(S.bea||[]).length;
+  return '<div class="card ref-kartu"><div class="judul-baris rapat"><div><div class="eyebrow">Database</div><h3>Universities &amp; scholarships on file</h3>'+
+    '<div class="sub">'+nU.toLocaleString()+' universities and '+nB.toLocaleString()+' scholarships students can pick from. Add one that is missing, or import a whole list — rows with the same name are updated instead of duplicated.</div></div>'+
+    '<div class="pick"><button class="btn ghost sm" onclick="refBaru(\'univ\')">'+ikon('plus')+'Add a university</button><button class="btn ghost sm" onclick="refBaru(\'bea\')">'+ikon('plus')+'Add a scholarship</button>'+
+    '<button class="btn sea sm" onclick="pindah(\'imporumum\')">'+ikon('unggah')+'Import JSON / Excel</button></div></div></div>';
+}
+function refBaru(j){ S.refEdit={jenis:j}; if(S.tab!=='admisi'&&S.tab!=='database'&&S.tab!=='imporumum') pindah('admisi'); else gambarView(); setTimeout(function(){ var e=q('refNama'); if(e){ e.focus(); e.scrollIntoView({block:'center'}) } },80) }
+function refFormHtml(){
+  var E=S.refEdit, univ=E.jenis!=='bea', F=univ?REF_UNIV_F:REF_BEA_F;
+  var ada=E.nama?(univ?(S.univ||[]).filter(function(u){return admKunci(u.nama)===admKunci(E.nama)}):(S.bea||[]).filter(function(b){return admKunci(b.nama)===admKunci(E.nama)})):[];
+  var h='<div class="card form-blok ref-form"><div class="judul-baris rapat"><h3>'+(univ?'Add a university to the database':'Add a scholarship to the database')+'</h3><button class="btn ghost xs" onclick="S.refEdit=null;gambarView()">Cancel</button></div>'+
+    (ada.length?'<div class="note">“'+esc(ada[0].nama)+'” is already in the database — saving updates it (empty fields keep their old value).</div>':'')+'<div class="isi-grid">';
+  F.forEach(function(f){
+    var k=f[0], lebar=/syarat|jurusan|ket|cakupan|daftar|periode|beaTerkait/.test(k)?' s2':'';
+    if(k==='tutupKuliah'||k==='tutupHidup'){ h+='<label class="bidang"><span>'+f[1].replace(' (Yes/No)','')+'</span><select onchange="S.refEdit.'+k+'=this.value"><option value="">—</option><option'+(E[k]==='Ya'?' selected':'')+' value="Ya">Yes</option><option'+(E[k]==='Tidak'?' selected':'')+' value="Tidak">No</option></select></label>'; return }
+    var tipe=/kuliah|hidup|daftarBiaya|nilai|minGpa|minIelts|minToefl/.test(k)?'number':(k==='web'||k==='link'?'url':'text');
+    h+='<label class="bidang'+lebar+'"><span>'+esc(f[1])+(k==='nama'?' *':'')+'</span><input '+(k==='nama'?'id="refNama" ':'')+'type="'+tipe+'"'+(tipe==='number'?' step="any"':'')+' value="'+esc(E[k]||'')+'" oninput="S.refEdit.'+k+'=this.value"'+(k==='nama'?' onchange="gambarView()"':'')+'></label>';
+  });
+  return h+'</div><div class="pick ketat"><button class="btn gold sm" id="refSimpanB" onclick="refSimpan()">Save to the database</button><span class="eyebrow">Written to the '+(univ?'UNIVERSITAS':'BEASISWA')+' tab. Every student sees it in the pickers within a minute.</span></div></div>';
+}
+function refSimpan(){
+  var E=S.refEdit; if(!E) return;
+  if(!sv(E.nama)){ toast('Enter the name.',true); return }
+  if(E.jenis!=='bea'&&!sv(E.negara)){ toast('Enter the country.',true); return }
+  var o={}; Object.keys(E).forEach(function(k){ if(k!=='jenis') o[k]=E[k] });
+  var b=q('refSimpanB'); if(b){ b.disabled=true; b.textContent='Saving…' }
+  refKirim(E.jenis,[o],'app').then(function(r){
+    if(b){ b.disabled=false; b.textContent='Save to the database' }
+    if(!r.ok){ toast(r.error,true); return }
+    var x=r.hasil; toast(x.baru?'Added to the database.':x.ubah?'Updated in the database.':'Nothing changed — the database already has these details.');
+    S.refEdit=null; gambarView();
+  }).catch(function(e){ if(b){ b.disabled=false; b.textContent='Save to the database' } tangani(e) });
+}
+function refKirim(jenis,baris,berkas){
+  return call('refTerapkan',S.token,{jenis:jenis,baris:baris,berkas:berkas}).then(function(r){
+    if(r&&r.error==='SESI_HABIS'){ sesiHabis(); return r }
+    if(r&&r.ok&&(r.hasil.baru||r.hasil.ubah)){ S._admRiwayatDimuat=false; S.refSidik=''; S.ambilRef=false; try{ ambilRefLatar('baru-'+Date.now()) }catch(e){} S._brWaktu=0; try{ brSegarkan(true) }catch(e2){} }
+    return r;
+  });
+}
+(function(){
+  var lamaDb=viewDatabase;
+  viewDatabase=function(){
+    var h=lamaDb.apply(this,arguments);
+    if(!bimbing()) return h;
+    return refKartuHtml()+(S.refEdit?refFormHtml():'')+h;
+  };
+})();
+
+/* =======================================================
+   IMPOR UMUM — satu pintu untuk JSON dan Excel
+   ======================================================= */
+var IP_JENIS=[
+  ['admisi','Admission dates — universities'],['admisiBea','Admission dates — scholarships'],
+  ['univ','University database (new / updated universities)'],['bea','Scholarship database (new / updated scholarships)'],
+  ['tracker','Target tracker'],['berita','News posts'],['siswa','Student data (grades, tests, targets)'],['abaikan','Ignore this part']
+];
+function ipLabel(j){ return (IP_JENIS.filter(function(x){return x[0]===j})[0]||['',j])[1] }
+function ipSt(){ return S.ip=S.ip||{} }
+function viewImporUmum(){
+  if(!bimbing()) return '<div class="empty">Mentor teachers and administrators only.</div>';
+  admMuat(false);
+  var P=ipSt();
+  var h='<div class="card imp-hero"><div><div class="eyebrow">Import</div><h2>Import JSON or Excel — any part of the deck</h2>'+
+    '<div class="sub">Drop one file. Every sheet (Excel) or section (JSON) is read on its own and the app works out what it is, then marks each row as <b>new</b> or <b>update</b> before anything is saved. You can correct the detected part before applying.</div>'+
+    '<div class="imp-bisa">'+['University admission dates','Scholarship admission dates','New universities for the database','New scholarships for the database','Target trackers','News posts','Student data (admin)'].map(function(t){return '<span class="tag">'+esc(t)+'</span>'}).join('')+'</div>'+
+    '<div class="pick" style="margin-top:10px"><button class="btn ghost sm" onclick="ipTemplat(\'xlsx\')">'+ikon('unduh')+'Excel template</button><button class="btn ghost sm" onclick="ipTemplat(\'json\')">'+ikon('unduh')+'JSON template</button></div></div>'+
+    '<label class="imp-drop" id="ipDrop"><input type="file" id="ipBerkas" accept=".xlsx,.xls,.xlsm,.csv,.ods,.json" onchange="ipPilih(this.files[0]);this.value=\'\'" hidden>'+
+    '<b>'+ikon('unggah')+' Choose an Excel or JSON file</b><span>.xlsx .xls .csv .ods .json</span></label></div>';
+  if(S.refEdit) h+=refFormHtml();
+  if(P.memuat) return h+'<div class="card"><div class="empty"><b>Reading “'+esc(P.nama)+'”…</b></div></div>';
+  if(P.galat) h+='<div class="card"><div class="note bad">'+esc(P.galat)+'</div></div>';
+  if(!P.bagian) return h+refKartuHtml();
+  var siap=P.bagian.filter(function(b){ return /^(admisi|admisiBea|univ|bea)$/.test(b.jenis)&&!b.hasil&&ipBaris(b).length });
+  h+='<div class="card imp-ringkas"><div class="judul-baris"><div><h2>'+esc(P.nama)+'</h2><div class="sub">'+P.bagian.length+' part(s) found. '+
+    P.bagian.map(function(b){return esc(b.nama)+' → <b>'+esc(ipLabel(b.jenis).split(' (')[0])+'</b>'}).join(' · ')+'</div></div>'+
+    '<div class="pick">'+(siap.length>1?'<button class="btn sea sm" id="ipSemuaB" onclick="ipTerapSemua()">Apply all '+siap.length+' parts</button>':'')+
+    '<button class="btn ghost sm" onclick="S.ip={};gambarView()">Close</button></div></div></div>';
+  P.bagian.forEach(function(b,i){ h+=ipKartu(b,i) });
+  return h;
+}
+function ipPilih(file){
+  if(!file) return;
+  if(file.size>25*1024*1024){ toast('That file is larger than 25 MB.',true); return }
+  S.ip={memuat:true,nama:file.name,berkas:file}; gambarView();
+  ipBaca(file).then(function(bag){
+    bag.forEach(ipDeteksi);
+    S.ip={nama:file.name,berkas:file,bagian:bag}; gambarView();
+  }).catch(function(e){ S.ip={galat:e.message,nama:file.name}; gambarView() });
+}
+function ipBaca(file){
+  if(/\.json$/i.test(file.name)||file.type==='application/json'){
+    return file.text().then(function(t){
+      var j; try{ j=JSON.parse(String(t).replace(/^﻿/,'')) }catch(e){ throw new Error('This is not valid JSON: '+e.message) }
+      var bag=ipDariJson(j);
+      if(!bag.length) throw new Error('Nothing that can be imported was found in this JSON.');
+      return bag;
+    });
+  }
+  return impBaca(file).then(function(wb){
+    var bag=[];
+    wb.SheetNames.forEach(function(n){
+      var rows=XLSX.utils.sheet_to_json(wb.Sheets[n],{header:1,raw:true,defval:''}).filter(function(r){return r.some(function(c){return !impKosong(c)})});
+      if(rows.length<2) return;
+      var b=ipDariAoa(n,rows); if(b) bag.push(b);
+    });
+    if(!bag.length) throw new Error('No table with a header row was found in this file.');
+    return bag;
+  });
+}
+function ipDariAoa(nama,rows){
+  var iJ=0, skor=-1;
+  for(var i=0;i<Math.min(rows.length,15);i++){
+    var s=(rows[i]||[]).filter(function(c){return typeof c==='string'&&c.trim()&&!/^\d/.test(c.trim())}).length;
+    if(s>skor){ skor=s; iJ=i }
+  }
+  if(skor<2) return null;
+  return {nama:nama,judul:rows[iJ].map(impTeks),data:rows.slice(iJ+1)};
+}
+function ipDariArr(nama,arr){
+  if(!arr.length) return null;
+  if(Array.isArray(arr[0])) return ipDariAoa(nama,arr);
+  var objs=arr.filter(function(o){return o&&typeof o==='object'&&!Array.isArray(o)});
+  if(!objs.length) return null;
+  var judul=[], idx={};
+  objs.forEach(function(o){ Object.keys(o).forEach(function(k){ if(idx[k]===undefined){ idx[k]=judul.length; judul.push(k) } }) });
+  return {nama:nama,judul:judul,data:objs.map(function(o){ return judul.map(function(k){ var v=o[k]; return Array.isArray(v)&&v.every(function(x){return typeof x!=='object'})?v.join('; '):(v&&typeof v==='object'?JSON.stringify(v):v) }) }),objs:objs};
+}
+function ipDariJson(j){
+  var out=[];
+  if(Array.isArray(j)){ var b=ipDariArr('JSON',j); if(b) out.push(b); return out }
+  if(!j||typeof j!=='object') return out;
+  var tr=j.tracker||j.pelacak;
+  if(tr&&typeof tr==='object'){ out.push({nama:'tracker · '+(tr.name||tr.nama||'tracker'),tracker:j,judul:[],data:[]}) }
+  else if((j.preparationList||j.phases)&&(j.name||j.nama)){ out.push({nama:'tracker · '+(j.name||j.nama),tracker:j,judul:[],data:[]}); return out }
+  var kunciBeritaTr=tr?['news','berita','posts','articles'].filter(function(k){ return Array.isArray(j[k])&&j[k].length })[0]:'';
+  Object.keys(j).forEach(function(k){
+    if(k===kunciBeritaTr) return;      /* berita pelacak ikut impor pelacaknya */
+    var v=j[k];
+    if(Array.isArray(v)){ var b=ipDariArr(k,v); if(b){ b.kunci=k; out.push(b) } }
+    else if(v&&typeof v==='object'&&k!=='tracker'&&k!=='pelacak'&&k!=='tab'){
+      var ks=Object.keys(v);
+      if(ks.length&&ks.every(function(x){return v[x]&&typeof v[x]==='object'&&!Array.isArray(v[x])})){
+        var b2=ipDariArr(k,ks.map(function(x){ var o=Object.assign({},v[x]); if(!o.name&&!o.nama&&!o.university&&!o.scholarship) o.name=x; return o }));
+        if(b2){ b2.kunci=k; out.push(b2) }
+      }
+    }
+  });
+  if(j.tab&&typeof j.tab==='object') Object.keys(j.tab).forEach(function(k){ if(Array.isArray(j.tab[k])){ var b=ipDariArr(k,j.tab[k]); if(b) out.push(b) } });
+  return out;
+}
+function ipDeteksi(b){
+  if(b.tracker){ b.jenis='tracker'; b.alasan='Has a tracker with universities, phases and a preparation list.'; return }
+  var H=b.judul.map(function(h){return String(h||'').toLowerCase().replace(/[_\-]+/g,' ').trim()});
+  function ada(re){ return H.some(function(h){return re.test(h)}) }
+  var nama=String((b.kunci||b.nama)||'').toLowerCase();
+  var kol=b.judul.map(admBidangJudul);
+  var isiTgl=function(field){
+    var i=kol.indexOf(field); if(i<0) return 0;
+    var isi=b.data.map(function(r){return r[i]}).filter(function(v){return !impKosong(v)});
+    if(!isi.length) return 0;
+    return isi.filter(function(v){var t=admTgl(v); return t&&t!==null}).length/isi.length;
+  };
+  var tgl=Math.max(isiTgl('tutup'),isiTgl('buka'));
+  var berita=ada(/^(title|judul|headline)$/)&&ada(/^(body|isi|content|text|teks|caption)$/);
+  var siswa=ada(/student|siswa|nisn|^nis$/)||(ada(/^(nama|name)$/)&&ada(/^(kelas|class)$/));
+  var uniK=ada(/universit|kampus|campus|institution|perguruan/), beaK=H.some(function(h){return /scholarship|beasiswa/.test(h)&&!/terkait|related|deadline|tutup|open|buka|period|periode/.test(h)});
+  var jenisK=kol.indexOf('jenis')>=0&&b.data.some(function(r){return admJenisDari(r[kol.indexOf('jenis')])==='Beasiswa'});
+  var uniDb=ada(/website|qs|rank|peringkat|tuition|biaya kuliah|jurusan|majors?|ielts|gpa|toefl|currency|mata uang|living|biaya hidup|kualifikasi/);
+  var beaDb=ada(/coverage|cakupan|^tipe$|amount|nilai dana|persyaratan|requirement|periode|period|funding|wilayah|region|covers|menutup/);
+  var alasan=function(t){ b.alasan=t+' Columns: '+b.judul.filter(Boolean).slice(0,8).join(', ')+(b.judul.length>8?'…':'') };
+  if(berita){ b.jenis='berita'; alasan('Has title and body columns.'); return }
+  if(tgl>=0.4){
+    if(jenisK){ b.jenis='admisi'; b.campur=true; alasan('Has dates and a Type column with universities and scholarships.'); return }
+    if(beaK&&!uniK){ b.jenis='admisiBea'; alasan('Has a scholarship column with opening/deadline dates.'); return }
+    if(uniK||/admission|admisi|jadwal|deadline|calendar/.test(nama)){ b.jenis=/scholar|beasiswa/.test(nama)?'admisiBea':'admisi'; alasan('Has a university column with opening/deadline dates.'); return }
+  }
+  if(siswa&&!(uniK&&uniDb)){ b.jenis='siswa'; alasan('Has student names, classes or IDs.'); return }
+  if(beaK&&!uniK){ b.jenis=tgl>=0.4?'admisiBea':'bea'; alasan('Has a scholarship name column'+(beaDb?' with coverage / requirements':'')+'.'); return }
+  if(uniK){ b.jenis='univ'; alasan('Has a university name column'+(uniDb?' with country, website, costs or requirements':'')+'.'); return }
+  if(/scholar.*(date|dead|jadwal|admission)|jadwal.?beasiswa|scholarshipdates/.test(nama)){ b.jenis='admisiBea'; alasan('Named like scholarship dates.'); return }
+  if(/admission|admisi|jadwal|deadline/.test(nama)){ b.jenis='admisi'; alasan('Named like admission dates.'); return }
+  if(/universit|kampus/.test(nama)){ b.jenis='univ'; alasan('Named like a university list.'); return }
+  if(/scholar|beasiswa/.test(nama)){ b.jenis='bea'; alasan('Named like a scholarship list.'); return }
+  if(/news|berita|post|article/.test(nama)){ b.jenis='berita'; alasan('Named like news posts.'); return }
+  if(/student|siswa|nilai|grade|rapor/.test(nama)){ b.jenis='siswa'; alasan('Named like student data.'); return }
+  b.jenis='abaikan'; alasan('Not recognised — choose what it is.');
+}
+/* Baris siap kirim + status baru/perbarui terhadap data yang sudah ada. */
+function ipBaris(b){
+  if(b._cacheJenis===b.jenis&&b._cache) return b._cache;
+  var out=[];
+  if(b.jenis==='admisi'||b.jenis==='admisiBea'){
+    var kol=b.judul.map(admBidangJudul), dipakai={}; kol=kol.map(function(k){ if(!k||dipakai[k]) return ''; dipakai[k]=1; return k });
+    var def=b.jenis==='admisiBea'?'Beasiswa':'Kampus', lama=admDaftar();
+    b.data.forEach(function(r,i){
+      var o={_baris:i+2};
+      kol.forEach(function(k,ci){ if(!k) return; var v=r[ci];
+        if(k==='buka'||k==='tutup'||k==='umum'){ var t=admTgl(v); o[k]=t===null?'':t; if(t===null&&!impKosong(v)) o._salah=(o._salah||[]).concat(impTeks(v)) }
+        else o[k]=impTeks(v) });
+      if(!sv(o.kampus)) return;
+      o.jenis=admJenisDari(o.jenis)||def;
+      var sama=lama.filter(function(a){ return (a.jenis||'Kampus')===o.jenis&&(admKunci(a.kampus)===admKunci(o.kampus)||(admSingkat(a.kampus)&&admSingkat(a.kampus)===admSingkat(o.kampus))) });
+      var x=sama.filter(function(a){ return (o.program===undefined||admKunci(a.program||'')===admKunci(o.program||'Undergraduate'))&&(o.intake===undefined||admKunci(a.intake||'')===admKunci(o.intake||'')) })[0]||(sama.length===1&&o.program===undefined?sama[0]:null);
+      o._st=!x?'baru':(['buka','tutup','umum','tautan','negara','catatan'].every(function(k){ return o[k]===undefined||o[k]===''||String(o[k])===String(x[k]||'') })?'sama':'ubah');
+      if(x&&o._st==='ubah') o._lama=x.tutup;
+      out.push(o);
+    });
+  }else if(b.jenis==='univ'||b.jenis==='bea'){
+    var univ=b.jenis==='univ', peta=b.peta&&b.peta.length===b.judul.length?b.peta:(b.peta=refPeta(b.judul,univ));
+    var ref=univ?(S.univ||[]):(S.bea||[]);
+    b.data.forEach(function(r,i){
+      var o={_baris:i+2};
+      peta.forEach(function(k,ci){ if(k) o[k]=impTeks(r[ci]) });
+      if(!sv(o.nama)) return;
+      var x=ref.filter(function(u){ return admKunci(u.nama)===admKunci(o.nama)||(admSingkat(u.nama)&&admSingkat(u.nama)===admSingkat(o.nama)&&admSingkat(o.nama).length>=3) }).filter(function(u){ return !univ||!o.negara||!u.negara||u.negara.toLowerCase()===o.negara.toLowerCase() })[0];
+      o._st=x?'ubah':'baru'; if(x) o._nama=x.nama;
+      out.push(o);
+    });
+  }
+  b._cache=out; b._cacheJenis=b.jenis;
+  return out;
+}
+function ipKartu(b,i){
+  var h='<div class="card ip-kartu"><div class="judul-baris rapat"><div><div class="eyebrow">Part '+(i+1)+' · '+esc(b.nama)+(b.data.length?' · '+b.data.length+' row(s)':'')+'</div>'+
+    '<h3>'+esc(ipLabel(b.jenis))+'</h3><div class="sub">'+esc(b.alasan||'')+'</div></div>'+
+    '<label class="bidang ip-jenis"><span>This part is</span><select onchange="ipUbahJenis('+i+',this.value)">'+IP_JENIS.filter(function(x){ return b.tracker?/tracker|abaikan/.test(x[0]):x[0]!=='tracker' }).map(function(x){return '<option value="'+x[0]+'"'+(b.jenis===x[0]?' selected':'')+'>'+esc(x[1])+'</option>'}).join('')+'</select></label></div>';
+  if(b.hasil) return h+ipHasilHtml(b)+'</div>';
+  if(b.jenis==='abaikan') return h+'</div>';
+  if(b.jenis==='tracker'){
+    var t=b.tracker.tracker||b.tracker.pelacak||b.tracker, ks=t.universities||t.kampus||[];
+    return h+'<div class="ip-trk"><b>'+esc(t.name||t.nama||'')+'</b><span>'+(Array.isArray(ks)?ks.length:0)+' universit'+(Array.isArray(ks)&&ks.length===1?'y':'ies')+' · '+((t.preparationList||t.persyaratan||[]).length)+' preparation item(s) · '+((b.tracker.news||[]).length)+' news post(s)</span></div>'+
+      '<div class="pick"><button class="btn sea sm" onclick="ipBuka('+i+')">Open the tracker preview</button><span class="muted kecil">Shows whether it creates a new tracker or updates an existing one, before saving.</span></div></div>';
+  }
+  if(b.jenis==='berita'){
+    var nb=b.data.length;
+    return h+'<div class="pick"><button class="btn sea sm" onclick="ipBuka('+i+')">Open the news preview ('+nb+')</button><span class="muted kecil">Posts with a title that already exists are linked, not posted twice.</span></div></div>';
+  }
+  if(b.jenis==='siswa'){
+    return h+(S.user.role==='admin'?'<div class="pick"><button class="btn sea sm" onclick="ipBuka('+i+')">Open in the student-data import</button><span class="muted kecil">Matches every row to a student and shows the changes first; it can be undone.</span></div>':
+      '<div class="note">Student data is imported by an administrator (Administration → Import Excel / JSON).</div>')+'</div>';
+  }
+  var baris=ipBaris(b), nBaru=baris.filter(function(o){return o._st==='baru'}).length, nUbah=baris.filter(function(o){return o._st==='ubah'}).length, nSama=baris.length-nBaru-nUbah;
+  var adm=b.jenis==='admisi'||b.jenis==='admisiBea';
+  if(!adm){
+    var F=b.jenis==='univ'?REF_UNIV_F:REF_BEA_F;
+    h+='<details class="ip-kol"'+(b.peta.indexOf('nama')<0?' open':'')+'><summary>Columns · '+b.peta.filter(Boolean).length+' of '+b.judul.length+' recognised</summary><div class="adm-kol">'+
+      b.judul.map(function(j,ci){ return '<label><span title="'+esc(j)+'">'+esc(String(j||'(no header)').slice(0,40))+'</span><select onchange="ipKolom('+i+','+ci+',this.value)"><option value="">— ignore —</option>'+
+        F.map(function(f){return '<option value="'+f[0]+'"'+(b.peta[ci]===f[0]?' selected':'')+'>'+esc(f[1])+'</option>'}).join('')+'</select></label>' }).join('')+'</div></details>';
+    if(b.peta.indexOf('nama')<0) return h+'<div class="note bad">Choose which column holds the '+(b.jenis==='univ'?'university':'scholarship')+' name.</div></div>';
+  }else{
+    var kolA=b.judul.map(admBidangJudul);
+    h+='<div class="ip-chips">'+b.judul.map(function(j,ci){ return kolA[ci]?'<span class="tag tipis" title="'+esc(j)+'">'+esc(ADM_LABEL[kolA[ci]])+'</span>':'' }).join('')+'</div>';
+    if(kolA.indexOf('kampus')<0) return h+'<div class="note bad">No university / scholarship name column was found. Open it in Admission dates to choose the columns.</div><div class="pick"><button class="btn ghost sm" onclick="ipBuka('+i+')">Open in Admission dates</button></div></div>';
+  }
+  h+='<div class="ip-angka"><div class="baru"><b>'+nBaru+'</b><span>New</span></div><div class="ubah"><b>'+nUbah+'</b><span>Will update</span></div><div><b>'+nSama+'</b><span>'+(adm?'Unchanged':'—')+'</span></div></div>';
+  h+='<div class="adm-gulir"><table class="adm-tbl kecil"><thead><tr><th>#</th><th>'+(adm?'Name':'Name')+'</th>'+(adm?'<th>Type</th><th>Programme</th><th>Opens</th><th>Deadline</th>':'<th>'+(b.jenis==='univ'?'Country':'Region')+'</th><th>Details</th>')+'<th>Will</th></tr></thead><tbody>';
+  baris.slice(0,30).forEach(function(o){
+    var st=o._st==='baru'?'<span class="dl jauh">New</span>':o._st==='ubah'?'<span class="dl dekat" title="'+esc(o._nama||'')+'">Update</span>':'<span class="dl">Same</span>';
+    if(adm) h+='<tr><td class="muted">'+o._baris+'</td><td><b>'+esc(o.kampus)+'</b>'+(o.negara?'<div class="muted kecil">'+esc(o.negara)+'</div>':'')+'</td><td>'+(o.jenis==='Beasiswa'?'Scholarship':'University')+'</td><td>'+esc(o.program||'')+'</td><td class="mono">'+esc(o.buka||'')+'</td><td class="mono"><b>'+esc(o.tutup||'')+'</b>'+(o._lama&&o._lama!==o.tutup?'<div class="muted kecil">was '+esc(o._lama)+'</div>':'')+'</td><td>'+st+'</td></tr>';
+    else{ var det=Object.keys(o).filter(function(k){return k[0]!=='_'&&k!=='nama'&&k!=='negara'&&k!=='wilayah'&&sv(o[k])}).slice(0,4).map(function(k){return esc(String(o[k]).slice(0,40))}).join(' · ');
+      h+='<tr><td class="muted">'+o._baris+'</td><td><b>'+esc(o.nama)+'</b>'+(o._nama&&o._nama!==o.nama?'<div class="muted kecil">matches “'+esc(o._nama)+'”</div>':'')+'</td><td>'+esc(o.negara||o.wilayah||'')+'</td><td class="kecil">'+det+'</td><td>'+st+'</td></tr>' }
+  });
+  h+='</tbody></table></div>'+(baris.length>30?'<div class="muted kecil">…and '+(baris.length-30)+' more row(s).</div>':'');
+  var kerja=nBaru+nUbah;
+  h+='<div class="pick">'+(adm?'<label class="tl-cek"><input type="checkbox" id="ipDb'+i+'" checked> <span>Also write the dates into the '+(b.jenis==='admisiBea'?'BEASISWA':'UNIVERSITAS')+' tab</span></label>':'')+
+    '<button class="btn sea sm" id="ipB'+i+'" onclick="ipTerap('+i+')"'+(kerja?'':' disabled')+'>'+(kerja?'Apply '+kerja+' row(s)':'Nothing to change')+'</button>'+
+    (adm?'<button class="btn ghost sm" onclick="ipBuka('+i+')">Open full preview in Admission dates</button>':'')+'</div>';
+  return h+'</div>';
+}
+function ipHasilHtml(b){
+  var x=b.hasil;
+  if(x.galat) return '<div class="note bad">'+esc(x.galat)+'</div>';
+  var h='<div class="note"><b>Saved.</b> '+x.baru+' new, '+x.ubah+' updated, '+(x.sama||0)+' unchanged'+((x.ditolak||[]).length?', '+x.ditolak.length+' skipped':'')+'.';
+  if(x.univ) h+=' UNIVERSITAS tab: '+(x.univ.galat?esc(x.univ.galat):x.univ.diubah+' updated')+'.';
+  if(x.bea) h+=' BEASISWA tab: '+(x.bea.galat?esc(x.bea.galat):x.bea.diubah+' updated')+'.';
+  if((x.kolomHilang||[]).length) h+=' <span class="muted">Columns not in the tab (skipped): '+esc(x.kolomHilang.join(', '))+'.</span>';
+  return h+' <a href="javascript:void 0" onclick="pindah(\'admisi\')">Undo is in Admission dates → Import history.</a></div>';
+}
+function ipUbahJenis(i,j){ var b=S.ip.bagian[i]; b.jenis=j; b._cache=null; b.peta=null; b.hasil=null; gambarView() }
+function ipKolom(i,ci,v){ var b=S.ip.bagian[i]; if(v) b.peta=b.peta.map(function(x){return x===v?'':x}); b.peta[ci]=v; b._cache=null; gambarView() }
+function ipBerkasDari(b){
+  if(b.tracker) return new File([JSON.stringify(b.tracker)],(S.ip.nama||'tracker').replace(/\.\w+$/,'')+'.json',{type:'application/json'});
+  var isi=b.objs?b.objs:(b.jenis==='berita'?b.data.map(function(r){ var o={}; b.judul.forEach(function(h,i){ if(h) o[h]=r[i] }); return o }):[b.judul].concat(b.data));
+  return new File([JSON.stringify(b.jenis==='berita'?{news:isi}:{rows:isi})],(S.ip.nama||'import').replace(/\.\w+$/,'')+' · '+b.nama+'.json',{type:'application/json'});
+}
+function ipBuka(i){
+  var b=S.ip.bagian[i], f=ipBerkasDari(b);
+  if(b.jenis==='tracker'){ pindah('pelacak'); setTimeout(function(){ asImporBerkas(f) },60); return }
+  if(b.jenis==='berita'){ pindah('akun'); setTimeout(function(){ portalImpor(f); setTimeout(function(){ var el=document.querySelector('.portal-atur'); if(el) el.scrollIntoView({block:'start'}) },400) },60); return }
+  if(b.jenis==='siswa'){
+    if(S.user.role!=='admin') return;
+    var asli=S.ip.berkas&&!/\.json$/i.test(S.ip.berkas.name)?S.ip.berkas:new File([JSON.stringify({rows:[b.judul].concat(b.data)})],'students.json',{type:'application/json'});
+    pindah('impor'); setTimeout(function(){ impPilih(asli) },60); return;
+  }
+  if(b.jenis==='admisi'||b.jenis==='admisiBea'){
+    var j=b.jenis==='admisiBea'?'Beasiswa':'Kampus';
+    S.adm=S.adm||{}; S.adm.jenis=j; pindah('admisi');
+    setTimeout(function(){ admPilihBerkas(new File([JSON.stringify({rows:[b.judul].concat(b.data.map(function(r){return r.map(function(v){return v instanceof Date?admTgl(v):v})}))})],f.name,{type:'application/json'}),{jenis:j,berkas:S.ip.nama+' · '+b.nama}) },60);
+  }
+}
+function ipTerap(i){
+  var b=S.ip.bagian[i], baris=ipBaris(b).filter(function(o){return o._st!=='sama'});
+  if(!baris.length) return Promise.resolve();
+  var bt=q('ipB'+i); if(bt){ bt.disabled=true; bt.textContent='Saving…' }
+  var nama=(S.ip.nama||'import')+' · '+b.nama, kerja;
+  var bersih=function(o){ var x={}; Object.keys(o).forEach(function(k){ if(k[0]!=='_'||k==='_baris') x[k]=o[k] }); return x };
+  if(b.jenis==='admisi'||b.jenis==='admisiBea'){
+    var db=q('ipDb'+i);
+    kerja=call('admisiTerapkan',S.token,{baris:baris.map(bersih),mode:'gabung',univ:db?db.checked:true,berkas:nama,jenis:b.jenis==='admisiBea'?'Beasiswa':'Kampus',_umum:true}).then(function(r){
+      if(r&&r.ok){ S.admisiPenuh=r.admisi||S.admisiPenuh; S._admWaktu=Date.now(); S._admRiwayatDimuat=false; admSetelahUbah() }
+      return r;
+    });
+  }else kerja=refKirim(b.jenis,baris.map(bersih),nama);
+  return kerja.then(function(r){
+    if(!r||!r.ok){ if(bt){ bt.disabled=false; bt.textContent='Apply' } toast((r&&r.error)||'Not saved.',true); return }
+    b.hasil=r.hasil; toast(b.nama+': saved.'); gambarView();
+  }).catch(function(e){ if(bt){ bt.disabled=false; bt.textContent='Apply' } tangani(e) });
+}
+function ipTerapSemua(){
+  var P=ipSt(), idx=[];
+  P.bagian.forEach(function(b,i){ if(/^(univ|bea|admisi|admisiBea)$/.test(b.jenis)&&!b.hasil&&ipBaris(b).some(function(o){return o._st!=='sama'})) idx.push(i) });
+  /* Database dulu, baru jadwal — supaya nama kampus/beasiswa baru sudah dikenal. */
+  idx.sort(function(a,c){ var u=function(i){ return /^(univ|bea)$/.test(P.bagian[i].jenis)?0:1 }; return u(a)-u(c) });
+  var bt=q('ipSemuaB'); if(bt){ bt.disabled=true; bt.textContent='Saving…' }
+  idx.reduce(function(p,i){ return p.then(function(){ return ipTerap(i) }) },Promise.resolve()).then(function(){ toast('All parts applied.'); gambarView() });
+}
+function ipTemplat(jenis){
+  var uD=[['University','Country','Programme / route','Intake','Opens','Deadline','Results','Official link','Notes'],
+    ['National University of Singapore (NUS)','Singapore','Undergraduate','Aug 2027','2026-12-16','2027-02-17','2027-07-15','https://nus.edu.sg/oam','International qualifications window']];
+  var bD=[['Scholarship','Country / provider','Level / route','Intake','Opens','Deadline','Results','Official link','Notes'],
+    ['MEXT Scholarship','Japan','Undergraduate · embassy route','Apr 2028','2027-04-15','2027-05-31','2027-07-31','https://www.studyinjapan.go.jp','Example — check the embassy announcement']];
+  var uDb=[['University','Country','Website','Qualification for Indonesian applicants','Application period','Results announced','Notes','Related scholarships','QS rank','Majors','Currency','Tuition per year','Living cost per year','Application fee','Min GPA','Min IELTS','Min TOEFL iBT','Intake'],
+    ['Singapore Institute of Technology (SIT)','Singapore','https://www.singaporetech.edu.sg','SMA results, case by case','6 Jan – 19 Mar 2027','Apr – May 2027','Applied degrees','ASEAN Undergraduate Scholarship','','Engineering; Computing; Health Sciences','SGD',17550,18000,'',3.0,6.5,90,'September']];
+  var bDb=[['Scholarship','Region','Application period','Official link','Main requirements','Coverage','Type','Currency','Amount per year','Covers tuition','Covers living','Bond'],
+    ['ASEAN Undergraduate Scholarship','Asia','Oct – Mar (per university)','https://nus.edu.sg/oam/scholarships','ASEAN citizen (not Singaporean), outstanding results, leadership','Tuition after Tuition Grant, S$5,800 living, S$3,000 accommodation','Fully funded','SGD',8800,'Yes','Yes','3-year Tuition Grant work bond']];
+  if(jenis==='json'){
+    var ob=function(t){ return t.slice(1).map(function(r){ var o={}; t[0].forEach(function(h,i){ o[h]=r[i] }); return o }) };
+    unduhBlob(new Blob([JSON.stringify({app:'DECK PTLN',about:'One file can hold any of these sections. Remove the ones you do not need.',
+      admissions:ob(uD),scholarshipDates:ob(bD),universities:ob(uDb),scholarships:ob(bDb)},null,2)],{type:'application/json'}),'deck-ptln-import-template.json');
+    return;
+  }
+  muatLib('xlsx',function(){return !!window.XLSX}).then(function(){
+    var wb=XLSX.utils.book_new();
+    [['University dates',uD],['Scholarship dates',bD],['Universities',uDb],['Scholarships',bDb]].forEach(function(x){
+      var ws=XLSX.utils.aoa_to_sheet(x[1]); ws['!cols']=x[1][0].map(function(h){return {wch:Math.max(12,Math.min(44,String(h).length+6))}});
+      XLSX.utils.book_append_sheet(wb,ws,x[0]);
+    });
+    XLSX.writeFile(wb,'deck-ptln-import-template.xlsx');
+  }).catch(function(e){ toast(e.message||'Excel could not be created.',true) });
+}
+
+/* ---------- menu & halaman ---------- */
+(function(){
+  var lamaNav=butirNav;
+  butirNav=function(){
+    var d=lamaNav.apply(this,arguments);
+    try{
+      if(bimbing()&&!d.some(function(x){return x.id==='imporumum'})){
+        var i=-1; d.forEach(function(x,j){ if(x.id==='admisi') i=j });
+        var item={id:'imporumum',label:'Import JSON / Excel'};
+        if(i>=0) d.splice(i+1,0,item); else d.push(item);
+      }
+    }catch(e){}
+    return d;
+  };
+  var lamaInti=gambarViewInti;
+  gambarViewInti=function(){
+    if(S.tab==='imporumum'){ q('view').innerHTML=viewImporUmum(); ipSeret(); return }
+    return lamaInti.apply(this,arguments);
+  };
+})();
+function ipSeret(){
+  var z=q('ipDrop'); if(!z||z._siap) return; z._siap=true;
+  z.addEventListener('dragover',function(e){ e.preventDefault(); z.classList.add('seret') });
+  z.addEventListener('dragleave',function(){ z.classList.remove('seret') });
+  z.addEventListener('drop',function(e){ e.preventDefault(); z.classList.remove('seret'); var f=e.dataTransfer&&e.dataTransfer.files&&e.dataTransfer.files[0]; if(f) ipPilih(f) });
+}
 
 /* =======================================================
    JALAN
