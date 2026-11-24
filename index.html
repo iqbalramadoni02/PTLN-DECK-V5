@@ -3841,6 +3841,30 @@ html.latar-auth .ld-berita{background:rgba(247,250,244,.96)}
 .tr-cekbaris{padding:4px 0;cursor:pointer}
 .tr-alat .btn:disabled{opacity:.55;cursor:not-allowed}
 .tr-semplih input{width:16px;height:16px;min-width:0}
+.bea-cari{width:100%;margin:0 0 6px}
+#view .tgt select optgroup{font-weight:700}
+.ds-drop{margin:12px 0}
+.ds-file{font-size:13px;margin:12px 0 4px;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.ds-tabel td{vertical-align:top}
+.ds-tabel tr.ds-ubah td:first-child{box-shadow:inset 3px 0 0 #C77D1A}
+.ds-tabel tr.ds-tidak td:first-child,.ds-tabel tr.ds-ganda td:first-child{box-shadow:inset 3px 0 0 #B91C1C}
+.ds-tabel tr.ds-sama td:first-child{box-shadow:inset 3px 0 0 #2E7F6D}
+.ds-tabel s{color:var(--tinta-2)}
+.ds-x{color:#B91C1C;font-size:12.5px}
+.note.ok{background:rgba(46,127,109,.08);border-color:rgba(46,127,109,.3)}
+.ttd-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:12px}
+.ttd-blok{border:1px solid var(--line);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:10px}
+.ttd-j{font-weight:650;font-size:13.5px}
+.ttd-contoh{display:flex;flex-direction:column;align-items:center;background:#fff;border-radius:10px;padding:10px 12px 12px;color:#111;font-family:"Times New Roman",serif;border:1px dashed var(--line)}
+.ttd-contoh span{font-size:13px}
+.ttd-ruang{position:relative;height:70px;width:100%}
+.ttd-ruang img{position:absolute;left:50%;bottom:-16px;transform:translateX(-50%);max-height:92px;max-width:92%;z-index:2}
+.ttd-ruang i{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#999;font-size:12px}
+.ttd-contoh b{text-decoration:underline;font-size:14px;position:relative;z-index:1}
+.ttd-kotak{margin-top:10px;border-radius:10px;padding:10px;display:flex;justify-content:center;
+  background:repeating-conic-gradient(#e5e7eb 0% 25%,#fff 0% 50%) 50%/18px 18px}
+.ttd-kotak img{max-width:100%;max-height:140px}
+.btn input[type=file][hidden]{display:none}
 /* @@V47-CSS-SELESAI */
 </style>
 </head>
@@ -4120,7 +4144,7 @@ var KEY='deckptln_token_v1';
    Ganti bila membuat deployment baru.
    ------------------------------------------------------- */
 var LAMBANG='<div class="lambang"><i class="logo-ptln" role="img" aria-label="PTLN DECK logo"></i></div>';
-var VERSI_UI='2026.11.24-47';
+var VERSI_UI='2026.11.24-49';
 var KUNCI_ALAMAT='deckptln_apiurl_v1';
 
 /* Alamat Web App boleh ditimpa dari dalam aplikasi. Berguna bila di Apps
@@ -5238,7 +5262,7 @@ function gambarHeader(){
     h+='<div class="pass"><div class="pass-top">'+
        '<div class="pass-kiri">'+LAMBANG+
        '<div><div class="brand">SMAIT Al-Ittihad · <b>University and Scholarship Preparation</b></div>'+
-       '<h1>'+esc(S.user.nama)+'<small>Class '+esc(S.user.kelas||'—')+' · '+esc(S.user.id)+
+       '<h1>'+esc(S.user.nama)+'<small>Class '+esc(S.user.kelas||'—')+' · '+esc(typeof idTampil==='function'?idTampil(S.user.id):S.user.id)+
        ((S.deck.meta||{}).tahun?' · departing '+esc(S.deck.meta.tahun):'')+'</small></h1></div></div>'+
        '</div><div class="perf"></div><div class="gates">';
     S.schema.sections.forEach(function(s){
@@ -7687,7 +7711,7 @@ function viewKelolaAkun(){
   data.forEach(function(x){
     var sendiri=x.id===S.user.id;
     h+='<tr style="cursor:default">'+
-       '<td class="nm"><div class="nm-av">'+avatarHtml(x.nama,x.id,'','kecil')+'<div>'+esc(x.nama)+'<div class="eyebrow">'+esc(x.id)+'</div></div></div></td>'+
+       '<td class="nm"><div class="nm-av">'+avatarHtml(x.nama,x.id,'','kecil')+'<div>'+esc(x.nama)+'<div class="eyebrow">'+esc(typeof idTampil==='function'?idTampil(x.id):x.id)+'</div></div></div></td>'+
        '<td class="mono" style="font-size:11.5px">'+esc(x.email)+'</td>'+
        '<td><select onchange="ubahPeran(&quot;'+esc(x.id)+'&quot;,this.value)"'+(sendiri?' disabled':'')+'>';
     PERAN_URUT.forEach(function(r){h+='<option value="'+r+'"'+(x.role===r?' selected':'')+'>'+esc(labelPeran(r))+'</option>'});
@@ -10824,7 +10848,7 @@ function gayaSapp(){
     '.hal{page-break-before:always}'+
     '.garis{border-bottom:1px solid #999;height:7.5mm}'+
     '.ttd{display:grid;grid-template-columns:1fr 1fr;gap:10mm;margin-top:6mm;text-align:center;page-break-inside:avoid}'+
-    '.ttd .ruang{height:22mm}.ttd .nm{font-weight:700;text-decoration:underline}'+
+    '.ttd .ruang{height:22mm;position:relative}.ttd .ruang .ttd-img{position:absolute;left:50%;bottom:-6mm;transform:translateX(-50%);height:27mm;max-width:62mm;object-fit:contain;z-index:2}.ttd .nm{font-weight:700;text-decoration:underline;position:relative;z-index:1}'+
     '.kaki{text-align:center;font-family:"Courier New",monospace;font-size:6.5pt;color:#B5B5B5;letter-spacing:.05em;margin-top:5mm}'+
     '@media screen{body{max-width:190mm;margin:8mm auto;padding:0 6mm}.hal{margin-top:12mm;border-top:1px dashed #bbb;padding-top:8mm}}'+
     '</style>';
@@ -11059,13 +11083,13 @@ function susunLaporanProgres(d){
   var pembuat=(d.pencetak&&d.pencetak.peran==='guru'&&d.pencetak.nama)?d.pencetak.nama:(idn.konselor||'');
   h+='<div style="text-align:right;margin-top:7mm">'+esc(idn.kota||'Pekanbaru')+', '+tglIndo(new Date())+'</div>'+
     '<div class="ttd">'+
-      '<div>Mengetahui<br>Kepala '+esc(idn.sekolah||'')+'<div class="ruang"></div><div class="nm">'+esc(idn.kepala||'____________________')+'</div></div>'+
-      '<div>Dibuat Oleh<br>Konselor Study Abroad Program<div class="ruang"></div><div class="nm">'+esc(pembuat||'____________________')+'</div></div>'+
+      '<div>Mengetahui<br>Kepala '+esc(idn.sekolah||'')+'<div class="ruang">'+(d.ttd&&d.ttd.kepala?'<img class="ttd-img" alt="" src="data:'+esc(d.ttd.kepala.mime)+';base64,'+d.ttd.kepala.data+'">':'')+'</div><div class="nm">'+esc(idn.kepala||'____________________')+'</div></div>'+
+      '<div>Dibuat Oleh<br>Konselor Study Abroad Program<div class="ruang">'+(d.ttd&&d.ttd.pembuat&&d.pencetak&&d.pencetak.nama===pembuat?'<img class="ttd-img" alt="" src="data:image/png;base64,'+d.ttd.pembuat.data+'">':'')+'</div><div class="nm">'+esc(pembuat||'____________________')+'</div></div>'+
     '</div>'+
     '<div class="ttd" style="grid-template-columns:1fr;margin-top:8mm"><div>Siswa<div class="ruang"></div><div class="nm">'+esc(s.nama||'')+'</div></div></div>';
   h+='<div class="catat" style="margin-top:6mm;color:#666">Laporan dibuat '+esc(d.tanggalLaporan||'')+' · data deck terakhir diperbarui '+esc(d.diperbarui||'—')+'.</div></div>';
 
-  var kaki='<div class="kaki">DECK PTLN // SAPP-DECK '+esc(VERSI_UI)+' // ID: ['+esc(s.id||'')+'] // CETAK: ['+esc(d.tanggalLaporan||'')+']</div>';
+  var kaki='<div class="kaki">DECK PTLN // SAPP-DECK '+esc(VERSI_UI)+' // ID: ['+esc(s.reg||s.id||'')+'] // CETAK: ['+esc(d.tanggalLaporan||'')+']</div>';
   h=h.split('<div class="hal">').join(kaki+'<div class="hal">')+kaki;
   return {namaBerkas:'SAPP-DECK_'+(s.kelas||'').replace(/\s+/g,'')+'_'+String(s.nama||'siswa').toUpperCase().replace(/[^A-Z0-9]+/g,'_'),html:h};
 }
@@ -11983,7 +12007,7 @@ function viewPapan(){
   function daftarT(x){ return ((tgt[x.id]||{})[kunciT]||[]) }
   if(S.cari){
     var c=S.cari.toLowerCase();
-    r=r.filter(function(x){return (x.nama||'').toLowerCase().indexOf(c)>=0||(x.id||'').toLowerCase().indexOf(c)>=0});
+    r=r.filter(function(x){return (x.nama||'').toLowerCase().indexOf(c)>=0||(x.id||'').toLowerCase().indexOf(c)>=0||(typeof idTampil==='function'&&idTampil(x.id).toLowerCase().indexOf(c)>=0)});
   }
   r.sort(function(a,b){
     if(S.urut==='nama') return (a.nama||'').localeCompare(b.nama||'');
@@ -12005,7 +12029,7 @@ function viewPapan(){
     '<div class="sub">'+r.length+' of '+(S.ringkasan||[]).length+' students shown · press <b>Open</b> to work inside a deck. '+
     'Charts for the whole cohort are on the <a href="#" onclick="pindah(\'dasbor\');return false">Dashboard</a>.</div>'+
     '<div class="filters">'+
-    '<input type="search" placeholder="Search by name or student ID" value="'+esc(S.cari)+'" oninput="S.cari=this.value;gambarView()">'+
+    '<input type="search" placeholder="Search by name, NIS or NISN" value="'+esc(S.cari)+'" oninput="S.cari=this.value;gambarView()">'+
     '<select onchange="S.filterKelas=this.value;gambarView()"><option value="">All classes</option>';
   Object.keys(kelas).sort().forEach(function(k){h+='<option'+(S.filterKelas===k?' selected':'')+'>'+esc(k)+'</option>'});
   h+='</select><select onchange="S.urut=this.value;gambarView()">'+
@@ -12051,7 +12075,7 @@ function viewPapan(){
       }
     }
     h+='<tr onclick="bukaSiswa(\''+esc(x.id)+'\')">'+
-       '<td class="nm"><div class="nm-av">'+avatarHtml(x.nama,x.id,'','kecil')+'<div>'+esc(x.nama)+'<div class="eyebrow">'+esc(x.id)+'</div></div></div></td>'+
+       '<td class="nm"><div class="nm-av">'+avatarHtml(x.nama,x.id,'','kecil')+'<div>'+esc(x.nama)+'<div class="eyebrow">'+esc(typeof idTampil==='function'?idTampil(x.id):x.id)+'</div></div></div></td>'+
        '<td>'+esc(x.kelas||'—')+'</td><td class="mono">'+(bimbing()?'<button class="btn ghost xs intake-sel data-sel" title="Change intake year" '+
          'onclick="event.stopPropagation();ubahIntake(\''+esc(x.id)+'\')">'+esc(x.tahun||'Set')+'</button>':esc(x.tahun||'—'))+'</td>';
     ['a','b','c','d','e','f'].forEach(function(k){
@@ -12187,7 +12211,7 @@ function viewDetail(){
   var d=S.detail, p=hitungDetail(), deck=d.deck;
   var h='<div class="card"><div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">'+
     '<div class="detail-kepala">'+(bimbing()?'<button class="profil-av detail-av" title="Change this student’s photo" onclick="fsDariDeck(\''+esc(d.siswa.id)+'\')">'+avatarHtml(d.siswa.nama,d.siswa.id,d.siswa.email,'sedang')+'<span class="kf-ganti">'+ikon('pena')+'</span></button>':avatarHtml(d.siswa.nama,d.siswa.id,d.siswa.email,'sedang'))+'<div><h2>'+esc(d.siswa.nama)+'</h2>'+
-    '<div class="sub">'+esc(d.siswa.kelas||'—')+' · '+esc(d.siswa.id)+' · '+esc(d.siswa.email)+
+    '<div class="sub">'+esc(d.siswa.kelas||'—')+' · '+(typeof idTampil==='function'&&idTampil(d.siswa.id)!==d.siswa.id?'NIS/NISN '+esc(idTampil(d.siswa.id)):esc(d.siswa.id)+' <span class="muted">(no NIS/NISN yet)</span>')+' · '+esc(d.siswa.email)+
     ' · intake <button class="btn ghost xs intake-sel data-sel" title="Change intake year" onclick="ubahIntake(\''+esc(d.siswa.id)+'\')">'+esc((deck.meta||{}).tahun||'Set')+'</button>'+
     ' · updated '+esc(d.diperbarui||'—')+'</div></div></div>'+
     '<div class="pick"><button class="btn sea sm" onclick="cetakLaporan()">Report (PDF)</button>'+
@@ -12476,7 +12500,8 @@ function viewAkun(){
     '<div class="f"><label>Name</label><input type="text" value="'+esc(S.user.nama)+'" disabled></div>'+
     '<div class="f"><label>Email</label><input type="text" value="'+esc(S.user.email)+'" disabled></div>'+
     '<div class="f"><label>Role</label><input type="text" value="'+esc(labelPeran(S.user.role))+'" disabled></div>'+
-    '<div class="f"><label>ID</label><input type="text" value="'+esc(S.user.id)+'" disabled></div>'+
+    (S.user.role==='siswa'&&typeof idTampil==='function'?'<div class="f"><label>Student ID (NIS/NISN)</label><input type="text" value="'+esc(idTampil(S.user.id)===S.user.id?'Not recorded yet — ask your mentor':idTampil(S.user.id))+'" disabled></div>':'')+
+    '<div class="f"><label>'+(S.user.role==='siswa'?'System code':'ID')+'</label><input type="text" value="'+esc(S.user.id)+'" disabled></div>'+
     '</div></div>'+
     (S.user.role==='siswa'?
       '<div class="card"><h2>Parent access</h2>'+
@@ -23813,7 +23838,7 @@ function trModel(it,atur,op,urut){
     if(sv(op.mulai)!==''&&!isNaN(parseInt(op.mulai,10))){ var a=sv(op.mulai); n=String(parseInt(a,10)+(urut||0)); while(n.length<a.length) n='0'+n }
     nomor=pola.replace('{n}',n).replace('{bulan}',TR_ROMAWI[d.getMonth()+1]).replace('{tahun}',d.getFullYear());
   }
-  var reg=[sv(idn.nis),sv(idn.nisn)].filter(Boolean).join(' / ');
+  var reg=[sv(idn.nis),sv(idn.nisn)].filter(Boolean).join('/');
   return {
     id:it.id, nama:trJudulKata(it.nama), kelas:it.kelas, sex:sv(idn.sex), reg:reg, ortu:trJudulKata(idn.ortu), nomor:nomor,
     sem:sem, kum:{skor:Math.round(totS*100)/100,sks:totK,gpa:gpa,standing:trKlasifikasi(gpa)},
@@ -23944,11 +23969,12 @@ function trPdfAkhir(doc,m,y,g,gambar){
   doc.setFont('times','normal'); doc.setFontSize(11);
   doc.text(trAsci((m.kota||'Pekanbaru')+', '+m.tanggal),tx,y+12);
   doc.text(trAsci('Principal '+(m.sekolah||'')),tx,y+26);
-  if(!m.draft&&g&&g.ttd){ var ih=80, iw=Math.min(180,ih*g.ttd.w/g.ttd.h); doc.addImage(g.ttd.url,g.ttd.ext.toUpperCase(),tx-12,y+32,iw,ih) }
-  else if(m.draft){ doc.setFont('times','italic'); doc.setFontSize(8); doc.setTextColor(150,150,150); doc.text('Signed after every semester is verified',tx,y+74); doc.setTextColor(0,0,0) }
+  if(m.draft){ doc.setFont('times','italic'); doc.setFontSize(8); doc.setTextColor(150,150,150); doc.text('Signed after every semester is verified',tx,y+74); doc.setTextColor(0,0,0) }
   doc.setFont('times','bold'); doc.setFontSize(11);
   var nm=trAsci(m.kepala||''); doc.text(nm,tx,y+128); trPdfGaris(doc,tx,y+128,nm);
   doc.text(trAsci('NIY: '+(m.niy||'')),tx,y+142);
+  /* tanda tangan transparan menumpuk di atas nama, seperti tanda tangan asli */
+  if(!m.draft&&g&&g.ttd){ var ih=86, iw=Math.min(190,ih*g.ttd.w/g.ttd.h); if(iw>=190) ih=iw*g.ttd.h/g.ttd.w; doc.addImage(g.ttd.url,g.ttd.ext.toUpperCase(),tx-10,y+131-ih,iw,ih) }
   return h;
 }
 function trPdfSiswa(doc,m,g,pertama){
@@ -24031,6 +24057,17 @@ function trXgambar(rid,nomor,wPt,hPt,nama){
     '<pic:pic xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"><pic:nvPicPr><pic:cNvPr id="'+nomor+'" name="'+nama+'"/><pic:cNvPicPr/></pic:nvPicPr>'+
     '<pic:blipFill><a:blip r:embed="'+rid+'"/><a:stretch><a:fillRect/></a:stretch></pic:blipFill><pic:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="'+cx+'" cy="'+cy+'"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></pic:spPr></pic:pic></a:graphicData></a:graphic></wp:inline></w:drawing></w:r>';
 }
+/* Gambar mengambang (di depan teks) yang diletakkan relatif terhadap paragrafnya — dipakai agar tanda tangan menumpuk di atas nama. */
+function trXjangkar(rid,nomor,wPt,hPt,nama,dxPt,dyPt){
+  var cx=Math.round(wPt*12700), cy=Math.round(hPt*12700);
+  return '<w:r><w:drawing><wp:anchor distT="0" distB="0" distL="0" distR="0" simplePos="0" relativeHeight="251659264" behindDoc="0" locked="0" layoutInCell="1" allowOverlap="1">'+
+    '<wp:simplePos x="0" y="0"/><wp:positionH relativeFrom="column"><wp:posOffset>'+Math.round(dxPt*12700)+'</wp:posOffset></wp:positionH>'+
+    '<wp:positionV relativeFrom="paragraph"><wp:posOffset>'+Math.round(dyPt*12700)+'</wp:posOffset></wp:positionV>'+
+    '<wp:extent cx="'+cx+'" cy="'+cy+'"/><wp:effectExtent l="0" t="0" r="0" b="0"/><wp:wrapNone/><wp:docPr id="'+nomor+'" name="'+nama+'"/><wp:cNvGraphicFramePr/>'+
+    '<a:graphic xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"><a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture">'+
+    '<pic:pic xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"><pic:nvPicPr><pic:cNvPr id="'+nomor+'" name="'+nama+'"/><pic:cNvPicPr/></pic:nvPicPr>'+
+    '<pic:blipFill><a:blip r:embed="'+rid+'"/><a:stretch><a:fillRect/></a:stretch></pic:blipFill><pic:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="'+cx+'" cy="'+cy+'"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></pic:spPr></pic:pic></a:graphicData></a:graphic></wp:anchor></w:drawing></w:r>';
+}
 function trDocxSel(w,teks,o){
   o=o||{};
   var baris=String(teks==null?'':teks).split('\n');
@@ -24078,9 +24115,11 @@ function trDocxSiswa(m,pertama,g){
   var bawahKiri=trXtbl([2600,2400],[trXrow([trXc(2600,tKl+trXp('',{rPrSz:2}),{tanpaGaris:true,va:'top'}),trXc(2400,tSk+trXp('',{rPrSz:2}),{tanpaGaris:true,va:'top'})])],{tanpaGaris:true,mar:0});
   var kiri=tKum+trXp('',{after:120,rPrSz:8})+bawahKiri+trXp('',{rPrSz:2});
   var ttd=trXp(trXr((m.kota||'Pekanbaru')+', '+m.tanggal,{sz:11}))+trXp(trXr('Principal '+(m.sekolah||''),{sz:11}),{after:60});
-  if(!m.draft&&g&&g.ttd){ var ih=80, iw=Math.min(180,ih*g.ttd.w/g.ttd.h); ttd+=trXp(trXgambar('rIdTtd',900+Math.floor(Math.random()*9000),iw,ih,'Signature')) }
-  else ttd+=trXp(trXr(m.draft?'Signed after every semester is verified':'',{i:true,sz:8,warna:'999999'}),{before:500,after:500});
-  ttd+=trXp(trXr(m.kepala||'',{b:true,u:true,sz:11}))+trXp(trXr('NIY: '+(m.niy||''),{b:true,sz:11}));
+  var adaTtd=!m.draft&&g&&g.ttd;
+  ttd+=trXp(trXr(m.draft?'Signed after every semester is verified':'',{i:true,sz:8,warna:'999999'}),{before:820,after:720});
+  var gbrNama='';
+  if(adaTtd){ var ih=86, iw=Math.min(190,ih*g.ttd.w/g.ttd.h); if(iw>=190) ih=iw*g.ttd.h/g.ttd.w; gbrNama=trXjangkar('rIdTtd',900+Math.floor(Math.random()*9000),iw,ih,'Signature',-8,-(ih-8)) }
+  ttd+=trXp(gbrNama+trXr(m.kepala||'',{b:true,u:true,sz:11}))+trXp(trXr('NIY: '+(m.niy||''),{b:true,sz:11}));
   x+=trXtbl([5200,500,W-5700],[trXrow([trXc(5200,kiri,{tanpaGaris:true,va:'top'}),trXc(500,trXp(''),{tanpaGaris:true}),trXc(W-5700,ttd,{tanpaGaris:true,va:'top'})])],{tanpaGaris:true,mar:0});
   return x;
 }
@@ -24208,7 +24247,7 @@ function trXlsxLembar(wb,ws,m,g,idLogo,idTtd){
   trSkalaBaris().forEach(function(x,i){ sel(b+1+i,4,x[0],{sz:7.5,garis:true}); sel(b+1+i,5,x[1],{sz:7.5,garis:true}); sel(b+1+i,6,x[2],{sz:7.5,garis:true}) });
   sel(a,8,(m.kota||'Pekanbaru')+', '+m.tanggal,{sz:11,kiri:true,bungkus:false});
   sel(a+1,8,'Principal '+(m.sekolah||''),{sz:11,kiri:true,bungkus:false});
-  if(!m.draft&&idTtd!==null&&idTtd!==undefined&&g&&g.ttd){ var ih=80, iw=Math.min(180,ih*g.ttd.w/g.ttd.h); ws.addImage(idTtd,{tl:{col:7,row:a+1},ext:{width:iw*1.33,height:ih*1.33},editAs:'oneCell'}) }
+  if(!m.draft&&idTtd!==null&&idTtd!==undefined&&g&&g.ttd){ var ih=86, iw=Math.min(190,ih*g.ttd.w/g.ttd.h); if(iw>=190) ih=iw*g.ttd.h/g.ttd.w; ws.addImage(idTtd,{tl:{col:6.9,row:a+8.55-ih/15},ext:{width:iw*1.33,height:ih*1.33},editAs:'oneCell'}) }
   else if(m.draft) sel(a+4,8,'Signed after every semester is verified',{i:true,sz:8,kiri:true,warna:'FF999999',bungkus:false});
   sel(a+8,8,m.kepala||'',{b:true,u:true,sz:11,kiri:true,bungkus:false});
   sel(a+9,8,'NIY: '+(m.niy||''),{b:true,sz:11,kiri:true,bungkus:false});
@@ -24311,7 +24350,7 @@ function trChip(x,k){
 }
 function trBarisHtml(x){
   var T=trSt(), st=trStatus(x), idn=x.idn||{}, cek=!!T.pilih[x.id];
-  var reg=[idn.nis,idn.nisn].filter(Boolean).join(' / ');
+  var reg=[idn.nis,idn.nisn].filter(Boolean).join('/');
   return '<div class="tr-baris'+(cek?' dipilih':'')+'" data-id="'+esc(x.id)+'">'+
     '<label class="tr-cek"><input type="checkbox"'+(cek?' checked':'')+' onchange="trPilih(\''+esc(x.id)+'\',this.checked)" aria-label="Select '+esc(x.nama)+'"></label>'+
     '<div class="tr-nama"><b>'+esc(x.nama)+'</b><span>'+esc(x.kelas||'—')+(reg?' · '+esc(reg):'')+(idn.sex?' · '+esc(idn.sex):'')+'</span>'+
@@ -24572,14 +24611,14 @@ function trAturBuka(){
     '<label class="bidang"><span>Number pattern</span><input data-f="pola" value="'+esc(a.pola||'')+'" placeholder="09.{n}/SMAIT/YKPI/{bulan}/{tahun}"></label></div>'+
     '<p class="hint">{n} is the running number you type when downloading, {bulan} becomes the Roman month and {tahun} the year.</p>'+
     '<div class="tr-ttd"><b>Signature &amp; school stamp</b><span>'+(a.adaTtd?'Uploaded — printed only on transcripts whose every semester is verified.':'Not uploaded yet. Upload one PNG/JPG of the principal’s signature with the stamp (a transparent PNG looks best).')+'</span>'+
-    '<div class="pick ketat"><input type="file" accept="image/png,image/jpeg" data-ttd>'+(a.adaTtd?'<button class="btn ghost xs bahaya" data-hapus>Remove signature</button>':'')+'</div></div>';
+    '<div class="pick ketat"><input type="file" accept="image/*" data-ttd>'+(a.adaTtd?'<button class="btn ghost xs bahaya" data-hapus>Remove signature</button>':'')+'</div></div>';
   var M=trModal('Transcript settings',isi,'<button class="btn ghost sm" data-batal>Cancel</button><button class="btn sea sm" data-ok>Save settings</button>','tr-sedang');
   M.q('[data-batal]').onclick=M.tutup;
   var hapusTtd=false, hb=M.q('[data-hapus]'); if(hb) hb.onclick=function(){ hapusTtd=true; hb.textContent='Will be removed'; hb.disabled=true };
   M.q('[data-ok]').onclick=function(){
     var data={kepala:M.q('[data-f="kepala"]').value,niy:M.q('[data-f="niy"]').value,pola:M.q('[data-f="pola"]').value};
     var f=M.q('[data-ttd]').files[0], b=this;
-    var siap=f?bacaBerkasAman(f,{batasMb:0.3}).then(function(x){ data.ttd=x.data }):Promise.resolve();
+    var siap=f?ttdTransparan(f).then(function(x){ data.ttd=x.b64 }):Promise.resolve();
     if(!f&&hapusTtd) data.ttd='';
     b.disabled=true; b.textContent='Saving…';
     siap.then(function(){ return call('transkripAtur',S.token,data) }).then(function(r){
@@ -24811,6 +24850,450 @@ function dtTampil(view,bag,gulir){
     var top=bar.getBoundingClientRect().top; if(top<0||top>window.innerHeight*0.5) bar.scrollIntoView({block:'start'});
   }
 }
+
+
+/* =======================================================
+   GERBANG E · MEMILIH BEASISWA DARI DATABASE SEKOLAH
+   - Database kini berisi 1.400+ beasiswa dengan kolom REGION, NEGARA,
+     UNIVERSITAS, LEVEL. Dulu aplikasi hanya mengenali judul WILAYAH,
+     sehingga pilihan Region kosong dan daftar beasiswa tidak muncul.
+   - Pilih Region → Country (boleh semua) → Scholarship, atau ketik di
+     kotak pencarian (nama beasiswa, kampus, negara).
+   - Setiap beasiswa punya id sendiri: nama yang sama di kampus berbeda
+     (mis. "International Student Scholarship") tidak tertukar lagi.
+   - Hanya beasiswa yang berlaku untuk S1 WNI yang ditawarkan.
+   ======================================================= */
+function beaHuruf(t){ return String(t==null?'':t).toLowerCase() }
+function beaUntukS1(b){
+  var s=beaHuruf(b.s1), j=beaHuruf(b.jenjang);
+  if(s==='tidak'||/non-gelar|persiapan/.test(s)) return false;
+  if(/tidak untuk s1|tidak terbuka untuk wni|non-gelar/.test(j)) return false;
+  return true;
+}
+var _BEA_MEMO={src:null};
+function beaData(){
+  var src=S.bea||[];
+  if(_BEA_MEMO.src===src&&_BEA_MEMO.n===src.length) return _BEA_MEMO;
+  var daftar=src.filter(function(b){ return b&&sv(b.nama)&&beaUntukS1(b) });
+  var wil={}, id={};
+  daftar.forEach(function(b){ var w=sv(b.wilayah)||'Other'; wil[w]=(wil[w]||0)+1; if(b.id) id[b.id]=b });
+  _BEA_MEMO={src:src,n:src.length,daftar:daftar,id:id,
+    wilayah:Object.keys(wil).sort(function(a,b){ return a.localeCompare(b) }).map(function(w){ return {w:w,n:wil[w]} })};
+  return _BEA_MEMO;
+}
+function beaWil(b){ return sv(b.wilayah)||'Other' }
+function beaCari(r){
+  if(!r) return null;
+  var D=beaData(), semua=S.bea||[];
+  if(r.beaId){ var x=D.id[r.beaId]||semua.filter(function(b){return b.id===r.beaId})[0]; if(x) return x }
+  if(!sv(r.nama)) return null;
+  var n=beaHuruf(sv(r.nama)), kandidat=semua.filter(function(b){ return beaHuruf(sv(b.nama))===n });
+  if(kandidat.length>1&&sv(r.kampus)){ var k1=kandidat.filter(function(b){ return beaHuruf(b.kampus)===beaHuruf(r.kampus) }); if(k1.length) kandidat=k1 }
+  if(kandidat.length>1&&sv(r.negara)) { var k2=kandidat.filter(function(b){ return beaHuruf(b.negara)===beaHuruf(r.negara) }); if(k2.length) kandidat=k2 }
+  return kandidat[0]||null;
+}
+function beaLabel(b){
+  var uni=sv(b.kampus)&&!/^(semua|all|multi|berbagai|various)/i.test(b.kampus)&&/universitas|university/i.test(b.level||'')?' — '+b.kampus:'';
+  return b.nama+uni+(b.tipe?' · '+b.tipe:'');
+}
+function beaKandidat(r,cari){
+  var D=beaData(), c=beaHuruf(sv(cari)), adaWil=D.wilayah.some(function(x){ return x.w===r.wilayah });
+  return D.daftar.filter(function(b){
+    if(c){
+      var t=beaHuruf(b.nama+' '+(b.kampus||'')+' '+(b.negara||'')+' '+(b.wilayah||'')+' '+(b.penyelenggara||''));
+      return c.split(/\s+/).every(function(k){ return t.indexOf(k)>=0 });
+    }
+    if(r.wilayah&&adaWil&&beaWil(b)!==r.wilayah) return false;
+    if(r.negara&&beaHuruf(b.negara)!==beaHuruf(r.negara)) return false;
+    return true;
+  });
+}
+function beaOpsiHtml(r,cari){
+  var pilih=beaCari(r), daftar=beaKandidat(r,cari), h='<option value="">— '+(daftar.length?'select ('+daftar.length+')':'no match')+' —</option>';
+  if(pilih&&daftar.indexOf(pilih)<0) h+='<option value="'+esc(pilih.id||'')+'" selected>'+esc(beaLabel(pilih))+'</option>';
+  else if(!pilih&&sv(r.nama)) h+='<option value="" selected>'+esc(r.nama)+' (saved)</option>';
+  var grup={}, urut=[];
+  daftar.slice(0,1500).forEach(function(b){
+    var g=(cari||!r.negara)?(sv(b.negara)||beaWil(b)):(sv(b.level)||'Scholarships');
+    if(!grup[g]){ grup[g]=[]; urut.push(g) }
+    grup[g].push(b);
+  });
+  urut.sort(function(a,b){ return a.localeCompare(b) }).forEach(function(g){
+    h+='<optgroup label="'+esc(g)+' ('+grup[g].length+')">';
+    grup[g].sort(function(a,b){ return a.nama.localeCompare(b.nama) }).forEach(function(b){
+      h+='<option value="'+esc(b.id||'')+'"'+(pilih===b?' selected':'')+'>'+esc(beaLabel(b))+'</option>';
+    });
+    h+='</optgroup>';
+  });
+  return h;
+}
+function beaCariKetik(i,el){
+  var r=targetDeck().sch[i], s=q('beaPilih'+i); if(!r||!s) return;
+  clearTimeout(el._t); el._t=setTimeout(function(){ s.innerHTML=beaOpsiHtml(r,el.value); s.classList.toggle('bea-cari-on',!!sv(el.value)) },180);
+}
+wilayahList=function(){ return beaData().wilayah.map(function(x){ return x.w }) };
+mkSch=function(){ return {wilayah:'',negara:'',kampus:'',beaId:'',nama:'',tipe:'',periode:'',syarat:'',cakupan:'',link:'',level:'',esai:'Not started',aplikasi:'Not started'} };
+fBeasiswa=function(deck,ro){
+  var e=deck.sch||[], D=beaData();
+  var muat=!(S.bea||[]).length&&(S.ambilRef||!S.refSidik);
+  var h=ro?'':'<div class="filters" style="margin-bottom:12px"><button class="btn sea sm" onclick="tambahSch()">+ Add scholarship target</button>'+
+    '<button class="btn ghost sm" id="btnRefSch" onclick="segarkanReferensi(\'btnRefSch\')">Refresh from spreadsheet</button>'+
+    '<span class="eyebrow">'+(muat?'Loading the scholarship database…':D.daftar.length.toLocaleString('en')+' scholarships open to Indonesian S1 applicants · '+D.wilayah.length+' regions')+'</span></div>';
+  if(!(S.bea||[]).length&&!ro) h+='<div class="note">'+(muat?'The scholarship list is still loading — the choices appear here in a moment.':'The scholarship database could not be loaded. Press <b>Refresh from spreadsheet</b>.')+'</div>';
+  if(!e.length) return h+'<div class="empty"><b>No scholarship targets yet</b>Press “Add scholarship target”, then choose a region, a country and the scholarship — or search by name, university or country.</div>';
+  e.forEach(function(r,i){
+    var b=beaCari(r);
+    h+='<div class="tgt"><div class="tgt-h"><span class="t">Scholarship '+(i+1)+(r.tipe?' · '+esc(r.tipe):'')+
+       lencanaMundur(r.deadline)+'</span>'+
+       (ro?'':'<button class="btn ghost sm" onclick="hapusSch('+i+')">Remove</button>')+'</div><div class="tgt-b"><div class="grid">';
+    /* Region */
+    var adaWil=D.wilayah.some(function(x){ return x.w===r.wilayah });
+    h+='<div class="f"><label>Region</label><select'+(ro?' disabled':'')+' onchange="setSch('+i+',\'wilayah\',this.value)"><option value="">— all regions —</option>';
+    D.wilayah.forEach(function(x){ h+='<option value="'+esc(x.w)+'"'+(r.wilayah===x.w?' selected':'')+'>'+esc(x.w)+' ('+x.n+')</option>' });
+    if(sv(r.wilayah)&&!adaWil) h+='<option value="'+esc(r.wilayah)+'" selected>'+esc(r.wilayah)+'</option>';
+    h+='</select></div>';
+    /* Country */
+    var neg={}; D.daftar.forEach(function(x){ if((!r.wilayah||!adaWil||beaWil(x)===r.wilayah)&&sv(x.negara)) neg[x.negara]=(neg[x.negara]||0)+1 });
+    var negL=Object.keys(neg).sort(function(a,b){ return a.localeCompare(b) });
+    h+='<div class="f"><label>Country</label><select'+(ro?' disabled':'')+' onchange="setSch('+i+',\'negara\',this.value)"><option value="">— all countries'+(negL.length?' ('+negL.length+')':'')+' —</option>';
+    negL.forEach(function(n){ h+='<option value="'+esc(n)+'"'+(beaHuruf(r.negara)===beaHuruf(n)?' selected':'')+'>'+esc(n)+' ('+neg[n]+')</option>' });
+    if(sv(r.negara)&&!negL.some(function(n){ return beaHuruf(n)===beaHuruf(r.negara) })) h+='<option value="'+esc(r.negara)+'" selected>'+esc(r.negara)+'</option>';
+    h+='</select></div>';
+    /* Scholarship + cari */
+    h+='<div class="f full"><label>Scholarship</label>'+
+       (ro?'':'<input type="search" class="bea-cari" placeholder="Search by scholarship, university or country…" oninput="beaCariKetik('+i+',this)" aria-label="Search scholarships">')+
+       '<select id="beaPilih'+i+'"'+(ro?' disabled':'')+' onchange="setSch('+i+',\'id\',this.value)">'+beaOpsiHtml(r,'')+'</select></div>';
+    h+='<div class="f"><label>Essay &amp; documents status</label><select'+(ro?' disabled':'')+' onchange="setSch('+i+',\'esai\',this.value)">';
+    S.schema.opt.esai.forEach(function(x){h+='<option'+(r.esai===x.v?' selected':'')+'>'+esc(x.v)+'</option>'});
+    h+='</select></div>';
+    h+='<div class="f"><label>Application status</label><select'+(ro?' disabled':'')+' onchange="setSch('+i+',\'aplikasi\',this.value)">';
+    S.schema.opt.aplikasi.forEach(function(x){h+='<option'+(r.aplikasi===x.v?' selected':'')+'>'+esc(x.v)+'</option>'});
+    h+='</select></div>';
+    h+='<div class="f"><label>Your deadline</label><input type="date" value="'+esc(r.deadline||'')+'"'+(ro?' disabled':'')+
+       ' onchange="setSch('+i+',\'deadline\',this.value)">'+
+       '<div class="hint">'+(r.periode?'Official period: '+esc(r.periode)+'. ':'')+'Set your own submission date to get a countdown.</div></div></div>';
+    if(sv(r.nama)){
+      var x=b||r;
+      h+='<div class="info"><dl>'+
+         (x.negara||r.negara?'<dt>Country</dt><dd>'+esc(x.negara||r.negara)+(x.wilayah?' · '+esc(x.wilayah):'')+'</dd>':'')+
+         (x.kampus?'<dt>University / scope</dt><dd>'+esc(x.kampus)+'</dd>':'')+
+         (x.penyelenggara?'<dt>Provider</dt><dd>'+esc(x.penyelenggara)+'</dd>':'')+
+         '<dt>Funding type</dt><dd>'+esc(r.tipe||x.tipe||'—')+'</dd>'+
+         '<dt>Application period</dt><dd>'+esc(r.periode||x.periode||'—')+'</dd>'+
+         ((r.link||x.link)?'<dt>Official link</dt><dd><a href="'+esc(r.link||x.link)+'" target="_blank" rel="noopener">'+esc(r.link||x.link)+'</a></dd>':'')+
+         '<dt>Main requirements</dt><dd>'+esc(r.syarat||x.syarat||'—')+'</dd>'+
+         '<dt>Coverage</dt><dd>'+esc(r.cakupan||x.cakupan||'—')+'</dd></dl></div>';
+    }
+    h+='</div></div>';
+  });
+  return h;
+};
+setSch=function(i,f,v){
+  var r=targetDeck().sch[i]; if(!r) return;
+  function kosongkan(){ r.beaId='';r.nama='';r.kampus='';r.tipe='';r.periode='';r.syarat='';r.cakupan='';r.link='';r.level='' }
+  function isi(b){
+    r.beaId=b.id||''; r.nama=b.nama; r.wilayah=sv(b.wilayah); r.negara=sv(b.negara); r.kampus=sv(b.kampus); r.level=sv(b.level);
+    r.tipe=b.tipe||''; r.periode=b.periode||''; r.syarat=b.syarat||''; r.cakupan=b.cakupan||''; r.link=b.link||'';
+  }
+  if(f==='wilayah'){ r.wilayah=v; r.negara=''; kosongkan() }
+  else if(f==='negara'){ r.negara=v; kosongkan() }
+  else if(f==='id'){
+    if(!v) return;
+    var b=beaData().id[v]||(S.bea||[]).filter(function(x){ return x.id===v })[0];
+    if(b) isi(b);
+  }
+  else if(f==='nama'){
+    r.nama=v; r.beaId='';
+    var c=beaCari(r); if(c) isi(c);
+  }
+  else r[f]=v;
+  ubahRapor2();
+  if(f==='wilayah'||f==='negara'||f==='id'||f==='nama'||f==='deadline') gambarView();
+};
+
+
+/* =======================================================
+   ID SISWA = NIS/NISN · IMPOR DATABASE SISWA · TANDA TANGAN
+   ======================================================= */
+BATAS_KHUSUS.dataSiswaAnalisa=90000; BATAS_KHUSUS.dataSiswaTerapkan=180000; ULANG_KHUSUS.dataSiswaTerapkan=0;
+BATAS_KHUSUS.ttdSimpan=60000; ULANG_KHUSUS.ttdSimpan=0;
+IKON_TAB.datasiswa='tabel';
+
+/* ---------- ID resmi yang tampil ---------- */
+function idTampil(id){ var x=(S.idResmi||{})[id]; return (x&&x.reg)||id||'' }
+function regDari(nis,nisn){ return [sv(nis),sv(nisn)].filter(Boolean).join('/') }
+(function(){
+  var lama=terapkanBootstrap;
+  terapkanBootstrap=function(r){
+    if(r&&r.idResmi) S.idResmi=r.idResmi;
+    if(r&&r.ttdSaya!==undefined) S.ttdAda=r.ttdSaya;
+    return lama.apply(this,arguments);
+  };
+})();
+
+/* ---------- impor database siswa ---------- */
+var DS_KOLOM=[
+  ['idSistem','System ID',/^(id\s*(sistem|deck|app)|system\s*id|id\s*siswa\s*\(sistem\)|siswa\s*id)$/],
+  ['nisn','NISN',/\bnisn\b|nomor\s*induk\s*siswa\s*nasional|national\s*student/],
+  ['nis','NIS',/^nis\b|\bnis$|^no\.?\s*induk|nomor\s*induk(?!\s*siswa\s*nasional)|^nipd$|student\s*(registration\s*)?number|registration\s*number|^induk$/],
+  ['nama','Name',/^(nama(\s*lengkap)?(\s*(siswa|peserta\s*didik|murid))?|name|full\s*name|student(\s*name)?|nama\s*peserta\s*didik)$/],
+  ['kelas','Class',/^(kelas|rombel|rombongan\s*belajar|class|grade|tingkat\s*kelas)\b/],
+  ['sex','Sex',/jenis\s*kelamin|^jk$|^l\s*\/\s*p$|^sex$|gender|kelamin/],
+  ['ayah','Father',/nama\s*ayah|father/],
+  ['ibu','Mother',/nama\s*ibu|mother/],
+  ['ortu','Parent / guardian',/nama\s*(orang\s*tua|ortu|wali)|parent(\s*name)?|guardian/],
+  ['emailOrtu','Parent email',/e-?mail\s*(orang\s*tua|ortu|wali|parent)|parent\s*e-?mail/],
+  ['email','Student email',/^e-?mail(\s*(siswa|murid|student|akun))?$|^surel/],
+  ['nomor','Transcript no.',/nomor\s*transkrip|transcript\s*(no|number)/]
+];
+function dsSt(){ if(!S.ds) S.ds={}; return S.ds }
+function dsPetaKolom(judul){
+  var peta={}, pakai={};
+  DS_KOLOM.forEach(function(k){
+    for(var i=0;i<judul.length;i++){
+      if(pakai[i]) continue;
+      var t=String(judul[i]||'').toLowerCase().replace(/[_]+/g,' ').replace(/\s+/g,' ').trim();
+      if(!t) continue;
+      if(k[0]==='nama'&&/ayah|ibu|orang tua|ortu|wali|parent|father|mother|guardian|sekolah|school|kelas/.test(t)) continue;
+      if(k[0]==='email'&&/orang tua|ortu|wali|parent/.test(t)) continue;
+      if(k[2].test(t)){ peta[k[0]]=i; pakai[i]=1; return }
+    }
+  });
+  return peta;
+}
+function dsBaris(bag){
+  var p=dsPetaKolom(bag.judul), out=[];
+  bag.data.forEach(function(r,j){
+    var o={_baris:j+2}, isi=false;
+    Object.keys(p).forEach(function(k){
+      var v=r[p[k]];
+      if(v===undefined||v===null||String(v).trim()==='') return;
+      if(typeof v==='number'&&(k==='nis'||k==='nisn')) v=String(Math.round(v));
+      o[k]=typeof v==='string'?v.trim():v; isi=true;
+    });
+    if(isi&&(o.nama||o.nis||o.nisn||o.email||o.idSistem)) out.push(o);
+  });
+  return {peta:p,baris:out};
+}
+function dsPilih(file){
+  if(!file) return;
+  if(file.size>25*1024*1024){ toast('That file is larger than 25 MB.',true); return }
+  var D=dsSt(); D.nama=file.name; D.memuat='Reading the file…'; D.analisa=null; D.galat=''; D.hasil=null; gambarView();
+  ipBaca(file).then(function(bag){
+    var terbaik=null;
+    bag.forEach(function(b){ var x=dsBaris(b); x.lembar=b.nama; if(!terbaik||Object.keys(x.peta).length*1000+x.baris.length>Object.keys(terbaik.peta).length*1000+terbaik.baris.length) terbaik=x });
+    if(!terbaik||!terbaik.baris.length) throw new Error('No student rows were found. The file needs a header row with at least Name, NIS or NISN.');
+    if(!(terbaik.peta.nama!==undefined||terbaik.peta.nis!==undefined||terbaik.peta.nisn!==undefined||terbaik.peta.email!==undefined)) throw new Error('No Name, NIS, NISN or email column was recognised.');
+    D.peta=terbaik.peta; D.baris=terbaik.baris; D.lembar=terbaik.lembar; D.memuat='Matching '+terbaik.baris.length+' rows with the student accounts…'; gambarView();
+    return call('dataSiswaAnalisa',S.token,terbaik.baris).then(function(r){
+      D.memuat='';
+      if(!r||!r.ok){ if(r&&r.error==='SESI_HABIS'){ sesiHabis(); return } throw new Error((r&&r.error)||'The rows could not be matched.') }
+      D.analisa=r; D.saring='semua'; gambarView();
+    });
+  }).catch(function(e){ D.memuat=''; D.galat=e.message||String(e); gambarView() });
+}
+function dsTerapkan(){
+  var D=dsSt(); if(!D.analisa) return;
+  var n=D.analisa.ringkas.ubah||0;
+  if(!n){ toast('Nothing to update — every matched student already has these details.'); return }
+  tanya('Update '+n+' student'+(n>1?'s':'')+' from “'+D.nama+'”? NIS, NISN, sex, parent name, class and name are written to the spreadsheet; decks and recaps follow.',function(){
+    D.memuat='Updating '+n+' students…'; gambarView();
+    call('dataSiswaTerapkan',S.token,D.baris,D.nama).then(function(r){
+      D.memuat='';
+      if(!r||!r.ok){ if(r&&r.error==='SESI_HABIS'){ sesiHabis(); return } D.galat=(r&&r.error)||'The update failed.'; gambarView(); return }
+      if(r.idResmi) S.idResmi=r.idResmi;
+      if(r.ringkasan) S.ringkasan=r.ringkasan;
+      if(S.tr){ S.tr.daftar=null; S.tr.data={} }
+      D.analisa={hasil:r.hasil,ringkas:r.ringkas}; D.hasil={n:r.diterapkan};
+      toast('Updated '+r.diterapkan+' student'+(r.diterapkan===1?'':'s')+'.');
+      gambarView();
+    }).catch(function(e){ D.memuat=''; D.galat=e.message; gambarView() });
+  },'Update students');
+}
+var DS_LABEL={nis:'NIS',nisn:'NISN',sex:'Sex',ortu:'Parent',nomor:'Transcript no.',kelas:'Class',nama:'Name',emailOrtu:'Parent email'};
+function dsTemplat(){
+  toast('Preparing the template…');
+  Promise.all([muatLib('xlsx',function(){return !!window.XLSX}),call('dataSiswaDaftar',S.token)]).then(function(x){
+    var r=x[1]; if(!r||!r.ok){ toast((r&&r.error)||'Could not load the students.',true); return }
+    var aoa=[['System ID','Name','Class','NIS','NISN','Sex (Male/Female)','Parent name','Student email','Parent email','Transcript no.']];
+    r.siswa.forEach(function(s){ aoa.push([s.id,s.nama,s.kelas,s.nis,s.nisn,s.sex,s.ortu,s.email,s.emailOrtu,s.nomor]) });
+    var ws=XLSX.utils.aoa_to_sheet(aoa);
+    for(var i=1;i<aoa.length;i++){ ['D','E'].forEach(function(c){ var a=ws[c+(i+1)]; if(a){ a.t='s'; a.v=String(a.v||''); a.z='@' } }) }
+    ws['!cols']=[{wch:16},{wch:34},{wch:9},{wch:14},{wch:14},{wch:17},{wch:30},{wch:28},{wch:30},{wch:26}];
+    var wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,'Students');
+    XLSX.writeFile(wb,'deck-ptln-student-database.xlsx');
+  }).catch(function(e){ toast(e.message||'Could not create the template.',true) });
+}
+function viewDataSiswa(){
+  var D=dsSt(), siswa=(S.ringkasan||[]), ada=siswa.filter(function(x){ return (S.idResmi||{})[x.id] }).length;
+  var h='<div class="card"><div class="judul-baris"><div class="sec-head" style="border:0;margin:0;padding:0"><span class="kode">ID</span>'+
+    '<div><h2>Student database</h2><div class="sub">The student ID shown in the app is the <b>NIS/NISN</b>. Import the school’s student list (Excel, CSV or JSON) once: every row is matched to a student account — by system ID, NISN, NIS, email, or name and class — and their NIS, NISN, sex, parent name, class and name are updated.</div></div></div>'+
+    '<div class="pick"><button class="btn ghost sm" onclick="dsTemplat()">'+ikon('unduh')+'Download current data (template)</button></div></div>'+
+    '<div class="tr-kpis" style="grid-template-columns:repeat(3,minmax(0,1fr))"><div class="tr-kpi"><b>'+siswa.length+'</b><span>Student accounts</span></div>'+
+    '<div class="tr-kpi ok"><b>'+ada+'</b><span>With NIS/NISN</span></div><div class="tr-kpi awas"><b>'+(siswa.length-ada)+'</b><span>Without NIS/NISN</span></div></div>'+
+    '<label class="imp-drop ds-drop" id="dsDrop"><input type="file" accept=".xlsx,.xls,.csv,.json,.ods" onchange="dsPilih(this.files[0]);this.value=\'\'" hidden>'+
+    '<b>'+ikon('unggah')+'Choose or drop the student database file</b><span>Columns are recognised by their names — e.g. NIS, NISN, Nama, Kelas, Jenis Kelamin (L/P), Nama Ayah / Ibu / Orang Tua, Email, Email Orang Tua. Extra columns are ignored.</span></label>';
+  if(D.memuat) h+='<div class="load" style="min-height:200px"><div class="spin"></div><div class="eyebrow">'+esc(D.memuat)+'</div></div>';
+  if(D.galat) h+='<div class="note bad">'+esc(D.galat)+'</div>';
+  if(D.analisa&&!D.memuat){
+    var a=D.analisa, R=a.ringkas;
+    h+='<div class="ds-file"><b>'+esc(D.nama||'')+'</b>'+(D.lembar?' · sheet “'+esc(D.lembar)+'”':'')+' · columns found: '+
+      Object.keys(D.peta||{}).map(function(k){ var l=(DS_KOLOM.filter(function(x){return x[0]===k})[0]||[])[1]; return '<span class="tag">'+esc(l||k)+'</span>' }).join(' ')+'</div>';
+    if(D.hasil) h+='<div class="note ok">'+ikon('centang')+' '+D.hasil.n+' student'+(D.hasil.n===1?'':'s')+' updated. The list below shows the data as it is now.</div>';
+    function kpi(n,l,st,c){ return '<button type="button" class="tr-kpi '+c+(D.saring===st?' on':'')+'" onclick="dsSt().saring=\''+(D.saring===st?'semua':st)+'\';gambarView()"><b>'+n+'</b><span>'+l+'</span></button>' }
+    h+='<div class="tr-kpis" style="grid-template-columns:repeat(4,minmax(0,1fr))">'+kpi(R.ubah||0,'Will be updated','ubah','isi')+kpi(R.sama||0,'Already up to date','sama','ok')+
+      kpi((R.tidak||0)+(R.ganda||0),'Not matched','tidak','awas')+kpi((R.tanpaBaris||[]).length,'Accounts not in the file','tanpa','')+'</div>';
+    if(!D.hasil&&R.ubah) h+='<div class="pick" style="margin:8px 0 12px"><button class="btn gold" onclick="dsTerapkan()">'+ikon('centang')+'Update '+R.ubah+' student'+(R.ubah>1?'s':'')+'</button><span class="hint">Nothing is written until you press this.</span></div>';
+    if(D.saring==='tanpa'){
+      h+='<div class="tr-tabel-wrap tinggi"><table class="tbl tr-tabel"><thead><tr><th>Student account</th><th>Class</th><th>ID</th></tr></thead><tbody>'+
+        (R.tanpaBaris||[]).map(function(s){ return '<tr><td><b>'+esc(s.nama)+'</b></td><td>'+esc(s.kelas||'')+'</td><td class="mono">'+esc(idTampil(s.id))+'</td></tr>' }).join('')+'</tbody></table></div>';
+    }else{
+      var rows=a.hasil.filter(function(x){ return D.saring==='semua'||(D.saring==='tidak'?(x.status==='tidak'||x.status==='ganda'):x.status===D.saring) });
+      h+='<div class="tr-tabel-wrap tinggi"><table class="tbl tr-tabel ds-tabel"><thead><tr><th>Row</th><th>In the file</th><th>Student account</th><th>Matched by</th><th>Changes</th></tr></thead><tbody>'+
+        rows.slice(0,800).map(function(x){
+          var ub=Object.keys(x.ubah||{}).map(function(k){ var u=x.ubah[k]; return '<div><span class="tag">'+esc(DS_LABEL[k]||k)+'</span> '+(u[0]?'<s>'+esc(u[0])+'</s> → ':'')+'<b>'+esc(u[1])+'</b></div>' }).join('');
+          return '<tr class="ds-'+x.status+'"><td class="mono">'+x.baris+'</td><td><b>'+esc(x.nama||'—')+'</b><div class="muted">'+esc(x.kelas||'')+'</div></td>'+
+            '<td>'+(x.id?esc(x.namaApp||'')+'<div class="muted">'+esc(x.kelasApp||'')+' · '+esc(idTampil(x.id))+'</div>':'<span class="ds-x">'+esc(x.alasan||'Not matched')+'</span>')+'</td>'+
+            '<td>'+(x.cara?'<span class="tag">'+esc(x.cara)+'</span>':'')+'</td>'+
+            '<td>'+(x.status==='ganda'?'<span class="ds-x">'+esc(x.alasan)+'</span>':(ub||(x.id?'<span class="muted">No change</span>':'')))+
+            (x.catatan&&x.catatan.length?'<div class="ds-x">'+x.catatan.map(esc).join('<br>')+'</div>':'')+'</td></tr>';
+        }).join('')+'</tbody></table></div>';
+      if(rows.length>800) h+='<div class="hint">Showing the first 800 rows.</div>';
+    }
+  }
+  return h+'</div>';
+}
+function dsSeret(){
+  var z=q('dsDrop'); if(!z||z._siap) return; z._siap=true;
+  z.addEventListener('dragover',function(e){ e.preventDefault(); z.classList.add('seret') });
+  z.addEventListener('dragleave',function(){ z.classList.remove('seret') });
+  z.addEventListener('drop',function(e){ e.preventDefault(); z.classList.remove('seret'); var f=e.dataTransfer&&e.dataTransfer.files&&e.dataTransfer.files[0]; if(f) dsPilih(f) });
+}
+
+/* ---------- tanda tangan: latar transparan ---------- */
+function ttdTransparan(file){
+  return new Promise(function(res,rej){
+    if(!file) return rej(new Error('Choose an image first.'));
+    if(!/^image\/(png|jpe?g|webp)$/i.test(file.type||'')&&!/\.(png|jpe?g|webp)$/i.test(file.name||'')) return rej(new Error('Use a photo or scan of the signature (PNG or JPG).'));
+    if(file.size>12*1024*1024) return rej(new Error('That image is larger than 12 MB.'));
+    var url=URL.createObjectURL(file), img=new Image();
+    img.onload=function(){
+      try{
+        var w=img.naturalWidth, h=img.naturalHeight, sk=Math.min(1,1400/Math.max(w,h));
+        w=Math.max(1,Math.round(w*sk)); h=Math.max(1,Math.round(h*sk));
+        var c=document.createElement('canvas'); c.width=w; c.height=h;
+        var x=c.getContext('2d'); x.drawImage(img,0,0,w,h);
+        var d=x.getImageData(0,0,w,h), p=d.data;
+        /* warna kertas = median piksel tepi */
+        var tepi=[]; function ambil(i){ tepi.push([p[i],p[i+1],p[i+2]]) }
+        for(var ix=0;ix<w;ix+=Math.max(1,w>>6)){ ambil((ix)*4); ambil(((h-1)*w+ix)*4) }
+        for(var iy=0;iy<h;iy+=Math.max(1,h>>6)){ ambil((iy*w)*4); ambil((iy*w+w-1)*4) }
+        function median(k){ var a=tepi.map(function(t){return t[k]}).sort(function(m,n){return m-n}); return a[a.length>>1] }
+        var bg=[median(0),median(1),median(2)];
+        var adaAlfa=false; for(var j=3;j<p.length;j+=4*97){ if(p[j]<250){ adaAlfa=true; break } }
+        var t0=26, t1=88, minX=w, minY=h, maxX=-1, maxY=-1;
+        for(var i=0;i<p.length;i+=4){
+          var a0=p[i+3]/255;
+          var dr=p[i]-bg[0], dg=p[i+1]-bg[1], db=p[i+2]-bg[2];
+          var jarak=Math.sqrt(dr*dr+dg*dg+db*db), gelap=(bg[0]+bg[1]+bg[2]-p[i]-p[i+1]-p[i+2])/3;
+          var al=Math.max(0,Math.min(1,(Math.max(jarak,gelap*1.4)-t0)/(t1-t0)));
+          if(adaAlfa) al=Math.min(al||a0,a0);
+          if(al<=0.02){ p[i+3]=0; continue }
+          /* buang sisa warna kertas dari tepi tinta (tanpa lingkaran putih) */
+          for(var k=0;k<3;k++){ var v=(p[i+k]-bg[k]*(1-al))/al; p[i+k]=Math.max(0,Math.min(255,Math.round(v*0.92))) }
+          p[i+3]=Math.round(al*255);
+          var px=(i>>2)%w, py=(i>>2)/w|0;
+          if(al>0.25){ if(px<minX) minX=px; if(px>maxX) maxX=px; if(py<minY) minY=py; if(py>maxY) maxY=py }
+        }
+        if(maxX<0) throw new Error('No signature could be found in this image — use a darker pen on plain paper.');
+        x.putImageData(d,0,0);
+        var pad=8; minX=Math.max(0,minX-pad); minY=Math.max(0,minY-pad); maxX=Math.min(w-1,maxX+pad); maxY=Math.min(h-1,maxY+pad);
+        var cw=maxX-minX+1, ch=maxY-minY+1, sk2=Math.min(1,700/cw,320/ch);
+        var o=document.createElement('canvas'); o.width=Math.max(1,Math.round(cw*sk2)); o.height=Math.max(1,Math.round(ch*sk2));
+        var ox=o.getContext('2d'); ox.imageSmoothingQuality='high'; ox.drawImage(c,minX,minY,cw,ch,0,0,o.width,o.height);
+        var hasil=o.toDataURL('image/png');
+        URL.revokeObjectURL(url);
+        res({url:hasil,b64:hasil.split(',')[1],w:o.width,h:o.height});
+      }catch(e){ URL.revokeObjectURL(url); rej(e) }
+    };
+    img.onerror=function(){ URL.revokeObjectURL(url); rej(new Error('The image could not be opened.')) };
+    img.src=url;
+  });
+}
+function ttdContoh(src,nama,peran){
+  return '<div class="ttd-contoh"><span>'+esc(peran||'')+'</span><div class="ttd-ruang">'+(src?'<img alt="Signature" src="'+esc(src)+'">':'<i>No signature yet</i>')+
+    '</div><b>'+esc(nama||'')+'</b></div>';
+}
+function ttdKartuHtml(){
+  var T=S.ttdData||{}, me=S.user||{}, h='<div class="card" id="ttdKartu"><h2>Signatures</h2><div class="sub">Upload a photo or scan of a signature on plain paper. The paper is removed automatically, so the signature becomes <b>transparent</b> and is printed over the name like a real one — on transcripts (principal) and on the SAPP progress report (principal and the mentor who prints it).</div>';
+  if(!S.ttdData) return h+'<div class="load" style="min-height:120px"><div class="spin"></div></div></div>';
+  h+='<div class="ttd-grid">';
+  if(me.role!=='kepsek') h+='<div class="ttd-blok"><div class="ttd-j">My signature · '+esc(me.nama)+'</div>'+ttdContoh(T.saya?'data:image/png;base64,'+T.saya.data:'',me.nama,'Mentor teacher')+
+    '<div class="pick ketat"><label class="btn sea sm">'+ikon('unggah')+'Upload signature<input type="file" accept="image/*" hidden onchange="ttdUnggah(\'saya\',this.files[0])"></label>'+
+    (T.saya?'<button class="btn ghost sm bahaya" onclick="ttdHapus(\'saya\')">Remove</button>':'')+'</div></div>';
+  if(T.bolehKepala) h+='<div class="ttd-blok"><div class="ttd-j">Principal’s signature &amp; stamp</div>'+ttdContoh(T.kepala?'data:'+T.kepala.mime+';base64,'+T.kepala.data:'',((S.tr&&S.tr.atur&&S.tr.atur.kepala)||(S.logo&&S.logo.kepala)||'Principal'),'Principal')+
+    '<div class="pick ketat"><label class="btn sea sm">'+ikon('unggah')+'Upload principal’s signature<input type="file" accept="image/*" hidden onchange="ttdUnggah(\'kepala\',this.files[0])"></label>'+
+    (T.kepala?'<button class="btn ghost sm bahaya" onclick="ttdHapus(\'kepala\')">Remove</button>':'')+'</div><div class="hint">Printed on transcripts only when every semester is verified.</div></div>';
+  return h+'</div></div>';
+}
+function ttdMuat(){
+  if(S.ttdMuat) return; S.ttdMuat=true;
+  call('ttdAmbil',S.token).then(function(r){ S.ttdMuat=false; if(r&&r.ok){ S.ttdData=r; var k=q('ttdKartu'); if(k) k.outerHTML=ttdKartuHtml() } }).catch(function(){ S.ttdMuat=false });
+}
+function ttdUnggah(untuk,file){
+  if(!file) return;
+  toast('Making the background transparent…');
+  ttdTransparan(file).then(function(x){
+    var v=document.createElement('div'); v.className='veil';
+    v.innerHTML='<div class="modal tr-modal tr-kecil" role="dialog" aria-modal="true"><div class="hd">Check the signature</div><div class="bd">'+
+      '<p>The paper has been removed. This is how it will look over the name:</p>'+ttdContoh(x.url,untuk==='kepala'?((S.tr&&S.tr.atur&&S.tr.atur.kepala)||'Principal'):S.user.nama,untuk==='kepala'?'Principal':'Mentor teacher')+
+      '<div class="ttd-kotak">'+'<img alt="" src="'+x.url+'"></div><div class="hint">Shown on a checkered background: the checks should show through everywhere except the ink.</div></div>'+
+      '<div class="ft"><button class="btn ghost sm" data-no>Cancel</button><button class="btn sea sm" data-ok>Save signature</button></div></div>';
+    document.body.appendChild(v);
+    v.querySelector('[data-no]').onclick=function(){ v.remove() };
+    v.querySelector('[data-ok]').onclick=function(){
+      var b=this; b.disabled=true; b.textContent='Saving…';
+      call('ttdSimpan',S.token,untuk,x.b64).then(function(r){
+        if(!r||!r.ok){ b.disabled=false; b.textContent='Save signature'; toast((r&&r.error)||'Could not save.',true); return }
+        v.remove(); S.ttdData=null; if(S.tr){ S.tr.aturPenuh=null; if(S.tr.atur) S.tr.atur.adaTtd=untuk==='kepala'?true:S.tr.atur.adaTtd }
+        toast('Signature saved.'); ttdMuat(); var k=q('ttdKartu'); if(k) k.outerHTML=ttdKartuHtml();
+      }).catch(function(e){ b.disabled=false; b.textContent='Save signature'; tangani(e) });
+    };
+  }).catch(function(e){ toast(e.message||'The image could not be processed.',true) });
+}
+function ttdHapus(untuk){
+  tanya('Remove this signature? Documents made afterwards will have an empty signature space.',function(){
+    call('ttdSimpan',S.token,untuk,'').then(function(r){
+      if(!r||!r.ok){ toast((r&&r.error)||'Could not remove.',true); return }
+      S.ttdData=null; if(S.tr) S.tr.aturPenuh=null; toast('Signature removed.'); ttdMuat(); var k=q('ttdKartu'); if(k) k.outerHTML=ttdKartuHtml();
+    }).catch(tangani);
+  },'Remove',true);
+}
+
+/* ---------- menu & halaman ---------- */
+(function(){
+  var lamaNav=butirNav;
+  butirNav=function(){
+    var d=lamaNav.apply(this,arguments);
+    try{
+      if(bimbing()&&!d.some(function(x){return x.id==='datasiswa'})){
+        var i=-1; d.forEach(function(x,j){ if(x.id==='transkrip') i=j });
+        var item={id:'datasiswa',label:'Student database',ikon:'tabel'};
+        if(i>=0) d.splice(i+1,0,item); else d.push(item);
+      }
+    }catch(e){}
+    return d;
+  };
+  var lamaInti=gambarViewInti;
+  gambarViewInti=function(){
+    if(S.tab==='datasiswa'&&bimbing()){ q('view').innerHTML=viewDataSiswa(); dsSeret(); return }
+    var h=lamaInti.apply(this,arguments);
+    if(S.tab==='akun'&&S.user&&/^(guru|admin|kepsek|wakepsek)$/.test(S.user.role)){
+      try{ var v=q('view'); if(v&&!q('ttdKartu')){ v.insertAdjacentHTML('beforeend',ttdKartuHtml()); if(!S.ttdData) ttdMuat() } }catch(e){}
+    }
+    return h;
+  };
+})();
 
 /* @@V47-JS-SELESAI */
 
